@@ -1,0 +1,13 @@
+Digit		[0-9]
+Letter		[a-zA-Z_]
+Number		{digit}+(\.{digit}+)?(E[+-]?{digit}+)? 
+ID			{letter}({letter}|{digit})*
+Hex			[a-fA-F0-9]
+Delimiter	[\t\n :;]
+WS			{Delimiter}+
+
+%{
+#include <stdio.h>
+#include "y.tab.h"
+%}
+ 
