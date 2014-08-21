@@ -50,18 +50,19 @@ def _createLexInput():
         f.write("\n%%\n")        
         values=_extractKeyWords()
         for value  in values:
-            f.write("\""+value.strip()+"\"\t\t{ return("+value.strip().upper()+"); }\n") 
+            f.write("\""+value.strip()+"\"\t\t{ return(T_"+value.strip().upper()+"); }\n") 
         
         
         
         ## Constant Rules 
         with open("../../other/ConstantRules", 'r') as f1:
             f.write(f1.read())
+        f.write("\n%%\n")
         # Rules End"""
         
-        # User Code Begins"""
-        f.write("\n%%\n")
-        f.write("/***user code***/ \n")
+        # User Code Begins"""                
+        with open("../../other/UserCode", 'r') as f1:
+            f.write(f1.read())
         # User Code Ends"""
                 
 grammar_file = _msg()
