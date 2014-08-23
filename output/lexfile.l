@@ -13,8 +13,11 @@ DELIMITER	([ \t\v\n\f])
  
 
 %%
-"auto"		{ return ("T_AUTO" ); }
-"extern"		{ return ("T_EXTERN" ); }
+"auto"		{ return (auto); }
+"extern"		{ return (extern); }
+"KEYWORD"		{ return (KEYWORD); }
+"SPANDAN"		{ return (SPANDAN); }
+"[0-9]"		{ return (SPANDAN); }
 "..."			{ return ("T_ELLIPSIS"); }
 ">>="			{ return ("T_RIGHT_ASSIGN"); }
 "<<="			{ return ("T_LEFT_ASSIGN"); }
