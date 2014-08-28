@@ -3,10 +3,13 @@ from os.path import isfile, join
 from os import system
 
 grammar_files_path = "../../GrammarFiles"
-grammar_files = [ f for f in listdir(grammar_files_path) if isfile(join(grammar_files_path, f)) ]
+grammar_files = [ f for f in listdir(grammar_files_path) 
+                 if isfile(join(grammar_files_path, f)) ]
 non_Terminals = []
 terminals = []
 keywords = []
+terminal_Values=[]
+
 def _msg():
     
     print "Select Grammar File"
@@ -42,10 +45,15 @@ def _extractNonTerminals():
     with open(grammar_file, 'r') as f1:
         bnf = f1.read()
         for item in bnf.split('\n'):
-            if item.find('::=') >= 0:
+            if item.find('::=') >= 0 :
                 key, values = item.split('::=')
                 key = key.strip()
                 non_Terminals.append(key.strip())
+            else: 
+                if item.find(':') >= 0 :
+                    key, values = item.split(' : ')
+                    key = key.strip()
+                    non_Terminals.append(key.strip())
 
 def _extractUnListedTerminals():
     
@@ -62,41 +70,54 @@ def _extractUnListedTerminals():
                         isTerm=False
                 if isTerm:
                     terminals.append(key)
-    print terminals
+                    terminal_Values.append(values)
     
                         
 def _createLexInput():
     
     with open("../../output/lexfile.l", 'w') as f:
-        # definitions Begin"""
+       
+    # definitions Begin"""
+        declarations =""
         f.write("/***definitions***/ \n")        
         with open("../../other/ConstantDeclarations", 'r') as f1:
-            f.write(f1.read())
-        # definitions End"""
+            declarations=f1.read()
+        f.write(declarations)        
+    # definitions End"""
         
-        # Rules Begin"""
+    # Rules Begin"""
         f.write("\n%%\n")
         keywords=_extractKeyWords() 
-        for value  in keywords:
-            f.write("\""+value.strip()+"\"\t\t{ return ("+value.strip()+"); }\n")
-            
-        for term in terminals:            
-            f.write("\""+raw_input("Enter Regular Expression for "+ term) + "\"\t\t{ return ("+term.strip()+"); }\n")
-        ## Constant Rules 
+        
+        if keywords is not None:
+            for value  in keywords:
+                if value not in terminals:
+                    f.write("\""+value.strip()+"\"\t\t{ return ("+value.strip()+"); }\n")
+        print "Available Declarations"
+        print
+        print  declarations.split("%{")[0]
+        print "Enter Regular Expression for following terminals"
+        
+        if terminals is not None:
+             i=0
+             for term in terminals:            
+                 f.write("\""+raw_input(str(i+1)+")"+term+":"+terminal_Values[i]+"\n") + "\"\t\t{ return ("+term.strip()+"); }\n")
+                 i=i+1
+             
         with open("../../other/ConstantRules", 'r') as f1:
             f.write(f1.read())
-        f.write("\n%%\n")
-        # Rules End"""
+        f.write("\n%%\n")        
+    # Rules End"""
         
-        # User Code Begins"""                
+    # User Code Begins"""                
         with open("../../other/UserCode", 'r') as f1:
             f.write(f1.read())
-        # User Code Ends"""
+    # User Code Ends"""
               
 grammar_file = _msg()
-print grammar_file
 _extractUnListedTerminals()
 _createLexInput()
+
 #Flex
 system("flex ../../output/lexfile.l");
 system("mv lex.yy.c ../../output/lex.yy.c");
