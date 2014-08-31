@@ -2,14 +2,16 @@
 
 %token ASSIGN_OP ID STRING_LITERAL ARITH_OP  REL_OP  EQ_OP  COND_OP INT_LITERAL
 
+%left '-' '!' ARITH_OP REL_OP EQ_OP COND_OP
+
 %%
-program : CLASS PROGRAM '{' field_decl method_decl '}';
+program : CLASS "Program" '{' field_decl method_decl '}';
 
-field_decl : type  field_block ',' ';' 
-           |  ;
+field_decl : type  field_block ';' 
+	   | type  field_block ',' field_decl ;
 
-field_block : ID  | ID  '[' int_literal  ']'
-            | ID  | ID  '[' int_literal  ']' field_block ;
+field_block : ID  
+            | ID  '[' INT_LITERAL  ']' field_block ;
 
 method_decl  : type_decl ID  '(' args_decl ')' block
              |  ;
@@ -17,65 +19,63 @@ method_decl  : type_decl ID  '(' args_decl ')' block
 type_decl : type  
           | VOID ;
 
-args_decl : TYPE ID
-          | TYPE ID ',' args_decl ; 
+args_decl : type ID
+          | type ID ',' args_decl ; 
 
-block  : '{' var_decl* statement* '}';
-
-var_decl :  TYPE ID+ ',' ';' ;
+block  : '{' '}' 
+       | '{' statement '}';
 
 type : INT 
      | BOOLEAN ;
 
 statement  : location ASSIGN_OP expr ';' 
          | method_call ';' 
-         | IF ( expr  ) block  [ else block  ] 
-         | FOR ID  = expr , expr  block 
+         | IF '(' expr  ')' block  ELSE block
+	 | IF '(' expr  ')' block  
+         | FOR ID  '=' expr ',' expr  block 
          | RETURN [expr ] ';' 
          | BREAK ';'
          | CONTINUE ';' 
          | block ;
 
-method_call  : method_name  ( [expr+,])
-         | CALLOUT ( STRING_LITERAL  [, callout_arg+,]) ;
+method_call  : method_name  '('  ')'
+         | CALLOUT '(' STRING_LITERAL ',' callout_arg ')' ;
+	 | CALLOUT '(' STRING_LITERAL  ')' ;
 
 method_name : ID ;
 
 location : ID 
          | ID  '[' expr  ']' ;
 
-expr  : location
+expr  : expr ARITH_OP term1
+      | term1 ;
+
+term1 : term1 REL_OP term2
+      | term2 ;
+
+
+term2 : term2 EQ_OP term3
+      | term3 ;
+
+
+term3 : term3 COND_OP term4 
+      | term4 ;
+
+term4 : location
       | method_call
       | literal 
-      | expr  bin_op expr 
-      | - expr 
-      | ! expr 
-      | ( expr  );
+      | '-' term4 
+      | '!' term4 
+      | '(' expr  ')' ;
 
 callout_arg  : expr  
              | STRING_LITERAL ;
 
-bin_op  : ARITH_OP  
-        | REL_OP  
-        | EQ_OP  
-        | COND_OP ; 
-
 bool_literal : TRUE 
              | FALSE;
 
-//TODO LITERAL(should complete)
 literal  : INT_LITERAL  
-         | CHAR_LITERAL  
-         | BOOL_LITERAL ;
-
-
-ARITH_OP  : + | - | * | / | %
-REL_OP  : < | > | <= |>=
-EQ_OP  : == | !=
-COND_OP  :  && | ||
-CHAR_LITERAL :  'CHAR'
-STRING_LITERAL : "CHAR*"
-
-
+//         | CHAR_LITERAL  
+         | bool_literal ;
 
 %%
