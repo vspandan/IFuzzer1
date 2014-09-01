@@ -13,6 +13,11 @@ REL_OP			[<|>]
 START_COMMENT   	("/*")
 END_COMMENT		("*/")
 SINGLE_COMMENT  	("//"[^\n]*)
+%{
+
+#include<stdio.h>
+#include "decaf.tab.h"
+%}
 
 %%
 "boolean"               { return BOOLEAN; }
@@ -28,21 +33,18 @@ SINGLE_COMMENT  	("//"[^\n]*)
 "void"                  { return VOID;         }
 "int"                   { return INT;         }
 {STRING}        { return STRING_LITERAL; }
-{INTEGER|DOUBLE|HEX_INTEGER}     { return INT_LITERAL; }
+(INTEGER|DOUBLE|HEX_INTEGER)     { return INT_LITERAL; }
 {IDENTIFIER}            { return ID;  }
-"<="                    { return LESSEQUAL;   }
-">="                    { return GREATEREQUAL;}
-"=="                    { return EQUAL;       }
-"!="                    { return NOTEQUAL;    }
-"&&"                    { return AND;         }
-"||"                    { return OR;          }
+"<="                    { return EQ_OP;   }
+">="                    { return EQ_OP;}
+"=="                    { return EQ_OP;       }
+"!="                    { return EQ_OP;    }
+"&&"                    { return COND_OP;         }
+"||"                    { return COND_OP;          }
 {REL_OP}                { return yytext[0];  }
 {ARITH_OP}              { return yytext[0]; }
-"[]"                    { return T_DIMS;      }
+
 %%
-main()
-{
-  yylex();
-}
+
 
 

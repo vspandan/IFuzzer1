@@ -5,7 +5,7 @@
 %left '-' '!' ARITH_OP REL_OP EQ_OP COND_OP
 
 %%
-program : CLASS "Program" '{' field_decl method_decl '}';
+program : CLASS ID '{' field_decl method_decl '}';
 
 field_decl : type  field_block ';' 
 	   | type  field_block ',' field_decl ;
@@ -79,3 +79,9 @@ literal  : INT_LITERAL
          | bool_literal ;
 
 %%
+
+main()
+{
+	yyparse();
+}
+
