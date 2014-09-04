@@ -11,10 +11,9 @@
 program : CLASS Program '{' field_decl method_decl '}'
 	| CLASS Program '{' method_decl '}' ;
 
-//field_decls : field_decl  
-//	    | field_decl field_decls ;
+
 	
-field_decl : type  fields ';' ;
+field_decl : type  fields ';';
 
 fields  : field_block 
 	| field_block ',' fields ;
@@ -22,15 +21,13 @@ fields  : field_block
 field_block : ID  
             | ID  '[' INT_LITERAL  ']' ;
 
-//method_decls : method_decl
-//	       | method_decl method_decls ;
-
-method_decl  : type ID  '(' args_decl ')' block 
-	     | VOID ID  '(' args_decl ')' block 
+method_decl  : type ID  '(' args_decl ')' block method_decl 
+	     | VOID ID  '(' args_decl ')' block method_decl
 	     | ;	
 
 args_decl : type ID
-          | type ID ',' args_decl ;
+          | type ID ',' args_decl 
+	  | ;
  
 vars : ID ';'
      | ID ',' vars;
