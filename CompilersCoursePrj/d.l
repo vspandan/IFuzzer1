@@ -1,4 +1,5 @@
 DIGIT		       	[0-9]
+
 HEX_DIGIT  	      	[0-9a-fA-F]
 HEX_INTEGER       	0[Xx]{HEX_DIGIT}+
 INTEGER           	{DIGIT}+
@@ -12,33 +13,48 @@ REL_OP			[<|>]
 START_COMMENT   	("/*")
 END_COMMENT		("*/")
 SINGLE_COMMENT  	("//"[^\n]*)
+%{
+
+#include<stdio.h>
+#include "decaf.tab.h"
+%}
 
 %%
-"boolean"    		{ printf("return boolean");  }
-"break"           	{ printf("return Break");       }
-"callout"         	{ printf("return Callout");       }
-"class"           	{ printf("return Class");       }
-"true"          	{ printf("return True");       }
-"false"            	{ printf("return False");        }
-"for"               	{ printf("return For");         }
-"if"                	{ printf("return If");          }
-"else"             	{ printf("return Else");        }
-"return"          	{ printf("return Return");      }
-"void"             	{ printf("return Void");         }
-"int"               	{ printf("return Int");         }
-{IDENTIFIER}            { printf("return Identifier"); }
-"<="                	{ printf("return LessEqual");   }
-">="                	{ printf("return GreaterEqual");}
-"=="                	{ printf("return Equal");       }
-"!="                	{ printf("return NotEqual");    }
-"&&"               	{ printf("return And");         }
-"||"                	{ printf("return Or");          }
-{REL_OP}    		{ printf("%c", yytext[0]);  }
-{ARITH_OP}    		{ printf("%c",yytext[0]); }
-"[]"                	{ printf("return T_Dims");      }
+"boolean"               { return BOOLEAN; }
+"break"                 { return BREAK; }
+"callout"               { return CALLOUT; }
+"class"                 { return CLASS; }
+"true"                  { return TRUE;       }
+"false"                 { return FALSE;        }
+"for"                   { return FOR;         }
+"if"                    { return IF;          }
+"else"                  { return ELSE;        }
+"return"                { return RETURN;      }
+"void"                  { return VOID;         }
+"int"                   { return INT;         }
+{STRING} 		{ return STRING_LITERAL; }
+{INTEGER}		{ return INT_LITERAL; }
+{DOUBLE}		{ return INT_LITERAL; }
+{HEX_INTEGER}     	{ return INT_LITERAL; }
+{IDENTIFIER}            { return ID;  }
+"<="                    { return EQ_OP;   }
+">="                    { return EQ_OP;}
+"=="                    { return EQ_OP;       }
+"!="                    { return EQ_OP;    }
+"&&"                    { return COND_OP;         }
+"||"                    { return COND_OP;          }
+{REL_OP}                { return yytext[0];  }
+{ARITH_OP}              { return yytext[0]; }
+"{"			{ return yytext[0] ;}
+"}"			{ return yytext[0] ; }
+";"			{ return yytext[0] ;}
+"["                     { return yytext[0] ;}
+"]"                     { return yytext[0] ;}
+"("                     { return yytext[0] ;}
+")"                     { return yytext[0] ;}
+","			{ return yytext[0] ;}
+"!"			{ return yytext[0] ;}
 %%
-main()
-{
 
-yylex();
-}
+
+

@@ -10,9 +10,11 @@
 
 program : CLASS ID '{' field_decl method_decl '}'
 	| CLASS ID '{' method_decl '}' ;
+
+//field_decls : field_decl 
+//	    | field_decl field_decls ;
 	
-field_decl : type  fields ';' 
-	   ;
+field_decl : type  fields ';' ;
 
 fields  : field_block 
 	| field_block ',' fields ;
@@ -20,32 +22,57 @@ fields  : field_block
 field_block : ID  
             | ID  '[' INT_LITERAL  ']' ;
 
+//method_decls : method_decl
+//	     | method_decl method_decls ;
 
 method_decl  : type ID  '(' args_decl ')' block 
-	     | VOID ID  '(' args_decl ')' block
-	     | ;
+	     | VOID ID  '(' args_decl ')' block 
+	     | ;	
 
 args_decl : type ID
-          | type ID ',' args_decl ; 
+          | type ID ',' args_decl ;
+ 
+vars : ID ';'
+     | ID ',' vars;
 
-block  : '{' '}' 
-       | '{' statement '}';
+var_decl : type vars var_decl
+	 | type vars
+	 ;
+
+block  : '{' block_body '}' 
+       ;
+
+statements : statement
+	   | statement statements
+
+block_body : var_decl statements
+	   | var_decl
+	   | statements 
+	   | ;
 
 type : INT 
      | BOOLEAN ;
 
-statement  : location ASSIGN_OP expr ';' 
+statement: location ASSIGN_OP expr ';' 
          | method_call ';' 
          | IF '(' expr  ')' block  ELSE block
 	 | IF '(' expr  ')' block  
          | FOR ID  '=' expr ',' expr  block 
-         | RETURN [expr ] ';' 
+         | RETURN ';'
+	 | RETURN expr ';' 
          | BREAK ';'
          | CONTINUE ';' 
          | block ;
+	 
+exprs : expr
+	| expr ',' exprs ;
 
-method_call  : method_name  '('  ')'
-         | CALLOUT '(' STRING_LITERAL ',' callout_arg ')' ;
+callout_args : callout_arg
+             | callout_arg ',' callout_args ;
+
+method_call  : method_name '('   ')'
+	 | method_name '(' exprs ')'
+         | CALLOUT '(' STRING_LITERAL ',' callout_args ')' 
 	 | CALLOUT '(' STRING_LITERAL  ')' ;
 
 method_name : ID ;
