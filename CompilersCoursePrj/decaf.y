@@ -8,17 +8,15 @@
 
 %%
 
-program : CLASS Program '{' field_decl method_decl '}'
-	| CLASS Program '{' method_decl '}' ;
+program : CLASS Program '{' field_decl '}' ;
 
+field_decl : type  fields ';' field_decl 
+	   | method_decl;
 
-	
-field_decl : type  fields ';';
+fields  : field 
+	| field ',' fields ;
 
-fields  : field_block 
-	| field_block ',' fields ;
-
-field_block : ID  
+field : ID  
             | ID  '[' INT_LITERAL  ']' ;
 
 method_decl  : type ID  '(' args_decl ')' block method_decl 
