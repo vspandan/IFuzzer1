@@ -65,7 +65,9 @@ extern int yydebug;
     REL_OP = 275,
     EQ_OP = 276,
     COND_OP = 277,
-    INT_LITERAL = 278
+    INT_LITERAL = 278,
+    E_ASSIGN_OP = 279,
+    MINUS = 280
   };
 #endif
 

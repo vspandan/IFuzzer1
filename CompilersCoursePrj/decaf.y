@@ -1,6 +1,6 @@
 %token INT BOOLEAN IF ELSE FOR RETURN BREAK CONTINUE CLASS VOID CALLOUT TRUE FALSE
 
-%token ASSIGN_OP ID STRING_LITERAL ARITH_OP  REL_OP  EQ_OP  COND_OP INT_LITERAL
+%token ASSIGN_OP ID STRING_LITERAL ARITH_OP  REL_OP  EQ_OP  COND_OP INT_LITERAL E_ASSIGN_OP MINUS
 
 %left '-' '!' ARITH_OP REL_OP EQ_OP COND_OP
 
@@ -11,10 +11,10 @@
 program : CLASS ID '{' field_decl method_decl '}'
 	| CLASS ID '{' method_decl '}' ;
 
-//field_decls : field_decl 
+//field_decls : field_decl  
 //	    | field_decl field_decls ;
 	
-field_decl : type  fields ';' ;
+field_decl : type  fields ':' ;
 
 fields  : field_block 
 	| field_block ',' fields ;
@@ -23,7 +23,7 @@ field_block : ID
             | ID  '[' INT_LITERAL  ']' ;
 
 //method_decls : method_decl
-//	     | method_decl method_decls ;
+//	       | method_decl method_decls ;
 
 method_decl  : type ID  '(' args_decl ')' block 
 	     | VOID ID  '(' args_decl ')' block 
@@ -53,16 +53,19 @@ block_body : var_decl statements
 type : INT 
      | BOOLEAN ;
 
-statement: location ASSIGN_OP expr ';' 
-         | method_call ';' 
+statement: location ASSGN_OP expr ';' 
+	 | method_call ';' 
          | IF '(' expr  ')' block  ELSE block
 	 | IF '(' expr  ')' block  
-         | FOR ID  '=' expr ',' expr  block 
+         | FOR ID  E_ASSIGN_OP expr ',' expr  block 
          | RETURN ';'
 	 | RETURN expr ';' 
          | BREAK ';'
          | CONTINUE ';' 
          | block ;
+
+ASSGN_OP : ASSIGN_OP
+	 | E_ASSIGN_OP ;
 	 
 exprs : expr
 	| expr ',' exprs ;
@@ -80,7 +83,10 @@ method_name : ID ;
 location : ID 
          | ID  '[' expr  ']' ;
 
-expr  : expr ARITH_OP term1
+ARTH_OP : ARITH_OP 
+	| MINUS ;
+
+expr  : expr ARTH_OP term1
       | term1 ;
 
 term1 : term1 REL_OP term2
@@ -97,7 +103,7 @@ term3 : term3 COND_OP term4
 term4 : location
       | method_call
       | literal 
-      | '-' term4 
+      | MINUS term4 
       | '!' term4 
       | '(' expr  ')' ;
 

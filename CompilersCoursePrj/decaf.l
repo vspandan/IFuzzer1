@@ -6,7 +6,7 @@ EXPONENT          	[Ee][-+]?{INTEGER}
 DOUBLE          	{INTEGER}"."{DIGIT}*{EXPONENT}?
 STRING  	  	\"[^"\n]*\"
 IDENTIFIER        	[a-zA-Z][a-zA-Z_0-9]*
-ARITH_OP		([-+/*%])
+ARITH_OP		([+/*%])
 REL_OP			[<|>]
 START_COMMENT   	("/*")
 END_COMMENT		("*/")
@@ -36,9 +36,9 @@ SINGLE_COMMENT  	("//"[^\n]*)
 {DOUBLE}		{ return INT_LITERAL; }
 {HEX_INTEGER}     	{ return INT_LITERAL; }
 {IDENTIFIER}            { return ID;  }
-"="			{ return ASSIGN_OP; }
-"-="                     { return ASSIGN_OP; }
-"+="                     { return ASSIGN_OP; }
+"="			{ return E_ASSIGN_OP; }
+"-="                    { return ASSIGN_OP; }
+"+="                    { return ASSIGN_OP; }
 "<="                    { return EQ_OP;   }
 ">="                    { return EQ_OP;}
 "=="                    { return EQ_OP;       }
@@ -47,6 +47,7 @@ SINGLE_COMMENT  	("//"[^\n]*)
 "||"                    { return COND_OP;          }
 {REL_OP}                { return REL_OP;  }
 {ARITH_OP}              { return ARITH_OP; }
+"-"			{ return MINUS ; }
 "{"			{ return yytext[0] ;}
 "}"			{ return yytext[0] ; }
 ";"			{ return yytext[0] ;}
