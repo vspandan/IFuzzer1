@@ -8,18 +8,22 @@
 
 %%
 
-program : CLASS ID '{' field_decl method_decl '}' ;
+program : CLASS ID '{' field_decl method_decl '}'
+	
+field_decl : type  fields ';' 
+	   ;
 
-field_decl : type  field_block ';' 
-	   | type  field_block ',' field_decl ;
+fields  : field_block 
+	| field_block ',' field_block ;
 
 field_block : ID  
-            | ID  '[' INT_LITERAL  ']' field_block ;
+            | ID  '[' INT_LITERAL  ']' ;
 
-method_decl  : type_decl ID  '(' args_decl ')' block
-             |  ;
 
-type_decl : type  
+method_decl  : type_decl ID  '(' args_decl ')' block 
+	     | ;
+
+type_decl : type 
           | VOID ;
 
 args_decl : type ID

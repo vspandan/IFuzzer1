@@ -33,7 +33,7 @@ SINGLE_COMMENT  	("//"[^\n]*)
 "void"                  { return VOID;         }
 "int"                   { return INT;         }
 {STRING}        { return STRING_LITERAL; }
-(INTEGER|DOUBLE|HEX_INTEGER)     { return INT_LITERAL; }
+(INTEGER|DOUBLE|HEX_INTEGER)     { printf ("%d", atoi(yytext)); return INT_LITERAL; }
 {IDENTIFIER}            { return ID;  }
 "<="                    { return EQ_OP;   }
 ">="                    { return EQ_OP;}
@@ -50,6 +50,7 @@ SINGLE_COMMENT  	("//"[^\n]*)
 "]"                     { return yytext[0] ;}
 "("                     { return yytext[0] ;}
 ")"                     { return yytext[0] ;}
+","			{ return yytext[0] ;}
 "!"			{ return yytext[0] ;}
 %%
 
