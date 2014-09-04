@@ -1,6 +1,6 @@
 %token INT BOOLEAN IF ELSE FOR RETURN BREAK CONTINUE CLASS VOID CALLOUT TRUE FALSE
 
-%token ASSIGN_OP ID STRING_LITERAL ARITH_OP  REL_OP  EQ_OP  COND_OP INT_LITERAL E_ASSIGN_OP MINUS
+%token ASSIGN_OP ID STRING_LITERAL ARITH_OP  REL_OP  EQ_OP  COND_OP INT_LITERAL E_ASSIGN_OP MINUS Program
 
 %left '-' '!' ARITH_OP REL_OP EQ_OP COND_OP
 
@@ -8,13 +8,13 @@
 
 %%
 
-program : CLASS ID '{' field_decl method_decl '}'
-	| CLASS ID '{' method_decl '}' ;
+program : CLASS Program '{' field_decl method_decl '}'
+	| CLASS Program '{' method_decl '}' ;
 
 //field_decls : field_decl  
 //	    | field_decl field_decls ;
 	
-field_decl : type  fields ':' ;
+field_decl : type  fields ';' ;
 
 fields  : field_block 
 	| field_block ',' fields ;

@@ -67,7 +67,8 @@ extern int yydebug;
     COND_OP = 277,
     INT_LITERAL = 278,
     E_ASSIGN_OP = 279,
-    MINUS = 280
+    MINUS = 280,
+    Program = 281
   };
 #endif
 

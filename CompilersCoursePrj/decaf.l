@@ -31,6 +31,7 @@ SINGLE_COMMENT  	("//"[^\n]*)
 "void"                  { return VOID;         }
 "int"                   { return INT;         }
 "continue"		{ return CONTINUE;  }
+"Program"		{ return Program; }
 {STRING} 		{ return STRING_LITERAL; }
 {INTEGER}		{ return INT_LITERAL; }
 {DOUBLE}		{ return INT_LITERAL; }
