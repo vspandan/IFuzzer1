@@ -43,7 +43,9 @@ SINGLE_COMMENT  	("//"[^\n]*)
 "||"                    { return COND_OP;          }
 {REL_OP}                { return yytext[0];  }
 {ARITH_OP}              { return yytext[0]; }
-
+"{"			{ return yytext[0] ;}
+"}"			{ return yytext[0] ; }
+";"			{ return yytext[0] ;}
 %%
 
 

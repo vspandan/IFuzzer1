@@ -8,7 +8,7 @@
 
 %%
 
-program : CLASS ID '{' field_decl method_decl '}' ;
+program : CLASS ID '{' field_decl method_decl '}';
 
 field_decl : type  field_block ';' 
 	   | type  field_block ',' field_decl ;
