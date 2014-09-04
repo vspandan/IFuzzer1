@@ -9,22 +9,21 @@
 %%
 
 program : CLASS ID '{' field_decl method_decl '}'
+	| CLASS ID '{' method_decl '}' ;
 	
 field_decl : type  fields ';' 
 	   ;
 
 fields  : field_block 
-	| field_block ',' field_block ;
+	| field_block ',' fields ;
 
 field_block : ID  
             | ID  '[' INT_LITERAL  ']' ;
 
 
-method_decl  : type_decl ID  '(' args_decl ')' block 
+method_decl  : type ID  '(' args_decl ')' block 
+	     | VOID ID  '(' args_decl ')' block
 	     | ;
-
-type_decl : type 
-          | VOID ;
 
 args_decl : type ID
           | type ID ',' args_decl ; 
