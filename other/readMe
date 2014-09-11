@@ -1,3 +1,11 @@
+Note:
+
+1. Use below Regular expressions and the rules while defining/writing a grammar for source language
+2. Grammars must be expressed in ebnf form of context free grammars
+3. This parse can accept only unambiguous grammar
+
+
+
 DIGIT		       	[0-9]
 HEX_DIGIT  	      	[0-9a-fA-F]
 HEX_INTEGER       	0[Xx]{HEX_DIGIT}+
@@ -8,31 +16,8 @@ STRING  	  	\"[^"\n]*\"
 IDENTIFIER        	[a-zA-Z][a-zA-Z_0-9]*
 ARITH_OP		([+/*%])
 REL_OP			[<|>]
-%%
-"class"		{ return (CLASS); }
-"program"		{ return (Program); }
-"{"		{ return ("{"); }
-"}"		{ return ("}"); }
-";"		{ return (";"); }
-","		{ return (","); }
-"["		{ return ("["); }
-"]"		{ return ("]"); }
-"("		{ return ("("); }
-")"		{ return (")"); }
-"void"		{ return (VOID); }
-"int"		{ return (INT); }
-"boolean"		{ return (BOOLEAN); }
-"if"		{ return (IF); }
-"else"		{ return (ELSE); }
-"for"		{ return (FOR); }
-"return"		{ return (RETURN); }
-"break"		{ return (BREAK); }
-"continue"		{ return (CONTINUE); }
-"callout"		{ return (CALLOUT); }
-"minus"		{ return (MINUS); }
-"!"		{ return ("!"); }
-"true"		{ return (TRUE); }
-"false"		{ return (FALSE); }
+
+
 {STRING} 		{ return STRING_LITERAL; }
 {INTEGER}		{ return INT_LITERAL; }
 {DOUBLE}		{ return INT_LITERAL; }
@@ -50,5 +35,3 @@ REL_OP			[<|>]
 {REL_OP}                { return REL_OP;  }
 {ARITH_OP}              { return ARITH_OP; }
 "-"			{ return MINUS ; }
-
-%%

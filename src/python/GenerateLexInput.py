@@ -7,8 +7,6 @@ grammar_files = [ f for f in listdir(grammar_files_path)
                  if isfile(join(grammar_files_path, f)) ]
 non_Terminals = []
 terminals = []
-keywords = []
-terminal_Values=[]
 
 def _msg():
     
@@ -25,97 +23,81 @@ def _msg():
         else:
             print "\nInvalid Input"
             _msg()  
+            
     except ValueError:
         print "\nInvalid Input"
         _msg()
         
-def _extractKeyWords():
-    
-    with open(grammar_file, 'r') as f1:
-        bnf = f1.read()
-        for item in bnf.split('\n'):
-            if item.find('::=') >= 0:
-                key, values = item.split('::=')
-                key = key.strip()
-                if key == "KEYWORD" :
-                    return values.split('|')
-                
 def _extractNonTerminals():
     
     with open(grammar_file, 'r') as f1:
         bnf = f1.read()
         for item in bnf.split('\n'):
-            if item.find('::=') >= 0 :
-                key, values = item.split('::=')
-                key = key.strip()
-                non_Terminals.append(key.strip())
-            else: 
-                if item.find(':') >= 0 :
-                    key, values = item.split(' : ')
+            if item.find(':') >= 0 :
+                    key, values = item.split(':',1)
                     key = key.strip()
+                    
                     non_Terminals.append(key.strip())
+                    productions=values.split('|')
+                    
+                    for prods in productions:
+                        prod=prods.split()
+                        for term in prod:
+                            t=term.strip()
+                            if t.find("\'") >= 0  :
+                                t=t[1]
+                            if t not in terminals:
+                                terminals.append(t)
+    _extractTerminals()
+    
+    
+                   
+                    
+def _extractTerminals():
+    for non_Term in non_Terminals:
+        if non_Term in terminals:
+            terminals.remove(non_Term)        
+            
 
-def _extractUnListedTerminals():
     
-    _extractNonTerminals()    
-    with open(grammar_file, 'r') as f1:
-        bnf = f1.read()
-        for item in bnf.split('\n'):
-            if item.find('::=') >= 0:
-                key, values = item.split('::=')
-                valu= values.split('|')
-                isTerm=True
-                for val in valu:
-                    if val in non_Terminals:
-                        isTerm=False
-                if isTerm:
-                    terminals.append(key)
-                    terminal_Values.append(values)
-    
-                        
 def _createLexInput():
-    
+    with open ("../../.temp_tokens",'w') as tempfile:
+        f = open("../../other/Constants", 'r');
+        for line in f:
+            tempfile.read(line)
+            if line.strip() in terminals:
+                terminals.remove(line.strip())
+                f.close()
+        for term in temrinals:
+            tempfile.write(term)
+        tempfile.close()
+            
     with open("../../output/lexfile.l", 'w') as f:
        
     # definitions Begin"""
         declarations =""
-        f.write("/***definitions***/ \n")        
         with open("../../other/ConstantDeclarations", 'r') as f1:
             declarations=f1.read()
         f.write(declarations)        
     # definitions End"""
         
     # Rules Begin"""
+        
         f.write("\n%%\n")
-        keywords=_extractKeyWords() 
-        
-        if keywords is not None:
-            for value  in keywords:
-                if value not in terminals:
-                    f.write("\""+value.strip()+"\"\t\t{ return ("+value.strip()+"); }\n")
-        print "Available Declarations"
-        print
-        print  declarations.split("%{")[0]
-        print "Enter Regular Expression for following terminals"
-        
-        if terminals is not None:
-             i=0
-             for term in terminals:            
-                 f.write("\""+raw_input(str(i+1)+")"+term+":"+terminal_Values[i]+"\n") + "\"\t\t{ return ("+term.strip()+"); }\n")
-                 i=i+1
-             
+        for term in terminals:
+            if len(term) == 1:
+                f.write("\""+term+ "\"\t\t{ return (\""+term+"\"); }\n")
+            else :
+                f.write("\""+term.lower()+ "\"\t\t{ return ("+term+"); }\n")
+            
         with open("../../other/ConstantRules", 'r') as f1:
             f.write(f1.read())
-        f.write("\n%%\n")        
-    # Rules End"""
-        
-    # User Code Begins"""                
-        with open("../../other/UserCode", 'r') as f1:
-            f.write(f1.read())
-    # User Code Ends"""
+        f.write("\n%%\n")
+                
+    # Rules End""" 
               
 grammar_file = _msg()
-_extractUnListedTerminals()
+_extractNonTerminals()
 _createLexInput()
 
 #Flex

@@ -1,12 +1,10 @@
-DIGIT		([0-9])
-IDENTIFIER 	([a-zA-Z][a-zA-Z_0-9]*)
-NUMBER		({DIGIT}+(\.{DIGIT}+)?(E[+-]?{DIGIT}+)?)
-STRING		{[A-Za-z_]}?\"(\\.|[^\\"])*\"
-HEX		([a-fA-F0-9])
-HEXINTEGER	(0[xX]{HEX}+)
-DELIMITER	([ \t\v\n\f])
-
-%{
-#include <stdio.h>
-%}
- 
+DIGIT		       	[0-9]
+HEX_DIGIT  	      	[0-9a-fA-F]
+HEX_INTEGER       	0[Xx]{HEX_DIGIT}+
+INTEGER           	{DIGIT}+
+EXPONENT          	[Ee][-+]?{INTEGER}
+DOUBLE          	{INTEGER}"."{DIGIT}*{EXPONENT}?
+STRING  	  	\"[^"\n]*\"
+IDENTIFIER        	[a-zA-Z][a-zA-Z_0-9]*
+ARITH_OP		([+/*%])
+REL_OP			[<|>]
