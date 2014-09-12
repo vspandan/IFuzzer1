@@ -1,0 +1,16 @@
+RULES_FILE = "../../other/ConstantRules"
+CONSTANTS = "../../other/Constants"
+OUTPUT_PATH = "../../output"
+TEMP_FILE="../../output/temp"
+LEX_FILE="../../output/lexfile.l"
+BISON_FILE="../../output/bison.y"
+DECLARATIONS ="../../other/ConstantDeclarations"
+NEW_LINE='\n'
+RULE_DELIM = ':'
+PROD_DELIMITER='|'
+RULE_END_DELIM=';'
+FILE_SEPERATOR="/"
+SINGLE_QUOTE="\'"
+GRAMMAR_FILES_FOLDER = "../../GrammarFiles"
+READ  = 'r'
+WRITE = 'w'
