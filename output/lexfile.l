@@ -8,19 +8,24 @@ STRING  	  	\"[^"\n]*\"
 IDENTIFIER        	[a-zA-Z][a-zA-Z_0-9]*
 ARITH_OP		([+/*%])
 REL_OP			[<|>]
+
+%{
+#include "bison.tab.h"
+%}
+
 %%
 "class"		{ return (CLASS); }
 "program"		{ return (Program); }
-"{"		{ return ("{"); }
-"}"		{ return ("}"); }
-";"		{ return (";"); }
-","		{ return (","); }
+"{"		{ return yytext[0]; }
+"}"		{ return yytext[0]; }
+";"		{ return yytext[0]; }
+","		{ return yytext[0]; }
 "id"		{ return (ID); }
-"["		{ return ("["); }
+"["		{ return yytext[0]; }
 "int_literal"		{ return (INT_LITERAL); }
-"]"		{ return ("]"); }
-"("		{ return ("("); }
-")"		{ return (")"); }
+"]"		{ return yytext[0]; }
+"("		{ return yytext[0]; }
+")"		{ return yytext[0]; }
 "void"		{ return (VOID); }
 "int"		{ return (INT); }
 "boolean"		{ return (BOOLEAN); }
@@ -39,7 +44,7 @@ REL_OP			[<|>]
 "rel_op"		{ return (REL_OP); }
 "eq_op"		{ return (EQ_OP); }
 "cond_op"		{ return (COND_OP); }
-"!"		{ return ("!"); }
+"!"		{ return yytext[0]; }
 "true"		{ return (TRUE); }
 "false"		{ return (FALSE); }
 "char_literal"		{ return (CHAR_LITERAL); }

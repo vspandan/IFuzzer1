@@ -18,7 +18,9 @@ class GenerateBisonInput(object):
                 f.write(line)
                 f.write(NEW_LINE)
             temp.close()
-            f.write("\n%%\n");
+            f.write("%error-verbose")
+            f.write(NEW_LINE)
+            f.write(NEW_LINE+"%%"+NEW_LINE)
             #remove(TEMP_FILE)
             temp = open (grammar_file, READ)
             for line in temp:
@@ -41,7 +43,8 @@ class GenerateBisonInput(object):
                     f.write(RULE_END_DELIM);
                     f.write(NEW_LINE)
                     
-            f.write("\n%%\n");    
+            f.write(NEW_LINE+"%%"+NEW_LINE)  
+            f.write("int main()" + NEW_LINE + "{"  + NEW_LINE + "yyparse();"  + NEW_LINE + "}")  
     
                 
                 

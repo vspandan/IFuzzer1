@@ -1,4 +1,5 @@
 %token CLASS Program ID INT_LITERAL VOID INT BOOLEAN IF ELSE FOR E_ASSIGN_OP RETURN BREAK CONTINUE ASSIGN_OP CALLOUT STRING_LITERAL ARITH_OP MINUS REL_OP EQ_OP COND_OP TRUE FALSE CHAR_LITERAL 
+%error-verbose
 
 %%
 program	:
@@ -158,3 +159,7 @@ literal	:
 				;
 
 %%
+int main()
+{
+yyparse();
+}

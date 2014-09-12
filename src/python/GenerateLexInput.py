@@ -87,20 +87,22 @@ class GenerateLexInput(object):
             with open(DECLARATIONS, READ) as f1:
                 declarations=f1.read()
             f.write(declarations)        
-        # definitions End"""
+            # definitions End"""
+            f.write(NEW_LINE)
+            f.write(NEW_LINE +"%{" + NEW_LINE + "#include \"bison.tab.h\""  + NEW_LINE + "%}")
+            f.write(NEW_LINE)
+            # Rules Begin"""
             
-        # Rules Begin"""
-            
-            f.write("\n%%\n")
+            f.write(NEW_LINE+"%%"+NEW_LINE)
             for term in self.terminals:
                 if len(term) == 1:
-                    f.write("\""+term+ "\"\t\t{ return (\""+term+"\"); }\n")
+                    f.write("\""+term+ "\"\t\t{ return yytext[0]; }\n")
                 else :
                     f.write("\""+term.lower()+ "\"\t\t{ return ("+term+"); }\n")
                 
             with open(RULES_FILE, ) as f1:
                 f.write(f1.read())
-            f.write("\n%%\n")
-                    
+            
+            f.write(NEW_LINE+"%%"+NEW_LINE)                    
         # Rules End""" 
                   
