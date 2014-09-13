@@ -45,8 +45,8 @@ class GenerateBisonInput(object):
                         f.write(prod)
                         j = len(prod.split())
                         ############
-                        if j>0 and start:
-                        #if j>0 :
+                        #if j>0 and start:
+                        if j>0 :
                             f.write("\t");
                             f.write("{")
                             for k in range (j):

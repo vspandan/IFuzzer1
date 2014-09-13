@@ -1343,8 +1343,416 @@ yyreduce:
 #line 1344 "bison.tab.c" /* yacc.c:1646  */
     break;
 
+  case 3:
+#line 23 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<field_decl %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1350 "bison.tab.c" /* yacc.c:1646  */
+    break;
 
-#line 1348 "bison.tab.c" /* yacc.c:1646  */
+  case 4:
+#line 25 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<field_decl %s >>>",(yyvsp[0].c));}
+#line 1356 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 5:
+#line 28 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<fields %s >>>",(yyvsp[0].c));}
+#line 1362 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 6:
+#line 30 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<fields %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1368 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 7:
+#line 33 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<field %s >>>",(yyvsp[0].c));}
+#line 1374 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 8:
+#line 35 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<field %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1380 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 9:
+#line 38 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-6].c)== '\0')	(yyvsp[-6].c)= "@";	if ((yyvsp[-5].c)== '\0')	(yyvsp[-5].c)= "@";	if ((yyvsp[-4].c)== '\0')	(yyvsp[-4].c)= "@";	if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<method_decl %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1386 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 10:
+#line 39 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-6].c)== '\0')	(yyvsp[-6].c)= "@";	if ((yyvsp[-5].c)== '\0')	(yyvsp[-5].c)= "@";	if ((yyvsp[-4].c)== '\0')	(yyvsp[-4].c)= "@";	if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<method_decl %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1392 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 12:
+#line 44 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<args_decl %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1398 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 13:
+#line 45 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<args_decl %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1404 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 15:
+#line 50 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<vars %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1410 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 16:
+#line 52 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<vars %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1416 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 17:
+#line 55 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<var_decl %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1422 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 18:
+#line 57 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<var_decl %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1428 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 19:
+#line 61 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<block %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1434 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 20:
+#line 64 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statements %s >>>",(yyvsp[0].c));}
+#line 1440 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 21:
+#line 66 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statements %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1446 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 22:
+#line 69 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<block_body %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1452 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 23:
+#line 70 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<block_body %s >>>",(yyvsp[0].c));}
+#line 1458 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 24:
+#line 71 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<block_body %s >>>",(yyvsp[0].c));}
+#line 1464 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 26:
+#line 76 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<type %s >>>",(yyvsp[0].c));}
+#line 1470 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 27:
+#line 78 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<type %s >>>",(yyvsp[0].c));}
+#line 1476 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 28:
+#line 81 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1482 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 29:
+#line 82 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1488 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 30:
+#line 83 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-6].c)== '\0')	(yyvsp[-6].c)= "@";	if ((yyvsp[-5].c)== '\0')	(yyvsp[-5].c)= "@";	if ((yyvsp[-4].c)== '\0')	(yyvsp[-4].c)= "@";	if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1494 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 31:
+#line 84 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-4].c)== '\0')	(yyvsp[-4].c)= "@";	if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s %s %s %s >>>",(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1500 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 32:
+#line 85 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-6].c)== '\0')	(yyvsp[-6].c)= "@";	if ((yyvsp[-5].c)== '\0')	(yyvsp[-5].c)= "@";	if ((yyvsp[-4].c)== '\0')	(yyvsp[-4].c)= "@";	if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1506 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 33:
+#line 86 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1512 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 34:
+#line 87 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1518 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 35:
+#line 88 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1524 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 36:
+#line 89 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1530 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 37:
+#line 91 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<statement %s >>>",(yyvsp[0].c));}
+#line 1536 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 38:
+#line 94 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<ASSGN_OP %s >>>",(yyvsp[0].c));}
+#line 1542 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 39:
+#line 96 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<ASSGN_OP %s >>>",(yyvsp[0].c));}
+#line 1548 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 40:
+#line 99 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<exprs %s >>>",(yyvsp[0].c));}
+#line 1554 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 41:
+#line 101 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<exprs %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1560 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 42:
+#line 104 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<callout_args %s >>>",(yyvsp[0].c));}
+#line 1566 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 43:
+#line 106 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<callout_args %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1572 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 44:
+#line 109 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<method_call %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1578 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 45:
+#line 110 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<method_call %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1584 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 46:
+#line 111 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-5].c)== '\0')	(yyvsp[-5].c)= "@";	if ((yyvsp[-4].c)== '\0')	(yyvsp[-4].c)= "@";	if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<method_call %s %s %s %s %s %s >>>",(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1590 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 47:
+#line 113 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<method_call %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1596 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 48:
+#line 117 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<method_name %s >>>",(yyvsp[0].c));}
+#line 1602 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 49:
+#line 120 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<location %s >>>",(yyvsp[0].c));}
+#line 1608 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 50:
+#line 122 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<location %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1614 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 51:
+#line 125 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<ARTH_OP %s >>>",(yyvsp[0].c));}
+#line 1620 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 52:
+#line 127 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<ARTH_OP %s >>>",(yyvsp[0].c));}
+#line 1626 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 53:
+#line 130 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<expr %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1632 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 54:
+#line 132 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<expr %s >>>",(yyvsp[0].c));}
+#line 1638 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 55:
+#line 135 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term1 %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1644 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 56:
+#line 137 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term1 %s >>>",(yyvsp[0].c));}
+#line 1650 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 57:
+#line 140 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term2 %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1656 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 58:
+#line 142 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term2 %s >>>",(yyvsp[0].c));}
+#line 1662 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 59:
+#line 145 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term3 %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1668 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 60:
+#line 147 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term3 %s >>>",(yyvsp[0].c));}
+#line 1674 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 61:
+#line 150 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term4 %s >>>",(yyvsp[0].c));}
+#line 1680 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 62:
+#line 151 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term4 %s >>>",(yyvsp[0].c));}
+#line 1686 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 63:
+#line 152 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term4 %s >>>",(yyvsp[0].c));}
+#line 1692 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 64:
+#line 153 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term4 %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1698 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 65:
+#line 154 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term4 %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1704 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 66:
+#line 156 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<term4 %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1710 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 67:
+#line 159 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<callout_arg %s >>>",(yyvsp[0].c));}
+#line 1716 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 68:
+#line 161 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<callout_arg %s >>>",(yyvsp[0].c));}
+#line 1722 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 69:
+#line 164 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<bool_literal %s >>>",(yyvsp[0].c));}
+#line 1728 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 70:
+#line 166 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<bool_literal %s >>>",(yyvsp[0].c));}
+#line 1734 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 71:
+#line 169 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<literal %s >>>",(yyvsp[0].c));}
+#line 1740 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 72:
+#line 170 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<literal %s >>>",(yyvsp[0].c));}
+#line 1746 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+  case 73:
+#line 171 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	sprintf((yyval.c)," <<<literal %s >>>",(yyvsp[0].c));}
+#line 1752 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+
+#line 1756 "bison.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
