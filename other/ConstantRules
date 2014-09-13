@@ -1,7 +1,7 @@
 {STRING} 		{ return STRING_LITERAL; }
 {INTEGER}		{ return INT_LITERAL; }
 {DOUBLE}		{ return INT_LITERAL; }
-{HEX_INTEGER}     	{ return INT_LITERAL; }
+{HEX_INTEGER}     	{  return INT_LITERAL; }
 {IDENTIFIER}            { return ID;  }
 "="			{ return E_ASSIGN_OP; }
 "-="                    { return ASSIGN_OP; }

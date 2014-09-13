@@ -128,7 +128,17 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
+{
+#line 3 "../../output/bison.y" /* yacc.c:355  */
+
+ int a;
+float b;
+char *c;
+
+#line 141 "bison.tab.c" /* yacc.c:355  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -141,8 +151,17 @@ int yyparse (void);
 #endif /* !YY_YY_BISON_TAB_H_INCLUDED  */
 
 /* Copy the second part of user declarations.  */
+#line 8 "../../output/bison.y" /* yacc.c:358  */
 
-#line 146 "bison.tab.c" /* yacc.c:358  */
+#include <stdlib.h>
+#line 11 "../../output/bison.y" /* yacc.c:358  */
+
+#include <stdio.h>
+#line 14 "../../output/bison.y" /* yacc.c:358  */
+
+#include <string.h>
+
+#line 165 "bison.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -442,14 +461,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,     6,     6,    10,    11,    15,    16,    20,    21,    25,
-      26,    27,    31,    32,    33,    37,    38,    42,    43,    47,
-      51,    52,    56,    57,    58,    59,    63,    64,    68,    69,
-      70,    71,    72,    73,    74,    75,    76,    77,    81,    82,
-      86,    87,    91,    92,    96,    97,    98,    99,   103,   107,
-     108,   112,   113,   117,   118,   122,   123,   127,   128,   132,
-     133,   137,   138,   139,   140,   141,   142,   146,   147,   151,
-     152,   156,   157,   158
+       0,    19,    19,    23,    24,    28,    29,    33,    34,    38,
+      39,    40,    44,    45,    46,    50,    51,    55,    56,    60,
+      64,    65,    69,    70,    71,    72,    76,    77,    81,    82,
+      83,    84,    85,    86,    87,    88,    89,    90,    94,    95,
+      99,   100,   104,   105,   109,   110,   111,   112,   116,   120,
+     121,   125,   126,   130,   131,   135,   136,   140,   141,   145,
+     146,   150,   151,   152,   153,   154,   155,   159,   160,   164,
+     165,   169,   170,   171
 };
 #endif
 
@@ -1318,8 +1337,14 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
-#line 1323 "bison.tab.c" /* yacc.c:1646  */
+        case 2:
+#line 20 "../../output/bison.y" /* yacc.c:1646  */
+    {if ((yyvsp[-4].c)== '\0')	(yyvsp[-4].c)= "@";	if ((yyvsp[-3].c)== '\0')	(yyvsp[-3].c)= "@";	if ((yyvsp[-2].c)== '\0')	(yyvsp[-2].c)= "@";	if ((yyvsp[-1].c)== '\0')	(yyvsp[-1].c)= "@";	if ((yyvsp[0].c)== '\0')	(yyvsp[0].c)= "@";	printf("<<<program %s %s %s %s %s >>>",(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
+#line 1344 "bison.tab.c" /* yacc.c:1646  */
+    break;
+
+
+#line 1348 "bison.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1547,6 +1572,9 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 161 "../../output/bison.y" /* yacc.c:1906  */
+#line 174 "../../output/bison.y" /* yacc.c:1906  */
 
-int main() { yyparse()}
+int main()
+{
+yyparse();
+}

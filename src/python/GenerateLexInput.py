@@ -90,15 +90,17 @@ class GenerateLexInput(object):
             # definitions End"""
             f.write(NEW_LINE)
             f.write(NEW_LINE +"%{" + NEW_LINE + "#include \"bison.tab.h\""  + NEW_LINE + "%}")
+            f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdlib.h>"  + NEW_LINE + "%}")
+            f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdio.h>"  + NEW_LINE + "%}")
             f.write(NEW_LINE)
             # Rules Begin"""
             
             f.write(NEW_LINE+"%%"+NEW_LINE)
             for term in self.terminals:
                 if len(term) == 1:
-                    f.write("\""+term+ "\"\t\t{ return yytext[0]; }\n")
+                    f.write("\""+term+ "\"\t\t{ yylval.c=strdup(yytext); return yytext[0]; }\n")
                 else :
-                    f.write("\""+term.lower()+ "\"\t\t{ return ("+term+"); }\n")
+                    f.write("\""+term.lower()+ "\"\t\t{ yylval.c=strdup(yytext); return ("+term+"); }\n")
                 
             with open(RULES_FILE, ) as f1:
                 f.write(f1.read())

@@ -1,10 +1,23 @@
 %token CLASS Program ID INT_LITERAL VOID INT BOOLEAN IF ELSE FOR E_ASSIGN_OP RETURN BREAK CONTINUE ASSIGN_OP CALLOUT STRING_LITERAL ARITH_OP MINUS REL_OP EQ_OP COND_OP TRUE FALSE CHAR_LITERAL 
 %error-verbose
-
+%union {
+ int a;
+float b;
+char *c;
+}
+%{
+#include <stdlib.h>
+%}
+%{
+#include <stdio.h>
+%}
+%{
+#include <string.h>
+%}
 %%
 program	:
 				 CLASS Program '{' field_decl '}' 
-
+	{if ($<c>1== '\0')	$<c>1= "@";	if ($<c>2== '\0')	$<c>2= "@";	if ($<c>3== '\0')	$<c>3= "@";	if ($<c>4== '\0')	$<c>4= "@";	if ($<c>5== '\0')	$<c>5= "@";	printf("<<<program %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);}
 				;
 field_decl	:
 				 type  fields ';' field_decl 
