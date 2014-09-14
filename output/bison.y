@@ -7,66 +7,64 @@ char *c;
 }
 %{
 #include <stdlib.h>
-%}
-%{
 #include <stdio.h>
-%}
-%{
 #include <string.h>
+%}%{
+char *s;
 %}
 %%
 program	:
 				 CLASS Program '{' field_decl '}' 
-	{printf("<<<program %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);}
+	{printf("<<<program: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s;}
 				;
 field_decl	:
-				 type  fields ';' field_decl 	{sprintf($<c>$," <<<field_decl %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);}
+				 type  fields ';' field_decl 	{s=malloc(sizeof(char)*20);sprintf(s," <<<field_decl: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s;}
 				| method_decl
 	{$<c>$=$<c>1;}
 				;
 fields	:
 				 field 	{$<c>$=$<c>1;}
 				| field ',' fields 
-	{sprintf($<c>$," <<<fields %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+	{s=malloc(sizeof(char)*15);sprintf(s," <<<fields: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				;
 field	:
 				 ID  	{$<c>$=$<c>1;}
 				| ID  '[' INT_LITERAL  ']' 
-	{sprintf($<c>$," <<<field %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);}
+	{s=malloc(sizeof(char)*20);sprintf(s," <<<field: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s;}
 				;
 method_decl	:
-				 type ID  '(' args_decl ')' block method_decl 	{sprintf($<c>$," <<<method_decl %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);}
-				| VOID ID  '(' args_decl ')' block method_decl 	{sprintf($<c>$," <<<method_decl %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);}
+				 type ID  '(' args_decl ')' block method_decl 	{s=malloc(sizeof(char)*35);sprintf(s," <<<method_decl: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s;}
+				| VOID ID  '(' args_decl ')' block method_decl 	{s=malloc(sizeof(char)*35);sprintf(s," <<<method_decl: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s;}
 				| 	
 	{$<c>$="EMPTY";}
 				;
 args_decl	:
-				 type ID  	{sprintf($<c>$," <<<args_decl %s %s >>>",$<c>1,$<c>2);}
-				| type ID ',' args_decl  	{sprintf($<c>$," <<<args_decl %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);}
+				 type ID  	{s=malloc(sizeof(char)*10);sprintf(s," <<<args_decl: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
+				| type ID ',' args_decl  	{s=malloc(sizeof(char)*20);sprintf(s," <<<args_decl: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s;}
 				| 
 	{$<c>$="EMPTY";}
 				;
 vars	:
-				 ID ';'  	{sprintf($<c>$," <<<vars %s %s >>>",$<c>1,$<c>2);}
+				 ID ';'  	{s=malloc(sizeof(char)*10);sprintf(s," <<<vars: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
 				| ID ',' vars
-	{sprintf($<c>$," <<<vars %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+	{s=malloc(sizeof(char)*15);sprintf(s," <<<vars: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				;
 var_decl	:
-				 type vars var_decl	 	{sprintf($<c>$," <<<var_decl %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+				 type vars var_decl	 	{s=malloc(sizeof(char)*15);sprintf(s," <<<var_decl: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				| type vars
-	{sprintf($<c>$," <<<var_decl %s %s >>>",$<c>1,$<c>2);}
+	{s=malloc(sizeof(char)*10);sprintf(s," <<<var_decl: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
 				;
 block	:
 				 '{' block_body '}' 
-	{sprintf($<c>$," <<<block %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+	{s=malloc(sizeof(char)*15);sprintf(s," <<<block: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				;
 statements	:
 				 statement  	{$<c>$=$<c>1;}
 				| statement statements
-	{sprintf($<c>$," <<<statements %s %s >>>",$<c>1,$<c>2);}
+	{s=malloc(sizeof(char)*10);sprintf(s," <<<statements: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
 				;
 block_body	:
-				 var_decl statements		{sprintf($<c>$," <<<block_body %s %s >>>",$<c>1,$<c>2);}
+				 var_decl statements		{s=malloc(sizeof(char)*10);sprintf(s," <<<block_body: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
 				| var_decl   	{$<c>$=$<c>1;}
 				| statements		{$<c>$=$<c>1;}
 				| 
@@ -78,15 +76,15 @@ type	:
 	{$<c>$=$<c>1;}
 				;
 statement	:
-				 location ASSGN_OP expr ';'  	{sprintf($<c>$," <<<statement %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);}
-				| method_call ';' 	{sprintf($<c>$," <<<statement %s %s >>>",$<c>1,$<c>2);}
-				| IF '(' expr  ')' block  ELSE block	 	{sprintf($<c>$," <<<statement %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);}
-				| IF '(' expr  ')' block   	{sprintf($<c>$," <<<statement %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);}
-				| FOR ID  E_ASSIGN_OP expr ',' expr  block  	{sprintf($<c>$," <<<statement %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);}
-				| RETURN ';' 	{sprintf($<c>$," <<<statement %s %s >>>",$<c>1,$<c>2);}
-				| RETURN expr ';' 	{sprintf($<c>$," <<<statement %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
-				| BREAK ';' 	{sprintf($<c>$," <<<statement %s %s >>>",$<c>1,$<c>2);}
-				| CONTINUE ';'  	{sprintf($<c>$," <<<statement %s %s >>>",$<c>1,$<c>2);}
+				 location ASSGN_OP expr ';'  	{s=malloc(sizeof(char)*20);sprintf(s," <<<statement: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s;}
+				| method_call ';' 	{s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
+				| IF '(' expr  ')' block  ELSE block	 	{s=malloc(sizeof(char)*35);sprintf(s," <<<statement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s;}
+				| IF '(' expr  ')' block   	{s=malloc(sizeof(char)*25);sprintf(s," <<<statement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s;}
+				| FOR ID  E_ASSIGN_OP expr ',' expr  block  	{s=malloc(sizeof(char)*35);sprintf(s," <<<statement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s;}
+				| RETURN ';' 	{s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
+				| RETURN expr ';' 	{s=malloc(sizeof(char)*15);sprintf(s," <<<statement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
+				| BREAK ';' 	{s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
+				| CONTINUE ';'  	{s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
 				| block 
 	{$<c>$=$<c>1;}
 				;
@@ -98,19 +96,19 @@ ASSGN_OP	:
 exprs	:
 				 expr		{$<c>$=$<c>1;}
 				| expr ',' exprs 
-	{sprintf($<c>$," <<<exprs %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+	{s=malloc(sizeof(char)*15);sprintf(s," <<<exprs: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				;
 callout_args	:
 				 callout_arg  	{$<c>$=$<c>1;}
 				| callout_arg ',' callout_args 
-	{sprintf($<c>$," <<<callout_args %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+	{s=malloc(sizeof(char)*15);sprintf(s," <<<callout_args: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				;
 method_call	:
-				 method_name '('   ')'	 	{sprintf($<c>$," <<<method_call %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
-				| method_name '(' exprs ')'      	{sprintf($<c>$," <<<method_call %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);}
-				| CALLOUT '(' STRING_LITERAL ',' callout_args ')'	 	{sprintf($<c>$," <<<method_call %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);}
+				 method_name '('   ')'	 	{s=malloc(sizeof(char)*15);sprintf(s," <<<method_call: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
+				| method_name '(' exprs ')'      	{s=malloc(sizeof(char)*20);sprintf(s," <<<method_call: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s;}
+				| CALLOUT '(' STRING_LITERAL ',' callout_args ')'	 	{s=malloc(sizeof(char)*30);sprintf(s," <<<method_call: %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);$<c>$=s;}
 				| CALLOUT '(' STRING_LITERAL  ')' 
-	{sprintf($<c>$," <<<method_call %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);}
+	{s=malloc(sizeof(char)*20);sprintf(s," <<<method_call: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s;}
 				;
 method_name	:
 				 ID 
@@ -119,7 +117,7 @@ method_name	:
 location	:
 				 ID		{$<c>$=$<c>1;}
 				| ID  '[' expr  ']' 
-	{sprintf($<c>$," <<<location %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);}
+	{s=malloc(sizeof(char)*20);sprintf(s," <<<location: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s;}
 				;
 ARTH_OP	:
 				 ARITH_OP		{$<c>$=$<c>1;}
@@ -127,22 +125,22 @@ ARTH_OP	:
 	{$<c>$=$<c>1;}
 				;
 expr	:
-				 expr ARTH_OP term1		{sprintf($<c>$," <<<expr %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+				 expr ARTH_OP term1		{s=malloc(sizeof(char)*15);sprintf(s," <<<expr: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				| term1 
 	{$<c>$=$<c>1;}
 				;
 term1	:
-				 term1 REL_OP term2    	{sprintf($<c>$," <<<term1 %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+				 term1 REL_OP term2    	{s=malloc(sizeof(char)*15);sprintf(s," <<<term1: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				| term2 
 	{$<c>$=$<c>1;}
 				;
 term2	:
-				 term2 EQ_OP term3     	{sprintf($<c>$," <<<term2 %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+				 term2 EQ_OP term3     	{s=malloc(sizeof(char)*15);sprintf(s," <<<term2: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				| term3 
 	{$<c>$=$<c>1;}
 				;
 term3	:
-				 term3 COND_OP term4   	{sprintf($<c>$," <<<term3 %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+				 term3 COND_OP term4   	{s=malloc(sizeof(char)*15);sprintf(s," <<<term3: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				| term4 
 	{$<c>$=$<c>1;}
 				;
@@ -150,10 +148,10 @@ term4	:
 				 location		{$<c>$=$<c>1;}
 				| method_call		{$<c>$=$<c>1;}
 				| literal		{$<c>$=$<c>1;}
-				| MINUS term4		{sprintf($<c>$," <<<term4 %s %s >>>",$<c>1,$<c>2);}
-				| '!' term4			{sprintf($<c>$," <<<term4 %s %s >>>",$<c>1,$<c>2);}
+				| MINUS term4		{s=malloc(sizeof(char)*10);sprintf(s," <<<term4: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
+				| '!' term4			{s=malloc(sizeof(char)*10);sprintf(s," <<<term4: %s %s >>>",$<c>1,$<c>2);$<c>$=s;}
 				| '(' expr  ')' 
-	{sprintf($<c>$," <<<term4 %s %s %s >>>",$<c>1,$<c>2,$<c>3);}
+	{s=malloc(sizeof(char)*15);sprintf(s," <<<term4: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s;}
 				;
 callout_arg	:
 				 expr		{$<c>$=$<c>1;}

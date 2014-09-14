@@ -89,9 +89,7 @@ class GenerateLexInput(object):
             f.write(declarations)        
             # definitions End"""
             f.write(NEW_LINE)
-            f.write(NEW_LINE +"%{" + NEW_LINE + "#include \"bison.tab.h\""  + NEW_LINE + "%}")
-            f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdlib.h>"  + NEW_LINE + "%}")
-            f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdio.h>"  + NEW_LINE + "%}")
+            f.write(NEW_LINE +"%{" + NEW_LINE + "#include \"bison.tab.h\"" +NEW_LINE + "#include <stdio.h>"+ NEW_LINE + "#include <stdlib.h>"  + NEW_LINE +"%}")
             f.write(NEW_LINE)
             # Rules Begin"""
             

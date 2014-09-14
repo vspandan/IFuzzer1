@@ -11,12 +11,8 @@ REL_OP			[<|>]
 
 %{
 #include "bison.tab.h"
-%}
-%{
-#include <stdlib.h>
-%}
-%{
 #include <stdio.h>
+#include <stdlib.h>
 %}
 
 %%
@@ -54,22 +50,22 @@ REL_OP			[<|>]
 "true"		{ yylval.c=strdup(yytext); return (TRUE); }
 "false"		{ yylval.c=strdup(yytext); return (FALSE); }
 "char_literal"		{ yylval.c=strdup(yytext); return (CHAR_LITERAL); }
-{STRING} 		{ return STRING_LITERAL; }
-{INTEGER}		{ return INT_LITERAL; }
-{DOUBLE}		{ return INT_LITERAL; }
-{HEX_INTEGER}     	{  return INT_LITERAL; }
-{IDENTIFIER}            { return ID;  }
-"="			{ return E_ASSIGN_OP; }
-"-="                    { return ASSIGN_OP; }
-"+="                    { return ASSIGN_OP; }
-"<="                    { return EQ_OP;   }
-">="                    { return EQ_OP;}
-"=="                    { return EQ_OP;       }
-"!="                    { return EQ_OP;    }
-"&&"                    { return COND_OP;         }
-"||"                    { return COND_OP;          }
-{REL_OP}                { return REL_OP;  }
-{ARITH_OP}              { return ARITH_OP; }
-"-"			{ return MINUS ; }
+{STRING} 		{ yylval.c=strdup(yytext); return STRING_LITERAL; }
+{INTEGER}		{ yylval.c=strdup(yytext); return INT_LITERAL; }
+{DOUBLE}		{ yylval.c=strdup(yytext); return INT_LITERAL; }
+{HEX_INTEGER}     	{ yylval.c=strdup(yytext);  return INT_LITERAL; }
+{IDENTIFIER}            { yylval.c=strdup(yytext); return ID;  }
+"="			{ yylval.c=strdup(yytext); return E_ASSIGN_OP; }
+"-="                    { yylval.c=strdup(yytext); return ASSIGN_OP; }
+"+="                    { yylval.c=strdup(yytext); return ASSIGN_OP; }
+"<="                    { yylval.c=strdup(yytext); return EQ_OP;   }
+">="                    { yylval.c=strdup(yytext); return EQ_OP;}
+"=="                    { yylval.c=strdup(yytext); return EQ_OP;       }
+"!="                    { yylval.c=strdup(yytext); return EQ_OP;    }
+"&&"                    { yylval.c=strdup(yytext); return COND_OP;         }
+"||"                    { yylval.c=strdup(yytext); return COND_OP;          }
+{REL_OP}                { yylval.c=strdup(yytext); return REL_OP;  }
+{ARITH_OP}              { yylval.c=strdup(yytext); return ARITH_OP; }
+"-"			{ yylval.c=strdup(yytext); return MINUS ; }
 
 %%

@@ -12,7 +12,7 @@ system("flex "+LEX_FILE);
 system("bison -d -v " + BISON_FILE)
 system("mv lex.yy.c ../../output/lex.yy.c");
 system("mv bison.* ../../output/")
-#system("cd ../../output/")
+#system("cd ../../output/")GenericParser
 #system("ls -ltr")
 #system("cc -o bison bison.tab.c lex.yy.c -ly -ll")
 #system("./bison")
