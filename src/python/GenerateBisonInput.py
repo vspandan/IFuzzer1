@@ -22,47 +22,39 @@ class GenerateBisonInput(object):
             f.write(NEW_LINE)
             f.write("%union {"+NEW_LINE+" int a;"+NEW_LINE+"float b;"+NEW_LINE+"char *c;"+NEW_LINE+"}")
             f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdlib.h>"  + NEW_LINE + "#include <stdio.h>"  + NEW_LINE + "#include <string.h>"  + NEW_LINE + "%}")
-            f.write("%{"+NEW_LINE+"char *s;"+NEW_LINE+"%}")
+            f.write(NEW_LINE+"%{"+NEW_LINE+"char *s;"+NEW_LINE+"%}")
             f.write(NEW_LINE+"%%"+NEW_LINE)
             remove(TEMP_FILE)
             temp = open (grammar_file, READ)
             start=True
+            prodnum=0
             for line in temp:
-                
                 if line.find(RULE_DELIM) >= 0 :
                     key, values = line.split(RULE_DELIM,1)
                     key = key.strip()
-                    
                     f.write(key +"\t"+ RULE_DELIM +NEW_LINE)
-                                       
                     productions=values.split(PROD_DELIMITER)
                     i=0
                     for prod in productions:
+                        prodnum=prodnum+1
                         f.write("\t\t\t\t")
                         if i != 0 :
                             f.write(PROD_DELIMITER)
                         f.write(prod)
                         j = len(prod.split())
-                        
                         f.write("\t");
                         f.write("{")
-                        #str1="NT:"+key
-                        #f.write("printf(\""+str1+"\");");
-                        ############
-                        #if j>0 and start: 
                         if j>1 :
-                            #for k in range (j):
-                            #    f.write("if ($<c>"+str(k+1)+"== \'\\0\')\t")
-                            #    f.write("$<c>"+str(k+1)+"= \"@\";\t")
                             if start:
                                 f.write("printf(\"<<<"+key+":")
-                                start=False
                             else :
-                                length = 0
+                                f.write("int len=");
                                 for k in range (j):
-                                    length=length+len("$<c>"+str(k+1))
-                                f.write("s=malloc(sizeof(char)*"+str(length)+");")
-                                f.write("sprintf(s,\" <<<"+key+":")
+                                    f.write("strlen($<c>"+str(k+1)+")")
+                                    f.write("+")
+                                f.write("7+"+str(len(key)+j)+" ;");
+                                f.write("char *s"+str(prodnum)+"=malloc(sizeof(char)*len);")
+                                f.write("sprintf(s"+str(prodnum)+",\" <<<"+key+":")
                             
                             for k in range (j):
                                 f.write(" %s")
@@ -70,7 +62,9 @@ class GenerateBisonInput(object):
                             for k in range (j):
                                 f.write(",$<c>"+str(k+1))
                             f.write(");")
-                            f.write("$<c>$=s;");
+                            if not start:
+                                f.write("$<c>$=s"+str(prodnum)+";");
+                            start=False
                         else: 
                             if j==0:                                
                                 f.write("$<c>$=\"EMPTY\";");

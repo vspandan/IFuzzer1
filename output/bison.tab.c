@@ -156,7 +156,7 @@ int yyparse (void);
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#line 12 "../../output/bison.y" /* yacc.c:358  */
+#line 13 "../../output/bison.y" /* yacc.c:358  */
 
 char *s;
 
@@ -460,14 +460,14 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    17,    17,    21,    22,    26,    27,    31,    32,    36,
-      37,    39,    42,    43,    45,    48,    49,    53,    54,    58,
-      62,    63,    67,    68,    69,    71,    74,    75,    79,    80,
-      81,    82,    83,    84,    85,    86,    87,    88,    92,    93,
-      97,    98,   102,   103,   107,   108,   109,   110,   114,   118,
-     119,   123,   124,   128,   129,   133,   134,   138,   139,   143,
-     144,   148,   149,   150,   151,   152,   153,   157,   158,   162,
-     163,   167,   168,   169
+       0,    18,    18,    22,    23,    27,    28,    32,    33,    37,
+      38,    40,    43,    44,    46,    49,    50,    54,    55,    59,
+      63,    64,    68,    69,    70,    72,    75,    76,    80,    81,
+      82,    83,    84,    85,    86,    87,    88,    89,    93,    94,
+      98,    99,   103,   104,   108,   109,   110,   111,   115,   119,
+     120,   124,   125,   129,   130,   134,   135,   139,   140,   144,
+     145,   149,   150,   151,   152,   153,   154,   158,   159,   163,
+     164,   168,   169,   170
 };
 #endif
 
@@ -1337,433 +1337,433 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 18 "../../output/bison.y" /* yacc.c:1646  */
-    {printf("<<<program: %s %s %s %s %s >>>",(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 19 "../../output/bison.y" /* yacc.c:1646  */
+    {printf("<<<program: %s %s %s %s %s >>>",(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));}
 #line 1343 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 21 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*20);sprintf(s," <<<field_decl: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 22 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+14 ;char *s2=malloc(sizeof(char)*len);sprintf(s2," <<<field_decl: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s2;}
 #line 1349 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 23 "../../output/bison.y" /* yacc.c:1646  */
+#line 24 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1355 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 26 "../../output/bison.y" /* yacc.c:1646  */
+#line 27 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1361 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 28 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<fields: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 29 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+9 ;char *s5=malloc(sizeof(char)*len);sprintf(s5," <<<fields: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s5;}
 #line 1367 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 31 "../../output/bison.y" /* yacc.c:1646  */
+#line 32 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1373 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 33 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*20);sprintf(s," <<<field: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 34 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+9 ;char *s7=malloc(sizeof(char)*len);sprintf(s7," <<<field: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s7;}
 #line 1379 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 36 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*35);sprintf(s," <<<method_decl: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 37 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-6].c))+strlen((yyvsp[-5].c))+strlen((yyvsp[-4].c))+strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+18 ;char *s8=malloc(sizeof(char)*len);sprintf(s8," <<<method_decl: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s8;}
 #line 1385 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 37 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*35);sprintf(s," <<<method_decl: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 38 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-6].c))+strlen((yyvsp[-5].c))+strlen((yyvsp[-4].c))+strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+18 ;char *s9=malloc(sizeof(char)*len);sprintf(s9," <<<method_decl: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s9;}
 #line 1391 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 39 "../../output/bison.y" /* yacc.c:1646  */
+#line 40 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)="EMPTY";}
 #line 1397 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 42 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<args_decl: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 43 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+11 ;char *s11=malloc(sizeof(char)*len);sprintf(s11," <<<args_decl: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s11;}
 #line 1403 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 43 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*20);sprintf(s," <<<args_decl: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 44 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+13 ;char *s12=malloc(sizeof(char)*len);sprintf(s12," <<<args_decl: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s12;}
 #line 1409 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 45 "../../output/bison.y" /* yacc.c:1646  */
+#line 46 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)="EMPTY";}
 #line 1415 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 48 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<vars: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 49 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+6 ;char *s14=malloc(sizeof(char)*len);sprintf(s14," <<<vars: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s14;}
 #line 1421 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 50 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<vars: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 51 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+7 ;char *s15=malloc(sizeof(char)*len);sprintf(s15," <<<vars: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s15;}
 #line 1427 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 53 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<var_decl: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 54 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+11 ;char *s16=malloc(sizeof(char)*len);sprintf(s16," <<<var_decl: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s16;}
 #line 1433 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 55 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<var_decl: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 56 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+10 ;char *s17=malloc(sizeof(char)*len);sprintf(s17," <<<var_decl: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s17;}
 #line 1439 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 59 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<block: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 60 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+8 ;char *s18=malloc(sizeof(char)*len);sprintf(s18," <<<block: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s18;}
 #line 1445 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 62 "../../output/bison.y" /* yacc.c:1646  */
+#line 63 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1451 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 64 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<statements: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 65 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+12 ;char *s20=malloc(sizeof(char)*len);sprintf(s20," <<<statements: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s20;}
 #line 1457 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 67 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<block_body: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 68 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+12 ;char *s21=malloc(sizeof(char)*len);sprintf(s21," <<<block_body: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s21;}
 #line 1463 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 68 "../../output/bison.y" /* yacc.c:1646  */
+#line 69 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1469 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 69 "../../output/bison.y" /* yacc.c:1646  */
+#line 70 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1475 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 71 "../../output/bison.y" /* yacc.c:1646  */
+#line 72 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)="EMPTY";}
 #line 1481 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 74 "../../output/bison.y" /* yacc.c:1646  */
+#line 75 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1487 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 76 "../../output/bison.y" /* yacc.c:1646  */
+#line 77 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1493 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 79 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*20);sprintf(s," <<<statement: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 80 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+13 ;char *s27=malloc(sizeof(char)*len);sprintf(s27," <<<statement: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s27;}
 #line 1499 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 80 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 81 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+11 ;char *s28=malloc(sizeof(char)*len);sprintf(s28," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s28;}
 #line 1505 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 81 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*35);sprintf(s," <<<statement: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 82 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-6].c))+strlen((yyvsp[-5].c))+strlen((yyvsp[-4].c))+strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+16 ;char *s29=malloc(sizeof(char)*len);sprintf(s29," <<<statement: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s29;}
 #line 1511 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 82 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*25);sprintf(s," <<<statement: %s %s %s %s %s >>>",(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 83 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-4].c))+strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+14 ;char *s30=malloc(sizeof(char)*len);sprintf(s30," <<<statement: %s %s %s %s %s >>>",(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s30;}
 #line 1517 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 83 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*35);sprintf(s," <<<statement: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 84 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-6].c))+strlen((yyvsp[-5].c))+strlen((yyvsp[-4].c))+strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+16 ;char *s31=malloc(sizeof(char)*len);sprintf(s31," <<<statement: %s %s %s %s %s %s %s >>>",(yyvsp[-6].c),(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s31;}
 #line 1523 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 84 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 85 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+11 ;char *s32=malloc(sizeof(char)*len);sprintf(s32," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s32;}
 #line 1529 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 85 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<statement: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 86 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+12 ;char *s33=malloc(sizeof(char)*len);sprintf(s33," <<<statement: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s33;}
 #line 1535 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 86 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 87 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+11 ;char *s34=malloc(sizeof(char)*len);sprintf(s34," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s34;}
 #line 1541 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 87 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 88 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+11 ;char *s35=malloc(sizeof(char)*len);sprintf(s35," <<<statement: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s35;}
 #line 1547 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 89 "../../output/bison.y" /* yacc.c:1646  */
+#line 90 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1553 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 92 "../../output/bison.y" /* yacc.c:1646  */
+#line 93 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1559 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 94 "../../output/bison.y" /* yacc.c:1646  */
+#line 95 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1565 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 97 "../../output/bison.y" /* yacc.c:1646  */
+#line 98 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1571 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 99 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<exprs: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 100 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+8 ;char *s40=malloc(sizeof(char)*len);sprintf(s40," <<<exprs: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s40;}
 #line 1577 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 102 "../../output/bison.y" /* yacc.c:1646  */
+#line 103 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1583 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 104 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<callout_args: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 105 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+15 ;char *s42=malloc(sizeof(char)*len);sprintf(s42," <<<callout_args: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s42;}
 #line 1589 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 107 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<method_call: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 108 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+14 ;char *s43=malloc(sizeof(char)*len);sprintf(s43," <<<method_call: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s43;}
 #line 1595 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 108 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*20);sprintf(s," <<<method_call: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 109 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+15 ;char *s44=malloc(sizeof(char)*len);sprintf(s44," <<<method_call: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s44;}
 #line 1601 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 109 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*30);sprintf(s," <<<method_call: %s %s %s %s %s %s >>>",(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 110 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-5].c))+strlen((yyvsp[-4].c))+strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+17 ;char *s45=malloc(sizeof(char)*len);sprintf(s45," <<<method_call: %s %s %s %s %s %s >>>",(yyvsp[-5].c),(yyvsp[-4].c),(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s45;}
 #line 1607 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 111 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*20);sprintf(s," <<<method_call: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 112 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+15 ;char *s46=malloc(sizeof(char)*len);sprintf(s46," <<<method_call: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s46;}
 #line 1613 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 115 "../../output/bison.y" /* yacc.c:1646  */
+#line 116 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1619 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
-#line 118 "../../output/bison.y" /* yacc.c:1646  */
+#line 119 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1625 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 120 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*20);sprintf(s," <<<location: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 121 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-3].c))+strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+12 ;char *s49=malloc(sizeof(char)*len);sprintf(s49," <<<location: %s %s %s %s >>>",(yyvsp[-3].c),(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s49;}
 #line 1631 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
-#line 123 "../../output/bison.y" /* yacc.c:1646  */
+#line 124 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1637 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 125 "../../output/bison.y" /* yacc.c:1646  */
+#line 126 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1643 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 128 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<expr: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 129 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+7 ;char *s52=malloc(sizeof(char)*len);sprintf(s52," <<<expr: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s52;}
 #line 1649 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 130 "../../output/bison.y" /* yacc.c:1646  */
+#line 131 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1655 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 133 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<term1: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 134 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+8 ;char *s54=malloc(sizeof(char)*len);sprintf(s54," <<<term1: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s54;}
 #line 1661 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
-#line 135 "../../output/bison.y" /* yacc.c:1646  */
+#line 136 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1667 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 138 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<term2: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 139 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+8 ;char *s56=malloc(sizeof(char)*len);sprintf(s56," <<<term2: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s56;}
 #line 1673 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 140 "../../output/bison.y" /* yacc.c:1646  */
+#line 141 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1679 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 143 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<term3: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 144 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+8 ;char *s58=malloc(sizeof(char)*len);sprintf(s58," <<<term3: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s58;}
 #line 1685 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 145 "../../output/bison.y" /* yacc.c:1646  */
+#line 146 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1691 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 148 "../../output/bison.y" /* yacc.c:1646  */
+#line 149 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1697 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 149 "../../output/bison.y" /* yacc.c:1646  */
+#line 150 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1703 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 150 "../../output/bison.y" /* yacc.c:1646  */
+#line 151 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1709 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
-#line 151 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<term4: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 152 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+7 ;char *s63=malloc(sizeof(char)*len);sprintf(s63," <<<term4: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s63;}
 #line 1715 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
-#line 152 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*10);sprintf(s," <<<term4: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 153 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+7 ;char *s64=malloc(sizeof(char)*len);sprintf(s64," <<<term4: %s %s >>>",(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s64;}
 #line 1721 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
-#line 154 "../../output/bison.y" /* yacc.c:1646  */
-    {s=malloc(sizeof(char)*15);sprintf(s," <<<term4: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s;}
+#line 155 "../../output/bison.y" /* yacc.c:1646  */
+    {int len=strlen((yyvsp[-2].c))+strlen((yyvsp[-1].c))+strlen((yyvsp[0].c))+7+8 ;char *s65=malloc(sizeof(char)*len);sprintf(s65," <<<term4: %s %s %s >>>",(yyvsp[-2].c),(yyvsp[-1].c),(yyvsp[0].c));(yyval.c)=s65;}
 #line 1727 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
-#line 157 "../../output/bison.y" /* yacc.c:1646  */
+#line 158 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1733 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
-#line 159 "../../output/bison.y" /* yacc.c:1646  */
+#line 160 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1739 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
-#line 162 "../../output/bison.y" /* yacc.c:1646  */
+#line 163 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1745 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
-#line 164 "../../output/bison.y" /* yacc.c:1646  */
+#line 165 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1751 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
-#line 167 "../../output/bison.y" /* yacc.c:1646  */
+#line 168 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1757 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
-#line 168 "../../output/bison.y" /* yacc.c:1646  */
+#line 169 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1763 "bison.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
-#line 169 "../../output/bison.y" /* yacc.c:1646  */
+#line 170 "../../output/bison.y" /* yacc.c:1646  */
     {(yyval.c)=(yyvsp[0].c);}
 #line 1769 "bison.tab.c" /* yacc.c:1646  */
     break;
@@ -1997,7 +1997,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 172 "../../output/bison.y" /* yacc.c:1906  */
+#line 173 "../../output/bison.y" /* yacc.c:1906  */
 
 int main()
 {
