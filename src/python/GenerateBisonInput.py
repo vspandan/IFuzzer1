@@ -25,7 +25,7 @@ class GenerateBisonInput(object):
             f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdio.h>"  + NEW_LINE + "%}")
             f.write(NEW_LINE +"%{" + NEW_LINE + "#include <string.h>"  + NEW_LINE + "%}")
             f.write(NEW_LINE+"%%"+NEW_LINE)
-            #remove(TEMP_FILE)
+            remove(TEMP_FILE)
             temp = open (grammar_file, READ)
             start=True
             for line in temp:
@@ -44,14 +44,17 @@ class GenerateBisonInput(object):
                             f.write(PROD_DELIMITER)
                         f.write(prod)
                         j = len(prod.split())
+                        
+                        f.write("\t");
+                        f.write("{")
+                        #str1="NT:"+key
+                        #f.write("printf(\""+str1+"\");");
                         ############
-                        #if j>0 and start:
-                        if j>0 :
-                            f.write("\t");
-                            f.write("{")
-                            for k in range (j):
-                                f.write("if ($<c>"+str(k+1)+"== \'\\0\')\t")
-                                f.write("$<c>"+str(k+1)+"= \"@\";\t") 
+                        #if j>0 and start: 
+                        if j>1 :
+                            #for k in range (j):
+                            #    f.write("if ($<c>"+str(k+1)+"== \'\\0\')\t")
+                            #    f.write("$<c>"+str(k+1)+"= \"@\";\t") 
                             if start:
                                 f.write("printf(\"<<<"+key)
                                 start=False
@@ -63,7 +66,15 @@ class GenerateBisonInput(object):
                             for k in range (j):
                                 
                                 f.write(",$<c>"+str(k+1))
-                            f.write(");}")
+                            f.write(");")
+                        else: 
+                            if j==0:                                
+                                f.write("$<c>$=\"EMPTY\";");
+                            if j==1:                         
+                                f.write("$<c>$=$<c>1;");
+                            
+                        ############
+                        f.write("}")
                         f.write(NEW_LINE)
                         i = i+1
                     f.write("\t\t\t\t");
