@@ -35,7 +35,7 @@ class GenerateLexInput(object):
             self._msg()
             
     def _extractNonTerminals(self):
-        
+        st=[]
         with open(self.grammar_file, READ) as f1:
             bnf = f1.read()
             for item in bnf.split(NEW_LINE):
@@ -44,17 +44,15 @@ class GenerateLexInput(object):
                         key = key.strip()
                         
                         self.non_Terminals.append(key.strip())
-                        productions=values.split(PROD_DELIMITER)
+                        productions=values.split(PROD_DELIMITER1)
                         
                         for prods in productions:
                             prod=prods.split()
                             for term in prod:
                                 t=term.strip()
-                                if t.find(SINGLE_QUOTE) >= 0  :
-                                    t=t[1]
                                 if t not in self.terminals:
                                     self.terminals.append(t)
-                        
+                                    
     def _extractTerminals(self):
         for non_Term in self.non_Terminals:
             if non_Term in self.terminals:
@@ -62,16 +60,23 @@ class GenerateLexInput(object):
                 
     
     def _generateTokens(self):
-        with open (TEMP_FILE,WRITE) as tempfile:
+        with open (TEMP_FILE1,WRITE) as tempfile1:
             tokens =self.terminals
             f = open(CONSTANTS, READ);
             for line in f:
                 if (line.strip() not in tokens) :
                     tokens.append(line.strip())
-            for t in tokens:
-                if len(t) != 1:
-                    tempfile.write(t + " ")
-            tempfile.close()
+            with open (TEMP_FILE2,WRITE) as tempfile2:
+                for t in tokens:
+                    if t.find(SINGLE_QUOTE)  == -1 :
+                        if len(t) !=1 :
+                            tempfile1.write(t + " ")
+                    else :
+                        if len(t) > 3:
+                            tempfile2.write(t + " ")
+                        
+            tempfile1.close()
+            tempfile2.close()
     
         
     def createLexInput(self):
@@ -95,8 +100,12 @@ class GenerateLexInput(object):
             
             f.write(NEW_LINE+"%%"+NEW_LINE)
             for term in self.terminals:
-                if len(term) == 1:
-                    f.write("\""+term+ "\"\t\t{ yylval.c=strdup(yytext); return yytext[0]; }\n")
+                if term.find(SINGLE_QUOTE) >= 0 :
+                    if len(term) == 3:
+                        f.write("\""+term+ "\"\t\t{ yylval.c=strdup(yytext); return yytext[0]; }\n")
+                    else:
+                        term=term.replace("\'","\"")
+                        f.write(term+ "\t\t{ yylval.c=strdup("+term+"); return " +term+" }\n")
                 else :
                     f.write("\""+term.lower()+ "\"\t\t{ yylval.c=strdup(yytext); return ("+term+"); }\n")
                 

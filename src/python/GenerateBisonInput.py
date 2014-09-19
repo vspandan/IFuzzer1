@@ -12,11 +12,17 @@ class GenerateBisonInput(object):
 
     def createBisonInput(self,grammar_file):
         with open (BISON_FILE,WRITE) as f:
-            temp = open(TEMP_FILE,READ);
+            temp = open(TEMP_FILE1,READ);
             for line in temp:
                 f.write("%token ")
                 f.write(line)
                 f.write(NEW_LINE)
+            temp.close()
+            temp = open(TEMP_FILE2,READ);
+            strs = []
+            for line in temp:
+                strs=line.split()
+                print strs
             temp.close()
             f.write("%error-verbose")
             f.write(NEW_LINE)
@@ -24,8 +30,9 @@ class GenerateBisonInput(object):
             f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdlib.h>"  + NEW_LINE + "#include <stdio.h>"  + NEW_LINE + "#include <string.h>"  + NEW_LINE + "%}")
             f.write(NEW_LINE+"%{"+NEW_LINE+"char *s;"+NEW_LINE+"%}")
             f.write(NEW_LINE+"%%"+NEW_LINE)
-            remove(TEMP_FILE)
-            temp = open (grammar_file, READ)
+            remove(TEMP_FILE1)
+            remove(TEMP_FILE2)
+            temp = open (grammar_file, READ)            
             start=True
             prodnum=0
             for line in temp:
@@ -33,13 +40,18 @@ class GenerateBisonInput(object):
                     key, values = line.split(RULE_DELIM,1)
                     key = key.strip()
                     f.write(key +"\t"+ RULE_DELIM +NEW_LINE)
-                    productions=values.split(PROD_DELIMITER)
+                    productions=values.split(PROD_DELIMITER1)
                     i=0
                     for prod in productions:
                         prodnum=prodnum+1
                         f.write("\t\t\t\t")
                         if i != 0 :
-                            f.write(PROD_DELIMITER)
+                            f.write(PROD_DELIMITER1)
+                        if len(strs)>0 :
+                            for s in strs :
+                                if prod.find(s) >= 0:
+                                    st= s.replace("\'","\"")
+                                    prod=prod.replace(s,st)
                         f.write(prod)
                         j = len(prod.split())
                         f.write("\t");

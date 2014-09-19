@@ -1,13 +1,14 @@
 RULES_FILE = "../../other/ConstantRules"
 CONSTANTS = "../../other/Constants"
 OUTPUT_PATH = "../../output"
-TEMP_FILE="../../output/temp"
+TEMP_FILE1="../../output/temp1"
+TEMP_FILE2="../../output/temp2"
 LEX_FILE="../../output/lexfile.l"
 BISON_FILE="../../output/bison.y"
 DECLARATIONS ="../../other/ConstantDeclarations"
 NEW_LINE='\n'
 RULE_DELIM = ':'
-PROD_DELIMITER='|'
+PROD_DELIMITER1='|'
 RULE_END_DELIM=';'
 FILE_SEPERATOR="/"
 SINGLE_QUOTE="\'"
