@@ -21,9 +21,10 @@ class GenerateBisonInput(object):
             temp = open(TEMP_FILE2,READ);
             strs = []
             for line in temp:
-                strs=line.split()
-                print strs
+                strs=line.split()                
             temp.close()
+            #f.write("%left '*' '/' '%' '+' '-'")
+            f.write(NEW_LINE)
             f.write("%error-verbose")
             f.write(NEW_LINE)
             f.write("%union {"+NEW_LINE+" int a;"+NEW_LINE+"float b;"+NEW_LINE+"char *c;"+NEW_LINE+"}")
