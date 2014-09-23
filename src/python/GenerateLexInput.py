@@ -106,7 +106,7 @@ class GenerateLexInput(object):
                         f.write("\""+term+ "\"\t\t{ yylval.c=strdup(yytext); return yytext[0]; }\n")
                     else:
                         term=term.replace("\'","\"")
-                        f.write(term+ "\t\t{ yylval.c=strdup("+term+"); return " +term+" }\n")
+                        f.write(term+ "\t\t{ yylval.c=strdup("+term+"); return " +term+"; }\n")
                 else :
                     f.write("\""+term.lower()+ "\"\t\t{ yylval.c=strdup(yytext); return ("+term+"); }\n")
                 

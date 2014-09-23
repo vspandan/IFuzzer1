@@ -1,3 +1,4 @@
+
 Program : SourceElements | 
 
 SourceElements : SourceElement | SourceElements SourceElement
@@ -12,7 +13,7 @@ EmptyBlock : '{' '}'
 
 StatementList : Statement | StatementList Statement
 
-VariableStatement : var VariableDeclarationList ';'
+VariableStatement : Var VariableDeclarationList ';'
 
 VariableDeclarationList : VariableDeclarationList  ',' VariableDeclaration | VariableDeclaration
 
@@ -22,43 +23,43 @@ Initialiser : '=' AssignmentExpression
 
 EmptyStatement : ';'
 
-IfStatement :  if '(' Expression ')' Statement 
+IfStatement :  If '(' Expression ')' Statement 
 
-IterationStatement : do Statement while '(' Expression ')' ';' | while '(' Expression ')' Statement  | for '(' Expression ';' Expression ';' Expression ')' Statement | for '(' ';' Expression ';' Expression ')' Statement | for '(' Expression ';'  ';' Expression ')' Statement | for '(' ';' ';' Expression ')' Statement  | for '(' Expression ';' Expression ';'  ')' Statement | for '(' Expression ';'  ';'  ')' Statement | for '('  ';' Expression ';'  ')' Statement | for '(' ';' ';'  ')' Statement | for '(' var VariableDeclarationList ';' Expression ';' Expression ')' Statement | for '(' var VariableDeclarationList ';' Expression ';'  ')' Statement | for '(' var VariableDeclarationList ';' ';' Expression ')' Statement | for '(' var VariableDeclarationList ';'  ';'  ')' Statement | for '(' LeftHandSideExpression in Expression ')' Statement | for '(' var VariableDeclaration in Expression ')' Statement
+IterationStatement : Do Statement While '(' Expression ')' ';' | While '(' Expression ')' Statement  | For '(' Expression ';' Expression ';' Expression ')' Statement | For '(' ';' Expression ';' Expression ')' Statement | For '(' Expression ';'  ';' Expression ')' Statement | For '(' ';' ';' Expression ')' Statement  | For '(' Expression ';' Expression ';'  ')' Statement | For '(' Expression ';'  ';'  ')' Statement | For '('  ';' Expression ';'  ')' Statement | For '(' ';' ';'  ')' Statement | For '(' Var VariableDeclarationList ';' Expression ';' Expression ')' Statement | For '(' Var VariableDeclarationList ';' Expression ';'  ')' Statement | For '(' Var VariableDeclarationList ';' ';' Expression ')' Statement | For '(' Var VariableDeclarationList ';'  ';'  ')' Statement | For '(' LeftHandSideExpression In Expression ')' Statement | For '(' Var VariableDeclaration In Expression ')' Statement
 
-ContinueStatement : continue Identifier ';' | continue ';'
+ContinueStatement : Continue Identifier ';' | Continue ';'
 
-BreakStatement : break Identifier ';' | break ';'
+BreakStatement : Break Identifier ';' | Break ';'
 
-ReturnStatement : return Expression ';' | return ';'
+ReturnStatement : Return Expression ';' | Return ';'
 
-WithStatement : with '(' Expression ')' Statement
+WithStatement : With '(' Expression ')' Statement
 
-SwitchStatement : switch '(' Expression ')' CaseBlock
+SwitchStatement : Switch '(' Expression ')' CaseBlock
 
 CaseBlock : '{' CaseClauses  DefaultClause CaseClauses  '}' | '{' CaseClauses DefaultClause '}' | '{' CaseClauses '}' | '{' DefaultClause CaseClauses '}' | '{' DefaultClause '}' | '{' '}'
 
 CaseClauses : CaseClause | CaseClauses CaseClause
 
-CaseClause : case Expression ':' StatementList | case Expression ':' 
+CaseClause : Case Expression ':' StatementList | Case Expression ':' 
 
-DefaultClause : default ':' StatementList | default ':' 
+DefaultClause : Default ':' StatementList | Default ':' 
 
 LabelledStatement : Identifier ':' Statement
 
-ThrowStatement : throw Expression ';'
+ThrowStatement : Throw Expression ';'
 
-TryStatement : try Block CatchProduction | try Block FinallyProduction | try Block CatchProduction FinallyProduction
+TryStatement : Try Block CatchProduction | Try Block FinallyProduction | Try Block CatchProduction FinallyProduction
 
-CatchProduction : catch '(' Identifier ')' Block
+CatchProduction : Catch '(' Identifier ')' Block
 
-FinallyProduction : finally block
+FinallyProduction : Finally Block
 
-DebuggerStatement : debugger ';'
+DebuggerStatement : Debugger ';'
 
-FunctionDeclaration : function Identifier '(' FormalParameterList ')' '{' FunctionBody '}' | function Identifier '('  ')' '{' FunctionBody '}'
+FunctionDeclaration : Function Identifier '(' FormalParameterList ')' '{' FunctionBody '}' | Function Identifier '('  ')' '{' FunctionBody '}'
 
-FunctionExpression : function '(' FormalParameterList ')' '{' FunctionBody '}' | function  '(' ')' '{' FunctionBody '}'
+FunctionExpression : Function '(' FormalParameterList ')' '{' FunctionBody '}' | Function  '(' ')' '{' FunctionBody '}'
 
 FormalParameterList : FormalParameterList ',' Identifier | Identifier
 
@@ -77,9 +78,9 @@ Arguments : '(' ArgumentList ')' | '(' ')'
     
 ArgumentList : ArgumentList ',' AssignmentExpression | AssignmentExpression
 
-MemberExpression : PrimaryExpression | FunctionExpression | MemberExpression '[' Expression ']' | MemberExpression '.' Identifier | new MemberExpression Arguments 
+MemberExpression : PrimaryExpression | FunctionExpression | MemberExpression '[' Expression ']' | MemberExpression '.' Identifier | New MemberExpression Arguments 
 
-PrimaryExpression : this | NullLiteral | BooleanLiteral | ArrayLiteral | ObjectLiteral | '(' Expression ')' | NumericLiteral | StringLiteral
+PrimaryExpression : This | NullLiteral | BooleanLiteral | ArrayLiteral | ObjectLiteral | '(' Expression ')' | NumericLiteral | StringLiteral
 
 ArrayLiteral : '[' Elision ']' | '[' ElementList ']' | '[' ElementList ',' Elision ']'
 
@@ -87,7 +88,7 @@ Elision : Elision ',' |
 
 AssignmentExpression : ConditionalExpression | LeftHandSideExpression '=' AssignmentExpression | LeftHandSideExpression AssignmentOperator AssignmentExpression 
 
-LeftHandSideExpression : new NewExpression | CallExpression 
+LeftHandSideExpression : New NewExpression | CallExpression 
 
 CallExpression : MemberExpression Arguments | CallExpression '.' Identifier
 
@@ -107,7 +108,7 @@ BitwiseANDExpression : BitwiseANDExpression '&' EqualityExpression | EqualityExp
 
 EqualityExpression : EqualityExpression '==' RelationalExpression | EqualityExpression '!=' RelationalExpression | EqualityExpression '===' RelationalExpression | EqualityExpression '!==' RelationalExpression | RelationalExpression
 
-RelationalExpression : RelationalExpression '<' ShiftExpression | RelationalExpression '>' ShiftExpression | RelationalExpression '<=' ShiftExpression | RelationalExpression '>=' ShiftExpression | RelationalExpression instanceof ShiftExpression | ShiftExpression   
+RelationalExpression : RelationalExpression '<' ShiftExpression | RelationalExpression '>' ShiftExpression | RelationalExpression '<=' ShiftExpression | RelationalExpression '>=' ShiftExpression | RelationalExpression Instanceof ShiftExpression | ShiftExpression   
 
 ShiftExpression : ShiftExpression '<<' AdditiveExpression | ShiftExpression '>>' AdditiveExpression | ShiftExpression '>>>' AdditiveExpression | AdditiveExpression
 
@@ -115,7 +116,7 @@ AdditiveExpression : AdditiveExpression '+' MultiplicativeExpression | AdditiveE
 
 MultiplicativeExpression : MultiplicativeExpression '*' UnaryExpression | MultiplicativeExpression '/' UnaryExpression | MultiplicativeExpression '%' UnaryExpression | UnaryExpression
  
-UnaryExpression : delete UnaryExpression | void UnaryExpression | typeof UnaryExpression | '++' UnaryExpression | '--' UnaryExpression | '+' UnaryExpression | '-' UnaryExpression | '~' UnaryExpression | '!' UnaryExpression | LeftHandSideExpression
+UnaryExpression : Delete UnaryExpression | Void UnaryExpression | Typeof UnaryExpression | '++' UnaryExpression | '--' UnaryExpression | '+' UnaryExpression | '-' UnaryExpression | '~' UnaryExpression | '!' UnaryExpression | LeftHandSideExpression
  
 AssignmentOperator : '*='  | '/='  | '%='  | '+='  | '-='  | '<<='  | '>>='  | '>>>='  | '&='  | '^=' 
 

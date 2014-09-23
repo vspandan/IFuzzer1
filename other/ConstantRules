@@ -14,4 +14,3 @@
 "||"                    { yylval.c=strdup(yytext); return COND_OP;          }
 {REL_OP}                { yylval.c=strdup(yytext); return REL_OP;  }
 {ARITH_OP}              { yylval.c=strdup(yytext); return ARITH_OP; }
-"-"			{ yylval.c=strdup(yytext); return MINUS ; }
