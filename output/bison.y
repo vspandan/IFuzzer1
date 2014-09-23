@@ -1,5 +1,6 @@
-%token var if else do while for in continue break return with switch case default throw try catch finally debugger function new Arguments this identifier instanceof delete void UnaryExpression typeof INT_LITERAL STRING_LITERAL null true false ID ASSIGN_OP E_ASSIGN_OP CHAR_LITERAL EQ_OP COND_OP REL_OP ARITH_OP 
+%token this Identifier Literal NumericLiteral StringLiteral new delete void typeof instanceof in var if else do while for continue break return with switch case default throw try catch finally block debugger function ASSIGN_OP INT_LITERAL STRING_LITERAL ID E_ASSIGN_OP CHAR_LITERAL EQ_OP COND_OP REL_OP ARITH_OP 
 
+%left '(' '[' '*' '/' '%' '+' '-' "<<" ">>" ">>>" '<' '>' "<=" ">=" "==" "!=" '&' '^' '#' "&&" "##" '?' ':' '=' 
 %error-verbose
 %union {
  int a;
@@ -15,367 +16,191 @@ char *c;
 char *s;
 %}
 %%
-program	:
-				 sourceElements 	{$<c>$=$<c>1;}
+Program	:
+				 SourceElements 	{$<c>$=$<c>1;}
 				| 
 	{$<c>$="EMPTY";}
 				;
-sourceElements	:
-				 sourceElement 	{$<c>$=$<c>1;}
-				| sourceElements sourceElement
-	{printf("<<<sourceElements: %s %s >>>",$<c>1,$<c>2);}
+SourceElements	:
+				 SourceElement 	{$<c>$=$<c>1;}
+				| SourceElements SourceElement
+	{printf("<<<SourceElements: %s %s >>>",$<c>1,$<c>2);}
 				;
-sourceElement	:
-				 statement 	{$<c>$=$<c>1;}
-				| functionDeclaration
+SourceElement	:
+				 Statement 	{$<c>$=$<c>1;}
+				| FunctionDeclaration
 	{$<c>$=$<c>1;}
 				;
-statement	:
-				 block 	{$<c>$=$<c>1;}
-				| variableStatement 	{$<c>$=$<c>1;}
-				| emptyStatement 	{$<c>$=$<c>1;}
-				| expression 	{$<c>$=$<c>1;}
-				| ifStatement 	{$<c>$=$<c>1;}
-				| iterationStatement 	{$<c>$=$<c>1;}
-				| continueStatement 	{$<c>$=$<c>1;}
-				| breakStatement 	{$<c>$=$<c>1;}
-				| returnStatement 	{$<c>$=$<c>1;}
-				| withStatement 	{$<c>$=$<c>1;}
-				| labelledStatement 	{$<c>$=$<c>1;}
-				| switchStatement 	{$<c>$=$<c>1;}
-				| throwStatement 	{$<c>$=$<c>1;}
-				| tryStatement 	{$<c>$=$<c>1;}
-				| debuggerStatement
-	{$<c>$=$<c>1;}
-				;
-block	:
-				 '{' statementList '}'	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+8 ;char *s22=malloc(sizeof(char)*len);sprintf(s22," <<<block: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s22;}
-				| empty
-	{$<c>$=$<c>1;}
-				;
-empty	:
-				 '{' '}' 
-	{int len=strlen($<c>1)+strlen($<c>2)+7+7 ;char *s24=malloc(sizeof(char)*len);sprintf(s24," <<<empty: %s %s >>>",$<c>1,$<c>2);$<c>$=s24;}
-				;
-statementList	:
-				 statement 	{$<c>$=$<c>1;}
-				| statementList statement
-	{int len=strlen($<c>1)+strlen($<c>2)+7+15 ;char *s26=malloc(sizeof(char)*len);sprintf(s26," <<<statementList: %s %s >>>",$<c>1,$<c>2);$<c>$=s26;}
-				;
-variableStatement	:
-				 var variableDeclarationList ';'
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s27=malloc(sizeof(char)*len);sprintf(s27," <<<variableStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s27;}
-				;
-variableDeclarationList	:
-				 variableDeclarationList  ',' variableDeclaration 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+26 ;char *s28=malloc(sizeof(char)*len);sprintf(s28," <<<variableDeclarationList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s28;}
-				| variableDeclaration
-	{$<c>$=$<c>1;}
-				;
-variableDeclaration	:
-				 Identifier  	{$<c>$=$<c>1;}
-				| Identifier initialiser 
-	{int len=strlen($<c>1)+strlen($<c>2)+7+21 ;char *s31=malloc(sizeof(char)*len);sprintf(s31," <<<variableDeclaration: %s %s >>>",$<c>1,$<c>2);$<c>$=s31;}
-				;
-initialiser	:
-				 '=' assignmentExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+7+13 ;char *s32=malloc(sizeof(char)*len);sprintf(s32," <<<initialiser: %s %s >>>",$<c>1,$<c>2);$<c>$=s32;}
-				;
-emptyStatement	:
-				 ';'
-	{$<c>$=$<c>1;}
-				;
-ifStatement	:
-				 if '(' expression ')' statement else statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+18 ;char *s34=malloc(sizeof(char)*len);sprintf(s34," <<<ifStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s34;}
-				| if '(' expression ')' statement   
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+16 ;char *s35=malloc(sizeof(char)*len);sprintf(s35," <<<ifStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s35;}
-				;
-iterationStatement	:
-				 do statement while '(' expression ')' ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s36=malloc(sizeof(char)*len);sprintf(s36," <<<iterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s36;}
-				| while '(' expression ')' statement  	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+23 ;char *s37=malloc(sizeof(char)*len);sprintf(s37," <<<iterationStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s37;}
-				| for '(' expression ';' expression ';' expression ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+7+27 ;char *s38=malloc(sizeof(char)*len);sprintf(s38," <<<iterationStatement: %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9);$<c>$=s38;}
-				| for '(' ';' expression ';' expression ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s39=malloc(sizeof(char)*len);sprintf(s39," <<<iterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s39;}
-				| for '(' expression ';'  ';' expression ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s40=malloc(sizeof(char)*len);sprintf(s40," <<<iterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s40;}
-				| for '(' ';' ';' expression ')' statement  	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s41=malloc(sizeof(char)*len);sprintf(s41," <<<iterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s41;}
-				| for '(' expression ';' expression ';'  ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s42=malloc(sizeof(char)*len);sprintf(s42," <<<iterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s42;}
-				| for '(' expression ';'  ';'  ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s43=malloc(sizeof(char)*len);sprintf(s43," <<<iterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s43;}
-				| for '('  ';' expression ';'  ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s44=malloc(sizeof(char)*len);sprintf(s44," <<<iterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s44;}
-				| for '(' ';' ';'  ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+7+24 ;char *s45=malloc(sizeof(char)*len);sprintf(s45," <<<iterationStatement: %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);$<c>$=s45;}
-				| for '(' var variableDeclarationList ';' expression ';' expression ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+strlen($<c>10)+7+28 ;char *s46=malloc(sizeof(char)*len);sprintf(s46," <<<iterationStatement: %s %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9,$<c>10);$<c>$=s46;}
-				| for '(' var variableDeclarationList ';' expression ';'  ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+7+27 ;char *s47=malloc(sizeof(char)*len);sprintf(s47," <<<iterationStatement: %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9);$<c>$=s47;}
-				| for '(' var variableDeclarationList ';' ';' expression ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+7+27 ;char *s48=malloc(sizeof(char)*len);sprintf(s48," <<<iterationStatement: %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9);$<c>$=s48;}
-				| for '(' var variableDeclarationList ';'  ';'  ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s49=malloc(sizeof(char)*len);sprintf(s49," <<<iterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s49;}
-				| for '(' leftHandSideExpression in expression ')' statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s50=malloc(sizeof(char)*len);sprintf(s50," <<<iterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s50;}
-				| for '(' var variableDeclaration in expression ')' statement
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s51=malloc(sizeof(char)*len);sprintf(s51," <<<iterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s51;}
-				;
-continueStatement	:
-				 continue Identifier ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s52=malloc(sizeof(char)*len);sprintf(s52," <<<continueStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s52;}
-				| continue ';'
-	{int len=strlen($<c>1)+strlen($<c>2)+7+19 ;char *s53=malloc(sizeof(char)*len);sprintf(s53," <<<continueStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s53;}
-				;
-breakStatement	:
-				 break Identifier ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+17 ;char *s54=malloc(sizeof(char)*len);sprintf(s54," <<<breakStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s54;}
-				| break ';'
-	{int len=strlen($<c>1)+strlen($<c>2)+7+16 ;char *s55=malloc(sizeof(char)*len);sprintf(s55," <<<breakStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s55;}
-				;
-returnStatement	:
-				 return expression ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s56=malloc(sizeof(char)*len);sprintf(s56," <<<returnStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s56;}
-				| return ';'
-	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s57=malloc(sizeof(char)*len);sprintf(s57," <<<returnStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s57;}
-				;
-withStatement	:
-				 with '(' expression ')' statement
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+18 ;char *s58=malloc(sizeof(char)*len);sprintf(s58," <<<withStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s58;}
-				;
-switchStatement	:
-				 switch '(' expression ')' caseBlock
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+20 ;char *s59=malloc(sizeof(char)*len);sprintf(s59," <<<switchStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s59;}
-				;
-caseBlock	:
-				 '{' caseClauses  defaultClause caseClauses  '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+14 ;char *s60=malloc(sizeof(char)*len);sprintf(s60," <<<caseBlock: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s60;}
-				| '{' caseClauses defaultClause '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+13 ;char *s61=malloc(sizeof(char)*len);sprintf(s61," <<<caseBlock: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s61;}
-				| '{' caseClauses '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+12 ;char *s62=malloc(sizeof(char)*len);sprintf(s62," <<<caseBlock: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s62;}
-				| '{' defaultClause caseClauses '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+13 ;char *s63=malloc(sizeof(char)*len);sprintf(s63," <<<caseBlock: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s63;}
-				| '{' defaultClause '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+12 ;char *s64=malloc(sizeof(char)*len);sprintf(s64," <<<caseBlock: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s64;}
-				| '{' '}'
-	{int len=strlen($<c>1)+strlen($<c>2)+7+11 ;char *s65=malloc(sizeof(char)*len);sprintf(s65," <<<caseBlock: %s %s >>>",$<c>1,$<c>2);$<c>$=s65;}
-				;
-caseClauses	:
-				 caseClause 	{$<c>$=$<c>1;}
-				| caseClauses caseClause
-	{int len=strlen($<c>1)+strlen($<c>2)+7+13 ;char *s67=malloc(sizeof(char)*len);sprintf(s67," <<<caseClauses: %s %s >>>",$<c>1,$<c>2);$<c>$=s67;}
-				;
-caseClause	:
-				 case expression ':' statementList 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+14 ;char *s68=malloc(sizeof(char)*len);sprintf(s68," <<<caseClause: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s68;}
-				| case expression ':' 
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+13 ;char *s69=malloc(sizeof(char)*len);sprintf(s69," <<<caseClause: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s69;}
-				;
-defaultClause	:
-				 default ':' statementList 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+16 ;char *s70=malloc(sizeof(char)*len);sprintf(s70," <<<defaultClause: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s70;}
-				| default ':' 
-	{int len=strlen($<c>1)+strlen($<c>2)+7+15 ;char *s71=malloc(sizeof(char)*len);sprintf(s71," <<<defaultClause: %s %s >>>",$<c>1,$<c>2);$<c>$=s71;}
-				;
-labelledStatement	:
-				 Identifier ':' statement
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s72=malloc(sizeof(char)*len);sprintf(s72," <<<labelledStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s72;}
-				;
-throwStatement	:
-				 throw expression ';'
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+17 ;char *s73=malloc(sizeof(char)*len);sprintf(s73," <<<throwStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s73;}
-				;
-tryStatement	:
-				 try block catchProduction 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s74=malloc(sizeof(char)*len);sprintf(s74," <<<tryStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s74;}
-				| try block finallyProduction 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s75=malloc(sizeof(char)*len);sprintf(s75," <<<tryStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s75;}
-				| try block catchProduction finallyProduction
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+16 ;char *s76=malloc(sizeof(char)*len);sprintf(s76," <<<tryStatement: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s76;}
-				;
-catchProduction	:
-				 catch '(' Identifier ')' block
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+20 ;char *s77=malloc(sizeof(char)*len);sprintf(s77," <<<catchProduction: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s77;}
-				;
-finallyProduction	:
-				 finally block
-	{int len=strlen($<c>1)+strlen($<c>2)+7+19 ;char *s78=malloc(sizeof(char)*len);sprintf(s78," <<<finallyProduction: %s %s >>>",$<c>1,$<c>2);$<c>$=s78;}
-				;
-debuggerStatement	:
-				 debugger ';'
-	{int len=strlen($<c>1)+strlen($<c>2)+7+19 ;char *s79=malloc(sizeof(char)*len);sprintf(s79," <<<debuggerStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s79;}
-				;
-functionDeclaration	:
-				 function Identifier '(' formalParameterList ')' '{' functionBody '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+27 ;char *s80=malloc(sizeof(char)*len);sprintf(s80," <<<functionDeclaration: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s80;}
-				| function Identifier '('  ')' '{' functionBody '}'
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+26 ;char *s81=malloc(sizeof(char)*len);sprintf(s81," <<<functionDeclaration: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s81;}
-				;
-functionExpression	:
-				 function '(' formalParameterList ')' '{' functionBody '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s82=malloc(sizeof(char)*len);sprintf(s82," <<<functionExpression: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s82;}
-				| function  '(' ')' '{' functionBody '}'
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+7+24 ;char *s83=malloc(sizeof(char)*len);sprintf(s83," <<<functionExpression: %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);$<c>$=s83;}
-				;
-formalParameterList	:
-				 formalParameterList ',' Identifier 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+22 ;char *s84=malloc(sizeof(char)*len);sprintf(s84," <<<formalParameterList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s84;}
-				| Identifier
-	{$<c>$=$<c>1;}
-				;
-functionBody	:
-				 sourceElements 	{$<c>$=$<c>1;}
-				| 
-	{$<c>$="EMPTY";}
-				;
-elementList	:
-				 assignmentExpression 	{$<c>$=$<c>1;}
-				|  elementList ',' assignmentExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+14 ;char *s89=malloc(sizeof(char)*len);sprintf(s89," <<<elementList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s89;}
-				;
-objectLiteral	:
-				 '{' propertyNameAndValueList  '}'  
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+16 ;char *s90=malloc(sizeof(char)*len);sprintf(s90," <<<objectLiteral: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s90;}
-				;
-propertyNameAndValueList	:
-				 propertyNameAndValueList  ',' propertyAssignment 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s91=malloc(sizeof(char)*len);sprintf(s91," <<<propertyNameAndValueList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s91;}
-				| propertyAssignment
-	{$<c>$=$<c>1;}
-				;
-propertyAssignment	:
-				 propertyName ':' assignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s93=malloc(sizeof(char)*len);sprintf(s93," <<<propertyAssignment: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s93;}
-				| Identifier '(' ')' '{' functionBody '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+7+24 ;char *s94=malloc(sizeof(char)*len);sprintf(s94," <<<propertyAssignment: %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);$<c>$=s94;}
-				| Identifier '(' propertySetParameterList ')' '{' functionBody '}'
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s95=malloc(sizeof(char)*len);sprintf(s95," <<<propertyAssignment: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s95;}
-				;
-propertyName	:
-				 StringLiteral 	{$<c>$=$<c>1;}
-				| numericLiteral
-	{$<c>$=$<c>1;}
-				;
-propertySetParameterList	:
-				 Identifier
-	{$<c>$=$<c>1;}
-				;
-arguments	:
-				 '(' argumentList ')' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+12 ;char *s99=malloc(sizeof(char)*len);sprintf(s99," <<<arguments: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s99;}
-				| '(' ')'
-	{int len=strlen($<c>1)+strlen($<c>2)+7+11 ;char *s100=malloc(sizeof(char)*len);sprintf(s100," <<<arguments: %s %s >>>",$<c>1,$<c>2);$<c>$=s100;}
-				;
-argumentList	:
-				 argumentList ',' assignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s101=malloc(sizeof(char)*len);sprintf(s101," <<<argumentList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s101;}
-				| assignmentExpression
-	{$<c>$=$<c>1;}
-				;
-memberExpression	:
-				 primaryExpression 	{$<c>$=$<c>1;}
-				| functionExpression 	{$<c>$=$<c>1;}
-				| memberExpression '[' expression ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+20 ;char *s105=malloc(sizeof(char)*len);sprintf(s105," <<<memberExpression: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s105;}
-				| memberExpression '.' Identifier 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+19 ;char *s106=malloc(sizeof(char)*len);sprintf(s106," <<<memberExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s106;}
-				| new memberExpression Arguments 
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+19 ;char *s107=malloc(sizeof(char)*len);sprintf(s107," <<<memberExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s107;}
-				;
-primaryExpression	:
+PrimaryExpression	:
 				 this 	{$<c>$=$<c>1;}
-				| identifier 	{$<c>$=$<c>1;}
-				| literal 	{$<c>$=$<c>1;}
-				| arrayLiteral 	{$<c>$=$<c>1;}
-				| objectLiteral 	{$<c>$=$<c>1;}
-				| '(' expression ')'
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s113=malloc(sizeof(char)*len);sprintf(s113," <<<primaryExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s113;}
+				| Identifier 	{$<c>$=$<c>1;}
+				| Literal 	{$<c>$=$<c>1;}
+				| ArrayLiteral 	{$<c>$=$<c>1;}
+				| ObjectLiteral 	{$<c>$=$<c>1;}
+				| '(' Expression ')'
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s12=malloc(sizeof(char)*len);sprintf(s12," <<<PrimaryExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s12;}
 				;
-arrayLiteral	:
-				 '[' elision ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s114=malloc(sizeof(char)*len);sprintf(s114," <<<arrayLiteral: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s114;}
-				| '[' elementList ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s115=malloc(sizeof(char)*len);sprintf(s115," <<<arrayLiteral: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s115;}
-				| '[' elementList ',' elision ']'
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+17 ;char *s116=malloc(sizeof(char)*len);sprintf(s116," <<<arrayLiteral: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s116;}
+ArrayLiteral	:
+				 '[' Elision ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s13=malloc(sizeof(char)*len);sprintf(s13," <<<ArrayLiteral: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s13;}
+				| '[' ElementList ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s14=malloc(sizeof(char)*len);sprintf(s14," <<<ArrayLiteral: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s14;}
+				| '[' ElementList ',' Elision ']'
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+17 ;char *s15=malloc(sizeof(char)*len);sprintf(s15," <<<ArrayLiteral: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s15;}
 				;
-elision	:
-				 elision ',' 	{int len=strlen($<c>1)+strlen($<c>2)+7+9 ;char *s117=malloc(sizeof(char)*len);sprintf(s117," <<<elision: %s %s >>>",$<c>1,$<c>2);$<c>$=s117;}
+Elision	:
+				 Elision ',' 	{int len=strlen($<c>1)+strlen($<c>2)+7+9 ;char *s16=malloc(sizeof(char)*len);sprintf(s16," <<<Elision: %s %s >>>",$<c>1,$<c>2);$<c>$=s16;}
 				| 
 	{$<c>$="EMPTY";}
 				;
-assignmentExpression	:
-				 conditionalExpression 	{$<c>$=$<c>1;}
-				| leftHandSideExpression '=' assignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s120=malloc(sizeof(char)*len);sprintf(s120," <<<assignmentExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s120;}
-				| leftHandSideExpression assignmentOperator assignmentExpression 
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s121=malloc(sizeof(char)*len);sprintf(s121," <<<assignmentExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s121;}
+ElementList	:
+				 Elision AssignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+13 ;char *s18=malloc(sizeof(char)*len);sprintf(s18," <<<ElementList: %s %s >>>",$<c>1,$<c>2);$<c>$=s18;}
+				|  ElementList ',' Elision AssignmentExpression
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+15 ;char *s19=malloc(sizeof(char)*len);sprintf(s19," <<<ElementList: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s19;}
 				;
-leftHandSideExpression	:
-				 newExpression 	{$<c>$=$<c>1;}
-				| callExpression
+ObjectLiteral	:
+				 '{' PropertyNameAndValueList  '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+16 ;char *s20=malloc(sizeof(char)*len);sprintf(s20," <<<ObjectLiteral: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s20;}
+				|  '{' PropertyNameAndValueList  ',' '}' 
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+17 ;char *s21=malloc(sizeof(char)*len);sprintf(s21," <<<ObjectLiteral: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s21;}
+				;
+PropertyNameAndValueList	:
+				 PropertyNameAndValueList  ',' PropertyAssignment 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s22=malloc(sizeof(char)*len);sprintf(s22," <<<PropertyNameAndValueList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s22;}
+				| PropertyAssignment
 	{$<c>$=$<c>1;}
 				;
-callExpression	:
-				 memberExpression arguments 	{int len=strlen($<c>1)+strlen($<c>2)+7+16 ;char *s124=malloc(sizeof(char)*len);sprintf(s124," <<<callExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s124;}
-				| callExpression arguments 	{int len=strlen($<c>1)+strlen($<c>2)+7+16 ;char *s125=malloc(sizeof(char)*len);sprintf(s125," <<<callExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s125;}
-				| callExpression '[' expression ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+18 ;char *s126=malloc(sizeof(char)*len);sprintf(s126," <<<callExpression: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s126;}
-				| callExpression '.' Identifier
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+17 ;char *s127=malloc(sizeof(char)*len);sprintf(s127," <<<callExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s127;}
+PropertyAssignment	:
+				 PropertyName ':' AssignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s24=malloc(sizeof(char)*len);sprintf(s24," <<<PropertyAssignment: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s24;}
+				| "get"PropertyName '(' ')' '{' FunctionBody '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+7+24 ;char *s25=malloc(sizeof(char)*len);sprintf(s25," <<<PropertyAssignment: %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);$<c>$=s25;}
+				| "set"PropertyName '(' Identifier ')' '{' FunctionBody '}'
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s26=malloc(sizeof(char)*len);sprintf(s26," <<<PropertyAssignment: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s26;}
 				;
-newExpression	:
-				  memberExpression 	{$<c>$=$<c>1;}
-				| new newExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+7+15 ;char *s129=malloc(sizeof(char)*len);sprintf(s129," <<<newExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s129;}
+PropertyName	:
+				 Identifier 	{$<c>$=$<c>1;}
+				| NumericLiteral 	{$<c>$=$<c>1;}
+				| StringLiteral
+	{$<c>$=$<c>1;}
 				;
-expression	:
-				 assignmentExpression 	{$<c>$=$<c>1;}
-				| expression ',' assignmentExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+13 ;char *s131=malloc(sizeof(char)*len);sprintf(s131," <<<expression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s131;}
+MemberExpression	:
+				 PrimaryExpression 	{$<c>$=$<c>1;}
+				| FunctionExpression 	{$<c>$=$<c>1;}
+				| MemberExpression '[' Expression ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+20 ;char *s32=malloc(sizeof(char)*len);sprintf(s32," <<<MemberExpression: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s32;}
+				| MemberExpression '.' Identifier 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+19 ;char *s33=malloc(sizeof(char)*len);sprintf(s33," <<<MemberExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s33;}
+				| new MemberExpression Arguments
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+19 ;char *s34=malloc(sizeof(char)*len);sprintf(s34," <<<MemberExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s34;}
 				;
-conditionalExpression	:
-				 logicalORExpression 	{$<c>$=$<c>1;}
-				| logicalORExpression '?' assignmentExpression ':' assignmentExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+26 ;char *s133=malloc(sizeof(char)*len);sprintf(s133," <<<conditionalExpression: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s133;}
+NewExpression	:
+				 new NewExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+15 ;char *s35=malloc(sizeof(char)*len);sprintf(s35," <<<NewExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s35;}
+				| MemberExpression
+	{$<c>$=$<c>1;}
 				;
-logicalORExpression	:
-				 logicalANDExpression 	{$<c>$=$<c>1;}
-				| logicalORExpression "##" logicalANDExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+22 ;char *s135=malloc(sizeof(char)*len);sprintf(s135," <<<logicalORExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s135;}
+CallExpression	:
+				 MemberExpression Arguments 	{int len=strlen($<c>1)+strlen($<c>2)+7+16 ;char *s37=malloc(sizeof(char)*len);sprintf(s37," <<<CallExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s37;}
+				| CallExpression Arguments 	{int len=strlen($<c>1)+strlen($<c>2)+7+16 ;char *s38=malloc(sizeof(char)*len);sprintf(s38," <<<CallExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s38;}
+				| CallExpression '[' Expression ']' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+18 ;char *s39=malloc(sizeof(char)*len);sprintf(s39," <<<CallExpression: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s39;}
+				| CallExpression '.' Identifier
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+17 ;char *s40=malloc(sizeof(char)*len);sprintf(s40," <<<CallExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s40;}
 				;
-logicalANDExpression	:
-				 bitwiseORExpression 	{$<c>$=$<c>1;}
-				| logicalANDExpression "&&" bitwiseORExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s137=malloc(sizeof(char)*len);sprintf(s137," <<<logicalANDExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s137;}
+Arguments	:
+				 '(' ArgumentList ')' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+12 ;char *s41=malloc(sizeof(char)*len);sprintf(s41," <<<Arguments: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s41;}
+				| '(' ')'
+	{int len=strlen($<c>1)+strlen($<c>2)+7+11 ;char *s42=malloc(sizeof(char)*len);sprintf(s42," <<<Arguments: %s %s >>>",$<c>1,$<c>2);$<c>$=s42;}
 				;
-bitwiseORExpression	:
-				 bitwiseXORExpression 	{$<c>$=$<c>1;}
-				| bitwiseORExpression '#' bitwiseXORExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+22 ;char *s139=malloc(sizeof(char)*len);sprintf(s139," <<<bitwiseORExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s139;}
+ArgumentList	:
+				 ArgumentList ',' AssignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s43=malloc(sizeof(char)*len);sprintf(s43," <<<ArgumentList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s43;}
+				| AssignmentExpression
+	{$<c>$=$<c>1;}
 				;
-bitwiseXORExpression	:
-				 bitwiseANDExpression 	{$<c>$=$<c>1;}
-				| bitwiseXORExpression '^' bitwiseANDExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s141=malloc(sizeof(char)*len);sprintf(s141," <<<bitwiseXORExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s141;}
+LeftHandSideExpression	:
+				 NewExpression 	{$<c>$=$<c>1;}
+				| CallExpression 
+	{$<c>$=$<c>1;}
 				;
-bitwiseANDExpression	:
-				 equalityExpression 	{$<c>$=$<c>1;}
-				| bitwiseANDExpression '&' equalityExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s143=malloc(sizeof(char)*len);sprintf(s143," <<<bitwiseANDExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s143;}
+UnaryExpression	:
+				 delete UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s47=malloc(sizeof(char)*len);sprintf(s47," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s47;}
+				| void UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s48=malloc(sizeof(char)*len);sprintf(s48," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s48;}
+				| typeof UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s49=malloc(sizeof(char)*len);sprintf(s49," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s49;}
+				| "++" UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s50=malloc(sizeof(char)*len);sprintf(s50," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s50;}
+				| "--" UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s51=malloc(sizeof(char)*len);sprintf(s51," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s51;}
+				| '+' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s52=malloc(sizeof(char)*len);sprintf(s52," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s52;}
+				| '-' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s53=malloc(sizeof(char)*len);sprintf(s53," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s53;}
+				| '~' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s54=malloc(sizeof(char)*len);sprintf(s54," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s54;}
+				| '!' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s55=malloc(sizeof(char)*len);sprintf(s55," <<<UnaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s55;}
+				| LeftHandSideExpression
+	{$<c>$=$<c>1;}
 				;
-equalityExpression	:
-				 relationalExpression 	{$<c>$=$<c>1;}
-				| equalityExpression "==" relationalExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s145=malloc(sizeof(char)*len);sprintf(s145," <<<equalityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s145;}
-				| equalityExpression "!=" relationalExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s146=malloc(sizeof(char)*len);sprintf(s146," <<<equalityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s146;}
-				| equalityExpression "===" relationalExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s147=malloc(sizeof(char)*len);sprintf(s147," <<<equalityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s147;}
-				| equalityExpression "!==" relationalExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s148=malloc(sizeof(char)*len);sprintf(s148," <<<equalityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s148;}
+MultiplicativeExpression	:
+				 MultiplicativeExpression '*' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s57=malloc(sizeof(char)*len);sprintf(s57," <<<MultiplicativeExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s57;}
+				| MultiplicativeExpression '/' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s58=malloc(sizeof(char)*len);sprintf(s58," <<<MultiplicativeExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s58;}
+				| MultiplicativeExpression '%' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s59=malloc(sizeof(char)*len);sprintf(s59," <<<MultiplicativeExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s59;}
+				| UnaryExpression
+	{$<c>$=$<c>1;}
 				;
-relationalExpression	:
-				 shiftExpression 	{$<c>$=$<c>1;}
-				| relationalExpression '<' shiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s150=malloc(sizeof(char)*len);sprintf(s150," <<<relationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s150;}
-				| relationalExpression '>' shiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s151=malloc(sizeof(char)*len);sprintf(s151," <<<relationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s151;}
-				| relationalExpression "<=" shiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s152=malloc(sizeof(char)*len);sprintf(s152," <<<relationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s152;}
-				| relationalExpression ">=" shiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s153=malloc(sizeof(char)*len);sprintf(s153," <<<relationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s153;}
-				| relationalExpression instanceof shiftExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s154=malloc(sizeof(char)*len);sprintf(s154," <<<relationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s154;}
+AdditiveExpression	:
+				 AdditiveExpression '+' MultiplicativeExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s61=malloc(sizeof(char)*len);sprintf(s61," <<<AdditiveExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s61;}
+				| AdditiveExpression '-' MultiplicativeExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s62=malloc(sizeof(char)*len);sprintf(s62," <<<AdditiveExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s62;}
+				| MultiplicativeExpression
+	{$<c>$=$<c>1;}
 				;
-shiftExpression	:
-				 additiveExpression 	{$<c>$=$<c>1;}
-				| shiftExpression "<<" additiveExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s156=malloc(sizeof(char)*len);sprintf(s156," <<<shiftExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s156;}
-				| shiftExpression ">>" additiveExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s157=malloc(sizeof(char)*len);sprintf(s157," <<<shiftExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s157;}
-				| shiftExpression ">>>" additiveExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s158=malloc(sizeof(char)*len);sprintf(s158," <<<shiftExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s158;}
+ShiftExpression	:
+				 ShiftExpression "<<" AdditiveExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s64=malloc(sizeof(char)*len);sprintf(s64," <<<ShiftExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s64;}
+				| ShiftExpression ">>" AdditiveExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s65=malloc(sizeof(char)*len);sprintf(s65," <<<ShiftExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s65;}
+				| ShiftExpression ">>>" AdditiveExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s66=malloc(sizeof(char)*len);sprintf(s66," <<<ShiftExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s66;}
+				| AdditiveExpression
+	{$<c>$=$<c>1;}
 				;
-additiveExpression	:
-				 multiplicativeExpression 	{$<c>$=$<c>1;}
-				| additiveExpression '+' multiplicativeExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s160=malloc(sizeof(char)*len);sprintf(s160," <<<additiveExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s160;}
-				| additiveExpression '-' multiplicativeExpression 
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s161=malloc(sizeof(char)*len);sprintf(s161," <<<additiveExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s161;}
+RelationalExpression	:
+				 RelationalExpression '<' ShiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s68=malloc(sizeof(char)*len);sprintf(s68," <<<RelationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s68;}
+				| RelationalExpression '>' ShiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s69=malloc(sizeof(char)*len);sprintf(s69," <<<RelationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s69;}
+				| RelationalExpression "<=" ShiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s70=malloc(sizeof(char)*len);sprintf(s70," <<<RelationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s70;}
+				| RelationalExpression ">=" ShiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s71=malloc(sizeof(char)*len);sprintf(s71," <<<RelationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s71;}
+				| RelationalExpression instanceof ShiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s72=malloc(sizeof(char)*len);sprintf(s72," <<<RelationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s72;}
+				| RelationalExpression in ShiftExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s73=malloc(sizeof(char)*len);sprintf(s73," <<<RelationalExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s73;}
+				| ShiftExpression
+	{$<c>$=$<c>1;}
 				;
-multiplicativeExpression	:
-				 unaryExpression 	{$<c>$=$<c>1;}
-				| multiplicativeExpression '*' unaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s163=malloc(sizeof(char)*len);sprintf(s163," <<<multiplicativeExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s163;}
-				| multiplicativeExpression '/' unaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s164=malloc(sizeof(char)*len);sprintf(s164," <<<multiplicativeExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s164;}
-				| multiplicativeExpression '%' unaryExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+27 ;char *s165=malloc(sizeof(char)*len);sprintf(s165," <<<multiplicativeExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s165;}
+EqualityExpression	:
+				 EqualityExpression "==" RelationalExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s75=malloc(sizeof(char)*len);sprintf(s75," <<<EqualityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s75;}
+				| EqualityExpression "!=" RelationalExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s76=malloc(sizeof(char)*len);sprintf(s76," <<<EqualityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s76;}
+				| EqualityExpression "===" RelationalExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s77=malloc(sizeof(char)*len);sprintf(s77," <<<EqualityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s77;}
+				| EqualityExpression "!==" RelationalExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+21 ;char *s78=malloc(sizeof(char)*len);sprintf(s78," <<<EqualityExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s78;}
+				| RelationalExpression
+	{$<c>$=$<c>1;}
 				;
-unaryExpression	:
-				 delete unaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s166=malloc(sizeof(char)*len);sprintf(s166," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s166;}
-				| void UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s167=malloc(sizeof(char)*len);sprintf(s167," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s167;}
-				| typeof UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s168=malloc(sizeof(char)*len);sprintf(s168," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s168;}
-				| "++" unaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s169=malloc(sizeof(char)*len);sprintf(s169," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s169;}
-				| "--" unaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s170=malloc(sizeof(char)*len);sprintf(s170," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s170;}
-				| '+' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s171=malloc(sizeof(char)*len);sprintf(s171," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s171;}
-				| '-' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s172=malloc(sizeof(char)*len);sprintf(s172," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s172;}
-				| '~' UnaryExpression 	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s173=malloc(sizeof(char)*len);sprintf(s173," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s173;}
-				| '!' UnaryExpression
-	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s174=malloc(sizeof(char)*len);sprintf(s174," <<<unaryExpression: %s %s >>>",$<c>1,$<c>2);$<c>$=s174;}
+BitwiseANDExpression	:
+				 BitwiseANDExpression '&' EqualityExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s80=malloc(sizeof(char)*len);sprintf(s80," <<<BitwiseANDExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s80;}
+				| EqualityExpression
+	{$<c>$=$<c>1;}
 				;
-assignmentOperator	:
+BitwiseXORExpression	:
+				 BitwiseXORExpression '^' BitwiseANDExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s82=malloc(sizeof(char)*len);sprintf(s82," <<<BitwiseXORExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s82;}
+				| BitwiseANDExpression
+	{$<c>$=$<c>1;}
+				;
+BitwiseORExpression	:
+				  BitwiseORExpression '#' BitwiseXORExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+22 ;char *s84=malloc(sizeof(char)*len);sprintf(s84," <<<BitwiseORExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s84;}
+				| BitwiseXORExpression
+	{$<c>$=$<c>1;}
+				;
+LogicalANDExpression	:
+				 LogicalANDExpression "&&" BitwiseORExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s86=malloc(sizeof(char)*len);sprintf(s86," <<<LogicalANDExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s86;}
+				| BitwiseORExpression   
+	{$<c>$=$<c>1;}
+				;
+LogicalORExpression	:
+				 LogicalORExpression "##" LogicalANDExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+22 ;char *s88=malloc(sizeof(char)*len);sprintf(s88," <<<LogicalORExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s88;}
+				| LogicalANDExpression
+	{$<c>$=$<c>1;}
+				;
+ConditionalExpression	:
+				 LogicalORExpression '?' AssignmentExpression ':' AssignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+26 ;char *s90=malloc(sizeof(char)*len);sprintf(s90," <<<ConditionalExpression: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s90;}
+				| LogicalORExpression
+	{$<c>$=$<c>1;}
+				;
+AssignmentExpression	:
+				 ConditionalExpression 	{$<c>$=$<c>1;}
+				| LeftHandSideExpression '=' AssignmentExpression 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s93=malloc(sizeof(char)*len);sprintf(s93," <<<AssignmentExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s93;}
+				| LeftHandSideExpression AssignmentOperator AssignmentExpression
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+23 ;char *s94=malloc(sizeof(char)*len);sprintf(s94," <<<AssignmentExpression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s94;}
+				;
+AssignmentOperator	:
 				 "*="  	{$<c>$=$<c>1;}
 				| "/="  	{$<c>$=$<c>1;}
 				| "%="  	{$<c>$=$<c>1;}
@@ -388,33 +213,181 @@ assignmentOperator	:
 				| "^=" 
 	{$<c>$=$<c>1;}
 				;
-literal	:
-				 NullLiteral 	{$<c>$=$<c>1;}
-				| BooleanLiteral 	{$<c>$=$<c>1;}
-				| numericLiteral 	{$<c>$=$<c>1;}
-				| StringLiteral 
+Expression	:
+				 AssignmentExpression 	{$<c>$=$<c>1;}
+				| AssignmentExpression ',' Expression
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+13 ;char *s106=malloc(sizeof(char)*len);sprintf(s106," <<<Expression: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s106;}
+				;
+Statement	:
+				 Block 	{$<c>$=$<c>1;}
+				| VariableStatement 	{$<c>$=$<c>1;}
+				| EmptyStatement 	{$<c>$=$<c>1;}
+				| Expression 	{$<c>$=$<c>1;}
+				| IfStatement 	{$<c>$=$<c>1;}
+				| IterationStatement 	{$<c>$=$<c>1;}
+				| ContinueStatement 	{$<c>$=$<c>1;}
+				| BreakStatement 	{$<c>$=$<c>1;}
+				| ReturnStatement 	{$<c>$=$<c>1;}
+				| WithStatement 	{$<c>$=$<c>1;}
+				| LabelledStatement 	{$<c>$=$<c>1;}
+				| SwitchStatement 	{$<c>$=$<c>1;}
+				| ThrowStatement 	{$<c>$=$<c>1;}
+				| TryStatement 	{$<c>$=$<c>1;}
+				| DebuggerStatement
 	{$<c>$=$<c>1;}
 				;
-numericLiteral	:
-				 INT_LITERAL
+Block	:
+				 '{' StatementList '}'	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+8 ;char *s122=malloc(sizeof(char)*len);sprintf(s122," <<<Block: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s122;}
+				| EmptyBlock
 	{$<c>$=$<c>1;}
 				;
-StringLiteral	:
-				 STRING_LITERAL
+EmptyBlock	:
+				 '{' '}' 
+	{int len=strlen($<c>1)+strlen($<c>2)+7+12 ;char *s124=malloc(sizeof(char)*len);sprintf(s124," <<<EmptyBlock: %s %s >>>",$<c>1,$<c>2);$<c>$=s124;}
+				;
+StatementList	:
+				 Statement 	{$<c>$=$<c>1;}
+				| StatementList Statement
+	{int len=strlen($<c>1)+strlen($<c>2)+7+15 ;char *s126=malloc(sizeof(char)*len);sprintf(s126," <<<StatementList: %s %s >>>",$<c>1,$<c>2);$<c>$=s126;}
+				;
+VariableStatement	:
+				 var VariableDeclarationList ';'
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s127=malloc(sizeof(char)*len);sprintf(s127," <<<VariableStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s127;}
+				;
+VariableDeclarationList	:
+				 VariableDeclarationList  ',' VariableDeclaration 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+26 ;char *s128=malloc(sizeof(char)*len);sprintf(s128," <<<VariableDeclarationList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s128;}
+				| VariableDeclaration
 	{$<c>$=$<c>1;}
 				;
-NullLiteral	:
-				 null
+VariableDeclaration	:
+				 Identifier  	{$<c>$=$<c>1;}
+				| Identifier Initialiser 
+	{int len=strlen($<c>1)+strlen($<c>2)+7+21 ;char *s131=malloc(sizeof(char)*len);sprintf(s131," <<<VariableDeclaration: %s %s >>>",$<c>1,$<c>2);$<c>$=s131;}
+				;
+Initialiser	:
+				 '=' AssignmentExpression
+	{int len=strlen($<c>1)+strlen($<c>2)+7+13 ;char *s132=malloc(sizeof(char)*len);sprintf(s132," <<<Initialiser: %s %s >>>",$<c>1,$<c>2);$<c>$=s132;}
+				;
+EmptyStatement	:
+				 ';'
 	{$<c>$=$<c>1;}
 				;
-BooleanLiteral	:
-				 true 	{$<c>$=$<c>1;}
-				| false
+IfStatement	:
+				  if '(' Expression ')' Statement else Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+18 ;char *s134=malloc(sizeof(char)*len);sprintf(s134," <<<IfStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s134;}
+				| if '(' Expression ')' Statement   
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+16 ;char *s135=malloc(sizeof(char)*len);sprintf(s135," <<<IfStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s135;}
+				;
+IterationStatement	:
+				 do Statement while '(' Expression ')' ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s136=malloc(sizeof(char)*len);sprintf(s136," <<<IterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s136;}
+				| while '(' Expression ')' Statement  	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+23 ;char *s137=malloc(sizeof(char)*len);sprintf(s137," <<<IterationStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s137;}
+				| for '(' Expression ';' Expression ';' Expression ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+7+27 ;char *s138=malloc(sizeof(char)*len);sprintf(s138," <<<IterationStatement: %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9);$<c>$=s138;}
+				| for '(' ';' Expression ';' Expression ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s139=malloc(sizeof(char)*len);sprintf(s139," <<<IterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s139;}
+				| for '(' Expression ';'  ';' Expression ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s140=malloc(sizeof(char)*len);sprintf(s140," <<<IterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s140;}
+				| for '(' ';' ';' Expression ')' Statement  	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s141=malloc(sizeof(char)*len);sprintf(s141," <<<IterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s141;}
+				| for '(' Expression ';' Expression ';'  ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s142=malloc(sizeof(char)*len);sprintf(s142," <<<IterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s142;}
+				| for '(' Expression ';'  ';'  ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s143=malloc(sizeof(char)*len);sprintf(s143," <<<IterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s143;}
+				| for '('  ';' Expression ';'  ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s144=malloc(sizeof(char)*len);sprintf(s144," <<<IterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s144;}
+				| for '(' ';' ';'  ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+7+24 ;char *s145=malloc(sizeof(char)*len);sprintf(s145," <<<IterationStatement: %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);$<c>$=s145;}
+				| for '(' var VariableDeclarationList ';' Expression ';' Expression ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+strlen($<c>10)+7+28 ;char *s146=malloc(sizeof(char)*len);sprintf(s146," <<<IterationStatement: %s %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9,$<c>10);$<c>$=s146;}
+				| for '(' var VariableDeclarationList ';' Expression ';'  ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+7+27 ;char *s147=malloc(sizeof(char)*len);sprintf(s147," <<<IterationStatement: %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9);$<c>$=s147;}
+				| for '(' var VariableDeclarationList ';' ';' Expression ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+strlen($<c>9)+7+27 ;char *s148=malloc(sizeof(char)*len);sprintf(s148," <<<IterationStatement: %s %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8,$<c>9);$<c>$=s148;}
+				| for '(' var VariableDeclarationList ';'  ';'  ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s149=malloc(sizeof(char)*len);sprintf(s149," <<<IterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s149;}
+				| for '(' LeftHandSideExpression in Expression ')' Statement 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s150=malloc(sizeof(char)*len);sprintf(s150," <<<IterationStatement: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s150;}
+				| for '(' var VariableDeclaration in Expression ')' Statement
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+26 ;char *s151=malloc(sizeof(char)*len);sprintf(s151," <<<IterationStatement: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s151;}
+				;
+ContinueStatement	:
+				 continue Identifier ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s152=malloc(sizeof(char)*len);sprintf(s152," <<<ContinueStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s152;}
+				| continue ';'
+	{int len=strlen($<c>1)+strlen($<c>2)+7+19 ;char *s153=malloc(sizeof(char)*len);sprintf(s153," <<<ContinueStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s153;}
+				;
+BreakStatement	:
+				 break Identifier ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+17 ;char *s154=malloc(sizeof(char)*len);sprintf(s154," <<<BreakStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s154;}
+				| break ';'
+	{int len=strlen($<c>1)+strlen($<c>2)+7+16 ;char *s155=malloc(sizeof(char)*len);sprintf(s155," <<<BreakStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s155;}
+				;
+ReturnStatement	:
+				 return Expression ';' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+18 ;char *s156=malloc(sizeof(char)*len);sprintf(s156," <<<ReturnStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s156;}
+				| return ';'
+	{int len=strlen($<c>1)+strlen($<c>2)+7+17 ;char *s157=malloc(sizeof(char)*len);sprintf(s157," <<<ReturnStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s157;}
+				;
+WithStatement	:
+				 with '(' Expression ')' Statement
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+18 ;char *s158=malloc(sizeof(char)*len);sprintf(s158," <<<WithStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s158;}
+				;
+SwitchStatement	:
+				 switch '(' Expression ')' CaseBlock
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+20 ;char *s159=malloc(sizeof(char)*len);sprintf(s159," <<<SwitchStatement: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s159;}
+				;
+CaseBlock	:
+				 '{' CaseClauses  DefaultClause CaseClauses  '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+14 ;char *s160=malloc(sizeof(char)*len);sprintf(s160," <<<CaseBlock: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s160;}
+				| '{' CaseClauses DefaultClause '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+13 ;char *s161=malloc(sizeof(char)*len);sprintf(s161," <<<CaseBlock: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s161;}
+				| '{' CaseClauses '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+12 ;char *s162=malloc(sizeof(char)*len);sprintf(s162," <<<CaseBlock: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s162;}
+				| '{' DefaultClause CaseClauses '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+13 ;char *s163=malloc(sizeof(char)*len);sprintf(s163," <<<CaseBlock: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s163;}
+				| '{' DefaultClause '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+12 ;char *s164=malloc(sizeof(char)*len);sprintf(s164," <<<CaseBlock: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s164;}
+				| '{' '}'
+	{int len=strlen($<c>1)+strlen($<c>2)+7+11 ;char *s165=malloc(sizeof(char)*len);sprintf(s165," <<<CaseBlock: %s %s >>>",$<c>1,$<c>2);$<c>$=s165;}
+				;
+CaseClauses	:
+				 CaseClause 	{$<c>$=$<c>1;}
+				| CaseClauses CaseClause
+	{int len=strlen($<c>1)+strlen($<c>2)+7+13 ;char *s167=malloc(sizeof(char)*len);sprintf(s167," <<<CaseClauses: %s %s >>>",$<c>1,$<c>2);$<c>$=s167;}
+				;
+CaseClause	:
+				 case Expression ':' StatementList 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+14 ;char *s168=malloc(sizeof(char)*len);sprintf(s168," <<<CaseClause: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s168;}
+				| case Expression ':' 
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+13 ;char *s169=malloc(sizeof(char)*len);sprintf(s169," <<<CaseClause: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s169;}
+				;
+DefaultClause	:
+				 default ':' StatementList 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+16 ;char *s170=malloc(sizeof(char)*len);sprintf(s170," <<<DefaultClause: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s170;}
+				| default ':' 
+	{int len=strlen($<c>1)+strlen($<c>2)+7+15 ;char *s171=malloc(sizeof(char)*len);sprintf(s171," <<<DefaultClause: %s %s >>>",$<c>1,$<c>2);$<c>$=s171;}
+				;
+LabelledStatement	:
+				 Identifier ':' Statement
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+20 ;char *s172=malloc(sizeof(char)*len);sprintf(s172," <<<LabelledStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s172;}
+				;
+ThrowStatement	:
+				 throw Expression ';'
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+17 ;char *s173=malloc(sizeof(char)*len);sprintf(s173," <<<ThrowStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s173;}
+				;
+TryStatement	:
+				 try Block CatchProduction 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s174=malloc(sizeof(char)*len);sprintf(s174," <<<TryStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s174;}
+				| try Block FinallyProduction 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+15 ;char *s175=malloc(sizeof(char)*len);sprintf(s175," <<<TryStatement: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s175;}
+				| try Block CatchProduction FinallyProduction
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+7+16 ;char *s176=malloc(sizeof(char)*len);sprintf(s176," <<<TryStatement: %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4);$<c>$=s176;}
+				;
+CatchProduction	:
+				 catch '(' Identifier ')' Block
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+7+20 ;char *s177=malloc(sizeof(char)*len);sprintf(s177," <<<CatchProduction: %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5);$<c>$=s177;}
+				;
+FinallyProduction	:
+				 finally block
+	{int len=strlen($<c>1)+strlen($<c>2)+7+19 ;char *s178=malloc(sizeof(char)*len);sprintf(s178," <<<FinallyProduction: %s %s >>>",$<c>1,$<c>2);$<c>$=s178;}
+				;
+DebuggerStatement	:
+				 debugger ';'
+	{int len=strlen($<c>1)+strlen($<c>2)+7+19 ;char *s179=malloc(sizeof(char)*len);sprintf(s179," <<<DebuggerStatement: %s %s >>>",$<c>1,$<c>2);$<c>$=s179;}
+				;
+FunctionDeclaration	:
+				 function Identifier '(' FormalParameterList ')' '{' FunctionBody '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+strlen($<c>8)+7+27 ;char *s180=malloc(sizeof(char)*len);sprintf(s180," <<<FunctionDeclaration: %s %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7,$<c>8);$<c>$=s180;}
+				| function Identifier '('  ')' '{' FunctionBody '}'
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+26 ;char *s181=malloc(sizeof(char)*len);sprintf(s181," <<<FunctionDeclaration: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s181;}
+				;
+FunctionExpression	:
+				 function '(' FormalParameterList ')' '{' FunctionBody '}' 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+strlen($<c>7)+7+25 ;char *s182=malloc(sizeof(char)*len);sprintf(s182," <<<FunctionExpression: %s %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6,$<c>7);$<c>$=s182;}
+				| function  '(' ')' '{' FunctionBody '}'
+	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+strlen($<c>4)+strlen($<c>5)+strlen($<c>6)+7+24 ;char *s183=malloc(sizeof(char)*len);sprintf(s183," <<<FunctionExpression: %s %s %s %s %s %s >>>",$<c>1,$<c>2,$<c>3,$<c>4,$<c>5,$<c>6);$<c>$=s183;}
+				;
+FormalParameterList	:
+				 FormalParameterList ',' Identifier 	{int len=strlen($<c>1)+strlen($<c>2)+strlen($<c>3)+7+22 ;char *s184=malloc(sizeof(char)*len);sprintf(s184," <<<FormalParameterList: %s %s %s >>>",$<c>1,$<c>2,$<c>3);$<c>$=s184;}
+				| Identifier
 	{$<c>$=$<c>1;}
 				;
-Identifier	:
-				 ID
-	{$<c>$=$<c>1;}
+FunctionBody	:
+				 SourceElements 	{$<c>$=$<c>1;}
+				| 
+	{$<c>$="EMPTY";}
 				;
 
 %%

@@ -23,7 +23,8 @@ class GenerateBisonInput(object):
             for line in temp:
                 strs=line.split()                
             temp.close()
-            #f.write("%left '*' '/' '%' '+' '-'")
+            f.write(NEW_LINE)
+            f.write("%left '(' '[' '*' '/' '%' '+' '-' \"<<\" \">>\" \">>>\" '<' '>' \"<=\" \">=\" \"==\" \"!=\" '&' '^' '#' \"&&\" \"##\" '?' ':' '=' ")
             f.write(NEW_LINE)
             f.write("%error-verbose")
             f.write(NEW_LINE)

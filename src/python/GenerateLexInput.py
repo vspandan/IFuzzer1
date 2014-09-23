@@ -102,6 +102,7 @@ class GenerateLexInput(object):
             for term in self.terminals:
                 if term.find(SINGLE_QUOTE) >= 0 :
                     if len(term) == 3:
+                        term=term.replace("\'","")
                         f.write("\""+term+ "\"\t\t{ yylval.c=strdup(yytext); return yytext[0]; }\n")
                     else:
                         term=term.replace("\'","\"")
