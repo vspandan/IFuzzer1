@@ -2,38 +2,31 @@ from Property import *
 from os import listdir
 from os.path import isfile, join
 from os import system
-
+from os import stat
+from os import mkdir
+from os import path
 
 class GenerateLexInput(object):
+    
+    
+    def getSelectedGrammar (self,fileName):
+        self.grammar_file =fileName
+
+    
+    def setSelectedGrammar (self,fileName):
+        self.grammar_file =fileName
 
     def __init__(self):
         
-        self.grammar_files = [ f for f in listdir(GRAMMAR_FILES_FOLDER) 
-                 if isfile(join(GRAMMAR_FILES_FOLDER, f)) ]
         self.non_Terminals = []
         self.terminals = []
         self.grammar_file =None
-
-    def _msg(self):
-        
-        print "Select Grammar File"
-        inc = 1
-        for i in self.grammar_files:
-            print "(" + str(inc) + ") : " + i
-            inc += 1
-    
+        self.HOME_DIR=path.expanduser(DIR)
         try:
-            input = int(raw_input("Enter File Number: ")) - 1   
-            if input <= len(self.grammar_files):
-                self.grammar_file = GRAMMAR_FILES_FOLDER + FILE_SEPERATOR + self.grammar_files[input]                           
-            else:
-                print "\nInvalid Input"
-                self._msg()  
-                
-        except ValueError:
-            print "\nInvalid Input"
-            self._msg()
-            
+            stat(self.HOME_DIR)
+        except:
+            mkdir(self.HOME_DIR)  
+
     def _extractNonTerminals(self):
         st=[]
         with open(self.grammar_file, READ) as f1:
@@ -60,13 +53,12 @@ class GenerateLexInput(object):
                 
     
     def _generateTokens(self):
-        with open (TEMP_FILE1,WRITE) as tempfile1:
+        with open (self.HOME_DIR+TEMP_FILE1,WRITE) as tempfile1:
             tokens =self.terminals
-            f = open(CONSTANTS, READ);
-            for line in f:
-                if (line.strip() not in tokens) :
-                    tokens.append(line.strip())
-            with open (TEMP_FILE2,WRITE) as tempfile2:
+            for const in CONSTANTS.split():
+                if (const not in tokens) :
+                    tokens.append(const)
+            with open (self.HOME_DIR+TEMP_FILE2,WRITE) as tempfile2:
                 for t in tokens:
                     if t.find(SINGLE_QUOTE)  == -1 :
                         if len(t) !=1 :
@@ -80,24 +72,19 @@ class GenerateLexInput(object):
     
         
     def createLexInput(self):
-        
-        self._msg()
+            
         self._extractNonTerminals()
         self._extractTerminals()
         self._generateTokens()
-        with open(LEX_FILE, WRITE) as f:
-    
-        # definitions Begin"""
-            declarations =""
-            with open(DECLARATIONS, READ) as f1:
-                declarations=f1.read()
-            f.write(declarations)        
-            # definitions End"""
+        
+        
+        
+        with open(self.HOME_DIR+LEX_FILE, WRITE) as f:
+
+            f.write(REG_EX)        
             f.write(NEW_LINE)
-            f.write(NEW_LINE +"%{" + NEW_LINE + "#include \"bison.tab.h\"" +NEW_LINE + "#include <stdio.h>"+ NEW_LINE + "#include <stdlib.h>"  + NEW_LINE +"%}")
+            f.write(IMPORTS)
             f.write(NEW_LINE)
-            # Rules Begin"""
-            
             f.write(NEW_LINE+"%%"+NEW_LINE)
             for term in self.terminals:
                 if term.find(SINGLE_QUOTE) >= 0 :
@@ -109,10 +96,8 @@ class GenerateLexInput(object):
                         f.write(term+ "\t\t{ yylval.c=strdup("+term+"); return " +term+"; }\n")
                 else :
                     f.write("\""+term.lower()+ "\"\t\t{ yylval.c=strdup(yytext); return ("+term+"); }\n")
-                
-            with open(RULES_FILE, ) as f1:
-                f.write(f1.read())
             
+            f.write(RULES)
             f.write(NEW_LINE+"%%"+NEW_LINE)                    
-        # Rules End""" 
                   
+

@@ -3,26 +3,38 @@ from os import listdir
 from os.path import isfile, join
 from os import system
 from os import remove
+from os import path
+from os import stat
+from os import mkdir
 
 
 class GenerateBisonInput(object):
     
     
+    def __init__(self):
         
+        self.HOME_DIR=path.expanduser(DIR)
+        try:
+            stat(self.HOME_DIR)
+        except:
+            mkdir(self.HOME_DIR)  
+
+
 
     def createBisonInput(self,grammar_file):
-        with open (BISON_FILE,WRITE) as f:
-            temp = open(TEMP_FILE1,READ);
+        with open (self.HOME_DIR+BISON_FILE,WRITE) as f:
+            temp = open(self.HOME_DIR+TEMP_FILE1,READ);
             for line in temp:
                 f.write("%token ")
                 f.write(line)
                 f.write(NEW_LINE)
             temp.close()
-            temp = open(TEMP_FILE2,READ);
+            temp = open(self.HOME_DIR+TEMP_FILE2,READ);
             strs = []
             for line in temp:
                 strs=line.split()                
             temp.close()
+            
             f.write(NEW_LINE)
             f.write("%left '(' '[' '*' '/' '%' '+' '-' \"<<\" \">>\" \">>>\" '<' '>' \"<=\" \">=\" \"==\" \"!=\" '&' '^' '#' \"&&\" \"##\" '?' ':' '=' ")
             f.write(NEW_LINE)
@@ -32,8 +44,8 @@ class GenerateBisonInput(object):
             f.write(NEW_LINE +"%{" + NEW_LINE + "#include <stdlib.h>"  + NEW_LINE + "#include <stdio.h>"  + NEW_LINE + "#include <string.h>"  + NEW_LINE + "%}")
             f.write(NEW_LINE+"%{"+NEW_LINE+"char *s;"+NEW_LINE+"%}")
             f.write(NEW_LINE+"%%"+NEW_LINE)
-            remove(TEMP_FILE1)
-            remove(TEMP_FILE2)
+            remove(self.HOME_DIR+TEMP_FILE1)
+            remove(self.HOME_DIR+TEMP_FILE2)
             temp = open (grammar_file, READ)            
             start=True
             prodnum=0
