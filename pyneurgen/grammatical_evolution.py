@@ -79,11 +79,19 @@ class GrammaticalEvolution(object):
     """
 
     def __init__(self):
-        
-        # non_Terminals variable contains the list of non_terminals extracted from grammar file. 
+        """
+        Because there are a number of parameters to specify, there are no
+        specific variables that are initialized within __init__.
+
+        There is a formidable number of default variables specified in this
+        function however.
+
+        """
+
+        #   Parameters for changing generations
+		#author : Spandan Veggalam    
+		#non_Terminals variable contains the list of non_terminals extracted from grammar file. 
         self._non_Terminals=[]
-        
-        
         self.stopping_criteria = {
                 STOPPING_MAX_GEN: None,
                 STOPPING_FITNESS_LANDSCAPE: None}
@@ -117,6 +125,8 @@ class GrammaticalEvolution(object):
         self.population = []
 
         self._history = []
+		#author : Spandan Veggalam    
+		#New flag _ind
         self._ind= None
 
 		
@@ -272,9 +282,13 @@ class GrammaticalEvolution(object):
 
             return values
 
+		#author : Spandan Veggalam  
+		#Local Variable to store non_terminals extracted after parsing grammar 
         non_Terminals=[]
 
         bnf_dict = {}
+		#author : Spandan Veggalam  
+		#modified the code to handle grammar and code fragment
         if self._ind == 1:
             for item in bnf.split('\n'):
                 if item.find('::=') >= 0:
@@ -293,7 +307,7 @@ class GrammaticalEvolution(object):
                     #   blank line
                     pass                
         else:
-            for item in bnf.split(';'):
+            for item in bnf.split('\n'):
                 if item.find(':') >= 0:
                     key, values = item.split(':',1)
                     key = key.strip()
@@ -305,11 +319,17 @@ class GrammaticalEvolution(object):
                     if key.startswith(STATEMENT_FORMAT):
                       	#   Convert statements back to string
                         values = ['\n'.join(values)]
+                        print key
                     bnf_dict[key] = values
+                  
                 else:
                     #   blank line
                     pass
+		#author : Spandan Veggalam  
+		#making non_terminals globally available
         self._non_Terminals = non_Terminals
+        
+        
         
         self.bnf = bnf_dict
 
@@ -707,7 +727,6 @@ class GrammaticalEvolution(object):
 
         for gene in self.population:
             starttime = datetime.now()
-            gene.set_non_Terminals(self._non_Terminals)
             gene._generation = self._generation
             logging.debug("Starting member G %s: %s at %s" % (
                 self._generation, gene.member_no,
@@ -717,6 +736,9 @@ class GrammaticalEvolution(object):
                 #self._generation, gene.member_no,
                 #starttime.strftime('%m/%d/%y %H:%M'))
             gene.starttime = starttime
+			#author : Spandan Veggalam  
+			#passing non_terminals to genotype
+            gene.set_keys (self._non_Terminals)
             self.current_g = gene
             gene.compute_fitness()
 

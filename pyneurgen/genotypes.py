@@ -26,10 +26,11 @@ from datetime import datetime
 import logging
 import random
 import re
+import subprocess
 import traceback
 
 from pyneurgen.utilities import base10tobase2, base2tobase10
-
+#author : Spandan Veggalam
 #STOPLIST = ['runtime_resolve', 'set_bnf_variable']
 VARIABLE_FORMAT = '(\<([^\>|^\s]+)\>)'
 MUT_TYPE_M = 'm'
@@ -73,6 +74,8 @@ class Genotype(object):
         grammatic evolution class.
 
         """
+		#author : Spandan Veggalam
+		#introducing new list keys to store Non-Terminals
         self._keys=[]        
         self.member_no = member_no
         self.local_bnf = {}
@@ -95,7 +98,9 @@ class Genotype(object):
         self._position = (0, 0)
 
         self.errors = []
-
+    
+    #author : Spandan Veggalam    
+    #setter for list variable :keys
     def set_keys(self, keys):
         self._keys=keys
     
@@ -261,10 +266,12 @@ class Genotype(object):
         would be used.
 
         """
-        
+
         values = self.local_bnf[variable]
         #try:
         value = self._select_choice(self._get_codon(), values)
+		#author : Spandan Veggalam
+        #Testing codons;; succeeded;;
         '''
         value1=''
         count =0
@@ -287,6 +294,8 @@ class Genotype(object):
                 #Failure to resolve variable: %s values: %s
                 #""" % (variable, values))
 
+		#author : Spandan Veggalam        
+		#New Production selected from a Production rule based on codon value;;
         value = re.sub('[\'()]', '', value)
         return str(value)
 
@@ -308,19 +317,22 @@ class Genotype(object):
             """
 
             status = False
-            print STOPLIST
             for stopitem in STOPLIST:
                 if item.find(stopitem) > -1:
                     status = True
 
             return status
-        
+
         self.errors = []
-        print program
-        """prg_list = re.split(VARIABLE_FORMAT, program)"""
+		#author : Spandan Veggalam        
+		#Changed Regular expression to split        
+        #prg_list = re.split(VARIABLE_FORMAT, program)
         prg_list = re.split('(\W+)', program)
         
         while True:
+			#author : Spandan Veggalam        
+			#Finding NT in the code fragment
+
             non_terminals=[]
             for token in prg_list:
                 if token in self._keys:
@@ -329,6 +341,9 @@ class Genotype(object):
             continue_map = False
             while position < len(prg_list):
                 item = prg_list[position]
+				#author : Spandan Veggalam        
+				#Un wanted code;; modified according to requirement;; Used while testing
+
                 #if item.strip() == '':
                 #    print 'stripping: ' +item
                 #    del(prg_list[position])
@@ -355,12 +370,12 @@ class Genotype(object):
                 position += 1
 
             program = ''.join(prg_list)
+			#author : Spandan Veggalam        
+			#Changed Regular expression to split ;; re- initialising variable prg_list
             prg_list=[]
-            print program
-            raw_input()
             prg_list = re.split('(\W+)', program)
             elapsed = datetime.now() - self.starttime
-            self._fitness=elapsed
+
             #   Reasons to fail the process
             if check_stoplist:
                 #   Program already running
@@ -512,7 +527,6 @@ class Genotype(object):
             self.local_bnf[BNF_PROGRAM] = [program]
             #print program[program.find('def'):]
             logging.debug(program)
-            raw_input()
             self._execute_code(program)
             logging.debug("==================================================")
         except:
@@ -529,7 +543,12 @@ class Genotype(object):
             #if a == "stop":
                 #raise ValueError("Program halted")
 
+		#author : Spandan Veggalam        
+		#Setting Time take to generate new code fragment is considered for fitness
+        elapsed = datetime.now() - self.starttime
+        self._fitness=elapsed.total_seconds()
         #self._fitness = float(self.local_bnf['<fitness>'][0])
+		
 
     def _execute_code(self, program):
         """
@@ -538,16 +557,42 @@ class Genotype(object):
         swapping in a custom parser.
 
         """
-
-        self.local_bnf['program'] = program
+        #author : Spandan Veggalam  
+        #For time being re-locating this statement
+        #self.local_bnf['program'] = program
 
         #   I'll revisit this again sometime.
         #print "compiling code..."
         #program_comp = compile(program, '<program>', 'exec')
         #print "executing code..."
         #exec program_comp
-        ns = locals()
-        exec(program) in ns
+		#author : Spandan Veggalam  
+		#Executing generated code fragment; 
+
+        #ns = locals()
+        #exec(program) in ns
+        
+        #Delete Code from here; this is used for only demonstration purpose
+        if program.find("INT_LITERAL") >=0:
+            s=random.randint(1,2)
+            if s==1:
+                program=program.replace("INT_LITERAL",ss)
+            else:
+                program=program.replace("INT_LITERAL",ss)
+        if program.find("STRING_LITERAL") >=0:
+            rw = ["a","b","c"]
+            program=program.replace('STRING_LITERAL',"\""+rw[random.randint(0,len(rw)-1)]+"\"")
+        if program.find("ID") >=0:
+            rw = ["a","b","c"]
+            program=program.replace("ID",rw[random.randint(0,len(rw))])
+        self.local_bnf['program'] = program    
+        #Delete Code till here; this is used for only demonstration purpose
+        print "executing \t" +program
+        proc = subprocess.Popen(["echo \""+program+"\" | js24"], stdout=subprocess.PIPE, shell=True)
+        (out, err) = proc.communicate()
+        
+        if out.find("syntax error") >=0 or out.find("syntax") >=0 :
+            raise StandardError("Syntax Error")
 
     def mutate(self, mutation_rate, mutation_type):
         """

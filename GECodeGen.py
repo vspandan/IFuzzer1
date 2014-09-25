@@ -3,36 +3,53 @@
 from pyneurgen.grammatical_evolution import GrammaticalEvolution
 from pyneurgen.fitness import FitnessElites, FitnessTournament
 from pyneurgen.fitness import ReplacementTournament, MAX, MIN, CENTER
+from pyneurgen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
+
+from os import listdir
+from os.path import isfile, join
+from os import system
+from posix import mkdir
+
+f=open('.Properties1','r')
+inputFOlder=f.read()
+f.close()
+
+f=open('.Properties2','r')
+grammarFile=f.read()
+f.close()
 
 
-f = open('JavaScript.g', 'r');
 
+inputFiles = [ f for f in listdir(inputFOlder) 
+                 if isfile(join(inputFOlder, f)) ]
+
+for inputFile in inputFiles:
+    f = open(inputFile, 'r');
+    f.read()
 bnf=""
-
+f = open(grammarFile,'r')
 for line in f:
     bnf+=line;
 f.close()
 
-#Build UI to take input folder
+genIncompleteCodeFrag =  GenIncompleteCodeFrag()
+
 #ability to handle multiple programs
 f1=open('IncompleteCodeFrag','r')
 
-bnf+="""<S>:"""
-for line in f1:
-    bnf+=line;
+bnf+="""<S>:"""+genIncompleteCodeFrag.genCodeFrag(f1.read())
 
-
+f1.close()
 
 ges = GrammaticalEvolution()
-
 ges.set_bnf(bnf)
 ges.set_genotype_length(start_gene_length=20,
-                        max_gene_length=50)
-ges.set_population_size(50)
+                        max_gene_length=5000)
+ges.set_population_size(4)
 ges.set_wrap(True)
 
-ges.set_max_generations(1000)
-ges.set_fitness_type(MIN, .01)
+ges.set_max_generations(10)
+ges.set_fitness_type(MIN, .00001)
 
 ges.set_max_program_length(500)
 ges.set_timeouts(10, 120)

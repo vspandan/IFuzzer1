@@ -1,0 +1,41 @@
+pydev debugger: starting (pid: 26730)
+     var   s Initialiser    ;    var   p   = 10   ;  
+executing 	     var   s = null    ;    var   p   = 10   ;
+executing 	     var   s = null    ;    var   p   = 10   ;
+executing 	     var   s = null    ;    var   p   = 10   ;
+executing 	     var   s = null    ;    var   p   = 10   ;
+executing 	     var   s = "a" . a    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: a is not defined
+executing 	     var   s = "c" . c    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: c is not defined
+executing 	     var   s = "c" . c    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: c is not defined
+executing 	     var   s = "c" . a    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: c is not defined
+executing 	     var   s = "b" . b    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: b is not defined
+executing 	     var   s = "c" . c    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: c is not defined
+executing 	     var   s = "c" . c    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: c is not defined
+executing 	     var   s = "c" . b    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: c is not defined
+executing 	     var   s = "c" . b    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: c is not defined
+executing 	     var   s = "a" . a    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: a is not defined
+executing 	     var   s = null . c . c    ;    var   p   = 10   ;
+typein:1:42 TypeError: null has no properties
+executing 	     var   s = "a" . b    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: a is not defined
+executing 	     var   s = null . a . a    ;    var   p   = 10   ;
+typein:1:42 TypeError: null has no properties
+executing 	     var   s = "a" . c    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: a is not defined
+executing 	     var   s = "b" . c    ;    var   p   = 10   ;
+typein:1:35 ReferenceError: b is not defined
+1
+[[1.822979, 1], [1.826964, 3], [2.063777, 0], [3.990092, 2]]
+
+
+     var   s = "a" . c    ;    var   p   = 10   ;
