@@ -42,6 +42,8 @@ from random import randint
 from pyneurgen.genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
 from pyneurgen.fitness import FitnessList, Fitness, Replacement
 from pyneurgen.fitness import CENTER, MAX, MIN
+from pyneurgen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
+
 
 
 #   Constants
@@ -91,6 +93,9 @@ class GrammaticalEvolution(object):
         #   Parameters for changing generations
 		#author : Spandan Veggalam    
 		#non_Terminals variable contains the list of non_terminals extracted from grammar file. 
+        #New flag _ind, initialPopulation list
+        self._ind= None
+        self.initial_Population = []
         self._non_Terminals=[]
         self.stopping_criteria = {
                 STOPPING_MAX_GEN: None,
@@ -125,13 +130,19 @@ class GrammaticalEvolution(object):
         self.population = []
 
         self._history = []
-		#author : Spandan Veggalam    
-		#New flag _ind
-        self._ind= None
+		
 
 		
     def set_ind(self, ind):
         self._ind=ind
+        
+    #Author : Spandan
+    def _prepareInitial_Population (self):
+        genIncompleteCodeFrag =  GenIncompleteCodeFrag()
+        f1=open('IncompleteCodeFrag','r')
+        self.initial_Population = genIncompleteCodeFrag.genCodeFrag(f1.read(),self._population_size) 
+        f1.close()
+
 		
     def set_population_size(self, size):
         """
@@ -263,7 +274,7 @@ class GrammaticalEvolution(object):
         longer choices.
 
         In addition, a set of statements are marked with a key
-        starting with "<S".  These are treated differently in that spaces are
+        starting with "CodeFrag".  These are treated differently in that spaces are
         not automatically stripped from the front.  This enables python
         oriented white space to be honored.
 
@@ -319,14 +330,13 @@ class GrammaticalEvolution(object):
                     if key.startswith(STATEMENT_FORMAT):
                       	#   Convert statements back to string
                         values = ['\n'.join(values)]
-                        print key
                     bnf_dict[key] = values
                   
                 else:
                     #   blank line
                     pass
 		#author : Spandan Veggalam  
-		#making non_terminals globally available
+		#making non_terminals globally available        
         self._non_Terminals = non_Terminals
         
         
@@ -814,6 +824,12 @@ class GrammaticalEvolution(object):
             gene._wrap = self._wrap
             self.population.append(gene)
             member_no += 1
+            
+            #Author Spandan
+            #setting Incomplete Code Frag
+            self._prepareInitial_Population()     
+            gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
+            
 
     def _perform_endcycle(self):
         """

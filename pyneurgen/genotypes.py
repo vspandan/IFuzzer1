@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #
 #   Copyright (C) 2012  Don Smiley  ds@sidorof.com
+from string import lower
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -522,7 +523,9 @@ class Genotype(object):
             logging.debug("mapping variables to program...")
             self.local_bnf[BNF_PROGRAM] = [
                     'mapping variables into program failed']
-            program = self._map_variables(self.local_bnf['<S>'][0], True)
+            #author : Spandan Veggalam     
+            #changed they key from 'program' to 'CodeFrag'
+            program = self._map_variables(self.local_bnf['CodeFrag'], True)
             logging.debug("finished mapping variables to program...")
             self.local_bnf[BNF_PROGRAM] = [program]
             #print program[program.find('def'):]
@@ -585,6 +588,7 @@ class Genotype(object):
         if program.find("ID") >=0:
             rw = ["a","b","c"]
             program=program.replace("ID",rw[random.randint(0,len(rw))])
+        program=program.lower()
         self.local_bnf['program'] = program    
         #Delete Code till here; this is used for only demonstration purpose
         print "executing \t" +program
@@ -593,6 +597,7 @@ class Genotype(object):
         
         if out.find("syntax error") >=0 or out.find("syntax") >=0 :
             raise StandardError("Syntax Error")
+        return program
 
     def mutate(self, mutation_rate, mutation_type):
         """
