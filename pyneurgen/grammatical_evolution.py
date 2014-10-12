@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #
 #   Copyright (C) 2012  Don Smiley  ds@sidorof.com
+import tkMessageBox
+from Tkconstants import INSERT
 
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -44,7 +46,18 @@ from pyneurgen.fitness import FitnessList, Fitness, Replacement
 from pyneurgen.fitness import CENTER, MAX, MIN
 from pyneurgen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
 
+from gparser.GenerateBisonInput import *
+from gparser.GenerateLexInput import *
 
+
+from Tkinter import Tk, Text, StringVar
+from Tkinter import Frame
+from Tkinter import Label
+from Tkinter import Button
+
+from tkMessageBox import askyesno,showwarning
+from tkFileDialog import askopenfilename
+from Tkconstants import INSERT
 
 #   Constants
 STATEMENT_FORMAT = '<S'
@@ -135,13 +148,71 @@ class GrammaticalEvolution(object):
 		
     def set_ind(self, ind):
         self._ind=ind
+    
+    #Author : Spandan Veggalam
+    def setGrammarFile(self,fileName):
+        self.grammarFile=fileName
+    
+    #Author : Spandan Veggalam
+    def _extractProductions(self):
+        bnf=""
+        f = open(self.grammarFile,'r')
+        for line in f:
+            bnf+=line;
+        f.close()
+        self.set_bnf(bnf)
         
-    #Author : Spandan
+    
+    #Author : Spandan Veggalam
     def _prepareInitial_Population (self):
+        def populateTextArea():
+            Tk().withdraw()
+            f1=open(askopenfilename(),'r')
+            self.textArea.insert(INSERT,f1.read())
+            f1.close()
+            
+        def genParser():
+            genLexInput =  GenerateLexInput()
+            genLexInput.setSelectedGrammar(self.grammarFile)
+            genLexInput.createLexInput()
+            
+            genBisonInput = GenerateBisonInput()
+            genBisonInput.createBisonInput(self.grammarFile)
+            
+            
+        def parseCode():
+            #TODO send text area data to parser and generate the parse tree set it to below variable; 
+            #TODO replace file reading 
+            try :
+                inputCode=self.textArea.get('1.0', 'end')
+                print len(inputCode)
+                if len(inputCode.strip())==0:
+                    raise Exception
+                f1=open('IncompleteCodeFrag','r')
+                self.parseRepr = f1.read()
+                f1.close()
+                frame.quit()
+                return self.parseRepr
+            except Exception as e:
+                showwarning("Warning", "Provide Input Code")
+            
+                 
+
+        result= askyesno("Confirmation", "Generate Parser?")
+        if result == "yes":
+            genParser() 
+        
+        root = Tk()
+        frame=Frame(root)
+        frame.pack(side="top", fill="both", expand=True)
+        self.textArea= Text(frame)
+        self.textArea.grid(row=1)
+        browseBtn=Button(frame, text='InputFile', command=populateTextArea,width=20).grid(row=2)
+        submitBtn=Button(frame, text='Parse Code', command=parseCode,width=20).grid(row=3)
+        frame.mainloop()      
         genIncompleteCodeFrag =  GenIncompleteCodeFrag()
-        f1=open('IncompleteCodeFrag','r')
-        self.initial_Population = genIncompleteCodeFrag.genCodeFrag(f1.read(),self._population_size) 
-        f1.close()
+        self.initial_Population = genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size) 
+        
 
 		
     def set_population_size(self, size):
@@ -806,7 +877,7 @@ class GrammaticalEvolution(object):
         genotype for running the fitness functions.
 
         """
-
+        self._prepareInitial_Population()
         member_no = 0
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
@@ -826,8 +897,7 @@ class GrammaticalEvolution(object):
             member_no += 1
             
             #Author Spandan
-            #setting Incomplete Code Frag
-            self._prepareInitial_Population()     
+            #setting Incomplete Code Frag                 
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
             
 

@@ -11,7 +11,16 @@ from os import system
 from posix import mkdir
 
 
-from Tkinter import *
+from Tkinter import Tk
+from Tkinter import Frame
+from Tkinter import Label
+from Tkinter import Button
+from Tkinter import StringVar
+from Tkinter import BooleanVar
+from Tkinter import Entry
+from Tkinter import Radiobutton
+from Tkinter import W
+from Tkinter import OptionMenu
 
 
 from tkFileDialog import askopenfilename
@@ -23,7 +32,8 @@ from Tix import ROW
 class GECodeGen(object):
     def __init__(self):
         root = Tk()
-        root.geometry("800x480+30+30")
+        root.title("Interpreter Fuzzer")
+        root.geometry("800x400+30+30")
         self.frame = Frame(root)        
         self.frame.pack(side="top", fill="both", expand=True)
         
@@ -34,8 +44,8 @@ class GECodeGen(object):
         browseBtn=Button(self.frame, text='Browse', command=self.selectGrammarFIle,width=10).grid(row=0, column=3)
         
         
-        label3= Label(self.frame,text="GENOTYPE PARAMETERS")
-        label3.grid(row = 3)       
+        label= Label(self.frame,text="GENOTYPE PARAMETERS")
+        label.grid(row = 3)       
         
         
         label2= Label(self.frame,text="Start Gene Length",width=15).grid(row = 5)
@@ -59,6 +69,7 @@ class GECodeGen(object):
         self.wrapRB2=Radiobutton(self.frame,text="False",variable=self.wrap,value="False", width=5,anchor=W)        
         self.wrapRB1.grid(row=5,column=3)
         self.wrapRB2.grid(row=5,column=4)
+        self.wrapRB1.select()
         
         
         label6= Label(self.frame,text="Generations",width=15).grid(row = 6,column=2)
@@ -164,12 +175,10 @@ class GECodeGen(object):
     
         bnf=""
         try:
-            f = open(self.inputFile.get(),'r')
-            for line in f:
-                bnf+=line;
-            f.close()
+           
            
             ges = GrammaticalEvolution()
+            ges.setGrammarFile(self.inputFile.get())
             ges.set_bnf(bnf)
             ges.set_genotype_length(int(self.start_gene_length.get()), int(self.max_gene_length.get()))
             ges.set_population_size(long(self.population_size.get()))
