@@ -96,38 +96,38 @@ class GECodeGen(object):
         
         label10= Label(self.frame,text="Min Time Out",width=15).grid(row = 9,column=0)
         self.set_min_timeout=Entry(self.frame,width=20)
-        self.set_min_timeout.insert(0,"10")
+        self.set_min_timeout.insert(0,"20")
         self.set_min_timeout.grid(row=9,column=1)
         
         label11= Label(self.frame,text="Max Time Out",width=15).grid(row = 9,column=2)
         self.set_max_timeout=Entry(self.frame,width=20)
-        self.set_max_timeout.insert(0,"120")
+        self.set_max_timeout.insert(0,"3600")
         self.set_max_timeout.grid(row=9,column=3)
         
         label12= Label(self.frame,text="Fitness Fail",width=15).grid(row = 10,column=0)
         self.set_fitness_failvalue=Entry(self.frame,width=20)
-        self.set_fitness_failvalue.insert(0,"100")
+        self.set_fitness_failvalue.insert(0,"-1000")
         self.set_fitness_failvalue.grid(row=10,column=1)
         
         label13= Label(self.frame,text="Max Fitness Rate",width=15).grid(row = 10,column=2)
         self.set_max_fitness_rate=Entry(self.frame,width=20)
-        self.set_max_fitness_rate.insert(0,"100")
+        self.set_max_fitness_rate.insert(0,"0.5")
         self.set_max_fitness_rate.grid(row=10,column=3)
 
         label14= Label(self.frame,text="Mutation Rate",width=15).grid(row = 11,column=0)
         self.set_mutation_rate=Entry(self.frame,width=20)
-        self.set_mutation_rate.insert(0,"100")
+        self.set_mutation_rate.insert(0,"0.02")
         self.set_mutation_rate.grid(row=11,column=1)
         
         label15= Label(self.frame,text="Crossover Rate",width=15).grid(row = 11,column=2)
         self.set_crossover_rate=Entry(self.frame,width=20)
-        self.set_crossover_rate.insert(0,"100")
+        self.set_crossover_rate.insert(0,"0.2")
         self.set_crossover_rate.grid(row=11,column=3)
         
         label16= Label(self.frame,text="Mutation Type",width=15).grid(row = 12,column=0)
         OPTIONS = ["SINGLE",    "MULTIPLE"]
         self.variable1 = StringVar()
-        self.variable1.set(OPTIONS[1])
+        self.variable1.set(OPTIONS[0])
         self.set_mutation_type = OptionMenu(self.frame, self.variable1,*OPTIONS)        
         self.set_mutation_type.grid(row=12,column=1)
         
@@ -160,8 +160,27 @@ class GECodeGen(object):
         self.set_replacement_tournmant_size=Entry(self.frame,width=20)
         self.set_replacement_tournmant_size.insert(0,"3")
         self.set_replacement_tournmant_size.grid(row=14,column=3)
-       
-       
+        
+        
+        frame1=Frame(self.frame)
+        frame1.grid(row = 15,column =0, columnspan=2)
+        label22= Label(frame1,text="Maintain History",width=15).grid(row = 0,column =0)
+        self.maintain_history=BooleanVar()
+        self.wrapRB1=Radiobutton(frame1,text="True",variable=self.maintain_history, value="True", width=5,anchor=W)
+        self.wrapRB2=Radiobutton(frame1,text="False",variable=self.maintain_history,value="False", width=5,anchor=W)        
+        self.wrapRB1.grid(row=0,column=1)
+        self.wrapRB2.grid(row=0,column=2)
+        self.wrapRB1.select()
+        
+        frame2=Frame(self.frame)
+        frame2.grid(row = 15,column =2,columnspan=2)
+        label23= Label(frame2,text="Extend Genotype",width=15).grid(row = 0,column =0)
+        self.extend_genotype=BooleanVar()
+        self.wrapRB1=Radiobutton(frame2,text="True",variable=self.extend_genotype, value="True", width=5,anchor=W)
+        self.wrapRB2=Radiobutton(frame2,text="False",variable=self.extend_genotype,value="False", width=5,anchor=W)        
+        self.wrapRB1.grid(row=0,column=1)
+        self.wrapRB2.grid(row=0,column=2)
+        self.wrapRB1.select()
         
         startBtn=Button(self.frame, text='START', command=self.initialize).grid(row=18, column=1)
         closeBtn=Button(self.frame, text='EXIT', command=self.frame.quit).grid(row=18, column=2)
@@ -214,7 +233,9 @@ class GECodeGen(object):
             ges.set_replacement_selections(
                     ReplacementTournament(ges.fitness_list, tournament_size=int(self.set_replacement_tournmant_size.get())))
             
-            ges.set_maintain_history(True)
+            ges.set_maintain_history(self.maintain_history.get())
+            ges.set_ExtendGenotype(self.extend_genotype.get())
+            
             ges.create_genotypes()
             print ges.run()
             print ges.fitness_list.sorted()

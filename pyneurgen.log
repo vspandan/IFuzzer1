@@ -1,0 +1,33 @@
+2014-10-13 11:35:33,428 started run
+2014-10-13 11:35:33,751 Finished generation: 0 Max generations: 10
+2014-10-13 11:35:33,751 best_value: 0.019385 median: 0.02104 mean: 0.0640706
+2014-10-13 11:35:33,751      var variabledeclaration   ;    var   p   = 10   ;  
+2014-10-13 11:35:33,861 Finished generation: 1 Max generations: 10
+2014-10-13 11:35:33,861 best_value: 0.019299 median: 0.020537 mean: 0.0215828
+2014-10-13 11:35:33,861      var   s initialiser    ;    var   p   = 10   ;  
+2014-10-13 11:35:33,978 Finished generation: 2 Max generations: 10
+2014-10-13 11:35:33,978 best_value: 0.019335 median: 0.020615 mean: 0.0228558
+2014-10-13 11:35:33,978      var   s initialiser    ;    var   p   = 10   ;  
+2014-10-13 11:35:34,099 Finished generation: 3 Max generations: 10
+2014-10-13 11:35:34,099 best_value: 0.019127 median: 0.02003 mean: 0.023674
+2014-10-13 11:35:34,099      var   s initialiser    ;    var   p   = 10   ;  
+2014-10-13 11:35:34,207 Finished generation: 4 Max generations: 10
+2014-10-13 11:35:34,207 best_value: 0.01948 median: 0.020028 mean: 0.0210872
+2014-10-13 11:35:34,207      var   s initialiser    ;    var   p   = 10   ;  
+2014-10-13 11:35:34,328 Finished generation: 5 Max generations: 10
+2014-10-13 11:35:34,328 best_value: 0.020837 median: 0.023941 mean: 0.0237438
+2014-10-13 11:35:34,328      var variabledeclaration   ;    var   p   = 10   ;  
+2014-10-13 11:35:34,441 Finished generation: 6 Max generations: 10
+2014-10-13 11:35:34,441 best_value: 0.019514 median: 0.020454 mean: 0.021946
+2014-10-13 11:35:34,442      var   s initialiser    ;    var   p   = 10   ;  
+2014-10-13 11:35:34,551 Finished generation: 7 Max generations: 10
+2014-10-13 11:35:34,551 best_value: 0.019851 median: 0.021097 mean: 0.0214476
+2014-10-13 11:35:34,551      var   s initialiser    ;    var   p   = 10   ;  
+2014-10-13 11:35:34,661 Finished generation: 8 Max generations: 10
+2014-10-13 11:35:34,661 best_value: 0.020244 median: 0.021725 mean: 0.021411
+2014-10-13 11:35:34,661      var   s initialiser    ;    var   p   = 10   ;  
+2014-10-13 11:35:34,772 Finished generation: 9 Max generations: 10
+2014-10-13 11:35:34,772 best_value: 0.019591 median: 0.020108 mean: 0.0218144
+2014-10-13 11:35:34,772      var variabledeclaration   ;    var   p   = 10   ;  
+2014-10-13 11:35:34,878 stopping processing due to max generation
+2014-10-13 11:35:34,879 completed run: generations: 10, best member:1 fitness: 0.019506
