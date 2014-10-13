@@ -144,7 +144,8 @@ class GrammaticalEvolution(object):
 
         self._history = []
 		
-
+    def set_ExtendGenotype(self, bool):
+        self._extend_genotype=bool
 		
     def set_ind(self, ind):
         self._ind=ind
@@ -161,17 +162,34 @@ class GrammaticalEvolution(object):
             bnf+=line;
         f.close()
         self.set_bnf(bnf)
-        
+    
+    #Author : Spandan Veggalam    
+    def parseCode(self,sourceInd=None):
+            #TODO send text area data to parser and generate the parse tree set it to below variable; 
+            #TODO replace file reading
+            if sourceInd is None: 
+                try :
+                    inputCode=self.textArea.get('1.0', 'end')                
+                    if len(inputCode.strip())<=0:
+                        raise Exception
+                    f1=open('IncompleteCodeFrag','r')
+                    self.parseRepr = f1.read()
+                    f1.close()
+                    self.frame.quit()                
+                except Exception as e:
+                    showwarning(e)
+            else:
+                print "Implementing"
     
     #Author : Spandan Veggalam
-    def _prepareInitial_Population (self):
-        def populateTextArea():
+    def populateTextArea(self):
             Tk().withdraw()
             f1=open(askopenfilename(),'r')
             self.textArea.insert(INSERT,f1.read())
             f1.close()
-            
-        def genParser():
+    
+    #Author : Spandan Veggalam        
+    def genParser(self):
             genLexInput =  GenerateLexInput()
             genLexInput.setSelectedGrammar(self.grammarFile)
             genLexInput.createLexInput()
@@ -179,37 +197,21 @@ class GrammaticalEvolution(object):
             genBisonInput = GenerateBisonInput()
             genBisonInput.createBisonInput(self.grammarFile)
             
+    #Author : Spandan Veggalam
+    def _prepareInitial_Population (self):
             
-        def parseCode():
-            #TODO send text area data to parser and generate the parse tree set it to below variable; 
-            #TODO replace file reading 
-            try :
-                inputCode=self.textArea.get('1.0', 'end')
-                print len(inputCode)
-                if len(inputCode.strip())==0:
-                    raise Exception
-                f1=open('IncompleteCodeFrag','r')
-                self.parseRepr = f1.read()
-                f1.close()
-                frame.quit()
-                return self.parseRepr
-            except Exception as e:
-                showwarning("Warning", "Provide Input Code")
-            
-                 
-
         result= askyesno("Confirmation", "Generate Parser?")
         if result == "yes":
-            genParser() 
+            self.genParser() 
         
         root = Tk()
-        frame=Frame(root)
-        frame.pack(side="top", fill="both", expand=True)
-        self.textArea= Text(frame)
+        self.frame=Frame(root)
+        self.frame.pack(side="top", fill="both", expand=True)
+        self.textArea= Text(self.frame)
         self.textArea.grid(row=1)
-        browseBtn=Button(frame, text='InputFile', command=populateTextArea,width=20).grid(row=2)
-        submitBtn=Button(frame, text='Parse Code', command=parseCode,width=20).grid(row=3)
-        frame.mainloop()      
+        browseBtn=Button(self.frame, text='InputFile', command=self.populateTextArea,width=20).grid(row=2)
+        submitBtn=Button(self.frame, text='Parse Code', command=self.parseCode,width=20).grid(row=3)
+        self.frame.mainloop()      
         genIncompleteCodeFrag =  GenIncompleteCodeFrag()
         self.initial_Population = genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size) 
         

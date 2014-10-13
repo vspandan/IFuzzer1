@@ -28,8 +28,10 @@ from tkFileDialog import askdirectory
 from tkMessageBox import showerror
 from Tix import ROW
 
-
+#Author: Spandan Veggalam
 class GECodeGen(object):
+    
+    #Author: Spandan Veggalam
     def __init__(self):
         root = Tk()
         root.title("Interpreter Fuzzer")
@@ -186,10 +188,12 @@ class GECodeGen(object):
         closeBtn=Button(self.frame, text='EXIT', command=self.frame.quit).grid(row=18, column=2)
         self.frame.mainloop()        
     
+    #Author: Spandan Veggalam
     def selectGrammarFIle(self):
         Tk().withdraw()        
         self.e.set(askopenfilename())        
-        
+    
+    #Author: Spandan Veggalam
     def initialize(self):
     
         bnf=""
@@ -248,7 +252,8 @@ class GECodeGen(object):
             showerror("Error", e)       
         
         self.frame.quit()
-     
+
+#Author: Spandan Veggalam 
 if __name__ == "__main__":
     GECodeGen()
         

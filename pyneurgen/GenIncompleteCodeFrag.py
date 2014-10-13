@@ -1,20 +1,17 @@
 from random import randint
 
+#Author: Spandan Veggalam
 class GenIncompleteCodeFrag(object):
-
     
-
+    #Author: Spandan Veggalam
     def genCodeFrag(self, parsetree, population_size):
         population = []
         
         for pop_count in range(0, population_size):
             inc =0
             code=""
-            nT=[]
             val=parsetree.split()
-            for v in val:
-                if "<<<" in v:
-                    nT.append(v.replace("<<<","").replace(":","").strip())
+            nT=self._extractNonTerminal(val)
             selected=randint(0,len(nT)-1)
             start=False
             once=False
@@ -42,3 +39,12 @@ class GenIncompleteCodeFrag(object):
             population.append(code)
             
         return population
+    
+    #Author: Spandan Veggalam
+    def _extractNonTerminal(self,val):
+        nT=[]
+        for v in val:
+                if "<<<" in v:
+                    nT.append(v.replace("<<<","").replace(":","").strip())
+        return nT
+    
