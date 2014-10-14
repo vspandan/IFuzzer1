@@ -31,12 +31,12 @@ class GenIncompleteCodeFrag(object):
                             start=False
                 if not start:   
                     if ">>>" in v :
-                        inc=inc-1
-                        code=code+" "
+                        inc=inc-1                        
                     else:
-                        code =code+" "+v
-                
-            population.append(code)
+                        v=v.strip()
+                        if len(v) >0:
+                            code =code+" "+v
+            population.append(code.strip())
             
         return population
     

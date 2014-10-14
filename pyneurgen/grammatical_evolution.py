@@ -164,13 +164,13 @@ class GrammaticalEvolution(object):
         self.set_bnf(bnf)
     
     #Author : Spandan Veggalam    
-    def parseCode(self,sourceInd=None):
+    def parseCode(self,sourceInd=None,program=None):
             #TODO send text area data to parser and generate the parse tree set it to below variable; 
             #TODO replace file reading
-            if sourceInd is None: 
+            if sourceInd is None and program is None: 
                 try :
                     inputCode=self.textArea.get('1.0', 'end')                
-                    if len(inputCode.strip())<=0:
+                    if len(inputCode.strip())<0:
                         raise Exception
                     f1=open('IncompleteCodeFrag','r')
                     self.parseRepr = f1.read()
@@ -178,7 +178,7 @@ class GrammaticalEvolution(object):
                     self.frame.quit()                
                 except Exception as e:
                     showwarning(e)
-            else:
+            if sourceInd is not None and program is not None:
                 print "Implementing"
     
     #Author : Spandan Veggalam
@@ -824,7 +824,7 @@ class GrammaticalEvolution(object):
             gene.set_keys (self._non_Terminals)
             self.current_g = gene
             gene.compute_fitness()
-
+            self.population[gene.member_no]=gene
             logging.debug("fitness=%s" % (gene.get_fitness()))
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
 
@@ -968,7 +968,7 @@ class GrammaticalEvolution(object):
                 parent1 = flist[i]
                 parent2 = flist[i + 1]
 
-                child1, child2 = self._crossover(parent1, parent2)
+                child1, child2 = self._crossover(parent1, parent2,True)
                 if self._children_per_crossover == 2:
                     child_list.append(child1)
                     child_list.append(child2)
@@ -977,7 +977,7 @@ class GrammaticalEvolution(object):
 
         return child_list
 
-    def _crossover(self, parent1, parent2):
+    def _crossover(self, parent1, parent2, ind=None):
         """
         This function accepts two parents, randomly selects which is parent1
         and which is parent2.  Then, executes the crossover, and returns two
@@ -989,27 +989,36 @@ class GrammaticalEvolution(object):
             raise ValueError("Parent1 is not a genotype")
         if not isinstance(parent2, Genotype):
             raise ValueError("Parent2 is not a genotype")
-
+        
         if randint(0, 1):
-            child1 = deepcopy(parent1)
-            child2 = deepcopy(parent2)
+                child1 = deepcopy(parent1)
+                child2 = deepcopy(parent2)
         else:
-            child1 = deepcopy(parent2)
-            child2 = deepcopy(parent1)
-
-        child1_binary = child1.binary_gene
-        child2_binary = child2.binary_gene
-
-        minlength = min(len(child1_binary), len(child2_binary))
-        crosspoint = randint(2, minlength - 2)
-
-        child1_binary, child2_binary = self._crossover_function(
-            child1.binary_gene, child2.binary_gene, crosspoint)
-
-        child1.set_binary_gene(child1_binary)
-        child1.generate_decimal_gene()
-        child2.set_binary_gene(child2_binary)
-        child2.generate_decimal_gene()
+                child1 = deepcopy(parent2)
+                child2 = deepcopy(parent1)
+        
+        print "child1::::"+child1.get_program()
+        print "child2::::"+child2.get_program()
+        
+        if ind is None:
+            
+            child1_binary = child1.binary_gene
+            child2_binary = child2.binary_gene
+    
+            minlength = min(len(child1_binary), len(child2_binary))
+            crosspoint = randint(2, minlength - 2)
+    
+            child1_binary, child2_binary = self._crossover_function(
+                child1.binary_gene, child2.binary_gene, crosspoint)
+            child1.set_binary_gene(child1_binary)
+            child1.generate_decimal_gene()
+            child2.set_binary_gene(child2_binary)
+            child2.generate_decimal_gene()
+    
+        else :
+            self.parseCode(True,None)
+            
+        
 
         return (child1, child2)
 
