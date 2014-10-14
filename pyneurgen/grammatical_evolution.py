@@ -59,6 +59,8 @@ from tkMessageBox import askyesno,showwarning
 from tkFileDialog import askopenfilename
 from Tkconstants import INSERT
 
+from random import choice
+
 #   Constants
 STATEMENT_FORMAT = '<S'
 STOPPING_MAX_GEN = 'max_generations'
@@ -163,23 +165,29 @@ class GrammaticalEvolution(object):
         f.close()
         self.set_bnf(bnf)
     
+    #Author : Spandan Veggalam
+    def parseCode(self,codeFragment):
+        #TODO : send codeFragment to parser
+        parseRepr=""
+        return parseRepr
+    
+    
     #Author : Spandan Veggalam    
-    def parseCode(self,sourceInd=None,program=None):
+    def parseInputCode(self):
             #TODO send text area data to parser and generate the parse tree set it to below variable; 
             #TODO replace file reading
-            if sourceInd is None and program is None: 
-                try :
+            try :
                     inputCode=self.textArea.get('1.0', 'end')                
                     if len(inputCode.strip())<0:
                         raise Exception
+                    #TODO : self.parseRepr=self.parseCode(inputCode)
                     f1=open('IncompleteCodeFrag','r')
                     self.parseRepr = f1.read()
+                    
                     f1.close()
                     self.frame.quit()                
-                except Exception as e:
-                    showwarning(e)
-            if sourceInd is not None and program is not None:
-                print "Implementing"
+            except Exception as e:
+                    showwarning(e)            
     
     #Author : Spandan Veggalam
     def populateTextArea(self):
@@ -210,10 +218,10 @@ class GrammaticalEvolution(object):
         self.textArea= Text(self.frame)
         self.textArea.grid(row=1)
         browseBtn=Button(self.frame, text='InputFile', command=self.populateTextArea,width=20).grid(row=2)
-        submitBtn=Button(self.frame, text='Parse Code', command=self.parseCode,width=20).grid(row=3)
+        submitBtn=Button(self.frame, text='Parse Code', command=self.parseInputCode,width=20).grid(row=3)
         self.frame.mainloop()      
-        genIncompleteCodeFrag =  GenIncompleteCodeFrag()
-        self.initial_Population = genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size) 
+        self.genIncompleteCodeFrag =  GenIncompleteCodeFrag()
+        self.initial_Population = self.genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size,self.genIncompleteCodeFrag.extractNonTerminal(self.parseRepr.split())) 
         
 
 		
@@ -997,9 +1005,6 @@ class GrammaticalEvolution(object):
                 child1 = deepcopy(parent2)
                 child2 = deepcopy(parent1)
         
-        print "child1::::"+child1.get_program()
-        print "child2::::"+child2.get_program()
-        
         if ind is None:
             
             child1_binary = child1.binary_gene
@@ -1016,10 +1021,34 @@ class GrammaticalEvolution(object):
             child2.generate_decimal_gene()
     
         else :
-            self.parseCode(True,None)
-            
+            #print "child1::::"+child1.get_program()
+            #print "child2::::"+child2.get_program()
         
-
+            child1Prg=child1.get_program()
+            child2Prg=child2.get_program()
+            
+            non_term1=self.genIncompleteCodeFrag.extractNonTerminal(child1Prg)
+            non_term2=self.genIncompleteCodeFrag.extractNonTerminal(child2Prg)
+            
+            commonNonTerm=[val for val in nonTerm1 if val in set(nonTerm2)]
+            
+            if len(commonNonTerm) > 0:
+                selectedNt= choice(commonNonTerm)
+            else:
+                return child1, child2
+            
+            subString1=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child1Prg),1,nonTerm1,True,selectedNt)
+            subString2=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child2Prg),1,nonTerm1,True,selectedNt)
+            
+            startPoint1=child1Prg.index(subString1)
+            startPoint2=child1Prg.index(subString2)
+            
+            child1Prg_ = child1Prg[0:startPoint1]+" "+subString2 +" "+child1Prg[startPoint1+len(subString1)]
+            child2Prg_ = child2Prg[0:startPoint2]+" "+subString1 +" "+child2Prg[startPoint2+len(subString2)]
+            
+            #TODO : crossover genestring as well
+            #TODO : Replace parents with childs
+            
         return (child1, child2)
 
     @staticmethod
