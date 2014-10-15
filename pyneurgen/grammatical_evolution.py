@@ -1005,51 +1005,70 @@ class GrammaticalEvolution(object):
                 child1 = deepcopy(parent2)
                 child2 = deepcopy(parent1)
         
-        if ind is None:
+        
             
-            child1_binary = child1.binary_gene
-            child2_binary = child2.binary_gene
-    
+        child1_binary = child1.binary_gene
+        child2_binary = child2.binary_gene
+        
+        if ind is None:
             minlength = min(len(child1_binary), len(child2_binary))
             crosspoint = randint(2, minlength - 2)
     
             child1_binary, child2_binary = self._crossover_function(
                 child1.binary_gene, child2.binary_gene, crosspoint)
+            
             child1.set_binary_gene(child1_binary)
             child1.generate_decimal_gene()
             child2.set_binary_gene(child2_binary)
             child2.generate_decimal_gene()
-    
-        else :
-            #print "child1::::"+child1.get_program()
-            #print "child2::::"+child2.get_program()
         
-            child1Prg=child1.get_program()
-            child2Prg=child2.get_program()
-            
-            non_term1=self.genIncompleteCodeFrag.extractNonTerminal(child1Prg)
-            non_term2=self.genIncompleteCodeFrag.extractNonTerminal(child2Prg)
-            
-            commonNonTerm=[val for val in nonTerm1 if val in set(nonTerm2)]
-            
-            if len(commonNonTerm) > 0:
-                selectedNt= choice(commonNonTerm)
-            else:
-                return child1, child2
-            
-            subString1=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child1Prg),1,nonTerm1,True,selectedNt)
-            subString2=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child2Prg),1,nonTerm1,True,selectedNt)
-            
-            startPoint1=child1Prg.index(subString1)
-            startPoint2=child1Prg.index(subString2)
-            
-            child1Prg_ = child1Prg[0:startPoint1]+" "+subString2 +" "+child1Prg[startPoint1+len(subString1)]
-            child2Prg_ = child2Prg[0:startPoint2]+" "+subString1 +" "+child2Prg[startPoint2+len(subString2)]
-            
-            #TODO : crossover genestring as well
-            #TODO : Replace parents with childs
-            
-        return (child1, child2)
+            return (child1, child2)
+    
+        #print "child1::::"+child1.get_program()
+        #print "child2::::"+child2.get_program()
+    
+        child1Prg=child1.get_program()
+        child2Prg=child2.get_program()
+        
+        non_term1=self.genIncompleteCodeFrag.extractNonTerminal(child1Prg)
+        non_term2=self.genIncompleteCodeFrag.extractNonTerminal(child2Prg)
+        
+        commonNonTerm=[val for val in nonTerm1 if val in set(nonTerm2)]
+        
+        if len(commonNonTerm) > 0:
+            selectedNt= choice(commonNonTerm)
+        else:
+            return child1, child2
+        
+        subString1=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child1Prg),1,nonTerm1,True,selectedNt)
+        subString2=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child2Prg),1,nonTerm1,True,selectedNt)
+        
+        startPoint1=child1Prg.index(subString1)
+        startPoint2=child1Prg.index(subString2)
+        
+        child1Prg_ = child1Prg[0:startPoint1]+" "+subString2 +" "+child1Prg[startPoint1+len(subString1)]
+        child2Prg_ = child2Prg[0:startPoint2]+" "+subString1 +" "+child2Prg[startPoint2+len(subString2)]
+        
+        
+        child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2+1)*8:(startPoint2+1+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8]
+        child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1+1)*8:(startPoint1+1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8]
+        
+        #TODO : crossover genestring as well
+        #TODO : Replace parents with childs
+        
+        incompl1=self.parseCode(child1Prg_)
+        incompl2=self.parseCode(child2Prg_)
+        
+        child1.local_bnf['CodeFrag'] =  self.genIncompleteCodeFrag.genCodeFrag(incompl1,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl1.split()))
+        child2.local_bnf['CodeFrag'] =  self.genIncompleteCodeFrag.genCodeFrag(incompl2,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl2.split()))
+        
+        child1.set_binary_gene(child1_binary)
+        child1.generate_decimal_gene()
+        child2.set_binary_gene(child2_binary)
+        child2.generate_decimal_gene()
+        
+        return (child1, child2) 
+        
 
     @staticmethod
     def _crossover_function(child1_binary, child2_binary, crosspoint):

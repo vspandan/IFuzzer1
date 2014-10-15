@@ -47,6 +47,8 @@ class GenIncompleteCodeFrag(object):
                         v=v.strip()
                         if len(v) >0:
                             code =code+" "+v
+            if population_size == 1:
+                return code.strip()
             population.append(code.strip())
             
         if subTree is None:
