@@ -1046,12 +1046,12 @@ class GrammaticalEvolution(object):
         startPoint1=child1Prg.index(subString1)
         startPoint2=child1Prg.index(subString2)
         
-        child1Prg_ = child1Prg[0:startPoint1]+" "+subString2 +" "+child1Prg[startPoint1+len(subString1)]
-        child2Prg_ = child2Prg[0:startPoint2]+" "+subString1 +" "+child2Prg[startPoint2+len(subString2)]
+        child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
+        child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
         
         
-        child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2+1)*8:(startPoint2+1+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8]
-        child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1+1)*8:(startPoint1+1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8]
+        child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
+        child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
         
         #TODO : crossover genestring as well
         #TODO : Replace parents with childs
