@@ -39,6 +39,7 @@ Hoped for course for implementation:
 from datetime import datetime
 from copy import deepcopy
 import logging
+import subprocess
 from random import randint
 
 from pyneurgen.genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
@@ -55,11 +56,15 @@ from Tkinter import Frame
 from Tkinter import Label
 from Tkinter import Button
 
-from tkMessageBox import askyesno,showwarning
+from tkMessageBox import askyesno,showwarning,showinfo
 from tkFileDialog import askopenfilename
 from Tkconstants import INSERT
 
+from os import system
+from os import path
+from gparser.Property import * 
 from random import choice
+
 
 #   Constants
 STATEMENT_FORMAT = '<S'
@@ -167,7 +172,15 @@ class GrammaticalEvolution(object):
     
     #Author : Spandan Veggalam
     def parseCode(self,codeFragment):
-        #TODO : send codeFragment to parser
+        #TODO : send codeFragment to parser        
+        home_dir= path.expanduser(DIR)
+        if not path.exists(home_dir+"/parser"):
+            result= showinfo("Info","No Parser Found - Generating Parser")
+            self.genParser()        
+        proc = subprocess.Popen(["echo \""+codeFragment+"\" | "+home_dir+"parser"], stdout=subprocess.PIPE, shell=True)
+        (out, err) = proc.communicate()
+        print out
+        #TODO FROM HERE : 21/10/2014
         parseRepr=""
         return parseRepr
     
@@ -179,12 +192,8 @@ class GrammaticalEvolution(object):
             try :
                     inputCode=self.textArea.get('1.0', 'end')                
                     if len(inputCode.strip())<0:
-                        raise Exception
-                    #TODO : self.parseRepr=self.parseCode(inputCode)
-                    f1=open('IncompleteCodeFrag','r')
-                    self.parseRepr = f1.read()
-                    
-                    f1.close()
+                        raise Exception                    
+                    self.parseRepr=self.parseCode(inputCode)
                     self.frame.quit()                
             except Exception as e:
                     showwarning(e)            
@@ -198,18 +207,25 @@ class GrammaticalEvolution(object):
     
     #Author : Spandan Veggalam        
     def genParser(self):
+            
             genLexInput =  GenerateLexInput()
             genLexInput.setSelectedGrammar(self.grammarFile)
             genLexInput.createLexInput()
             
             genBisonInput = GenerateBisonInput()
             genBisonInput.createBisonInput(self.grammarFile)
+            home_dir= path.expanduser(DIR)
+            
+            system("flex -o " + home_dir+"/lex.c"+ " " +home_dir+"/lexfile.l")            
+            system("bison -d "+ home_dir+"/bison.y -o "+home_dir+"/bison.tab.c" ) 
+            system("gcc -o "+ home_dir+"/parser "+home_dir+"/lex.c " + home_dir+"/bison.tab.c -ly -ll")
+            system("rm -rf "+home_dir+"/*lex* "+ home_dir+"/*bison*" )
             
     #Author : Spandan Veggalam
     def _prepareInitial_Population (self):
             
         result= askyesno("Confirmation", "Generate Parser?")
-        if result == "yes":
+        if result :
             self.genParser() 
         
         root = Tk()
