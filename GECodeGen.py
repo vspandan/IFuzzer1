@@ -199,59 +199,61 @@ class GECodeGen(object):
         bnf=""
         try:
            
-           
-            ges = GrammaticalEvolution()
-            ges.setGrammarFile(self.inputFile.get())
-            ges.set_bnf(bnf)
-            ges.set_genotype_length(int(self.start_gene_length.get()), int(self.max_gene_length.get()))
-            ges.set_population_size(long(self.population_size.get()))
-            ges.set_wrap(bool(self.wrap.get()))
-            ges.set_max_generations(int(self.set_max_generations.get()))
-            ges.set_fitness_type(self.variable.get().lower(), self.set_fitness_traget_val.getdouble())
-            
-            ges.set_max_program_length(int(self.set_max_program_length.get()))
-            ges.set_timeouts(self.set_min_timeout.getint(), self.set_max_timeout.getint())
-            ges.set_fitness_fail(self.set_fitness_failvalue.getdouble())
-            
-            ges.set_mutation_rate(self.set_mutation_rate.getdouble())
-            
-            #TODO: FITNESS SELCTIONS
-            ges.set_fitness_selections(
-                FitnessElites(ges.fitness_list, .05),
-                FitnessTournament(ges.fitness_list, tournament_size=int(self.set_fitness_tournmant_size.get())))
-            #TODO: use self.set_max_fitness_rate.getdouble()
-            ges.set_max_fitness_rate(0.5)
-            
-            ges.set_crossover_rate(self.set_crossover_rate.getdouble())
-            ges.set_children_per_crossover(int(self.set_children_per_crossover.get()))
-            
-            if self.variable1.get() == "SINGLE":           
-                ges.set_mutation_type('s')
-            if self.variable1.get() == "MULTIPLE":           
-                ges.set_mutation_type('m')
-            
-            #TODO: use self.set_max_fitness_rate.getdouble()
-            ges.set_max_fitness_rate(0.25)
-            
-            #TODO: REPLACEMENTS SELCTIONS
-            ges.set_replacement_selections(
-                    ReplacementTournament(ges.fitness_list, tournament_size=int(self.set_replacement_tournmant_size.get())))
-            
-            ges.set_maintain_history(self.maintain_history.get())
-            ges.set_ExtendGenotype(self.extend_genotype.get())
-            
-            ges.create_genotypes()
-            print ges.run()
-            print ges.fitness_list.sorted()
-            print
-            print
-            gene = ges.population[ges.fitness_list.best_member()]
-            print gene.get_program()
+            fileName=self.inputFile.get()
+            if len(fileName.strip()) <=0:
+                raise StandardError("Input Grammar File");
+            else:
+                ges = GrammaticalEvolution()
+                ges.setGrammarFile(fileName)
+                ges.set_bnf(bnf)
+                ges.set_genotype_length(int(self.start_gene_length.get()), int(self.max_gene_length.get()))
+                ges.set_population_size(long(self.population_size.get()))
+                ges.set_wrap(bool(self.wrap.get()))
+                ges.set_max_generations(int(self.set_max_generations.get()))
+                ges.set_fitness_type(self.variable.get().lower(), self.set_fitness_traget_val.getdouble())
+                
+                ges.set_max_program_length(int(self.set_max_program_length.get()))
+                ges.set_timeouts(self.set_min_timeout.getint(), self.set_max_timeout.getint())
+                ges.set_fitness_fail(self.set_fitness_failvalue.getdouble())
+                
+                ges.set_mutation_rate(self.set_mutation_rate.getdouble())
+                
+                #TODO: FITNESS SELCTIONS
+                ges.set_fitness_selections(
+                    FitnessElites(ges.fitness_list, .05),
+                    FitnessTournament(ges.fitness_list, tournament_size=int(self.set_fitness_tournmant_size.get())))
+                #TODO: use self.set_max_fitness_rate.getdouble()
+                ges.set_max_fitness_rate(0.5)
+                
+                ges.set_crossover_rate(self.set_crossover_rate.getdouble())
+                ges.set_children_per_crossover(int(self.set_children_per_crossover.get()))
+                
+                if self.variable1.get() == "SINGLE":           
+                    ges.set_mutation_type('s')
+                if self.variable1.get() == "MULTIPLE":           
+                    ges.set_mutation_type('m')
+                
+                #TODO: use self.set_max_fitness_rate.getdouble()
+                ges.set_max_fitness_rate(0.25)
+                
+                #TODO: REPLACEMENTS SELCTIONS
+                ges.set_replacement_selections(
+                        ReplacementTournament(ges.fitness_list, tournament_size=int(self.set_replacement_tournmant_size.get())))
+                
+                ges.set_maintain_history(self.maintain_history.get())
+                ges.set_ExtendGenotype(self.extend_genotype.get())
+                
+                ges.create_genotypes()
+                ges.run()
+                print ges.fitness_list.sorted()
+                print
+                print
+                gene = ges.population[ges.fitness_list.best_member()]
+                print gene.get_program()
+                self.frame.quit()
             
         except Exception as e:
-            showerror("Error", e)       
-        
-        self.frame.quit()
+            showerror("Error", e)
 
 #Author: Spandan Veggalam 
 if __name__ == "__main__":

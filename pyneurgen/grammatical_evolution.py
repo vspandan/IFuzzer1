@@ -158,11 +158,11 @@ class GrammaticalEvolution(object):
     
     #Author : Spandan Veggalam
     def _extractProductions(self):
-        bnf=""
+        bnf=""        
         f = open(self.grammarFile,'r')
         for line in f:
             bnf+=line;
-        f.close()
+        f.close()        
         self.set_bnf(bnf)
     
     #Author : Spandan Veggalam
@@ -417,9 +417,8 @@ class GrammaticalEvolution(object):
                     #   blank line
                     pass
 		#author : Spandan Veggalam  
-		#making non_terminals globally available        
-        self._non_Terminals = non_Terminals
-        
+		#making non_terminals globally available
+        self._non_Terminals = non_Terminals        
         
         
         self.bnf = bnf_dict
@@ -887,6 +886,7 @@ class GrammaticalEvolution(object):
         genotype for running the fitness functions.
 
         """
+        self._extractProductions()
         self._prepareInitial_Population()
         member_no = 0
         while member_no < self._population_size:
@@ -942,6 +942,7 @@ class GrammaticalEvolution(object):
         flist = []
         total = int(round(
             self._max_fitness_rate * float(self._population_size)))
+        total =4
         count = 0
         for fsel in self._fitness_selections:
             fsel.set_fitness_list(self.fitness_list)
@@ -1024,37 +1025,38 @@ class GrammaticalEvolution(object):
         
             return (child1, child2)
     
-        #print "child1::::"+child1.get_program()
-        #print "child2::::"+child2.get_program()
-    
+        print "perform corsso"+self.parseRepr
         child1Prg=child1.get_program()
         child2Prg=child2.get_program()
         
-        non_term1=self.genIncompleteCodeFrag.extractNonTerminal(child1Prg)
-        non_term2=self.genIncompleteCodeFrag.extractNonTerminal(child2Prg)
+        child1ParseTree=self.parseCode(child1Prg)
+        child2ParseTree=self.parseCode(child2Prg)
+
         
-        commonNonTerm=[val for val in nonTerm1 if val in set(nonTerm2)]
+        non_term1=self.genIncompleteCodeFrag.extractNonTerminal(child1ParseTree.split())
+        non_term2=self.genIncompleteCodeFrag.extractNonTerminal(child2ParseTree.split())
+
+        commonNonTerm=[val for val in non_term1 if val in set(non_term2)]
         
         if len(commonNonTerm) > 0:
             selectedNt= choice(commonNonTerm)
         else:
             return child1, child2
         
-        subString1=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child1Prg),1,nonTerm1,True,selectedNt)
-        subString2=self.genIncompleteCodeFrag.genCodeFrag(self.parseCode(child2Prg),1,nonTerm1,True,selectedNt)
+        #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
+        subString1=self.genIncompleteCodeFrag.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
+        subString2=self.genIncompleteCodeFrag.genCodeFrag(child2ParseTree,1,non_term1,True,selectedNt)        
         
         startPoint1=child1Prg.index(subString1)
-        startPoint2=child1Prg.index(subString2)
+        startPoint2=child2Prg.index(subString2)
         
+                
         child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
         child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
         
-        
+        #TODOcheck the binary string against child and also parent
         child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
         child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
-        
-        #TODO : crossover genestring as well
-        #TODO : Replace parents with childs
         
         incompl1=self.parseCode(child1Prg_)
         incompl2=self.parseCode(child2Prg_)
