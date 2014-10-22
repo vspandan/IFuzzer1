@@ -177,12 +177,15 @@ class GrammaticalEvolution(object):
         if not path.exists(home_dir+"/parser"):
             result= showinfo("Info","No Parser Found - Generating Parser")
             self.genParser()        
-        proc = subprocess.Popen(["echo \""+codeFragment+"\" | "+home_dir+"parser"], stdout=subprocess.PIPE, shell=True)
+        print "echo \""+codeFragment.rstrip()+"\"" +home_dir+"parser"
+        proc = subprocess.Popen(["echo \""+codeFragment.rstrip()+"\" | "+home_dir+"parser"], stdout=subprocess.PIPE, shell=True)
         (out, err) = proc.communicate()
-        print out
-        #TODO FROM HERE : 21/10/2014
-        parseRepr=""
-        return parseRepr
+        if out.find("<<<"):
+            
+            return out
+        else :
+            raise StandardError("Syntax Error")
+        
     
     
     #Author : Spandan Veggalam    
@@ -191,12 +194,12 @@ class GrammaticalEvolution(object):
             #TODO replace file reading
             try :
                     inputCode=self.textArea.get('1.0', 'end')                
-                    if len(inputCode.strip())<0:
-                        raise Exception                    
+                    if len(inputCode.strip())<=0:
+                        raise StandardError("Provide Input")                    
                     self.parseRepr=self.parseCode(inputCode)
                     self.frame.quit()                
             except Exception as e:
-                    showwarning(e)            
+                    showwarning(title, e.message())            
     
     #Author : Spandan Veggalam
     def populateTextArea(self):
@@ -218,7 +221,7 @@ class GrammaticalEvolution(object):
             
             system("flex -o " + home_dir+"/lex.c"+ " " +home_dir+"/lexfile.l")            
             system("bison -d "+ home_dir+"/bison.y -o "+home_dir+"/bison.tab.c" ) 
-            system("gcc -o "+ home_dir+"/parser "+home_dir+"/lex.c " + home_dir+"/bison.tab.c -ly -ll")
+            system("cc -o "+ home_dir+"/parser "+home_dir+"/lex.c " + home_dir+"/bison.tab.c -ly -ll")
             system("rm -rf "+home_dir+"/*lex* "+ home_dir+"/*bison*" )
             
     #Author : Spandan Veggalam

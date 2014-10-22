@@ -67,10 +67,22 @@ class GenerateBisonInput(object):
                                     st= s.replace("\'","\"")
                                     prod=prod.replace(s,st)
                         f.write(prod)
+                        
                         j = len(prod.split())
+                        print prod
+                        print prod.split()
+                        print j
                         f.write("\t");
                         f.write("{")
-                        if j>1 :
+                        if j==0:                                
+                                f.write("$<c>$=\"EMPTY\";");
+                        elif j==1:
+                            if not start:                         
+                                f.write("$<c>$=$<c>1;");
+                            if start:
+                                f.write("printf(\"<<<"+key+": %s >>>\",$<c>$);")
+                                start=False
+                        elif j>1 :
                             if start:
                                 f.write("printf(\"<<<"+key+":")
                             else :
@@ -91,11 +103,8 @@ class GenerateBisonInput(object):
                             if not start:
                                 f.write("$<c>$=s"+str(prodnum)+";");
                             start=False
-                        else: 
-                            if j==0:                                
-                                f.write("$<c>$=\"EMPTY\";");
-                            if j==1:                         
-                                f.write("$<c>$=$<c>1;");
+                            
+
                             
                         ############
                         f.write("}")
