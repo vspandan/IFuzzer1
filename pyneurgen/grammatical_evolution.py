@@ -64,6 +64,7 @@ from os import system
 from os import path
 from gparser.Property import * 
 from random import choice
+from re import sub
 
 
 #   Constants
@@ -176,12 +177,11 @@ class GrammaticalEvolution(object):
         home_dir= path.expanduser(DIR)
         if not path.exists(home_dir+"/parser"):
             result= showinfo("Info","No Parser Found - Generating Parser")
-            self.genParser()        
-        print "echo \""+codeFragment.rstrip()+"\"" +home_dir+"parser"
+            self.genParser()       
+        
         proc = subprocess.Popen(["echo \""+codeFragment.rstrip()+"\" | "+home_dir+"parser"], stdout=subprocess.PIPE, shell=True)
         (out, err) = proc.communicate()
-        if out.find("<<<"):
-            
+        if out.find("<<<"):            
             return out
         else :
             raise StandardError("Syntax Error")
@@ -1044,14 +1044,12 @@ class GrammaticalEvolution(object):
         
             return (child1, child2)
     
-        print "perform corsso"+self.parseRepr
         child1Prg=child1.get_program()
         child2Prg=child2.get_program()
         
         child1ParseTree=self.parseCode(child1Prg)
         child2ParseTree=self.parseCode(child2Prg)
 
-        
         non_term1=self.genIncompleteCodeFrag.extractNonTerminal(child1ParseTree.split())
         non_term2=self.genIncompleteCodeFrag.extractNonTerminal(child2ParseTree.split())
 
@@ -1064,12 +1062,14 @@ class GrammaticalEvolution(object):
         
         #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
         subString1=self.genIncompleteCodeFrag.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
-        subString2=self.genIncompleteCodeFrag.genCodeFrag(child2ParseTree,1,non_term1,True,selectedNt)        
+        subString2=self.genIncompleteCodeFrag.genCodeFrag(child2ParseTree,1,non_term1,True,selectedNt)       
+        
+        subString1=sub(r'\s+', ' ',subString1)
+        subString2=sub(r'\s+', ' ',subString1)
         
         startPoint1=child1Prg.index(subString1)
         startPoint2=child2Prg.index(subString2)
         
-                
         child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
         child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
         

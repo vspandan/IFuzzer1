@@ -579,9 +579,9 @@ class Genotype(object):
         if program.find("INT_LITERAL") >=0:
             s=random.randint(1,2)
             if s==1:
-                program=program.replace("INT_LITERAL",ss)
+                program=program.replace("INT_LITERAL","100")
             else:
-                program=program.replace("INT_LITERAL",ss)
+                program=program.replace("INT_LITERAL","200")
         if program.find("STRING_LITERAL") >=0:
             rw = ["a","b","c"]
             program=program.replace('STRING_LITERAL',"\""+rw[random.randint(0,len(rw)-1)]+"\"")

@@ -37,6 +37,7 @@ class GenIncompleteCodeFrag(object):
                     if ">>>" in v :
                         inc=inc-1
                     else:
+                        print v
                         subcode=subcode+" "+v    
                     if inc==self.selected-1:
                             start=False
@@ -47,14 +48,16 @@ class GenIncompleteCodeFrag(object):
                         v=v.strip()
                         if len(v) >0:
                             code =code+" "+v
-            if population_size == 1:
-                return code.strip()
+            if population_size == 1: 
+                if subTree is None:
+                    return code.strip()
+                if subTree is not None:                    
+                    return subcode.strip()
             population.append(code.strip())
             
-        if subTree is None:
-            return population
-        if subTree is not None:
-            return subcode.strip()
+        return population
+        
+            
     
     #Author: Spandan Veggalam
     def extractNonTerminal(self,val):        
