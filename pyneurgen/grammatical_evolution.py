@@ -56,7 +56,7 @@ from Tkinter import Frame
 from Tkinter import Label
 from Tkinter import Button
 
-from tkMessageBox import askyesno,showwarning,showinfo
+from tkMessageBox import askyesno,showwarning,showinfo, showerror
 from tkFileDialog import askopenfilename
 from Tkconstants import INSERT
 
@@ -162,8 +162,7 @@ class GrammaticalEvolution(object):
     def setGrammarFile(self,fileName):
         self.grammarFile=fileName
     
-    #Author : Spandan Veggalam
-    #var s=100;var a=100+1000;
+    #Author : Spandan Veggalam    
     def _extractProductions(self):
         bnf=""        
         f = open(self.grammarFile,'r')
@@ -198,7 +197,7 @@ class GrammaticalEvolution(object):
                     if len(inputCode.strip())<=0:
                         raise StandardError("Provide Input")
                     self.parseRepr=self.parseCode(inputCode)
-                    self.frame.quit()                
+                    self.frame.quit()
             except Exception as e:
                     showwarning("Warning", e.message())            
     
@@ -228,21 +227,24 @@ class GrammaticalEvolution(object):
     #Author : Spandan Veggalam
     def _prepareInitial_Population (self):
             
-        result= askyesno("Confirmation", "Generate Parser?")
-        if result :
-            self.genParser() 
-        
-        root = Tk()
-        self.frame=Frame(root)
-        self.frame.pack(side="top", fill="both", expand=True)
-        self.textArea= Text(self.frame)
-        self.textArea.grid(row=1)
-        browseBtn=Button(self.frame, text='InputFile', command=self.populateTextArea,width=20).grid(row=2)
-        submitBtn=Button(self.frame, text='Parse Code', command=self.parseInputCode,width=20).grid(row=3)
-        self.frame.mainloop()      
-        self.genIncompleteCodeFrag =  GenIncompleteCodeFrag()
-        self.initial_Population = self.genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size,self.genIncompleteCodeFrag.extractNonTerminal(self.parseRepr.split())) 
-        print self.initial_Population
+        try:
+            result= askyesno("Confirmation", "Generate Parser?")
+            if result :
+                self.genParser() 
+            
+            root = Tk()
+            root.title("Code Input Dialog")
+            self.frame=Frame(root)
+            self.frame.pack(side="top", fill="both", expand=True)
+            self.textArea= Text(self.frame)
+            self.textArea.grid(row=1)
+            browseBtn=Button(self.frame, text='InputFile', command=self.populateTextArea,width=20).grid(row=2)
+            submitBtn=Button(self.frame, text='Parse Code', command=self.parseInputCode,width=20).grid(row=3)
+            self.frame.mainloop()      
+            self.genIncompleteCodeFrag =  GenIncompleteCodeFrag()
+            self.initial_Population = self.genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size,self.genIncompleteCodeFrag.extractNonTerminal(self.parseRepr.split()))
+        except Exception as e:
+            showerror("Error", e.message())        
         
 
 		
@@ -962,8 +964,7 @@ class GrammaticalEvolution(object):
 
         flist = []
         total = int(round(
-            self._max_fitness_rate * float(self._population_size)))
-        total =4
+            self._max_fitness_rate * float(self._population_size)))        
         count = 0
         for fsel in self._fitness_selections:
             fsel.set_fitness_list(self.fitness_list)
