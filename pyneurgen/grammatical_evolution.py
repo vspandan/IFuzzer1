@@ -163,6 +163,7 @@ class GrammaticalEvolution(object):
         self.grammarFile=fileName
     
     #Author : Spandan Veggalam
+    #var s=100;var a=100+1000;
     def _extractProductions(self):
         bnf=""        
         f = open(self.grammarFile,'r')
@@ -178,8 +179,8 @@ class GrammaticalEvolution(object):
         if not path.exists(home_dir+"/parser"):
             result= showinfo("Info","No Parser Found - Generating Parser")
             self.genParser()       
-        
-        proc = subprocess.Popen(["echo \""+codeFragment.rstrip()+"\" | "+home_dir+"parser"], stdout=subprocess.PIPE, shell=True)
+        codeFragment= codeFragment.replace('\n', '')
+        proc = subprocess.Popen(["echo \""+codeFragment+"\" | "+home_dir+"parser"], stdout=subprocess.PIPE, shell=True)
         (out, err) = proc.communicate()
         if out.find("<<<"):            
             return out
@@ -195,11 +196,11 @@ class GrammaticalEvolution(object):
             try :
                     inputCode=self.textArea.get('1.0', 'end')                
                     if len(inputCode.strip())<=0:
-                        raise StandardError("Provide Input")                    
+                        raise StandardError("Provide Input")
                     self.parseRepr=self.parseCode(inputCode)
                     self.frame.quit()                
             except Exception as e:
-                    showwarning(title, e.message())            
+                    showwarning("Warning", e.message())            
     
     #Author : Spandan Veggalam
     def populateTextArea(self):
@@ -241,6 +242,7 @@ class GrammaticalEvolution(object):
         self.frame.mainloop()      
         self.genIncompleteCodeFrag =  GenIncompleteCodeFrag()
         self.initial_Population = self.genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size,self.genIncompleteCodeFrag.extractNonTerminal(self.parseRepr.split())) 
+        print self.initial_Population
         
 
 		
