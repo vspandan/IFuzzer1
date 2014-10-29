@@ -1,1 +1,0 @@
-   <<<SourceElements:  <<<VariableStatement: var  <<<VariableDeclaration: s  <<<Initialiser: =  <<<Expression: 10 + 10 >>> >>> >>> ; >>>  <<<VariableStatement: var  <<<VariableDeclaration: p  <<<Initialiser: = 10 >>> >>> ; >>> >>>
