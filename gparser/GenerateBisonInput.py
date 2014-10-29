@@ -68,10 +68,7 @@ class GenerateBisonInput(object):
                                     prod=prod.replace(s,st)
                         f.write(prod)
                         
-                        j = len(prod.split())
-                        print prod
-                        print prod.split()
-                        print j
+                        j = len(prod.split())                        
                         f.write("\t");
                         f.write("{")
                         if j==0:                                
@@ -90,13 +87,13 @@ class GenerateBisonInput(object):
                                 for k in range (j):
                                     f.write("strlen($<c>"+str(k+1)+")")
                                     f.write("+")
-                                f.write("7+"+str(len(key)+j)+" ;");
+                                f.write("9+"+str(len(key)+j)+" ;");
                                 f.write("char *s"+str(prodnum)+"=malloc(sizeof(char)*len);")
-                                f.write("sprintf(s"+str(prodnum)+",\" <<<"+key+":")
+                                f.write("sprintf(s"+str(prodnum)+",\"<<<"+key+":")
                             
                             for k in range (j):
                                 f.write(" %s")
-                            f.write(" >>>\"")
+                            f.write(" >>> \"")
                             for k in range (j):
                                 f.write(",$<c>"+str(k+1))
                             f.write(");")

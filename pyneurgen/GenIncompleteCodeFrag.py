@@ -24,32 +24,32 @@ class GenIncompleteCodeFrag(object):
             once=False
             subcode=""
             for v in val:
-                if "<<<" in v:
-                    inc=inc+1
-                    v=" "
-                if self.selected == inc and not start and not once:
-                    #code=code+" <"+nT[self.selected-1]+"> "
-                    code=code+" "+selectedNt+" "
-                    start=True
-                    once =True
-                if start:
-                    
-                    if ">>>" in v :
-                        inc=inc-1
-                    else:
-                        print v
-                        subcode=subcode+" "+v    
-                    if inc==self.selected-1:
-                            start=False
-                if not start:
-                    if ">>>" in v :
-                        inc=inc-1                        
-                    else:
-                        v=v.strip()
-                        if len(v) >0:
-                            code =code+" "+v
+                v=v.strip()
+                if len(v) >= 1:
+                    if "<<<" in v:
+                        inc=inc+1
+                        v=" "
+                    if self.selected == inc and not start and not once:
+                        #code=code+" <"+nT[self.selected-1]+"> "
+                        code=code+" "+selectedNt+" "
+                        start=True
+                        once =True
+                    if start:
+                        
+                        if ">>>" in v :
+                            inc=inc-1
+                        else:                        
+                            subcode=subcode+" "+v    
+                        if inc==self.selected-1:
+                                start=False
+                    if not start:
+                        if ">>>" in v :
+                            inc=inc-1                        
+                        else:
+                            if len(v) >0:
+                                code =code+" "+v                
             if population_size == 1: 
-                if subTree is None:
+                if subTree is None:                    
                     return code.strip()
                 if subTree is not None:                    
                     return subcode.strip()

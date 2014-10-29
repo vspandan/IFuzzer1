@@ -24,6 +24,7 @@ This module implements genotypes for grammatical evolution.
 
 """
 from datetime import datetime
+from re import sub
 import logging
 import random
 import re
@@ -521,22 +522,24 @@ class Genotype(object):
         try:
             logging.debug("==================================================")
             logging.debug("mapping variables to program...")
-            self.local_bnf[BNF_PROGRAM] = [
-                    'mapping variables into program failed']
             #author : Spandan Veggalam     
-            #changed they key from 'program' to 'CodeFrag'
+            #changed they key from 'program' to 'CodeFrag'; commented unwanted code; changed [program] to program
+            #self.local_bnf[BNF_PROGRAM] = [
+            #        'mapping variables into program failed']
             program = self._map_variables(self.local_bnf['CodeFrag'], True)
             logging.debug("finished mapping variables to program...")
-            self.local_bnf[BNF_PROGRAM] = [program]
+            self.local_bnf[BNF_PROGRAM] = program
             #print program[program.find('def'):]
             logging.debug(program)
             self._execute_code(program)
             logging.debug("==================================================")
+            elapsedTime = datetime.now() - self.starttime
+            elapsed = elapsedTime.total_seconds()
         except:
             #traceback.print_exc()
             #a = raw_input("waiting")
             logging.debug("program failed")
-            program = self.local_bnf['program'][0]
+            program = self.local_bnf[BNF_PROGRAM]
             logging.debug("errors: %s", (self.errors))
             logging.debug(program)
             #logging.debug(traceback.print_exc())
@@ -545,11 +548,12 @@ class Genotype(object):
             #a = raw_input("Program failed")
             #if a == "stop":
                 #raise ValueError("Program halted")
+            elapsed=self._fitness_fail
 
 		#author : Spandan Veggalam        
 		#Setting Time take to generate new code fragment is considered for fitness
-        elapsed = datetime.now() - self.starttime
-        self._fitness=elapsed.total_seconds()
+        
+        self._fitness=elapsed
         #self._fitness = float(self.local_bnf['<fitness>'][0])
 		
 
@@ -588,16 +592,18 @@ class Genotype(object):
         if program.find("ID") >=0:
             rw = ["a","b","c"]
             program=program.replace("ID",rw[random.randint(0,len(rw))])
+            
+        program=sub(r'\s+', ' ',program)
         program=program.lower()
-        self.local_bnf['program'] = program    
+        
+        self.local_bnf[BNF_PROGRAM] = program    
         #Delete Code till here; this is used for only demonstration purpose
         print "executing \t" +program
         proc = subprocess.Popen(["echo \""+program+"\" | js24"], stdout=subprocess.PIPE, shell=True)
         (out, err) = proc.communicate()
         
         if out.find("syntax error") >=0 or out.find("syntax") >=0 :
-            raise StandardError("Syntax Error")
-        return program
+            raise StandardError("Syntax Error")        
 
     def mutate(self, mutation_rate, mutation_type):
         """
@@ -699,7 +705,7 @@ class Genotype(object):
 
         """
 
-        return self.local_bnf['program']
+        return self.local_bnf[BNF_PROGRAM]
 
     def get_preprogram(self):
         """

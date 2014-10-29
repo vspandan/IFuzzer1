@@ -1025,8 +1025,6 @@ class GrammaticalEvolution(object):
                 child1 = deepcopy(parent2)
                 child2 = deepcopy(parent1)
         
-        
-            
         child1_binary = child1.binary_gene
         child2_binary = child2.binary_gene
         
@@ -1065,7 +1063,7 @@ class GrammaticalEvolution(object):
         subString2=self.genIncompleteCodeFrag.genCodeFrag(child2ParseTree,1,non_term1,True,selectedNt)       
         
         subString1=sub(r'\s+', ' ',subString1)
-        subString2=sub(r'\s+', ' ',subString1)
+        subString2=sub(r'\s+', ' ',subString2)
         
         startPoint1=child1Prg.index(subString1)
         startPoint2=child2Prg.index(subString2)
