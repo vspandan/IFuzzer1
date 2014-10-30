@@ -552,7 +552,6 @@ class Genotype(object):
 
 		#author : Spandan Veggalam        
 		#Setting Time take to generate new code fragment is considered for fitness
-        
         self._fitness=elapsed
         #self._fitness = float(self.local_bnf['<fitness>'][0])
 		
@@ -595,15 +594,17 @@ class Genotype(object):
             
         program=sub(r'\s+', ' ',program)
         program=program.lower()
-        
-        self.local_bnf[BNF_PROGRAM] = program    
-        #Delete Code till here; this is used for only demonstration purpose
-        print "executing \t" +program
-        proc = subprocess.Popen(["echo \""+program+"\" | js24"], stdout=subprocess.PIPE, shell=True)
-        (out, err) = proc.communicate()
-        
-        if out.find("syntax error") >=0 or out.find("syntax") >=0 :
-            raise StandardError("Syntax Error")        
+        if len(program) == 0:
+            raise StandardError("Empty Code")
+        else:
+            self.local_bnf[BNF_PROGRAM] = program    
+            #Delete Code till here; this is used for only demonstration purpose
+            print "executing \t" +program
+            proc = subprocess.Popen(["echo \""+program+"\" | js24"], stdout=subprocess.PIPE, shell=True)
+            (out, err) = proc.communicate()
+            
+            if out.find("syntax error") >=0 or out.find("syntax") >=0  or out.find("Syntax") >= 0:
+                raise StandardError("Syntax Error")        
 
     def mutate(self, mutation_rate, mutation_type):
         """

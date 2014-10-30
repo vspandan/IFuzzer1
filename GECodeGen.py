@@ -195,10 +195,9 @@ class GECodeGen(object):
     
     #Author: Spandan Veggalam
     def initialize(self):
-    
-        bnf=""
+        
         try:
-           
+            bnf=""
             fileName=self.inputFile.get()
             if len(fileName.strip()) <=0:
                 raise StandardError("Input Grammar File");
@@ -210,22 +209,21 @@ class GECodeGen(object):
                 ges.set_population_size(long(self.population_size.get()))
                 ges.set_wrap(bool(self.wrap.get()))
                 ges.set_max_generations(int(self.set_max_generations.get()))
-                ges.set_fitness_type(self.variable.get().lower(), self.set_fitness_traget_val.getdouble())
+                ges.set_fitness_type(self.variable.get().lower(), float(self.set_fitness_traget_val.get()))
                 
                 ges.set_max_program_length(int(self.set_max_program_length.get()))
-                ges.set_timeouts(self.set_min_timeout.getint(), self.set_max_timeout.getint())
-                ges.set_fitness_fail(self.set_fitness_failvalue.getdouble())
+                ges.set_timeouts(int(self.set_min_timeout.get()), int(self.set_max_timeout.get()))
+                ges.set_fitness_fail(float(self.set_fitness_failvalue.get()))
                 
-                ges.set_mutation_rate(self.set_mutation_rate.getdouble())
+                ges.set_mutation_rate(float(self.set_mutation_rate.get()))
                 
                 #TODO: FITNESS SELCTIONS
                 ges.set_fitness_selections(
                     FitnessElites(ges.fitness_list, .05),
                     FitnessTournament(ges.fitness_list, tournament_size=int(self.set_fitness_tournmant_size.get())))
-                #TODO: use self.set_max_fitness_rate.getdouble()
-                ges.set_max_fitness_rate(0.5)
+                ges.set_max_fitness_rate(float(self.set_max_fitness_rate.get()))
                 
-                ges.set_crossover_rate(self.set_crossover_rate.getdouble())
+                ges.set_crossover_rate(float(self.set_crossover_rate.get()))
                 ges.set_children_per_crossover(int(self.set_children_per_crossover.get()))
                 
                 if self.variable1.get() == "SINGLE":           
@@ -233,8 +231,7 @@ class GECodeGen(object):
                 if self.variable1.get() == "MULTIPLE":           
                     ges.set_mutation_type('m')
                 
-                #TODO: use self.set_max_fitness_rate.getdouble()
-                ges.set_max_fitness_rate(0.25)
+                ges.set_max_fitness_rate(float(self.set_max_fitness_rate.get()))
                 
                 #TODO: REPLACEMENTS SELCTIONS
                 ges.set_replacement_selections(
