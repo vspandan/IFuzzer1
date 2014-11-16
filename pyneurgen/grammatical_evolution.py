@@ -1059,14 +1059,16 @@ class GrammaticalEvolution(object):
         if len(commonNonTerm) > 0:
             selectedNt= choice(commonNonTerm)
         else:
-            return child1, child2
+            return (child1, child2)
         
         #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
         subString1=self.genIncompleteCodeFrag.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
-        subString2=self.genIncompleteCodeFrag.genCodeFrag(child2ParseTree,1,non_term1,True,selectedNt)       
+        subString2=self.genIncompleteCodeFrag.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
         
         subString1=sub(r'\s+', ' ',subString1)
         subString2=sub(r'\s+', ' ',subString2)
+        if child1Prg.find(subString2) <0 or child2Prg.find(subString1) <0:
+            return (child1, child2) 
         
         startPoint1=child1Prg.index(subString1)
         startPoint2=child2Prg.index(subString2)
@@ -1081,8 +1083,8 @@ class GrammaticalEvolution(object):
         incompl1=self.parseCode(child1Prg_)
         incompl2=self.parseCode(child2Prg_)
         
-        child1.local_bnf['CodeFrag'] =  self.genIncompleteCodeFrag.genCodeFrag(incompl1,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl1.split()))
-        child2.local_bnf['CodeFrag'] =  self.genIncompleteCodeFrag.genCodeFrag(incompl2,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl2.split()))
+        child1.local_bnf['CodeFrag'],dummy =  self.genIncompleteCodeFrag.genCodeFrag(incompl1,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl1.split()))
+        child2.local_bnf['CodeFrag'],dummy =  self.genIncompleteCodeFrag.genCodeFrag(incompl2,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl2.split()))
         
         child1.set_binary_gene(child1_binary)
         child1.generate_decimal_gene()
@@ -1110,6 +1112,7 @@ class GrammaticalEvolution(object):
 
         return (child1_binary, child2_binary)
 
+    #Author: Spandan Veggalam
     def _perform_mutations(self, mlist):
         """
         This functions accepts a list of genotypes that are subject to
@@ -1117,9 +1120,15 @@ class GrammaticalEvolution(object):
         may not be mutated.
 
         """
-
+        
         for gene in mlist:
-            gene.mutate(self._mutation_rate, self._mutation_type)
+            prg=gene.get_program()
+            incompl=self.parseCode(prg)
+            if len(incompl.strip()) >0:
+                gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteCodeFrag.genCodeFrag(incompl,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl.split()))
+                position1=gene.local_bnf['CodeFrag'].find(selectedNt)
+                position2=position1+len(selectedNt)            
+                gene.mutate(self._mutation_rate, self._mutation_type,position1, position2)
 
     def _perform_replacements(self, fitness_pool):
         """

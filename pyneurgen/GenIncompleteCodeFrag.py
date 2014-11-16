@@ -7,9 +7,8 @@ class GenIncompleteCodeFrag(object):
     def genCodeFrag(self, parsetree, population_size,nT,subTree = None,nonTerminal=None):
         population = []
         
-        for pop_count in range(0, population_size):
-            inc =0
-            code=""
+        for pop_count in range(0, population_size):            
+            
             val=parsetree.split()
             
             if nonTerminal is None:
@@ -18,39 +17,50 @@ class GenIncompleteCodeFrag(object):
             else:
                 selectedNt=nonTerminal
                 indices = [i for i, x in enumerate(nT) if x == nonTerminal]
-                self.selected=choice(indices)
+                self.selected=choice(indices)+1
                 
-            start=False
-            once=False
+            nTposition=0;
+            indicator = False
+            temp=0
+            code=""
             subcode=""
+            
             for v in val:
-                v=v.strip()
-                if len(v) >= 1:
-                    if "<<<" in v:
-                        inc=inc+1
-                        v=" "
-                    if self.selected == inc and not start and not once:
-                        #code=code+" <"+nT[self.selected-1]+"> "
-                        code=code+" "+selectedNt+" "
-                        start=True
-                        once =True
-                    if start:
+                
+                if '<<<' in v:
+                    nTposition=nTposition+1
+                    if indicator:
+                        temp=temp+1
+                    
+                if nTposition == self.selected and not indicator:
+                    nTposition =-10000
+                    code=code+" "+selectedNt
+                    indicator=True                    
+                    temp=temp+1
+                    
+                if '>>>' in v:
+                    if indicator:
+                        temp=temp-1
                         
-                        if ">>>" in v :
-                            inc=inc-1
-                        else:                        
-                            subcode=subcode+" "+v    
-                        if inc==self.selected-1:
-                                start=False
-                    if not start:
-                        if ">>>" in v :
-                            inc=inc-1                        
-                        else:
-                            if len(v) >0:
-                                code =code+" "+v                
+                if indicator:
+                    #for complete parse representation that is being replaced use below code statement.
+                    #subcode=subcode + " " +v
+                    if "<<<" not in v :
+                        if ">>>" not in v:
+                            subcode=subcode+" "+v
+                if not indicator:
+                    if "<<<" not in v :
+                        if ">>>" not in v:
+                            code=code+" "+v
+                
+                if temp==0 and indicator:
+                    indicator=False
+                
+                    
+                   
             if population_size == 1: 
                 if subTree is None:                    
-                    return code.strip()
+                    return code.strip(),selectedNt
                 if subTree is not None:                    
                     return subcode.strip()
             population.append(code.strip())

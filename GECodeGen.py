@@ -108,7 +108,7 @@ class GECodeGen(object):
         
         label12= Label(self.frame,text="Fitness Fail",width=15).grid(row = 10,column=0)
         self.set_fitness_failvalue=Entry(self.frame,width=20)
-        self.set_fitness_failvalue.insert(0,"-1000")
+        self.set_fitness_failvalue.insert(0,"1000")
         self.set_fitness_failvalue.grid(row=10,column=1)
         
         label13= Label(self.frame,text="Max Fitness Rate",width=15).grid(row = 10,column=2)
@@ -217,7 +217,6 @@ class GECodeGen(object):
                 
                 ges.set_mutation_rate(float(self.set_mutation_rate.get()))
                 
-                #TODO: FITNESS SELCTIONS
                 ges.set_fitness_selections(
                     FitnessElites(ges.fitness_list, .05),
                     FitnessTournament(ges.fitness_list, tournament_size=int(self.set_fitness_tournmant_size.get())))
@@ -233,7 +232,6 @@ class GECodeGen(object):
                 
                 ges.set_max_fitness_rate(float(self.set_max_fitness_rate.get()))
                 
-                #TODO: REPLACEMENTS SELCTIONS
                 ges.set_replacement_selections(
                         ReplacementTournament(ges.fitness_list, tournament_size=int(self.set_replacement_tournmant_size.get())))
                 

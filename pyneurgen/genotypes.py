@@ -519,23 +519,25 @@ class Genotype(object):
         """
 
         self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
-        try:
-            logging.debug("==================================================")
-            logging.debug("mapping variables to program...")
-            #author : Spandan Veggalam     
-            #changed they key from 'program' to 'CodeFrag'; commented unwanted code; changed [program] to program
-            #self.local_bnf[BNF_PROGRAM] = [
-            #        'mapping variables into program failed']
-            program = self._map_variables(self.local_bnf['CodeFrag'], True)
-            logging.debug("finished mapping variables to program...")
-            self.local_bnf[BNF_PROGRAM] = program
-            #print program[program.find('def'):]
-            logging.debug(program)
-            self._execute_code(program)
-            logging.debug("==================================================")
+        #try:
+        logging.debug("==================================================")
+        logging.debug("mapping variables to program...")
+        #author : Spandan Veggalam     
+        #changed they key from 'program' to 'CodeFrag'; commented unwanted code; changed [program] to program
+        #self.local_bnf[BNF_PROGRAM] = [
+        #        'mapping variables into program failed']
+        program = self._map_variables(self.local_bnf['CodeFrag'], True)
+        logging.debug("finished mapping variables to program...")
+        self.local_bnf[BNF_PROGRAM] = program
+        #print program[program.find('def'):]
+        logging.debug(program)
+        status=self._execute_code(program)
+        logging.debug("==================================================")
+        if status==1:
             elapsedTime = datetime.now() - self.starttime
             elapsed = elapsedTime.total_seconds()
-        except:
+        #except:
+        if status==0:
             #traceback.print_exc()
             #a = raw_input("waiting")
             logging.debug("program failed")
@@ -543,18 +545,38 @@ class Genotype(object):
             logging.debug("errors: %s", (self.errors))
             logging.debug(program)
             #logging.debug(traceback.print_exc())
-            logging.debug(traceback.format_exc())
+            #logging.debug(traceback.format_exc())
             logging.debug("end of failure report")
             #a = raw_input("Program failed")
             #if a == "stop":
-                #raise ValueError("Program halted")
+            #raise ValueError("Program halted")
             elapsed=self._fitness_fail
 
 		#author : Spandan Veggalam        
 		#Setting Time take to generate new code fragment is considered for fitness
+        print self.local_bnf[BNF_PROGRAM]
         self._fitness=elapsed
+        print self._fitness
         #self._fitness = float(self.local_bnf['<fitness>'][0])
 		
+    #author : Spandan Veggalam  
+    def handleGenereatedCode(self,prog):
+        if prog.find("INT_LITERAL") >=0:
+            s=random.randint(1,2)
+            if s==1:
+                prog=prog.replace("INT_LITERAL","100")
+            else:
+                prog=prog.replace("INT_LITERAL","200")
+        if prog.find("STRING_LITERAL") >=0:
+            rw = ["a","b","c"]
+            prog=prog.replace('STRING_LITERAL',"\""+rw[random.randint(0,len(rw)-1)]+"\"")
+        if prog.find("ID") >=0:
+            rw = ["a","b","c"]
+            prog=prog.replace("ID",rw[random.randint(0,len(rw))-1])
+            
+        prog=sub(r'\s+', ' ',prog)
+        return prog.lower()
+        
 
     def _execute_code(self, program):
         """
@@ -578,35 +600,21 @@ class Genotype(object):
         #ns = locals()
         #exec(program) in ns
         
-        #Delete Code from here; this is used for only demonstration purpose
-        if program.find("INT_LITERAL") >=0:
-            s=random.randint(1,2)
-            if s==1:
-                program=program.replace("INT_LITERAL","100")
-            else:
-                program=program.replace("INT_LITERAL","200")
-        if program.find("STRING_LITERAL") >=0:
-            rw = ["a","b","c"]
-            program=program.replace('STRING_LITERAL',"\""+rw[random.randint(0,len(rw)-1)]+"\"")
-        if program.find("ID") >=0:
-            rw = ["a","b","c"]
-            program=program.replace("ID",rw[random.randint(0,len(rw))])
-            
-        program=sub(r'\s+', ' ',program)
-        program=program.lower()
+        program=self.handleGenereatedCode(program)
+        self.local_bnf[BNF_PROGRAM] = program    
+        
+        
         if len(program) == 0:
-            raise StandardError("Empty Code")
-        else:
-            self.local_bnf[BNF_PROGRAM] = program    
-            #Delete Code till here; this is used for only demonstration purpose
+            return 0
+        else:                
             print "executing \t" +program
             proc = subprocess.Popen(["echo \""+program+"\" | js24"], stdout=subprocess.PIPE, shell=True)
             (out, err) = proc.communicate()
-            
-            if out.find("syntax error") >=0 or out.find("syntax") >=0  or out.find("Syntax") >= 0:
-                raise StandardError("Syntax Error")        
+            if 'Syntax' in out or 'syntax' in out :
+                return 0    
+            return 1    
 
-    def mutate(self, mutation_rate, mutation_type):
+    def mutate(self, mutation_rate, mutation_type,position1=None,position2=None):
         """
         This is function randomly mutates a binary genotype by changing 1 to 0
         and vice versa.  It is not context-perserving at this level.
@@ -615,7 +623,7 @@ class Genotype(object):
 
         if mutation_type == MUT_TYPE_S:
             if random.random() < mutation_rate:
-                self._single_mutate()
+                self._single_mutate(position1, position2)
         elif mutation_type == MUT_TYPE_M:
             self._multiple_mutate(mutation_rate)
         else:
@@ -653,32 +661,56 @@ class Genotype(object):
         """
 
         return self._gene_length * 8
-
-    def _single_mutate(self):
+    
+    #Author: Spandan Veggalam
+    def _single_mutate(self,position1=None, position2=None):
         """
         This function with a randomly selects a mutation point within the gene
         and changes a 1 to 0, or vice versa.
 
         """
-
-        position = random.randint(0, self._gene_length * 8 - 1)
-        gene = self.binary_gene
-
-        self.binary_gene = self._mutate(gene, position)
+        
+        
+        if position1 is None or position2 is None:
+            position = random.randint(0, self._gene_length * 8 - 1)
+            gene = self.binary_gene
+            self.binary_gene = self._mutate(gene, position1)
+        
+        else:
+            program1=self.local_bnf[BNF_PROGRAM]
+            self.local_bnf[BNF_PROGRAM] = self.handleGenereatedCode(self._map_variables(self.local_bnf['CodeFrag'], True))
+            subCode=self.local_bnf['CodeFrag'][position2:]
+            position2=self.local_bnf[BNF_PROGRAM].find(subCode)
+            gene = self.binary_gene
+            self.binary_gene = self._mutate(gene, position1,position2)
+            
         self.generate_decimal_gene()
 
+    #Author: Spandan Veggalam
     @staticmethod
-    def _mutate(gene, position):
+    def _mutate(gene, position1,position2=None):
         """
         This function does the actual mutation of the gene at a specific
         position.
 
         """
-
-        if gene[position] == '0':
-            gene = ''.join([gene[:position], "1", gene[position + 1:]])
+        newRandBGene = ""
+        
+        count = 0
+        if position2 is not None:
+            length=position2-position1
         else:
-            gene = ''.join([gene[:position], "0", gene[position + 1:]])
+            length=1
+        if length > 0:
+            while count < length*8 :
+                newRandBGene=newRandBGene+str(random.randint(0, 1))
+                count += 1        
+            gene = ''.join([gene[:position1*8], newRandBGene , gene[(position1 +length)* 8:]])
+        
+        #if gene[position] == '0':
+        #    gene = ''.join([gene[:position], "1", gene[position + 1:]])
+        #else:
+        #    gene = ''.join([gene[:position], "0", gene[position + 1:]])
 
         return gene
 
