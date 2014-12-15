@@ -23,8 +23,9 @@ This module implements the fitness components for grammatical evolution.
 
 """
 
-from random import random, randint
 import math
+from random import random, randint
+
 
 MAX = 'max'
 MIN = 'min'

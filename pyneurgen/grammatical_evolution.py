@@ -1,74 +1,24 @@
 #!/usr/bin/env python
-#
-#   Copyright (C) 2012  Don Smiley  ds@sidorof.com
-import tkMessageBox
 from Tkconstants import INSERT
-
-#   This program is free software: you can redistribute it and/or modify
-#   it under the terms of the GNU General Public License as published by
-#   the Free Software Foundation, either version 3 of the License, or
-#   (at your option) any later version.
-
-#   This program is distributed in the hope that it will be useful,
-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#   GNU General Public License for more details.
-
-#   You should have received a copy of the GNU General Public License
-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-#   See the LICENSE file included in this archive
-#
-
-"""
-This module implements the components for grammatical evolution.
-
-Logging has been added, but is currently poorly integrated.
-Hoped for course for implementation:
-    Turn on/off logging from user program
-    Granularity of logging choices
-        ex. be able to specify logging for certain reasons why a genotype fails
-            such as timeout, or syntax errors
-
-    Generally speaking, the intent will be to be able to turn on debugging
-    for certain types of problems without being flooded in other areas.
-
-
-"""
-
-from datetime import datetime
+from Tkinter import Button, Frame, Tk, Text
 from copy import deepcopy
+from datetime import datetime
 import logging
-import subprocess
-from random import randint
-
-from pyneurgen.genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
-from pyneurgen.fitness import FitnessList, Fitness, Replacement
-from pyneurgen.fitness import CENTER, MAX, MIN
-from pyneurgen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
-
-from gparser.GenerateBisonInput import *
-from gparser.GenerateLexInput import *
-
-
-from Tkinter import Tk, Text, StringVar
-from Tkinter import Frame
-from Tkinter import Label
-from Tkinter import Button
-
-from tkMessageBox import askyesno,showwarning,showinfo, showerror
-from tkFileDialog import askopenfilename
-from Tkconstants import INSERT
-
-from os import system
-from os import path
-from gparser.Property import * 
-from random import choice
+from os import path, system
+from random import choice, randint
 from re import sub
+import subprocess
+from tkFileDialog import askopenfilename
+from tkMessageBox import askyesno, showwarning, showinfo, showerror
+import tkMessageBox
+
+from gparser.AntlrParser import *
+from pyneurgen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
+from pyneurgen.fitness import CENTER, MAX, MIN
+from pyneurgen.fitness import FitnessList, Fitness, Replacement
+from pyneurgen.genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
 
 
-#   Constants
-STATEMENT_FORMAT = '<S'
 STOPPING_MAX_GEN = 'max_generations'
 STOPPING_FITNESS_LANDSCAPE = 'fitness_landscape'
 
@@ -95,32 +45,21 @@ logging.basicConfig(format='%(asctime)s %(message)s',
 
 
 class GrammaticalEvolution(object):
-    """
-    This class comprises the overall process of generating genotypes,
-    expressing the genes as programs using grammer and evalating the fitness of
-    those members.
-    """
 
     def __init__(self):
-        """
-        Because there are a number of parameters to specify, there are no
-        specific variables that are initialized within __init__.
-
-        There is a formidable number of default variables specified in this
-        function however.
-
-        """
-
-        #   Parameters for changing generations
-		#author : Spandan Veggalam    
-		#non_Terminals variable contains the list of non_terminals extracted from grammar file. 
-        #New flag _ind, initialPopulation list
-        self._ind= None
+        self.history = []
+        self.population = []
+        self.parser = AntlrParser()
         self.initial_Population = []
-        self._non_Terminals=[]
+        self.non_Terminals=[]
         self.stopping_criteria = {
                 STOPPING_MAX_GEN: None,
                 STOPPING_FITNESS_LANDSCAPE: None}
+        self.current_g = None
+        self.fitness_selections = []
+        self.replacement_selections = []        
+        
+        self._ind= None
         self._crossover_rate = DEFAULT_CROSSOVER_RATE
         self._children_per_crossover = DEFAULT_CHILDEREN_PER_CROSSOVER
         self._mutation_type = DEFAULT_MUTATION_TYPE
@@ -135,26 +74,16 @@ class GrammaticalEvolution(object):
         self._max_program_length = DEFAULT_MAX_PROGRAM_LENGTH
 
         #   Parameters for overall process
-        self._generation = 0
         self.fitness_list = FitnessList(CENTER)
+        self._generation = 0
         self._fitness_fail = DEFAULT_FITNESS_FAIL
         self._maintain_history = DEFAULT_MAINTAIN_HISTORY
         self._timeouts = DEFAULT_TIMEOUTS
 
-        #   Parameters used during runtime
-        self.current_g = None
-        self._fitness_selections = []
-        self._replacement_selections = []
-
-        self.bnf = {}
+        self._bnf = {}
         self._population_size = 0
-        self.population = []
 
-        self._history = []
-		
-    def set_ExtendGenotype(self, bool):
-        self._extend_genotype=bool
-		
+    #Author : Spandan Veggalam	
     def set_ind(self, ind):
         self._ind=ind
     
@@ -173,88 +102,65 @@ class GrammaticalEvolution(object):
     
     #Author : Spandan Veggalam
     def parseCode(self,codeFragment):
-        #TODO : send codeFragment to parser        
-        home_dir= path.expanduser(DIR)
-        if not path.exists(home_dir+"/parser"):
-            result= showinfo("Info","No Parser Found - Generating Parser")
-            self.genParser()       
         codeFragment= codeFragment.replace('\n', '')
-        proc = subprocess.Popen(["echo \""+codeFragment+"\" | "+home_dir+"parser"], stdout=subprocess.PIPE, shell=True)
-        (out, err) = proc.communicate()
-        if out.find("<<<"):            
-            return out
-        else :
-            raise StandardError("Syntax Error")
-        
-    
+        return self.parser.parseTree(codeFragment)
     
     #Author : Spandan Veggalam    
     def parseInputCode(self):
-            #TODO send text area data to parser and generate the parse tree set it to below variable; 
-            #TODO replace file reading
             try :
-                    inputCode=self.textArea.get('1.0', 'end')                
+                    inputCode=self.textArea.get('1.0', 'end')
+                    print inputCode                
                     if len(inputCode.strip())<=0:
                         raise StandardError("Provide Input")
-                    self.parseRepr=self.parseCode(inputCode)
-                    self.frame.quit()
-            except Exception as e:
-                    showwarning("Warning", e.message())            
+                    self.parseRepr=str(self.parseCode(inputCode))
+                    
+                    if self.parseRepr is not None:
+                        self.genIncompleteCodeFrag =  GenIncompleteCodeFrag()
+                        self.initial_Population = self.genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals)
+                        self.frame.quit()
+                    else:
+                        raise StandardError("error", "Syntax error")
+            except StandardError as e:
+                    showwarning("Warning", e.args)
+                    self.root.withdraw()            
     
     #Author : Spandan Veggalam
-    def populateTextArea(self):
-            Tk().withdraw()
-            f1=open(askopenfilename(),'r')
-            self.textArea.insert(INSERT,f1.read())
-            f1.close()
+    def populateTextArea(self) :
+        try:
+            input_File = askopenfilename()
+            print "file"+input_File
+            if len(input_File.strip())<=0:
+                raise StandardError()
+            else:
+                f1=open(input_File,'r')
+                self.textArea.insert(INSERT,f1.read())
+                f1.close()
+        except StandardError as e:
+            showwarning("Warning", e.args)
+            self.root.withdraw()   
+            
     
-    #Author : Spandan Veggalam        
-    def genParser(self):
-            
-            genLexInput =  GenerateLexInput()
-            genLexInput.setSelectedGrammar(self.grammarFile)
-            genLexInput.createLexInput()
-            
-            genBisonInput = GenerateBisonInput()
-            genBisonInput.createBisonInput(self.grammarFile)
-            home_dir= path.expanduser(DIR)
-            
-            system("flex -o " + home_dir+"/lex.c"+ " " +home_dir+"/lexfile.l")            
-            system("bison -d "+ home_dir+"/bison.y -o "+home_dir+"/bison.tab.c" ) 
-            system("cc -o "+ home_dir+"/parser "+home_dir+"/lex.c " + home_dir+"/bison.tab.c -ly -ll")
-            system("rm -rf "+home_dir+"/*lex* "+ home_dir+"/*bison*" )
             
     #Author : Spandan Veggalam
     def _prepareInitial_Population (self):
             
         try:
-            result= askyesno("Confirmation", "Generate Parser?")
-            if result :
-                self.genParser() 
-            
-            root = Tk()
-            root.title("Code Input Dialog")
-            self.frame=Frame(root)
+            self.root = Tk()
+            self.root.title("Code Input Dialog")
+            self.frame=Frame(self.root)
             self.frame.pack(side="top", fill="both", expand=True)
             self.textArea= Text(self.frame)
             self.textArea.grid(row=1)
             browseBtn=Button(self.frame, text='InputFile', command=self.populateTextArea,width=20).grid(row=2)
             submitBtn=Button(self.frame, text='Parse Code', command=self.parseInputCode,width=20).grid(row=3)
             self.frame.mainloop()      
-            self.genIncompleteCodeFrag =  GenIncompleteCodeFrag()
-            self.initial_Population = self.genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size,self.genIncompleteCodeFrag.extractNonTerminal(self.parseRepr.split()))
         except Exception as e:
-            showerror("Error", e.message())        
+            showerror("Error", e.message())     
+            
         
 
 		
     def set_population_size(self, size):
-        """
-        This function sets the total number of genotypes in the population.
-        This program uses a fixed size population.
-
-        """
-
         size = long(size)
         if isinstance(size, long) and size > 0:
             self._population_size = size
@@ -267,25 +173,10 @@ class GrammaticalEvolution(object):
                 population size, %s, must be a long above 0""" % (size))
 
     def get_population_size(self):
-        """
-        This function returns total number of genotypes in the
-        population.
-
-        """
-
         return self._population_size
 
     def set_genotype_length(self, start_gene_length,
                                     max_gene_length=None):
-        """
-        This function sets the initial size of the binary genotype.  An
-        optional max_gene_length can be entered as well.  This permits the
-        genotype to grow during the mapping process of the genotype to a
-        program.  The lengths are the length of the decimal genotypes, which
-        are therefor 8 times longer the binary genotypes created.
-
-        """
-
         if max_gene_length is None:
             max_gene_length = start_gene_length
 
@@ -312,98 +203,36 @@ class GrammaticalEvolution(object):
         self._max_gene_length = max_gene_length
 
     def get_genotype_length(self):
-        """
-        This function returns a tuple with the length the initial genotype and
-        the maximum genotype length permitted.
-
-        """
-
         return (self._start_gene_length, self._max_gene_length)
 
     def set_extend_genotype(self, true_false):
-        """
-        This function sets whether the genotype is extended during the gene
-        mapping process.
-
-        """
-
         if isinstance(true_false, bool):
             self._extend_genotype = true_false
         else:
             raise ValueError("Extend genotype must be True or False")
 
     def get_extend_genotype(self):
-        """
-        This function returns whether the genotype is extended during the gene
-        mapping process.
-
-        """
-
         return self._extend_genotype
 
     def set_wrap(self, true_false):
-        """
-        This function sets whether the genotype is wrapped during the gene
-        mapping process.  Wrapping would occur in the iterative process of
-        getting the next codon is the basis for the variable selection process.
-        If wrapped, when all the codons in the genotype are exhausted, the
-        position marker is wrapped around to the first codon in the sequence
-        and goes on.
-
-        """
-
         if isinstance(true_false, bool):
             self._wrap = true_false
         else:
             raise ValueError("Wrap must be True or False")
 
     def get_wrap(self):
-        """
-        This function returns whether the genotype is wrapped during the gene
-        mapping process.  Wrapping would occur in the iterative process of
-        getting the next codon is the basis for the variable selection process.
-        If wrapped, when all the codons in the genotype are exhausted, the
-        position marker is wrapped around to the first codon in the sequence
-        and goes on.
-
-        """
-
         return self._wrap
-
+    
+    #Modified Author : Spandan Veggalam 
     def set_bnf(self, bnf):
-        """
-        This function parses up a bnf and builds a dictionary. The incoming
-        format is designed to follow a format of:  <key> ::= value1 | value2
-        \n. The following lines can also hold additional values to accommodate
-        longer choices.
-
-        In addition, a set of statements are marked with a key
-        starting with "CodeFrag".  These are treated differently in that spaces are
-        not automatically stripped from the front.  This enables python
-        oriented white space to be honored.
-
-        """
-
         def strip_spaces(key, values):
-            """
-            This removes white space unless it is a statement.
-            """
-            if key.startswith(STATEMENT_FORMAT):
-                values = [value.rstrip()
-                    for value in values.split('|') if value]
-            else:
-                values = [value.strip()
-                    for value in values.split('|') if value]
-
+            values = [value.strip()
+                for value in values.split('|') if value]
             return values
 
-		#author : Spandan Veggalam  
-		#Local Variable to store non_terminals extracted after parsing grammar 
         non_Terminals=[]
 
         bnf_dict = {}
-		#author : Spandan Veggalam  
-		#modified the code to handle grammar and code fragment
         if self._ind == 1:
             for item in bnf.split('\n'):
                 if item.find('::=') >= 0:
@@ -414,9 +243,7 @@ class GrammaticalEvolution(object):
                 elif item:
                     values = bnf_dict[key]
                     values.extend(strip_spaces(key, item))
-                    if key.startswith(STATEMENT_FORMAT):
-			#   Convert statements back to string
-                        values = ['\n'.join(values)]
+                    
                     bnf_dict[key] = values
                 else:
                     #   blank line
@@ -431,56 +258,27 @@ class GrammaticalEvolution(object):
                 elif item:
                     values = bnf_dict[key]
                     values.extend(strip_spaces(key, item))
-                    if key.startswith(STATEMENT_FORMAT):
-                      	#   Convert statements back to string
-                        values = ['\n'.join(values)]
                     bnf_dict[key] = values
                   
                 else:
                     #   blank line
                     pass
-		#author : Spandan Veggalam  
-		#making non_terminals globally available
-        self._non_Terminals = non_Terminals        
-        
-        
-        self.bnf = bnf_dict
+        self.non_Terminals = non_Terminals        
+        self._bnf = bnf_dict
 
     def get_bnf(self):
-        """
-        This function returns the Backus Naur form of variables that are used
-        to map the genotypes to the generated programs.
-
-        """
-
-        return self.bnf
+        return self._bnf
 
     def set_maintain_history(self, true_false):
-        """
-        This function sets a flag to maintain a history of fitness_lists.
-
-        """
         if isinstance(true_false, bool):
             self._maintain_history = true_false
         else:
             raise ValueError("Maintain history must be True or False")
 
     def get_maintain_history(self):
-        """
-        This function returns a flag indicating whether the fitness list is
-        retained for each generation.
-
-        """
-
         return self._maintain_history
 
     def set_max_program_length(self, max_program_length):
-        """
-        This function sets the maximum length that a program can attain before
-        the genotype is declared a failure.
-
-        """
-
         errmsg1 = """The maximum program length, %s must be an long value
                     """ % (max_program_length)
         errmsg2 = """The maximum program length, %s must be greater than 0
@@ -494,23 +292,9 @@ class GrammaticalEvolution(object):
         self._max_program_length = max_program_length
 
     def get_max_program_length(self):
-        """
-        This function gets the maximum length that a program can attain before
-        the genotype is declared a failure.
-
-        """
-
         return self._max_program_length
 
     def set_fitness_fail(self, fitness_fail):
-        """
-        This function sets the fitness fail value that will be applied to
-        fitness functions that are deemed failure.  Failure would be programs
-        that fail due to overflows, or programs that grow to greater than
-        maximum program length, syntax failures, or other reasons.
-
-        """
-
         errmsg = """The fitness_fail, %s must be a float value
                     """ % (fitness_fail)
         #   coerce if possible
@@ -521,25 +305,9 @@ class GrammaticalEvolution(object):
         self._fitness_fail = fitness_fail
 
     def get_fitness_fail(self):
-        """
-        This function returns the value of fitness if the program is a failure.
-
-        """
-
         return self._fitness_fail
 
     def set_mutation_type(self, mutation_type):
-        """
-        This function sets the mutation type.  The choices are s(ingle),
-        m(ultiple).  If the choice is "s", then the mutation rate is applied
-        as a choice of whether to alter 1 bit on a gene or not.  If the choice
-        is "m", then the process applies the rate as the probability that a bit
-        will be changed as it walks the gene.  In short, "s", means that if the
-        gene is mutated, it will take place once.  Otherwise, the gene could be
-        mutated multiple times.
-
-        """
-
         errmsg = "The mutation type must be either '%s' or '%s'." % (
                                                     MUT_TYPE_S, MUT_TYPE_M)
         if mutation_type not in [MUT_TYPE_M, MUT_TYPE_S]:
@@ -548,28 +316,9 @@ class GrammaticalEvolution(object):
         self._mutation_type = mutation_type
 
     def get_mutation_type(self):
-        """
-        This function returns the mutation type.  See set_mutation_type for a
-        more complete explanation.
-
-        """
-
         return self._mutation_type
 
     def set_mutation_rate(self, mutation_rate):
-        """
-        This function sets the mutation rate that will be applied to members
-        selected into the fitness pool and to newly generated children.  Note
-        that the mutation rate should be vastly different depending upon the
-        mutation type that you have selected.  If the mutation type is 's',
-        then the rate is the probability that the genotype will be mutated.  If
-        the mutation type is 'm', then the rate is the probability that the any
-        given bit in the genotype will be altered.  Because of that, the
-        mutation rate should be significantly lower than the rate used with a
-        mutation type of 's'.
-
-        """
-
         errmsg = """The mutation rate, %s must be a float value
                     from 0.0 to 1.0""" % (mutation_rate)
         if not isinstance(mutation_rate, float):
@@ -580,28 +329,9 @@ class GrammaticalEvolution(object):
         self._mutation_rate = mutation_rate
 
     def get_mutation_rate(self):
-        """
-        This function gets the mutation rate that will be applied to members
-        selected into the fitness pool and to newly generated children.  Note
-        that the mutation rate should be vastly different depending upon the
-        mutation type that you have selected.  If the mutation type is 's',
-        then the rate is the probability that the genotype will be mutated.  If
-        the mutation type is 'm', then the rate is the probability that the any
-        given bit in the genotype will be altered.  Because of that, the
-        mutation rate should be significantly lower than the rate used with a
-        mutation type of 's'.
-
-        """
-
         return self._mutation_rate
 
     def set_crossover_rate(self, crossover_rate):
-        """
-        This function sets the probablity that will be
-        applied to members selected into the fitness pool.
-
-        """
-
         errmsg = """The crossover rate, %s must be a float value
                     from 0.0 to 1.0""" % (crossover_rate)
         if not isinstance(crossover_rate, float):
@@ -612,41 +342,18 @@ class GrammaticalEvolution(object):
         self._crossover_rate = crossover_rate
 
     def get_crossover_rate(self):
-        """
-        This function gets the probablity that will be applied to members
-        selected into the fitness pool.
-
-        """
-
         return self._crossover_rate
 
     def set_children_per_crossover(self, children_per_crossover):
-        """
-        This function sets the number of children that will generated from two
-        parents.  The choice is one or two.
-
-        """
-
         if children_per_crossover not in [1, 2]:
             raise ValueError(
                 "The children per crossovermust be either 1 or 2.")
         self._children_per_crossover = children_per_crossover
 
     def get_children_per_crossover(self):
-        """
-        This function gets the number of children that will generated from two
-        parents.
-
-        """
-
         return self._children_per_crossover
 
     def set_max_generations(self, generations):
-        """
-        This function sets the maximum number of generations that will be run.
-
-        """
-
         if isinstance(generations, int) and generations >= 0:
             self.stopping_criteria[STOPPING_MAX_GEN] = generations
         else:
@@ -655,53 +362,16 @@ class GrammaticalEvolution(object):
                                                                 generations))
 
     def get_max_generations(self):
-        """
-        This function gets the maximum number of generations that will be run.
-
-        """
-
         return self.stopping_criteria[STOPPING_MAX_GEN]
 
     def set_fitness_type(self, fitness_type, target_value=0.0):
-        """
-        This function sets whether the objective is to achieve as large a
-        fitness value possible, small, or hit a target_value.  Therefor the
-        choices are 'max', 'min', or 'center'.  If center is used, then a
-        target value should be entered as well.  For example, suppose that you
-        wanted to hit a target somewhere near zero.  Setting the target_value
-        at .001 would cause the process to complete if a fitness value achieved
-        and absolute value of .001 or less.
-
-        """
-
         self.fitness_list.set_fitness_type(fitness_type)
         self.fitness_list.set_target_value(target_value)
 
     def get_fitness_type(self):
-        """
-        This function gets whether the objective is to achieve as large a
-        fitness value possible, small, or hit a target_value.  Therefor the
-        choices are 'max', 'min', or 'center'.  If center is used, then a
-        target value should be entered as well.  For example, suppose that you
-        wanted to hit a target somewhere near zero.  Setting the target_value
-        at .001 would cause the process to complete if a fitness value achieved
-        .001 or less.
-
-        """
-
         return self.fitness_list.get_fitness_type()
 
     def set_max_fitness_rate(self, max_fitness_rate):
-        """
-        This function sets a maximum for the number of genotypes that can be
-        put in the fitness pool.  Since some fitness selection approaches can
-        have a varying number selected, and since multiple selection approaches
-        can be applied consequentially, there needs to be an ultimate limit on
-        the total number.  The max fitness rate must be a value greater than
-        zero and less than 1.0.
-
-        """
-
         errmsg = """The max fitness rate, %s must be a float value
                     from 0.0 to 1.0""" % (max_fitness_rate)
         if not isinstance(max_fitness_rate, float):
@@ -712,102 +382,35 @@ class GrammaticalEvolution(object):
         self._max_fitness_rate = max_fitness_rate
 
     def get_max_fitness_rate(self):
-        """
-        This function gets a maximum for the number of genotypes that can be
-        in the fitness pool.  Since some fitness selection approaches can have
-        a varying number selected, and since multiple selection approaches can
-        be applied consequentially, there needs to be an ultimate limit on the
-        total number.  The max fitness rate must be a value greater than zero
-        and less than 1.0.
-
-        """
-
         return self._max_fitness_rate
 
     def set_fitness_selections(self, *params):
-        """
-        This function loads the fitness selections that are to be used to
-        determine genotypes worthy of continuing to the next generation.  There
-        can be multiple selections, such as elites and tournaments.  See the
-        section Fitness Selection for further information.
-
-        """
-
         for fitness_selection in params:
             if isinstance(fitness_selection, Fitness):
-                self._fitness_selections.append(fitness_selection)
+                self.fitness_selections.append(fitness_selection)
             else:
                 raise ValueError("Invalid fitness selection")
 
     def set_replacement_selections(self, *params):
-        """
-        This function loads the replacement selections that are used to
-        determine genotypes are to be replaced.  Basically, it is the grim
-        reaper. Multiple replacement types can be loaded to meet the criteria.
-        The number replaced is governed by the fitness selection functions to
-        ensure that the population number stays constant.
-
-        """
-
         for replacement_selection in params:
             if isinstance(replacement_selection, Replacement):
-                self._replacement_selections.append(replacement_selection)
+                self.replacement_selections.append(replacement_selection)
             else:
                 raise ValueError("Invalid replacement selection")
 
     def get_fitness_history(self, statistic='best_value'):
-        """
-        This funcion returns a list of values that represent historical values
-        from the fitness history.  While there is a default value of
-        'best_value', other values are 'mean', 'min_value', 'max_value',
-        'worst_value', 'min_member', 'max_member', 'best_member', and
-        'worst_member'. The order is from oldest to newest.
-
-        """
-
         hist_list = []
-        for fitness_list in self._history:
+        for fitness_list in self.history:
             hist_list.append(fitness_list.__getattribute__(statistic)())
         return hist_list
 
     def get_best_member(self):
-        """
-        This function returns the member that it is most fit according to the
-        fitness list.  Accordingly, it is only functional after at least one
-        generation has been completed.
-
-        """
-
         return self.population[self.fitness_list.best_member()]
 
     def get_worst_member(self):
-        """
-        This function returns the member that it is least fit according to the
-        fitness list.  Accordingly, it is only functional after at least one
-        generation has been completed.
-
-        """
-
         return self.population[self.fitness_list.worst_member()]
 
     def set_timeouts(self, preprogram, program):
-        """
-        This function sets the number of seconds that the program waits until
-        declaring that the process is a runaway and cuts it off.  During the
-        mapping process against the preprogram, due to random chance a function
-        can be calling another function, which calls another, until the process
-        becomes so convoluted that the resulting program will be completely
-        useless. While the total length of a program can be guide to its
-        uselessnes as well, this is another way to handle it. Since variables
-        can also be generated during the running of the program there is a
-        second variable for the running program. Clearly, the second value must
-        be in harmony with the nature of the program that you are actually
-        running. Otherwise, you will be cutting of your program prematurely.
-        Note that the second timeout is checked only if the running program
-        requests an additional variable.  Otherwise, it will not be triggered.
-
-        """
-
         if isinstance(preprogram, int) and preprogram >= 0:
             self._timeouts[0] = preprogram
         else:
@@ -821,23 +424,11 @@ class GrammaticalEvolution(object):
                 timeout, %s, must be an int 0 or above""" % (program))
 
     def get_timeouts(self):
-        """
-        This function returns the number of seconds that must elapse before
-        the mapping process cuts off the process and declares that the genotype
-        is a failure.  It returns a tuple for the number of seconds for the
-        preprogram and the program itself.
-
-        """
-
         return self._timeouts
 
+
+    #Modified Author : Spandan Veggalam  
     def _compute_fitness(self):
-        """
-        This function runs the process of computing fitness functions for each
-        genotype and calculating the fitness function.
-
-        """
-
         for gene in self.population:
             starttime = datetime.now()
             gene._generation = self._generation
@@ -845,13 +436,8 @@ class GrammaticalEvolution(object):
                 self._generation, gene.member_no,
                 starttime.strftime('%m/%d/%y %H:%M')))
 
-            #print "Starting member G %s: %s at %s" % (
-                #self._generation, gene.member_no,
-                #starttime.strftime('%m/%d/%y %H:%M'))
             gene.starttime = starttime
-			#author : Spandan Veggalam  
-			#passing non_terminals to genotype
-            gene.set_keys (self._non_Terminals)
+            gene.set_keys (self.non_Terminals)
             self.current_g = gene
             gene.compute_fitness()
             self.population[gene.member_no]=gene
@@ -859,19 +445,12 @@ class GrammaticalEvolution(object):
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
 
     def run(self, starting_generation=0):
-        """
-        Once the parameters have all been set governing the course of the
-        evolutionary processing, this function starts the process running.  It
-        will continue until it the completion criteria have been set.
-
-        """
-
         logging.info("started run")
         self._generation = starting_generation
         while True:
             self._compute_fitness()
             if self._maintain_history:
-                self._history.append(deepcopy(self.fitness_list))
+                self.history.append(deepcopy(self.fitness_list))
 
             if self._continue_processing():
                 self._perform_endcycle()
@@ -902,15 +481,12 @@ class GrammaticalEvolution(object):
 
         return self.fitness_list.best_member()
 
+    #Modified Author : Spandan Veggalam 
     def create_genotypes(self):
-        """
-        This function creates a genotype using the input parameters for each
-        member of the population, and transfers operating parameters to the
-        genotype for running the fitness functions.
-
-        """
         self._extractProductions()
         self._prepareInitial_Population()
+        if len(self.initial_Population)<=0:
+            return
         member_no = 0
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
@@ -918,8 +494,9 @@ class GrammaticalEvolution(object):
                         member_no)
             #   a local copy is made because variables
             #   can be saved within the local_bnf
-            gene.local_bnf = deepcopy(self.bnf)
+            gene.local_bnf = deepcopy(self._bnf)
             gene.local_bnf['<member_no>'] = [gene.member_no]
+            gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
             gene._max_program_length = self._max_program_length
             gene._fitness = self._fitness_fail
             gene._fitness_fail = self._fitness_fail
@@ -928,25 +505,10 @@ class GrammaticalEvolution(object):
             gene._wrap = self._wrap
             self.population.append(gene)
             member_no += 1
-            
-            #Author Spandan
-            #setting Incomplete Code Frag                 
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
-            
+        return True;  
 
     def _perform_endcycle(self):
-        """
-        This function runs after each member of the population has computed
-        their fitness function.  Then, the fitness selection objects will
-        evaluate those members according to their respective criteria and
-        develop a pool of members that will potentially survive to the next
-        generation. Crossovers will take place from that pool and each member
-        will be subject to the possibility of mutatuting.  Finally, a
-        replacement process will find which members should be replaced. The
-        fitness pool will then replace those members.
-
-        """
-
         fitness_pool = self._evaluate_fitness()
         child_list = self._perform_crossovers(fitness_pool)
 
@@ -955,18 +517,11 @@ class GrammaticalEvolution(object):
         self._perform_replacements(fitness_pool)
 
     def _evaluate_fitness(self):
-        """
-        This function evaluates the fitness of the members in the light of the
-        fitness criteria functions.  It returns a list of members that will be
-        used for crossovers and mutations.
-
-        """
-
         flist = []
         total = int(round(
             self._max_fitness_rate * float(self._population_size)))        
         count = 0
-        for fsel in self._fitness_selections:
+        for fsel in self.fitness_selections:
             fsel.set_fitness_list(self.fitness_list)
             for i in fsel.select():
                 flist.append(i)
@@ -982,14 +537,6 @@ class GrammaticalEvolution(object):
         return flist1
 
     def _perform_crossovers(self, flist):
-        """
-        This function accepts a list of genotypes that are to be crossed.  The
-        list is processed two at a time, and a child list holding the offspring
-        is returned.  The _children_per_crossover indicator governs whether two
-        children are produced or one.
-
-        """
-
         child_list = []
         length = len(flist)
         if length % 2 == 1:
@@ -1008,14 +555,8 @@ class GrammaticalEvolution(object):
 
         return child_list
 
+    #Modified Author : Spandan Veggalam 
     def _crossover(self, parent1, parent2, ind=None):
-        """
-        This function accepts two parents, randomly selects which is parent1
-        and which is parent2.  Then, executes the crossover, and returns two
-        children.
-
-        """
-
         if not isinstance(parent1, Genotype):
             raise ValueError("Parent1 is not a genotype")
         if not isinstance(parent2, Genotype):
@@ -1049,10 +590,9 @@ class GrammaticalEvolution(object):
         child2Prg=child2.get_program()
         
         child1ParseTree=self.parseCode(child1Prg)
+        non_term1=self.parser.non_Terminals
         child2ParseTree=self.parseCode(child2Prg)
-
-        non_term1=self.genIncompleteCodeFrag.extractNonTerminal(child1ParseTree.split())
-        non_term2=self.genIncompleteCodeFrag.extractNonTerminal(child2ParseTree.split())
+        non_term2=self.parser.non_Terminals
 
         commonNonTerm=[val for val in non_term1 if val in set(non_term2)]
         
@@ -1096,15 +636,6 @@ class GrammaticalEvolution(object):
 
     @staticmethod
     def _crossover_function(child1_binary, child2_binary, crosspoint):
-        """
-        This function performs the actual crossover of material at a random
-        point.
-
-        I gratefully acknowlege Franco from Argentina (blamaeda@gmail.com) for
-        the fix to my previous version of this code.
-
-        """
-
         child1_binary, child2_binary = child1_binary[0:crosspoint] + \
                                     child2_binary[crosspoint:], \
                                     child2_binary[0:crosspoint] + \
@@ -1114,13 +645,6 @@ class GrammaticalEvolution(object):
 
     #Author: Spandan Veggalam
     def _perform_mutations(self, mlist):
-        """
-        This functions accepts a list of genotypes that are subject to
-        mutation.  Each genotype is then put at risk for mutation and may or
-        may not be mutated.
-
-        """
-        
         for gene in mlist:
             prg=gene.get_program()
             incompl=self.parseCode(prg)
@@ -1131,15 +655,8 @@ class GrammaticalEvolution(object):
                 gene.mutate(self._mutation_rate, self._mutation_type,position1, position2)
 
     def _perform_replacements(self, fitness_pool):
-        """
-        This function accepts a list of members that will replace lesser
-        performers.  The replacement process then applies the fitness pool to
-        the population.
-
-        """
-
         position = 0
-        for rsel in self._replacement_selections:
+        for rsel in self.replacement_selections:
             rsel.set_fitness_list(self.fitness_list)
 
             for replaced_no in rsel.select():
@@ -1158,12 +675,6 @@ class GrammaticalEvolution(object):
                     break
 
     def _continue_processing(self):
-        """
-        This function, using the criteria for ending the evolutionary process
-        after each generation, returns a flag of whether to continue or not.
-
-        """
-
         status = True
         fitl = self.fitness_list
 

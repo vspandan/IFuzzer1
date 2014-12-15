@@ -1,32 +1,29 @@
 #!/usr/bin/env python
 
-from pyneurgen.grammatical_evolution import GrammaticalEvolution
-from pyneurgen.fitness import FitnessElites, FitnessTournament
-from pyneurgen.fitness import ReplacementTournament, MAX, MIN, CENTER
-
-
-from os import listdir
-from os.path import isfile, join
-from os import system
-from posix import mkdir
-
-
-from Tkinter import Tk
+from Tix import ROW
+from Tkconstants import DISABLED
+from Tkinter import BooleanVar
+from Tkinter import Button
+from Tkinter import Entry
 from Tkinter import Frame
 from Tkinter import Label
-from Tkinter import Button
-from Tkinter import StringVar
-from Tkinter import BooleanVar
-from Tkinter import Entry
-from Tkinter import Radiobutton
-from Tkinter import W
 from Tkinter import OptionMenu
-
-
-from tkFileDialog import askopenfilename
+from Tkinter import Radiobutton
+from Tkinter import StringVar
+from Tkinter import Tk
+from Tkinter import W
+from os import listdir
+from os import system
+from os.path import isfile, join
+from posix import mkdir
 from tkFileDialog import askdirectory
+from tkFileDialog import askopenfilename
 from tkMessageBox import showerror
-from Tix import ROW
+
+from pyneurgen.fitness import FitnessElites, FitnessTournament
+from pyneurgen.fitness import ReplacementTournament, MAX, MIN, CENTER
+from pyneurgen.grammatical_evolution import GrammaticalEvolution
+
 
 #Author: Spandan Veggalam
 class GECodeGen(object):
@@ -42,8 +39,10 @@ class GECodeGen(object):
         label1= Label(self.frame,text="Grammar File", width=20).grid(row = 0,column=0)
         self.e = StringVar()
         self.inputFile = Entry(self.frame, textvariable=self.e,width=30)
+        self.inputFile.insert(0, "grammarFiles/JavaScript1.g4")
+        self.inputFile.config(state=DISABLED)
         self.inputFile.grid(row=0, column=1)
-        browseBtn=Button(self.frame, text='Browse', command=self.selectGrammarFIle,width=10).grid(row=0, column=3)
+        browseBtn=Button(self.frame, text='Browse', command=self.selectGrammarFIle,width=10,state=DISABLED).grid(row=0, column=3)
         
         
         label= Label(self.frame,text="GENOTYPE PARAMETERS")
@@ -236,19 +235,18 @@ class GECodeGen(object):
                         ReplacementTournament(ges.fitness_list, tournament_size=int(self.set_replacement_tournmant_size.get())))
                 
                 ges.set_maintain_history(self.maintain_history.get())
-                ges.set_ExtendGenotype(self.extend_genotype.get())
+                ges.set_extend_genotype(self.extend_genotype.get())
                 
-                ges.create_genotypes()
-                ges.run()
-                print ges.fitness_list.sorted()
-                print
-                print
-                gene = ges.population[ges.fitness_list.best_member()]
-                print gene.get_program()
+                if ges.create_genotypes():
+                    ges.run()
+                    print ges.fitness_list.sorted()
+                    gene = ges.population[ges.fitness_list.best_member()]
+                    print gene.get_program()
                 self.frame.quit()
+                
             
-        except Exception as e:
-            showerror("Error", e)
+        except AttributeError as e:
+            print e
 
 #Author: Spandan Veggalam 
 if __name__ == "__main__":
