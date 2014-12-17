@@ -39,7 +39,7 @@ class GECodeGen(object):
         label1= Label(self.frame,text="Grammar File", width=20).grid(row = 0,column=0)
         self.e = StringVar()
         self.inputFile = Entry(self.frame, textvariable=self.e,width=30)
-        self.inputFile.insert(0, "grammarFiles/JavaScript1.g4")
+        self.inputFile.insert(0, "grammarFiles/JavaScript.g4")
         self.inputFile.config(state=DISABLED)
         self.inputFile.grid(row=0, column=1)
         browseBtn=Button(self.frame, text='Browse', command=self.selectGrammarFIle,width=10,state=DISABLED).grid(row=0, column=3)

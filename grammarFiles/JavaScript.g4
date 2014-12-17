@@ -14,7 +14,7 @@ variableStatement : Var variableDeclarationList eos
 
 variableDeclarationList : variableDeclaration ',' variableDeclarationList | variableDeclaration
 
-variableDeclaration : Identifier initialiser |  Identifier
+variableDeclaration : identifier initialiser |  identifier
 
 initialiser : '=' singleExpression
 
@@ -26,9 +26,9 @@ ifStatement : If '(' expressionSequence ')' statement Else statement | If '(' ex
 
 iterationStatement : Do statement While '(' expressionSequence ')' eos | While '(' expressionSequence ')' statement | For '(' ';' ';' ')' statement | For '(' ';' ';' expressionSequence ')' statement | For '(' ';' expressionSequence ';' ')' statement | For '(' ';' expressionSequence ';' expressionSequence ')' statement | For '(' expressionSequence ';' ';' ')' statement | For '(' expressionSequence ';' ';' expressionSequence ')' statement | For '(' expressionSequence ';' expressionSequence ';' ')' statement | For '(' expressionSequence ';' expressionSequence ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' ';' ')' statement | For '(' Var variableDeclarationList ';' ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' expressionSequence ')' statement | For '(' singleExpression In expressionSequence ')' statement | For '(' Var variableDeclaration In expressionSequence ')' statement
 
-continueStatement : Continue Identifier eos | Continue eos
+continueStatement : Continue identifier eos | Continue eos
 
-breakStatement : Break Identifier eos | Break eos
+breakStatement : Break identifier eos | Break eos
 
 returnStatement : Return expressionSequence eos | Return eos
 
@@ -44,21 +44,21 @@ caseClause : Case expressionSequence ':' statementList |  Case expressionSequenc
 
 defaultClause : Default ':' statementList | Default ':' 
 
-labelledStatement : Identifier ':' statement
+labelledStatement : identifier ':' statement
 
 throwStatement : Throw expressionSequence eos
 
 tryStatement : Try block catchProduction | Try block finallyProduction | Try block catchProduction finallyProduction
 
-catchProduction : Catch '(' Identifier ')' block
+catchProduction : Catch '(' identifier ')' block
 
 finallyProduction : Finally block
 
 debuggerStatement : Debugger eos
 
-functionDeclaration : Function Identifier '(' formalParameterList ')' '{' functionBody '}' | Function Identifier '(' ')' '{' functionBody '}'
+functionDeclaration : Function identifier '(' formalParameterList ')' '{' functionBody '}' | Function identifier '(' ')' '{' functionBody '}'
 
-formalParameterList : Identifier ',' formalParameterList| Identifier
+formalParameterList : identifier ',' formalParameterList| identifier
 
 functionExpression	: Function '(' formalParameterList ')' '{' functionBody '}'	| Function  '(' ')' '{' functionBody '}'
 
@@ -78,7 +78,7 @@ propertyAssignment : propertyName ':' singleExpression | 'get' '(' ')' '{' funct
     
 propertyName : identifierName | StringLiteral | numericLiteral
     
-propertySetParameterList : Identifier
+propertySetParameterList : identifier
 
 arguments : '(' argumentList ')' |  '(' ')'
     
@@ -86,7 +86,7 @@ argumentList : singleExpression ',' argumentList | singleExpression
     
 expressionSequence : singleExpression expressionSequence | singleExpression
 
-singleExpression : functionExpression | singleExpression '[' expressionSequence ']' | singleExpression '.' identifierName | singleExpression arguments | New singleExpression arguments | New singleExpression | singleExpression '++' | singleExpression '--' | Delete singleExpression | Void singleExpression | Typeof singleExpression | '++' singleExpression | '--' singleExpression | '+' singleExpression | '-' singleExpression | '~' singleExpression | '!' singleExpression | singleExpression '*' singleExpression | singleExpression '/' singleExpression | singleExpression '%' singleExpression | singleExpression '+' singleExpression | singleExpression '-' singleExpression | singleExpression '<<' singleExpression | singleExpression '>>' singleExpression | singleExpression '>>>' singleExpression | singleExpression '<' singleExpression | singleExpression '>' singleExpression | singleExpression '<=' singleExpression | singleExpression '>=' singleExpression | singleExpression Instanceof singleExpression | singleExpression In singleExpression | singleExpression '==' singleExpression | singleExpression '!=' singleExpression | singleExpression '===' singleExpression | singleExpression '!==' singleExpression | singleExpression '&' singleExpression | singleExpression '^' singleExpression | singleExpression '|' singleExpression | singleExpression '&&' singleExpression | singleExpression '##' singleExpression | singleExpression '?' singleExpression ':' singleExpression | singleExpression '=' expressionSequence | singleExpression assignmentOperator expressionSequence | This | Identifier | literal | arrayLiteral | objectLiteral | '(' expressionSequence ')'
+singleExpression : functionExpression | singleExpression '[' expressionSequence ']' | singleExpression '.' identifierName | singleExpression arguments | New singleExpression arguments | New singleExpression | singleExpression '++' | singleExpression '--' | Delete singleExpression | Void singleExpression | Typeof singleExpression | '++' singleExpression | '--' singleExpression | '+' singleExpression | '-' singleExpression | '~' singleExpression | '!' singleExpression | singleExpression '*' singleExpression | singleExpression '/' singleExpression | singleExpression '%' singleExpression | singleExpression '+' singleExpression | singleExpression '-' singleExpression | singleExpression '<<' singleExpression | singleExpression '>>' singleExpression | singleExpression '>>>' singleExpression | singleExpression '<' singleExpression | singleExpression '>' singleExpression | singleExpression '<=' singleExpression | singleExpression '>=' singleExpression | singleExpression Instanceof singleExpression | singleExpression In singleExpression | singleExpression '==' singleExpression | singleExpression '!=' singleExpression | singleExpression '===' singleExpression | singleExpression '!==' singleExpression | singleExpression '&' singleExpression | singleExpression '^' singleExpression | singleExpression '|' singleExpression | singleExpression '&&' singleExpression | singleExpression '##' singleExpression | singleExpression '?' singleExpression ':' singleExpression | singleExpression '=' expressionSequence | singleExpression assignmentOperator expressionSequence | This | identifier | literal | arrayLiteral | objectLiteral | '(' expressionSequence ')'
 
 assignmentOperator : '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '>>>=' | '&=' | '^=' | '|='
 
@@ -94,7 +94,7 @@ literal : nullLiteral | booleanLiteral | StringLiteral | RegularExpressionLitera
 
 numericLiteral : DecimalLiteral | HexIntegerLiteral | OctalIntegerLiteral
 
-identifierName : Identifier | reservedWord
+identifierName : identifier | reservedWord
 
 reservedWord : keyword | futureReservedWord | nullLiteral | booleanLiteral
 
@@ -151,3 +151,6 @@ Package    : 'package'
 Protected  : 'protected'
 Static     : 'static'
 Yield      : 'yield'
+
+identifier : Ident
+

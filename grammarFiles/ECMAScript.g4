@@ -1,4 +1,4 @@
-grammar ECMAScript1;
+grammar ECMAScript;
 
 program
  : sourceElements
@@ -49,7 +49,7 @@ variableDeclarationList
  ;
 
 variableDeclaration
- : Identifier initialiser?
+ : identifier initialiser?
  ;
 
 initialiser
@@ -78,11 +78,11 @@ iterationStatement
  ;
 
 continueStatement
- : Continue Identifier? eos
+ : Continue identifier? eos
  ;
 
 breakStatement
- : Break Identifier? eos
+ : Break identifier? eos
  ;
 
 returnStatement
@@ -114,7 +114,7 @@ defaultClause
  ;
 
 labelledStatement
- : Identifier ':' statement
+ : identifier ':' statement
  ;
 
 throwStatement
@@ -128,7 +128,7 @@ tryStatement
  ;
 
 catchProduction
- : Catch '(' Identifier ')' block
+ : Catch '(' identifier ')' block
  ;
 
 finallyProduction
@@ -140,11 +140,11 @@ debuggerStatement
  ;
 
 functionDeclaration
- : Function Identifier '(' formalParameterList? ')' '{' functionBody '}'
+ : Function identifier '(' formalParameterList? ')' '{' functionBody '}'
  ;
 
 formalParameterList
- : Identifier ( ',' Identifier )*
+ : identifier ( ',' identifier )*
  ;
 
 functionExpression 
@@ -189,7 +189,7 @@ propertyName
  ;
     
 propertySetParameterList
- : Identifier
+ : identifier
  ;
 
 arguments
@@ -248,7 +248,7 @@ singleExpression
  | singleExpression '=' expressionSequence                                # AssignmentExpression
  | singleExpression assignmentOperator expressionSequence                 # AssignmentOperatorExpression
  | This                                                                   # ThisExpression
- | Identifier                                                             # IdentifierExpression
+ | identifier                                                             # IdentifierExpression
  | literal                                                                # LiteralExpression
  | arrayLiteral                                                           # ArrayLiteralExpression
  | objectLiteral                                                          # ObjectLiteralExpression
@@ -284,7 +284,7 @@ numericLiteral
  ;
 
 identifierName
- : Identifier
+ : identifier
  | reservedWord
  ;
 
@@ -422,7 +422,9 @@ Protected  : 'protected';
 Static     : 'static';
 Yield      : 'yield';
 
-Identifier
+identifier : Ident;
+
+Ident	
  : IdentifierStart IdentifierPart*
  ;
 

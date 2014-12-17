@@ -527,7 +527,7 @@ def serializedATN():
         return buf.getvalue()
 		
 
-class ECMAScript1Lexer(Lexer):
+class ECMAScriptLexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -633,7 +633,7 @@ class ECMAScript1Lexer(Lexer):
     Protected = 98
     Static = 99
     Yield = 100
-    Identifier = 101
+    Ident = 101
     StringLiteral = 102
     WhiteSpaces = 103
     MultiLineComment = 104
@@ -679,7 +679,7 @@ class ECMAScript1Lexer(Lexer):
                   u"Class", u"Enum", u"Extends", u"Super", u"Const", u"Export", 
                   u"Import", u"Implements", u"Let", u"Private", u"Public", 
                   u"Interface", u"Package", u"Protected", u"Static", u"Yield", 
-                  u"Identifier", u"StringLiteral", u"WhiteSpaces", u"MultiLineComment", 
+                  u"Ident", u"StringLiteral", u"WhiteSpaces", u"MultiLineComment", 
                   u"SingleLineComment", u"UnexpectedCharacter", u"DoubleStringCharacter", 
                   u"SingleStringCharacter", u"EscapeSequence", u"CharacterEscapeSequence", 
                   u"HexEscapeSequence", u"UnicodeEscapeSequence", u"SingleEscapeCharacter", 
@@ -693,10 +693,10 @@ class ECMAScript1Lexer(Lexer):
                   u"RegularExpressionNonTerminator", u"RegularExpressionBackslashSequence", 
                   u"RegularExpressionClass", u"RegularExpressionClassChar" ]
 
-    grammarFileName = u"ECMAScript1.g4"
+    grammarFileName = u"ECMAScript.g4"
 
     def __init__(self, input=None):
-        super(ECMAScript1Lexer, self).__init__(input)
+        super(ECMAScriptLexer, self).__init__(input)
         self.checkVersion("4.4")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None

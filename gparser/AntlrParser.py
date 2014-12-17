@@ -7,9 +7,9 @@ from random import choice, randint
 from collections import defaultdict
 from pickle import dump, load, HIGHEST_PROTOCOL
 
-from ECMAScript1Lexer import ECMAScript1Lexer
-from ECMAScript1Parser import ECMAScript1Parser
-from ECMAScript1Listener import ECMAScript1Listener
+from ECMAScriptLexer import ECMAScriptLexer
+from ECMAScriptParser import ECMAScriptParser
+from ECMAScriptListener import ECMAScriptListener
 
 DEFAULT_SCORE = 0
 DEFAULT_DATABASE_PATH = "../database"
@@ -34,9 +34,9 @@ class AntlrParser(object):
         
     def _initParser(self, fileStream):
         self.init()
-        lexer = ECMAScript1Lexer(fileStream)
+        lexer = ECMAScriptLexer(fileStream)
         stream = CommonTokenStream(lexer)
-        self.parser = ECMAScript1Parser(stream)
+        self.parser = ECMAScriptParser(stream)
         
     def _createFileInputStream(self, program):
         fil = open(DEFAULT_FILE, WRITE);
