@@ -13,6 +13,7 @@ from os import path
 
 from pyneurgen.utilities import base10tobase2, base2tobase10
 import collections
+from random import randint
 
 
 VARIABLE_FORMAT = '(\W+)'
@@ -62,6 +63,7 @@ class Genotype(object):
 
         self._position = (0, 0)
         self.keywords = None
+        self._identifiers=[]
         self.errors = []
     
     # Author : Spandan Veggalam    
@@ -122,12 +124,6 @@ class Genotype(object):
     # Author : Spandan Veggalam 
     def _converge(self, item):
         
-        if item == 'StringLiteral':
-            item = 'literal'
-            
-        if item in ['HexIntegerLiteral' , 'DecimalLiteral' , 'OctalIntegerLiteral']:
-            item = 'numericLiteral'
-        
         if item in self.keywords:
             return lower(item)
         
@@ -163,8 +159,28 @@ class Genotype(object):
             continue_map = False
             while position < len(prg_list):
                 item = prg_list[position]
+                if item == "identifier":
+                    l=len(self._identifiers)
+                    if l>0:
+                        prg_list[position]= str(self._identifiers[randint(0,l-1)])
+                    else:
+                        prg_list[position]= str(self._identifiers[0])
+                    position += 1
+                    continue
+
+                if item in ['StringLiteral','RegularExpressionLiteral']:
+                    prg_list[position] = self._converge('literal')
+                    position += 1
+                    continue
+                
+                if item in ['HexIntegerLiteral' , 'DecimalLiteral' , 'OctalIntegerLiteral']:
+                    prg_list[position] = self._converge('numericLiteral')
+                    position += 1
+                    continue
+        
                 if item in self._keys:
                     if check_stoplist and position >= 0:
+                        
                         if initialMapping == 0:
                             prg_list[position] = self.resolve_variable(item)
                         else:
@@ -332,7 +348,7 @@ class Genotype(object):
         
         else:
             program1 = self.local_bnf[BNF_PROGRAM]
-            self.local_bnf[BNF_PROGRAM] = self.handleGenereatedCode(self._map_variables(self.local_bnf['CodeFrag'], True))
+            self.local_bnf[BNF_PROGRAM] = sub(r'\s+', ' ', self._map_variables(self.local_bnf['CodeFrag'], True))
             subCode = self.local_bnf['CodeFrag'][position2:]
             position2 = self.local_bnf[BNF_PROGRAM].find(subCode)
             gene = self.binary_gene
@@ -375,3 +391,8 @@ class Genotype(object):
     def get_fitness_fail(self):
         return self._fitness_fail
 
+    def set_identifiers(self,idenfifiers):
+        self._identifiers=idenfifiers
+    
+    def get_identifiers(self):
+        return self._identifiers

@@ -31,6 +31,7 @@ class AntlrParser(object):
         self.parseTr = ""
         self.pos = 0;
         self.pri = False
+        self.identifiers=[]
         
     def _initParser(self, fileStream):
         self.init()
@@ -82,7 +83,8 @@ class AntlrParser(object):
             if childCount > 0:
                 rC = s.getPayload()
                 self.parseTr = self.parseTr + "<<<" + (self.rules[rC.getRuleIndex()]) + ": "
-                    
+                if (self.rules[rC.getRuleIndex()] == 'identifier'):
+                    self.identifiers.append(s.getText())
                 for i in range(0, childCount):
                     self.selectSubtrees(nonT, s.getChild(i))
                 self.parseTr = self.parseTr + " >>> "

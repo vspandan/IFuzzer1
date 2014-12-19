@@ -506,6 +506,7 @@ class GrammaticalEvolution(object):
             self.population.append(gene)
             member_no += 1
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
+            gene._identifiers=self.parser.identifiers
         return True;  
 
     def _perform_endcycle(self):
@@ -621,7 +622,9 @@ class GrammaticalEvolution(object):
         child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
         
         incompl1=self.parseCode(child1Prg_)
+        child1.set_identifiers(self.parser.identifiers)
         incompl2=self.parseCode(child2Prg_)
+        child2.set_identifiers(self.parser.identifiers)
         
         child1.local_bnf['CodeFrag'],dummy =  self.genIncompleteCodeFrag.genCodeFrag(incompl1,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl1.split()))
         child2.local_bnf['CodeFrag'],dummy =  self.genIncompleteCodeFrag.genCodeFrag(incompl2,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl2.split()))
@@ -648,6 +651,7 @@ class GrammaticalEvolution(object):
         for gene in mlist:
             prg=gene.get_program()
             incompl=self.parseCode(prg)
+            gene.set_identifiers(self.parser.identifiers)
             if len(incompl.strip()) >0:
                 gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteCodeFrag.genCodeFrag(incompl,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl.split()))
                 position1=gene.local_bnf['CodeFrag'].find(selectedNt)
