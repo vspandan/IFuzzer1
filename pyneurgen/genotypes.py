@@ -124,9 +124,6 @@ class Genotype(object):
     # Author : Spandan Veggalam 
     def _converge(self, item):
         
-        if item in self.keywords:
-            return lower(item)
-        
         fileName = DEFAULT_DATABASE_PATH + "/" + item
         if  path.isfile(fileName): 
             f = open(fileName, READ)
@@ -159,6 +156,12 @@ class Genotype(object):
             continue_map = False
             while position < len(prg_list):
                 item = prg_list[position]
+                
+                if item in self.keywords:
+                    prg_list[position]=lower(item)
+                    position += 1
+                    continue
+        
                 if item == "identifier":
                     l=len(self._identifiers)
                     if l>0:

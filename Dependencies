@@ -18,3 +18,6 @@ alias antlr4='java -jar /usr/local/lib/antlr4.4.jar'
 antlr4 -Dlanguage=Python2 ECMAScript.g4 -o ../gparser/
 
 
+
+
+https://wiki.mozilla.org/JavaScript:New_to_SpiderMonkey
