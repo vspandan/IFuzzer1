@@ -22,7 +22,7 @@ from tkMessageBox import showerror
 
 from codegen.fitness import FitnessElites, FitnessTournament
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
-from codegen.grammatical_evolution import GrammaticalEvolution
+from codegen.GrammaticalEvolution import GrammaticalEvolution
 
 
 #Author: Spandan Veggalam
