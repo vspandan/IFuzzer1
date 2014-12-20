@@ -11,7 +11,7 @@ import traceback
 from pickle import load
 from os import path
 
-from pyneurgen.utilities import base10tobase2, base2tobase10
+from codegen.Utilities import base10tobase2, base2tobase10
 import collections
 from random import randint
 
@@ -25,7 +25,7 @@ BNF_PROGRAM = 'program'
 TIMEOUT_PROG_BUILD = 0
 TIMEOUT_PROG_EXECUTE = 1
 
-DEFAULT_LOG_FILE = 'pyneurgen.log'
+DEFAULT_LOG_FILE = 'GECodeGen.log'
 DEFAULT_LOG_LEVEL = logging.INFO
 
 DEFAULT_DATABASE_PATH = "database"

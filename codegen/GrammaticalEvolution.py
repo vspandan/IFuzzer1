@@ -12,11 +12,11 @@ from tkFileDialog import askopenfilename
 from tkMessageBox import askyesno, showwarning, showinfo, showerror
 import tkMessageBox
 
-from gparser.AntlrParser import *
-from pyneurgen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
-from pyneurgen.fitness import CENTER, MAX, MIN
-from pyneurgen.fitness import FitnessList, Fitness, Replacement
-from pyneurgen.genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
+from parser.AntlrParser import *
+from codegen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
+from codegen.fitness import CENTER, MAX, MIN
+from codegen.fitness import FitnessList, Fitness, Replacement
+from codegen.Genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
 
 
 STOPPING_MAX_GEN = 'max_generations'
@@ -37,7 +37,7 @@ DEFAULT_FITNESS_FAIL = -1000.0
 DEFAULT_MAINTAIN_HISTORY = True
 DEFAULT_TIMEOUTS = [20, 3600]
 
-DEFAULT_LOG_FILE = 'pyneurgen.log'
+DEFAULT_LOG_FILE = 'GECodeGen.log'
 
 logging.basicConfig(format='%(asctime)s %(message)s',
                     filename=DEFAULT_LOG_FILE,
@@ -115,8 +115,8 @@ class GrammaticalEvolution(object):
                     self.parseRepr=str(self.parseCode(inputCode))
                     
                     if self.parseRepr is not None:
-                        self.genIncompleteCodeFrag =  GenIncompleteCodeFrag()
-                        self.initial_Population = self.genIncompleteCodeFrag.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals)
+                        self.codefragGen =  GenIncompleteCodeFrag()
+                        self.initial_Population = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals)
                         self.frame.quit()
                     else:
                         raise StandardError("error", "Syntax error")
@@ -603,8 +603,8 @@ class GrammaticalEvolution(object):
             return (child1, child2)
         
         #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
-        subString1=self.genIncompleteCodeFrag.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
-        subString2=self.genIncompleteCodeFrag.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
+        subString1=self.codefragGen.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
+        subString2=self.codefragGen.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
         
         subString1=sub(r'\s+', ' ',subString1)
         subString2=sub(r'\s+', ' ',subString2)
@@ -626,8 +626,8 @@ class GrammaticalEvolution(object):
         incompl2=self.parseCode(child2Prg_)
         child2.set_identifiers(self.parser.identifiers)
         
-        child1.local_bnf['CodeFrag'],dummy =  self.genIncompleteCodeFrag.genCodeFrag(incompl1,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl1.split()))
-        child2.local_bnf['CodeFrag'],dummy =  self.genIncompleteCodeFrag.genCodeFrag(incompl2,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl2.split()))
+        child1.local_bnf['CodeFrag'],dummy =  self.codefragGen.genCodeFrag(incompl1,1,self.codefragGen.extractNonTerminal(incompl1.split()))
+        child2.local_bnf['CodeFrag'],dummy =  self.codefragGen.genCodeFrag(incompl2,1,self.codefragGen.extractNonTerminal(incompl2.split()))
         
         child1.set_binary_gene(child1_binary)
         child1.generate_decimal_gene()
@@ -653,7 +653,7 @@ class GrammaticalEvolution(object):
             incompl=self.parseCode(prg)
             gene.set_identifiers(self.parser.identifiers)
             if len(incompl.strip()) >0:
-                gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteCodeFrag.genCodeFrag(incompl,1,self.genIncompleteCodeFrag.extractNonTerminal(incompl.split()))
+                gene.local_bnf['CodeFrag'],selectedNt=self.codefragGen.genCodeFrag(incompl,1,self.codefragGen.extractNonTerminal(incompl.split()))
                 position1=gene.local_bnf['CodeFrag'].find(selectedNt)
                 position2=position1+len(selectedNt)            
                 gene.mutate(self._mutation_rate, self._mutation_type,position1, position2)

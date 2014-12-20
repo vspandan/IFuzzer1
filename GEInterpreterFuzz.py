@@ -20,9 +20,9 @@ from tkFileDialog import askdirectory
 from tkFileDialog import askopenfilename
 from tkMessageBox import showerror
 
-from pyneurgen.fitness import FitnessElites, FitnessTournament
-from pyneurgen.fitness import ReplacementTournament, MAX, MIN, CENTER
-from pyneurgen.grammatical_evolution import GrammaticalEvolution
+from codegen.fitness import FitnessElites, FitnessTournament
+from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
+from codegen.grammatical_evolution import GrammaticalEvolution
 
 
 #Author: Spandan Veggalam
