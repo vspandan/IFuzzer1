@@ -25,7 +25,8 @@ from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 from mozillaJSTestSuite.jstests import main
 
-JS_SHELL_PATH="/home/spandan/mozjs-24.2.0/js/src/dist/bin/js24"
+JS_SHELL_PATH="/home/spandan/js-1.8.5/js/src/dist/bin/js"
+CREATE_FRAG_POOL=False
 
 #Author: Spandan Veggalam
 def start():
@@ -89,8 +90,8 @@ def start():
             
         except AttributeError as e:
             print e
-
-    #main(JS_SHELL_PATH)
+    #CREATE_FRAG_POOL=True
+    main(JS_SHELL_PATH,CREATE_FRAG_POOL)
     
     root = Tk()
     root.title("Interpreter Fuzzer")

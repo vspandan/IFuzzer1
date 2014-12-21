@@ -12,7 +12,7 @@ from ECMAScriptParser import ECMAScriptParser
 from ECMAScriptListener import ECMAScriptListener
 
 DEFAULT_SCORE = 0
-DEFAULT_DATABASE_PATH = "../database"
+DEFAULT_DATABASE_PATH = "database"
 DEFAULT_FILE = "temp"
 WRITE = 'w'
 APPEND = "a+"
@@ -46,8 +46,14 @@ class AntlrParser(object):
         self.input = FileStream(DEFAULT_FILE)
         remove(DEFAULT_FILE)
     
-    def parseTree(self, program):
-        self._createFileInputStream(program)
+    def parseTree(self, program=None, fileName=None):
+        if program is not None:
+            self._createFileInputStream(program)
+        else:
+            if fileName is not None:
+                self.input=FileStream(fileName)
+            else :
+                sys.exit()
         self._initParser(self.input)
         self.parser.buildParseTree = True
         self.rules = self.parser.ruleNames
@@ -93,8 +99,15 @@ class AntlrParser(object):
         except:
             print "error"
 
-    def extractCodeFrag(self, program):
-        parseTr = self.parseTree(program)
+    def extractCodeFrag(self, program=None,fileName=None):
+        if program is not None:
+            parseTr = self.parseTree(program)
+        else:
+            if fileName is None:
+                sys.exit()
+            else:
+                parseTr = self.parseTree(fileName)
+            
         d = defaultdict(dict)
         
         position = 0
@@ -102,7 +115,7 @@ class AntlrParser(object):
         if not path.exists(directory):
             makedirs(directory)
             
-        for nt in p.non_Terminals:
+        for nt in self.non_Terminals:
             code = self.retrieveCodeFrag(parseTr, self.non_Terminals, nt, position)
             d1 = defaultdict(list)
             if len(code) > 0:
@@ -116,10 +129,11 @@ class AntlrParser(object):
                     d1[str(code)].append(DEFAULT_SCORE)
                     d[str(nt)] = d1
             position += 1
-        nonTerms = set(p.non_Terminals)
+        nonTerms = set(self.non_Terminals)
         
         for nt in nonTerms:
             fileName = directory + "/" + str(nt)
+            #print path.abspath(fileName)
             f = open(fileName, 'a+')
             if stat(fileName).st_size == ZERO:
                 dump(d.get(nt), f, HIGHEST_PROTOCOL)
