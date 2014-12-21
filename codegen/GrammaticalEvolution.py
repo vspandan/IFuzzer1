@@ -12,7 +12,7 @@ from tkFileDialog import askopenfilename
 from tkMessageBox import askyesno, showwarning, showinfo, showerror
 import tkMessageBox
 
-from parser.AntlrParser import *
+from langparser.AntlrParser import *
 from codegen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
 from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement

@@ -77,3 +77,69 @@
 2014-12-20 07:50:36,198 var s x ;
 2014-12-20 07:50:36,213 stopping processing due to max generation
 2014-12-20 07:50:36,213 completed run: generations: 10, best member:2 fitness: 0.002412
+2014-12-21 08:14:38,351 started run
+2014-12-21 08:14:38,568 Finished generation: 0 Max generations: 10
+2014-12-21 08:14:38,568 best_value: 0.002674 median: 0.002903 mean: 0.0074496
+2014-12-21 08:14:38,568 { }
+2014-12-21 08:14:38,623 Finished generation: 1 Max generations: 10
+2014-12-21 08:14:38,624 best_value: 0.002613 median: 0.002777 mean: 0.0052076
+2014-12-21 08:14:38,624 var s = 3 ;
+2014-12-21 08:14:38,653 Finished generation: 2 Max generations: 10
+2014-12-21 08:14:38,653 best_value: 0.002617 median: 0.002824 mean: 0.0028472
+2014-12-21 08:14:38,653 var s = 1000 ;
+2014-12-21 08:14:38,717 Finished generation: 3 Max generations: 10
+2014-12-21 08:14:38,717 best_value: 0.002688 median: 0.002809 mean: 0.0028292
+2014-12-21 08:14:38,717 var s = 3 ;
+2014-12-21 08:14:38,749 Finished generation: 4 Max generations: 10
+2014-12-21 08:14:38,750 best_value: 0.002489 median: 0.002921 mean: 0.0028506
+2014-12-21 08:14:38,750 var s ;
+2014-12-21 08:14:38,782 Finished generation: 5 Max generations: 10
+2014-12-21 08:14:38,782 best_value: 0.002595 median: 0.002775 mean: 0.0027908
+2014-12-21 08:14:38,782 var s ;
+2014-12-21 08:14:38,817 Finished generation: 6 Max generations: 10
+2014-12-21 08:14:38,817 best_value: 0.002605 median: 0.003008 mean: 0.0033608
+2014-12-21 08:14:38,817 var s ;
+2014-12-21 08:14:39,429 Finished generation: 7 Max generations: 10
+2014-12-21 08:14:39,429 best_value: 0.00259 median: 0.002792 mean: 0.0031448
+2014-12-21 08:14:39,429 var s ;
+2014-12-21 08:14:39,459 Finished generation: 8 Max generations: 10
+2014-12-21 08:14:39,459 best_value: 0.002614 median: 0.002894 mean: 0.0028934
+2014-12-21 08:14:39,459 var s ;
+2014-12-21 08:14:39,489 Finished generation: 9 Max generations: 10
+2014-12-21 08:14:39,489 best_value: 0.002717 median: 0.002887 mean: 0.002908
+2014-12-21 08:14:39,489 var s ;
+2014-12-21 08:14:39,505 stopping processing due to max generation
+2014-12-21 08:14:39,505 completed run: generations: 10, best member:1 fitness: 0.00268
+2014-12-21 08:15:09,886 started run
+2014-12-21 08:15:10,204 Finished generation: 0 Max generations: 10
+2014-12-21 08:15:10,205 best_value: 0.002579 median: 0.002937 mean: 0.0028916
+2014-12-21 08:15:10,205 var x = null ;
+2014-12-21 08:15:10,264 Finished generation: 1 Max generations: 10
+2014-12-21 08:15:10,264 best_value: 0.002339 median: 0.002936 mean: 0.0028062
+2014-12-21 08:15:10,264 ; var y = null ; var y = true + 3 ;
+2014-12-21 08:15:10,404 Finished generation: 2 Max generations: 10
+2014-12-21 08:15:10,404 best_value: 0.002505 median: 0.002729 mean: 0.0026862
+2014-12-21 08:15:10,405 ; var x = null ; var y = true + 3 ;
+2014-12-21 08:15:10,667 Finished generation: 3 Max generations: 10
+2014-12-21 08:15:10,667 best_value: 0.002529 median: 0.002703 mean: 0.0026854
+2014-12-21 08:15:10,667 function sp ( e ) { }
+2014-12-21 08:15:10,840 Finished generation: 4 Max generations: 10
+2014-12-21 08:15:10,840 best_value: 0.002584 median: 0.002807 mean: 0.0028378
+2014-12-21 08:15:10,840 function sp ( e ) { }
+2014-12-21 08:15:10,919 Finished generation: 5 Max generations: 10
+2014-12-21 08:15:10,919 best_value: 0.002725 median: 0.002858 mean: 0.0028358
+2014-12-21 08:15:10,919 function sp ( sp ) { }
+2014-12-21 08:15:11,021 Finished generation: 6 Max generations: 10
+2014-12-21 08:15:11,021 best_value: 0.002553 median: 0.002873 mean: 0.0028368
+2014-12-21 08:15:11,021 function sp ( e ) { var x = null ; var y = true + 3 ; }
+2014-12-21 08:15:11,163 Finished generation: 7 Max generations: 10
+2014-12-21 08:15:11,163 best_value: 0.002547 median: 0.002798 mean: 0.0028268
+2014-12-21 08:15:11,163 function sp ( e ) { var x = null ; var y = true + 3 ; } var x = null ; var y = true + 3 ;
+2014-12-21 08:15:11,270 Finished generation: 8 Max generations: 10
+2014-12-21 08:15:11,270 best_value: 0.00272 median: 0.003124 mean: 0.003107
+2014-12-21 08:15:11,270 function sp ( e ) { var x = null ; var y = true + 3 ; } var y = false + 3 ; var y = true + 3 ;
+2014-12-21 08:15:11,379 Finished generation: 9 Max generations: 10
+2014-12-21 08:15:11,379 best_value: 0.002595 median: 0.002892 mean: 0.0028142
+2014-12-21 08:15:11,379 function y ( e ) { var x = null ; var y = true + 3 ; } var x = true + 3 ; var y = true + 3 ;
+2014-12-21 08:15:11,395 stopping processing due to max generation
+2014-12-21 08:15:11,395 completed run: generations: 10, best member:3 fitness: 0.002879
