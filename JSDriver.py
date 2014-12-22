@@ -363,8 +363,8 @@ def main(js_shell_path=None, createFragPool=False):
             results = ResultsSink()
             #run_tests(options, test_list, results)
             while True:
-                filename = os.path.join(os.path.dirname(__file__), 'jstests_genereated.list')
-                childThread=threading.Thread(name="fuzzer", target=runFuzzer())
+                filename = os.path.join(os.path.dirname(__file__), "generatedTestSuite/jstests.list")
+                childThread=threading.Thread(name="fuzzer", target=runFuzzer(filename))
                 childThread.start()
                 childThread.join()
                 #test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester, createFragPool)
