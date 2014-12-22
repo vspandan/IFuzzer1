@@ -14,7 +14,7 @@ from Tkinter import Tk
 from Tkinter import W
 from os import listdir
 from os import system
-from os.path import isfile, join
+from os.path import isfile, join, abspath
 from posix import mkdir
 from tkFileDialog import askdirectory
 from tkFileDialog import askopenfilename
@@ -23,13 +23,10 @@ from tkMessageBox import showerror
 from codegen.fitness import FitnessElites, FitnessTournament
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
-from mozillaJSTestSuite.jstests import main
 
-JS_SHELL_PATH="/home/spandan/js-1.8.5/js/src/dist/bin/js"
-CREATE_FRAG_POOL=False
 
 #Author: Spandan Veggalam
-def start():
+def runFuzzer():
     
     def selectGrammarFIle():
         Tk().withdraw()        
@@ -90,8 +87,6 @@ def start():
             
         except AttributeError as e:
             print e
-    #CREATE_FRAG_POOL=True
-    main(JS_SHELL_PATH,CREATE_FRAG_POOL)
     
     root = Tk()
     root.title("Interpreter Fuzzer")
@@ -102,7 +97,7 @@ def start():
     label1= Label(frame,text="Grammar File", width=20).grid(row = 0,column=0)
     e = StringVar()
     inputFile = Entry(frame, textvariable=e,width=30)
-    inputFile.insert(0, "grammarFiles/JavaScript.g4")
+    inputFile.insert(0, abspath("../grammarFiles/JavaScript.g4"))
     inputFile.config(state=DISABLED)
     inputFile.grid(row=0, column=1)
     browseBtn=Button(frame, text='Browse', command=selectGrammarFIle,width=10,state=DISABLED).grid(row=0, column=3)
@@ -250,11 +245,3 @@ def start():
     closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
     frame.mainloop()    
         
-    
-    
-#Author: Spandan Veggalam 
-if __name__ == "__main__":
-    start()
-        
-    
-    

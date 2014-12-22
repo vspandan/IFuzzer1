@@ -176,3 +176,7 @@
 2014-12-21 14:31:41,873 var varx = null ; 3
 2014-12-21 14:31:41,888 stopping processing due to max generation
 2014-12-21 14:31:41,888 completed run: generations: 10, best member:2 fitness: 0.002682
+2014-12-22 13:22:38,916 started run
+2014-12-22 13:22:43,222 Finished generation: 0 Max generations: 10
+2014-12-22 13:22:43,222 best_value: 0.002234 median: 0.002874 mean: 0.0086042
+2014-12-22 13:22:43,222 var s = 1000 ;

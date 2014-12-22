@@ -8,6 +8,7 @@ from subprocess import *
 from tests import TestResult, NullTestOutput
 from workers import Source
 from progressbar import ProgressBar
+from os.path import abspath
 
 def exclude_tests(test_list, exclude_files):
     exclude_paths = []
@@ -358,6 +359,10 @@ def main(js_shell_path=None, createFragPool=False):
         try:
             results = ResultsSink()
             run_tests(options, test_list, results)
+            while True:
+                filename = os.path.join(os.path.dirname(__file__), 'jstests_genereated.list')
+                test_list=manifest.parse(filename, xul_tester, createFragPool)
+                run_tests(options, test_list, results)
         finally:
             os.chdir(curdir)
 
