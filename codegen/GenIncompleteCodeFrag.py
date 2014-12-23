@@ -11,6 +11,8 @@ class GenIncompleteCodeFrag(object):
         for pop_count in range(0, population_size):            
             
             val=parsetree.split()
+            code=""
+            subcode=""
             if len(nT) != 0: 
                 
                 if nonTerminal is None:
@@ -24,8 +26,6 @@ class GenIncompleteCodeFrag(object):
                 nTposition=0;
                 indicator = False
                 temp=0
-                code=""
-                subcode=""
                 
                 for v in val:
                     

@@ -14,7 +14,7 @@ from Tkinter import Tk
 from Tkinter import W
 from os import listdir
 from os import system
-from os.path import isfile, join, abspath
+from os.path import isfile, join, abspath, sys
 from posix import mkdir
 from tkFileDialog import askdirectory
 from tkFileDialog import askopenfilename
@@ -23,18 +23,27 @@ from tkMessageBox import showerror
 from codegen.fitness import FitnessElites, FitnessTournament
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
-
+import threading
+from datetime import datetime
+EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
+                    'user.js', 'sta.js',
+                    'test262-browser.js', 'test262-shell.js',
+                    'test402-browser.js', 'test402-shell.js',
+                    'testBuiltInObject.js', 'testIntl.js',
+                    'js-test-driver-begin.js', 'js-test-driver-end.js'))
 
 #Author: Spandan Veggalam
-def runFuzzer():
-    
+def runFuzzer(trackingFile,testCasesDir,targetDirectory):
+    sys.setrecursionlimit(100000)
     def selectGrammarFIle():
         Tk().withdraw()        
-        e.set(askopenfilename())        
+        e.set(askopenfilename())   
+        
+    
     
     #Author: Spandan Veggalam
     def initialize():
-        
+
         try:
             bnf=""
             fileName=inputFile.get()
@@ -76,12 +85,30 @@ def runFuzzer():
                 
                 ges.set_maintain_history(maintain_history.get())
                 ges.set_extend_genotype(extend_genotype.get())
-                
-                if ges.create_genotypes():
-                    ges.run()
-                    print ges.fitness_list.sorted()
-                    gene = ges.population[ges.fitness_list.best_member()]
-                    print gene.get_program()
+                testfiles_list=listAllTestCases(testCasesDir)
+                def process(file):     
+                    if ges.create_genotypes(file):
+                        ges.run()
+                        ges.fitness_list.sorted()
+                        gene = ges.population[ges.fitness_list.best_member()]
+                        generatedPrg= gene.get_program()
+                        f=open(join(targetDirectory,file),'w')
+                        f.write(generatedPrg)
+                        f.close
+                        f=open(trackingFile,'a+')
+                        f.write(join(targetDirectory,file))
+                        f.close
+                    
+                print datetime.now()
+                count =0
+                for file in testfiles_list:
+                    print count
+                    print file
+                    count+=1
+                    thread=threading.Thread(target=process(file))
+                    thread.start()
+                    thread.join()
+                print datetime.now()
                 frame.quit()
                 
             
@@ -245,3 +272,15 @@ def runFuzzer():
     closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
     frame.mainloop()    
         
+def listAllTestCases(testCasesDir):
+    fileList=[]
+    for f in listdir(testCasesDir):
+        fileName=join(testCasesDir,f)
+        
+        if isfile(fileName):
+            if fileName.endswith(".js") and f not in EXCLUDED:
+                fileList.append(fileName)
+        else:
+            fileList += listAllTestCases(fileName)
+    return fileList
+    

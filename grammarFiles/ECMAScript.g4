@@ -345,6 +345,7 @@ futureReservedWord
 
 eos
  : ';'
+ |
  ;
 
 RegularExpressionLiteral

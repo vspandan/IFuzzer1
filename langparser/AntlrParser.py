@@ -58,8 +58,9 @@ class AntlrParser(object):
         self.parser.buildParseTree = True
         self.rules = self.parser.ruleNames
         pContext = self.parser.program();
-        self.listTerminals(pContext.getChild(0));
-        self.selectSubtrees(None, pContext.getChild(0));
+        if pContext.children is not None:
+            self.listTerminals(pContext.getChild(0));
+            self.selectSubtrees(None, pContext.getChild(0));
         
         return self.parseTr
     
@@ -84,6 +85,7 @@ class AntlrParser(object):
 
     def selectSubtrees(self, nonT, s) :
         try:
+            #print s.__class__.__name__
             childCount = s.getChildCount()
             
             if childCount > 0:
@@ -97,7 +99,8 @@ class AntlrParser(object):
             else :
                 self.parseTr = self.parseTr+s.getText()+" "
         except:
-            print "error"
+            #TODO EOS always reaches this point. Handle this
+            print 
 
     def extractCodeFrag(self, program=None,fileName=None):
         if program is not None:
@@ -187,8 +190,13 @@ class AntlrParser(object):
 
 if __name__ == '__main__':
         p = AntlrParser()
-        
-        p.extractCodeFrag("function sp(e)\r\n" + "{\r\n" + "var x = null;\r\n" + "var y = true + 3;\r\n" + "}\r\n")
-        p.extractCodeFrag("var a=function (x,y){x=10000+this.y;};")
-        p.extractCodeFrag("var a=10000+\"s\"+6.4;")
+        #p.extractCodeFrag("function sp(e)\r\n" + "{\r\n" + "var x = null;\r\n" + "var y = true + 3;\r\n" + "}\r\n")
+        #p.extractCodeFrag("var a=function (x,y){x=10000+this.y;};")
+        #p.extractCodeFrag("var a=10000+\"s\"+6.4;")
+        progra=raw_input()
+        f=open(progra,'r')
+        try:
+            print p.parseTree(f.read())
+        except:
+            print "e"
         

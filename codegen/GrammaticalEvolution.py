@@ -105,61 +105,22 @@ class GrammaticalEvolution(object):
         codeFragment= codeFragment.replace('\n', '')
         return self.parser.parseTree(codeFragment)
     
-    #Author : Spandan Veggalam    
-    def parseInputCode(self):
-            try :
-                    inputCode=self.textArea.get('1.0', 'end')
-                    print inputCode                
-                    if len(inputCode.strip())<=0:
-                        raise StandardError("Provide Input")
-                    self.parseRepr=str(self.parseCode(inputCode))
-                    
-                    if self.parseRepr is not None:
-                        self.codefragGen =  GenIncompleteCodeFrag()
-                        self.initial_Population = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals)
-                        self.frame.quit()
-                    else:
-                        raise StandardError("error", "Syntax error")
-            except StandardError as e:
-                    showwarning("Warning", e.args)
-                    self.root.withdraw()            
-    
     #Author : Spandan Veggalam
-    def populateTextArea(self) :
+    def _prepareInitial_Population (self,fileName):
         try:
-            input_File = askopenfilename()
-            print "file"+input_File
-            if len(input_File.strip())<=0:
-                raise StandardError()
+            f=open(fileName,'r')
+            self.parseRepr=self.parser.parseTree(f.read())
+            if self.parseRepr is not None and len(self.parseRepr)>0:
+                self.codefragGen =  GenIncompleteCodeFrag()
+                self.initial_Population = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals)
             else:
-                f1=open(input_File,'r')
-                self.textArea.insert(INSERT,f1.read())
-                f1.close()
-        except StandardError as e:
-            showwarning("Warning", e.args)
-            self.root.withdraw()   
-            
-    
-            
-    #Author : Spandan Veggalam
-    def _prepareInitial_Population (self):
-            
-        try:
-            self.root = Tk()
-            self.root.title("Code Input Dialog")
-            self.frame=Frame(self.root)
-            self.frame.pack(side="top", fill="both", expand=True)
-            self.textArea= Text(self.frame)
-            self.textArea.grid(row=1)
-            browseBtn=Button(self.frame, text='InputFile', command=self.populateTextArea,width=20).grid(row=2)
-            submitBtn=Button(self.frame, text='Parse Code', command=self.parseInputCode,width=20).grid(row=3)
-            self.frame.mainloop()      
-        except Exception as e:
-            showerror("Error", e.message())     
-            
+                print fileName
+                print "Syntax error"
+            f.close()
+        except:
+            #TODO handle this 
+            print
         
-
-		
     def set_population_size(self, size):
         size = long(size)
         if isinstance(size, long) and size > 0:
@@ -466,6 +427,7 @@ class GrammaticalEvolution(object):
                 #temp -- remove this
                 gene = self.population[self.fitness_list.best_member()]
                 program = gene.get_program()
+                #Update codefragementsbased upon their fitness
                 logging.info(program)
 
                 #logging.debug("stddev= %s" % self.fitness_list.stddev())
@@ -482,9 +444,9 @@ class GrammaticalEvolution(object):
         return self.fitness_list.best_member()
 
     #Modified Author : Spandan Veggalam 
-    def create_genotypes(self):
+    def create_genotypes(self,file):
         self._extractProductions()
-        self._prepareInitial_Population()
+        self._prepareInitial_Population(file)
         if len(self.initial_Population)<=0:
             return
         member_no = 0

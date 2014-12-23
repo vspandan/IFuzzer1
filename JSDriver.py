@@ -193,7 +193,7 @@ def run_tests(options, tests, results):
     if not options.tinderbox:
         results.list(options)
 
-def main(js_shell_path=None, createFragPool=False):        
+def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=False):        
     from optparse import OptionParser
     op = OptionParser(usage='%prog JS_SHELL [TEST-SPECS]')
     op.add_option('-s', '--show-cmd', dest='show_cmd', action='store_true',
@@ -363,12 +363,13 @@ def main(js_shell_path=None, createFragPool=False):
             results = ResultsSink()
             #run_tests(options, test_list, results)
             while True:
-                filename = os.path.join(os.path.dirname(__file__), "generatedTestSuite/jstests.list")
-                childThread=threading.Thread(name="fuzzer", target=runFuzzer(filename))
-                childThread.start()
-                childThread.join()
-                #test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester, createFragPool)
-                #run_tests(options, test_list, results)
+                filename = os.path.join(os.path.dirname(__file__), "generatedTestSuite/jstests_generated.list")
+                runFuzzer(filename,testCasesDirectory,targetDirectory)
+                if os.path.isfile(filename):
+                    os.rename(filename, fileName+"_1")
+                    test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester, createFragPool)
+                    run_tests(options, test_list, results)
+                break
             
         finally:
             os.chdir(curdir)
