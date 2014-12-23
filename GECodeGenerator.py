@@ -86,32 +86,31 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
                 ges.set_maintain_history(maintain_history.get())
                 ges.set_extend_genotype(extend_genotype.get())
                 testfiles_list=listAllTestCases(testCasesDir)
-                def process(file):     
+                
+                def process(file,string):     
                     if ges.create_genotypes(file):
                         ges.run()
                         ges.fitness_list.sorted()
                         gene = ges.population[ges.fitness_list.best_member()]
                         generatedPrg= gene.get_program()
-                        f=open(join(targetDirectory,file),'w')
+                        fileName=targetDirectory+"/"+string
+                        print fileName
+                        f=open(fileName,'w')
                         f.write(generatedPrg)
                         f.close
                         f=open(trackingFile,'a+')
-                        f.write(join(targetDirectory,file))
+                        f.write("script "+fileName+"\n")
                         f.close
-                    
-                print datetime.now()
-                count =0
+                
+                count =1
                 for file in testfiles_list:
-                    print count
-                    print file
+                    thread=threading.Thread(target=process(file,str(count)+".js"))
                     count+=1
-                    thread=threading.Thread(target=process(file))
                     thread.start()
                     thread.join()
-                print datetime.now()
+
                 frame.quit()
-                
-            
+
         except AttributeError as e:
             print e
     

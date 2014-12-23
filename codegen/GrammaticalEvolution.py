@@ -118,8 +118,10 @@ class GrammaticalEvolution(object):
                 print "Syntax error"
             f.close()
         except:
-            #TODO handle this 
-            print
+            """
+            if program is syntactically invalid. it is not considered; simply skipped
+            """
+            return
         
     def set_population_size(self, size):
         size = long(size)
@@ -448,6 +450,9 @@ class GrammaticalEvolution(object):
         self._extractProductions()
         self._prepareInitial_Population(file)
         if len(self.initial_Population)<=0:
+            """
+            if program is syntactically invalid. it is not considered; simply skipped
+            """
             return
         member_no = 0
         while member_no < self._population_size:

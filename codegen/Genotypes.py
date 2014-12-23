@@ -155,6 +155,7 @@ class Genotype(object):
             position = 0
             continue_map = False
             while position < len(prg_list):
+                #TODO check this process
                 item = prg_list[position]
                 
                 if item in self.keywords:
