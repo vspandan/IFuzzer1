@@ -109,8 +109,7 @@ class AntlrParser(object):
             if fileName is None:
                 sys.exit()
             else:
-                parseTr = self.parseTree(fileName)
-            
+                parseTr = self.parseTree(None,fileName)
         d = defaultdict(dict)
         
         position = 0
@@ -193,10 +192,6 @@ if __name__ == '__main__':
         #p.extractCodeFrag("function sp(e)\r\n" + "{\r\n" + "var x = null;\r\n" + "var y = true + 3;\r\n" + "}\r\n")
         #p.extractCodeFrag("var a=function (x,y){x=10000+this.y;};")
         #p.extractCodeFrag("var a=10000+\"s\"+6.4;")
-        progra=raw_input()
-        f=open(progra,'r')
-        try:
-            print p.parseTree(f.read())
-        except:
-            print "e"
-        
+        input=raw_input()
+        print input
+        p.extractCodeFrag(None,input)

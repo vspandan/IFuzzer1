@@ -74,7 +74,7 @@ objectLiteral : '{' '}' | '{' propertyNameAndValueList '}' |'{' propertyNameAndV
 
 propertyNameAndValueList : propertyAssignment ',' propertyNameAndValueList | propertyAssignment
     
-propertyAssignment : propertyName ':' singleExpression | 'get' '(' ')' '{' functionBody '}'| 'set' '(' propertySetParameterList ')' '{' functionBody '}'
+propertyAssignment : propertyName ':' singleExpression | 'get' identifier '(' ')' '{' functionBody '}'| 'set' identifier '(' propertySetParameterList ')' '{' functionBody '}'
     
 propertyName : identifierName | StringLiteral | numericLiteral
     

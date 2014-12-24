@@ -94,7 +94,6 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
                         gene = ges.population[ges.fitness_list.best_member()]
                         generatedPrg= gene.get_program()
                         fileName=targetDirectory+"/"+string
-                        print fileName
                         f=open(fileName,'w')
                         f.write(generatedPrg)
                         f.close

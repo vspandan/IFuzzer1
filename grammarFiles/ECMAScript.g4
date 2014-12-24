@@ -1,5 +1,35 @@
 grammar ECMAScript;
 
+@parser::members {
+  	"""
+  	Implement python implementation for below
+    def here(type) {
+
+        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
+        Token ahead = _input.get(possibleIndexEosToken);
+
+        return (ahead.getChannel() == Lexer.HIDDEN) && (ahead.getType() == type);
+    }
+
+    private boolean lineTerminatorAhead() {
+
+        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
+        Token ahead = _input.get(possibleIndexEosToken);
+
+        if (ahead.getChannel() != Lexer.HIDDEN) {
+            return false;
+        }
+
+        String text = ahead.getText();
+        int type = ahead.getType();
+
+        return (type == MultiLineComment && (text.contains("\r") || text.contains("\n"))) ||
+                (type == LineTerminator);
+    }       
+    """                         
+}
+
+
 program
  : sourceElements
  |
@@ -178,8 +208,10 @@ propertyNameAndValueList
     
 propertyAssignment
  : propertyName ':' singleExpression                            # PropertyExpressionAssignment
- | 'get' '(' ')' '{' functionBody '}'                          # PropertyGetter
- | 'set' '(' propertySetParameterList ')' '{' functionBody '}' # PropertySetter
+ //| getter '(' ')' '{' functionBody '}'                          # PropertyGetter
+ //| setter '(' propertySetParameterList ')' '{' functionBody '}' # PropertySetter
+ | 'get' identifier '(' ')' '{' functionBody '}'                          # PropertyGetter
+ | 'set' identifier '(' propertySetParameterList ')' '{' functionBody '}' # PropertySetter
  ;           
     
 propertyName
@@ -210,8 +242,10 @@ singleExpression
  | singleExpression '.' identifierName                                    # MemberDotExpression
  | singleExpression arguments                                             # ArgumentsExpression
  | New singleExpression arguments?                                        # NewExpression
- | singleExpression '++'                         						  # PostIncrementExpression
- | singleExpression '--'							                      # PostDecreaseExpression
+ //| singleExpression { not here(LineTerminator)}? '++'      				  # PostIncrementExpression
+ //| singleExpression { not here(LineTerminator)}? '--'			          # PostDecreaseExpression
+ | singleExpression  '++'      				  # PostIncrementExpression
+ | singleExpression  '--'			          # PostDecreaseExpression
  | Delete singleExpression                                                # DeleteExpression
  | Void singleExpression                                                  # VoidExpression
  | Typeof singleExpression                                                # TypeofExpression
@@ -343,11 +377,6 @@ futureReservedWord
  | Yield
  ;
 
-eos
- : ';'
- |
- ;
-
 RegularExpressionLiteral
  : '/' RegularExpressionBody '/' RegularExpressionFlags
  ;
@@ -424,6 +453,21 @@ Static     : 'static';
 Yield      : 'yield';
 
 identifier : Ident;
+
+//getter
+// : {_input.LT(1).getText().startsWith("get")}? identifier
+// ;
+
+//setter
+// : {_input.LT(1).getText().startsWith("set")}? identifier
+// ;
+
+eos
+ : ';'
+ | EOF
+// | {lineTerminatorAhead()}?
+// | {_input.LT(1).getType() == CloseBrace}?
+ ;
 
 Ident	
  : IdentifierStart IdentifierPart*

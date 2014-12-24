@@ -14,6 +14,7 @@ from os import path
 from codegen.Utilities import base10tobase2, base2tobase10
 import collections
 from random import randint
+from os.path import abspath
 
 
 VARIABLE_FORMAT = '(\W+)'
@@ -28,7 +29,7 @@ TIMEOUT_PROG_EXECUTE = 1
 DEFAULT_LOG_FILE = 'GECodeGen.log'
 DEFAULT_LOG_LEVEL = logging.INFO
 
-DEFAULT_DATABASE_PATH = "database"
+DEFAULT_DATABASE_PATH = "../database"
 APPEND = "a+"
 READ = "r"
 
@@ -124,7 +125,7 @@ class Genotype(object):
     # Author : Spandan Veggalam 
     def _converge(self, item):
         
-        fileName = DEFAULT_DATABASE_PATH + "/" + item
+        fileName = abspath(DEFAULT_DATABASE_PATH + "/" + item)
         if  path.isfile(fileName): 
             f = open(fileName, READ)
             # TODO apply strategy to select based on its score values
@@ -305,7 +306,7 @@ class Genotype(object):
         if len(program) == 0:
             return 0
         else:                
-            #print "executing \t" + program
+            print "executing \t" + program
             p = subprocess.Popen(["js24 -e \'" + program + "\'"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             (out, err) = p.communicate()
             if 'SyntaxError' in err :
