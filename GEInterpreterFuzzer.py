@@ -5,6 +5,7 @@ from JSDriver import main
 from datetime import datetime
 import os
 from string import lower
+import sys
 
 JS_SHELL_PATH="/home/spandan/js-1.8.5/js/src/dist/bin/js"
 CREATE_FRAG_POOL=False
@@ -15,6 +16,7 @@ def options():
     return lower(raw_input("Do you want to create fragment pool (Default: No)? Y/N"))
 
 if __name__ == "__main__":
+    sys.setrecursionlimit(100000)
     print datetime.now()
     
     while True:

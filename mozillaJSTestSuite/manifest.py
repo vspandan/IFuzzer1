@@ -165,8 +165,12 @@ def parse(filename, xul_tester, createFragPool,reldir=''):
             assert script is not None
             if createFragPool:
                 print script
-                a = AntlrParser()
-                a.extractCodeFrag(None, script)
-            ans.append(TestCase(os.path.join(reldir, script),
+                if script != '11.1.4-08.js':
+                    try:
+                        a = AntlrParser()
+                        a.extractCodeFrag(None, os.path.abspath("mozillaJSTestSuite/"+reldir+"/"+script))
+                    except UnicodeDecodeError:
+                        print "Unicodeerror: "+script
+            ans.append(TestCase(os.path.join("mozillaJSTestSuite/"+reldir, script),
                                 enable, expect, random, slow))
     return ans

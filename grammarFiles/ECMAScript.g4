@@ -1,35 +1,30 @@
 grammar ECMAScript;
 
 @parser::members {
-  	"""
-  	Implement python implementation for below
-    def here(type) {
+"""
+def here(self, type) :
 
-        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
-        Token ahead = _input.get(possibleIndexEosToken);
+    possibleIndexEosToken = self.getCurrentToken().getTokenIndex() - 1;
+    ahead = self._input[possibleIndexEosToken]
 
-        return (ahead.getChannel() == Lexer.HIDDEN) && (ahead.getType() == type);
-    }
+    return (ahead.getChannel() == Lexer.HIDDEN) and (ahead.getType() == type);
 
-    private boolean lineTerminatorAhead() {
 
-        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
-        Token ahead = _input.get(possibleIndexEosToken);
+def lineTerminatorAhead(self) :
 
-        if (ahead.getChannel() != Lexer.HIDDEN) {
-            return false;
-        }
+    possibleIndexEosToken = self.getCurrentToken()
+    ahead = self._input
 
-        String text = ahead.getText();
-        int type = ahead.getType();
+    if (ahead.channel != Lexer.HIDDEN) :
+        return False;
+    
 
-        return (type == MultiLineComment && (text.contains("\r") || text.contains("\n"))) ||
-                (type == LineTerminator);
-    }       
-    """                         
+    text = ahead.getText();
+    type = ahead.type;
+
+    return (type == MultiLineComment and (text.contains("\r") or text.contains("\n"))) or (type == self.LineTerminator)
+"""
 }
-
-
 program
  : sourceElements
  |
@@ -242,8 +237,8 @@ singleExpression
  | singleExpression '.' identifierName                                    # MemberDotExpression
  | singleExpression arguments                                             # ArgumentsExpression
  | New singleExpression arguments?                                        # NewExpression
- //| singleExpression { not here(LineTerminator)}? '++'      				  # PostIncrementExpression
- //| singleExpression { not here(LineTerminator)}? '--'			          # PostDecreaseExpression
+ //| singleExpression { not self.here(self.LineTerminator)}? '++'      				  # PostIncrementExpression
+ //| singleExpression { not self.here(self.LineTerminator)}? '--'			          # PostDecreaseExpression
  | singleExpression  '++'      				  # PostIncrementExpression
  | singleExpression  '--'			          # PostDecreaseExpression
  | Delete singleExpression                                                # DeleteExpression
@@ -454,19 +449,19 @@ Yield      : 'yield';
 
 identifier : Ident;
 
-//getter
-// : {_input.LT(1).getText().startsWith("get")}? identifier
-// ;
+getter
+ : {self._input.LT(1).getText().startsWith("get")}? identifier
+ ;
 
-//setter
-// : {_input.LT(1).getText().startsWith("set")}? identifier
-// ;
+setter
+ : {self._input.LT(1).getText().startsWith("set")}? identifier
+ ;
 
 eos
  : ';'
  | EOF
-// | {lineTerminatorAhead()}?
-// | {_input.LT(1).getType() == CloseBrace}?
+// | {self.lineTerminatorAhead()}?
+// | {self._input.LT(1).type == '}'}?
  ;
 
 Ident	

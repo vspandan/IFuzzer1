@@ -31,6 +31,15 @@ class ECMAScriptListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by ECMAScriptParser#getter.
+    def enterGetter(self, ctx):
+        pass
+
+    # Exit a parse tree produced by ECMAScriptParser#getter.
+    def exitGetter(self, ctx):
+        pass
+
+
     # Enter a parse tree produced by ECMAScriptParser#expressionStatement.
     def enterExpressionStatement(self, ctx):
         pass
@@ -325,6 +334,15 @@ class ECMAScriptListener(ParseTreeListener):
 
     # Exit a parse tree produced by ECMAScriptParser#GreaterThanExpression.
     def exitGreaterThanExpression(self, ctx):
+        pass
+
+
+    # Enter a parse tree produced by ECMAScriptParser#setter.
+    def enterSetter(self, ctx):
+        pass
+
+    # Exit a parse tree produced by ECMAScriptParser#setter.
+    def exitSetter(self, ctx):
         pass
 
 
