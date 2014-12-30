@@ -9,8 +9,9 @@ import sys
 
 JS_SHELL_PATH="/home/spandan/js-1.8.5/js/src/dist/bin/js"
 CREATE_FRAG_POOL=False
-TargetDirectory = os.path.join(os.path.dirname(__file__), "generatedTestCases")
-TestCasesDirectory=os.path.join(os.path.dirname(__file__), "testsamples")
+TargetDirectory = os.path.join(os.path.dirname(__file__), "../generatedTestCases")
+TestCasesDirectory=os.path.join(os.path.dirname(__file__), "../testsamples")
+
 
 def options():
     return lower(raw_input("Do you want to create fragment pool (Default: No)? Y/N"))

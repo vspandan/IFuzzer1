@@ -34,7 +34,6 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
 
 #Author: Spandan Veggalam
 def runFuzzer(trackingFile,testCasesDir,targetDirectory):
-    sys.setrecursionlimit(100000)
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
