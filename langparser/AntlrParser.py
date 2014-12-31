@@ -10,6 +10,7 @@ from pickle import dump, load, HIGHEST_PROTOCOL
 from ECMAScriptLexer import ECMAScriptLexer
 from ECMAScriptParser import ECMAScriptParser
 from ECMAScriptListener import ECMAScriptListener
+from antlr4.error.Errors import FailedPredicateException
 
 DEFAULT_SCORE = 0
 DEFAULT_DATABASE_PATH = "database"
@@ -47,23 +48,29 @@ class AntlrParser(object):
         remove(DEFAULT_FILE)
     
     def parseTree(self, program=None, fileName=None):
-        if program is not None:
-            self._createFileInputStream(program)
-        else:
-            if fileName is not None:
-                self.input=FileStream(fileName)
-            else :
-                sys.exit()
-        self._initParser(self.input)
-        self.parser.buildParseTree = True
-        self.rules = self.parser.ruleNames
-        pContext = self.parser.program();
-        if pContext.children is not None:
-            self.listTerminals(pContext.getChild(0));
-            self.selectSubtrees(None, pContext.getChild(0));
+        try:
+            if program is not None:
+                self._createFileInputStream(program)
+            else:
+                if fileName is not None:
+                    self.input=FileStream(fileName)
+                else :
+                    sys.exit()
+            self._initParser(self.input)
+            self.parser.buildParseTree = True
+            self.rules = self.parser.ruleNames
+            pContext = self.parser.program();
+            if pContext.children is not None:
+                self.listTerminals(pContext.getChild(0));
+                self.selectSubtrees(None, pContext.getChild(0));
+            print self.parseTr
+            raw_input()
+            return self.parseTr
+        except (AttributeError, FailedPredicateException):
+            return ""
+        except:
+            return ""
         
-        return self.parseTr
-    
     def listTerminals(self, s) :
         try:
             childCount = s.getChildCount();

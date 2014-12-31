@@ -3,182 +3,154 @@ program : sourceElements |
 sourceElements : sourceElement | sourceElement sourceElements
 
 sourceElement : statement | functionDeclaration
-	
-functionDeclaration	: function  identifier  formalParameterList  functionBody
-	
-functionExpression	: function  identifier  formalParameterList  functionBody | function  formalParameterList  functionBody
-	
-formalParameterList	: ( identifier , formalParameterList  )| identifier
 
-formalParameterList : identifier , formalParameterList| identifier
+statement : block | variableStatement | emptyStatement | expressionStatement | ifStatement | iterationStatement | continueStatement | breakStatement | returnStatement | withStatement | labelledStatement | switchStatement | throwStatement | tryStatement | debuggerStatement
 
-functionBody	: {  sourceElements  }
+block : '{' statementList '}' |  '{' '}' 
 
-statement	: statementBlock	| variableStatement	| emptyStatement	| expressionStatement	| ifStatement	| iterationStatement	| continueStatement	| breakStatement	| returnStatement	| withStatement	| labelledStatement	| switchStatement	| throwStatement	| tryStatement		
-
-statementBlock	: {  statementList } | {  }
-	
 statementList : statement | statement statementList
-	
-variableStatement : var  variableDeclarationList eos
 
-variableDeclarationList : variableDeclaration , variableDeclarationList | variableDeclaration
-	
-variableDeclarationListNoIn : variableDeclaration , variableDeclarationListNoIn | variableDeclaration
-	
-variableDeclaration	: identifier  initialiser | identifier
-	
-variableDeclarationNoIn	: identifier  initialiserNoIn | identifier
-	
-initialiser	: =  assignmentExpression
-	
-initialiserNoIn	: =  assignmentExpressionNoIn
-	
-emptyStatement	: ;
-	
-expressionStatement	: expression  eos
-	
-ifStatement	: if  (  expression  )  statement else  statement | if  (  expression  )  statement 
+variableStatement : Var variableDeclarationList eos
 
-iterationStatement	: doWhileStatement	| whileStatement	| forStatement	| forInStatement
-	
-doWhileStatement	: do  statement  while  ( expression ) eos 
+variableDeclarationList : variableDeclaration ',' variableDeclarationList | variableDeclaration
 
-eos : | ;	
+variableDeclaration : identifier initialiser |  identifier
 
-whileStatement	: while  (  expression  )  statement
-	
-forStatement : for  ( forStatementInitialiserPart  ;  expression  ;  expression  )  statement | for  ( forStatementInitialiserPart  ;  expression  ;    )  statement | for  ( forStatementInitialiserPart  ;    ;    )  statement | for  ( forStatementInitialiserPart  ;    ;  expression  )  statement | for  (   ;  expression  ;  expression  )  statement | for  (   ;  expression  ;    )  statement | for  (   ;    ;  expression  )  statement | for  (   ;    ;    )  statement	
+initialiser : '=' singleExpression
 
-forStatementInitialiserPart	: expressionNoIn	| var  variableDeclarationListNoIn
-	
-forInStatement	: for  (  forInStatementInitialiserPart  in  expression  )  statement
-	
-forInStatementInitialiserPart	: leftHandSideExpression	| var  variableDeclarationNoIn
+emptyStatement : ';'
 
-continueStatement	: continue identifier eos | continue eos
+expressionStatement : expressionSequence
 
-breakStatement	: break identifier eos | break eos
+ifStatement : If '(' expressionSequence ')' statement Else statement | If '(' expressionSequence ')' statement 
 
-returnStatement	: return expression eos | return
-	
-withStatement	: with  (  expression  )  statement
+iterationStatement : Do statement While '(' expressionSequence ')' eos | While '(' expressionSequence ')' statement | For '(' ';' ';' ')' statement | For '(' ';' ';' expressionSequence ')' statement | For '(' ';' expressionSequence ';' ')' statement | For '(' ';' expressionSequence ';' expressionSequence ')' statement | For '(' expressionSequence ';' ';' ')' statement | For '(' expressionSequence ';' ';' expressionSequence ')' statement | For '(' expressionSequence ';' expressionSequence ';' ')' statement | For '(' expressionSequence ';' expressionSequence ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' ';' ')' statement | For '(' Var variableDeclarationList ';' ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' expressionSequence ')' statement | For '(' singleExpression In expressionSequence ')' statement | For '(' Var variableDeclaration In expressionSequence ')' statement
 
-labelledStatement	: identifier  :  statement
-	
-switchStatement	: switch  (  expression  )  caseBlock
-	
-caseBlock : { caseClause1 defaultClause caseClause1  }	| { caseClause1  }
+continueStatement : Continue identifier eos | Continue eos
 
-caseClause1 : caseClause caseClause1 | caseClause
+breakStatement : Break identifier eos | Break eos
 
-caseClause	: case  expression  :  statementList | case  expression  :
-	
-defaultClause	: default  :  statementList| default  : 
-	
-throwStatement	: throw expression eos
+returnStatement : Return expressionSequence eos | Return eos
 
-tryStatement	: try  statementBlock  finallyClause | try  statementBlock  catchClause | try  statementBlock  catchClause  finallyClause
-       
-catchClause	: catch  (  identifier  )  statementBlock
-	
-finallyClause	: finally  statementBlock
+withStatement : With '(' expressionSequence ')' statement
 
-expression	: assignmentExpression ,  expression
-	
-expressionNoIn	: assignmentExpressionNoIn ,  expressionNoIn
-	
-assignmentExpression : conditionalExpression | leftHandSideExpression  assignmentOperator  assignmentExpression
-	
-assignmentExpressionNoIn	: conditionalExpressionNoIn	| leftHandSideExpression  assignmentOperator  assignmentExpressionNoIn
-	
-leftHandSideExpression	: callExpression	| newExpression
-	
-newExpression	: memberExpression	| new  newExpression
-	
-memberExpression: primaryExpression memberExpression1 | functionExpression memberExpression1 | new  memberExpression  arguments memberExpression1 
+switchStatement : Switch '(' expressionSequence ')' caseBlock
 
-memberExpression1 :  memberExpressionSuffix | memberExpressionSuffix memberExpression1
-	
-memberExpressionSuffix	: indexSuffix	| propertyReferenceSuffix
+caseBlock : '{' caseClauses defaultClause caseClauses '}' | '{' caseClauses defaultClause '}' | '{' caseClauses '}' | '{' defaultClause caseClauses '}' |{' defaultClause '}' | '{' '}' 
 
-callExpression	: memberExpression  arguments  | memberExpression  arguments callExpression1 
+caseClauses : caseClause | caseClause caseClauses
 
-callExpression1 : callExpressionSuffix | callExpressionSuffix callExpression1 
-	
-callExpressionSuffix	: arguments	| indexSuffix	| propertyReferenceSuffix
+caseClause : Case expressionSequence ':' statementList |  Case expressionSequence ':'
 
-arguments	: ( argumentList )
+defaultClause : Default ':' statementList | Default ':' 
 
-argumentList : assignmentExpression |  assignmentExpression ,  argumentList 
-	
-indexSuffix	: [  expression  ]
-	
-propertyReferenceSuffix	: .  identifier
-	
-assignmentOperator	: = | *= | /= | %= | += | -= | <<= | >>= | >>>= | &= | ^= | #=
+labelledStatement : identifier ':' statement
 
-conditionalExpression	: logicalORExpression ?  assignmentExpression  :  assignmentExpression | logicalORExpression
+throwStatement : Throw expressionSequence eos
 
-conditionalExpressionNoIn	: logicalORExpressionNoIn ?  assignmentExpressionNoIn  :  assignmentExpressionNoIn | logicalORExpressionNoIn
+tryStatement : Try block catchProduction | Try block finallyProduction | Try block catchProduction finallyProduction
 
-logicalORExpression	: logicalANDExpression ##  logicalORExpression | logicalANDExpression
-	
-logicalORExpressionNoIn	: logicalANDExpressionNoIn ##  logicalORExpressionNoIn | logicalANDExpressionNoIn
-	
-logicalANDExpression	: bitwiseORExpression &&  logicalANDExpression| bitwiseORExpression
-	
-logicalANDExpressionNoIn	: bitwiseORExpressionNoIn &&  logicalANDExpressionNoIn | bitwiseORExpressionNoIn
-	
-bitwiseORExpression	: bitwiseXORExpression | bitwiseXORExpression # bitwiseORExpression 
-	
-bitwiseORExpressionNoIn : bitwiseXORExpressionNoIn #  bitwiseORExpressionNoIn | bitwiseXORExpressionNoIn
-	
-bitwiseXORExpression	: bitwiseANDExpression ^  bitwiseXORExpression | bitwiseANDExpression
-	
-bitwiseXORExpressionNoIn : bitwiseANDExpressionNoIn ^  bitwiseXORExpressionNoIn | bitwiseANDExpressionNoIn
-	
-bitwiseANDExpression	: equalityExpression &  bitwiseANDExpression | equalityExpression
-	
-bitwiseANDExpressionNoIn	: equalityExpressionNoIn &  bitwiseANDExpressionNoIn | equalityExpressionNoIn
-	
-equalityExpression	: relationalExpression | relationalExpression == equalityExpression | relationalExpression = equalityExpression | relationalExpression === equalityExpression | relationalExpression == equalityExpression
+catchProduction : Catch '(' identifier ')' block
 
-equalityExpressionNoIn	: relationalExpressionNoIn | relationalExpressionNoIn  == equalityExpressionNoIn | relationalExpressionNoIn = equalityExpressionNoIn | relationalExpressionNoIn === equalityExpressionNoIn | relationalExpressionNoIn == equalityExpressionNoIn
-	
-relationalExpression : shiftExpression | shiftExpression < relationalExpression | shiftExpression > relationalExpression | shiftExpression <= relationalExpression | shiftExpression >= relationalExpression | shiftExpression instanceof relationalExpression | shiftExpression in relationalExpression
+finallyProduction : Finally block
 
-relationalExpressionNoIn	: shiftExpression | shiftExpression < relationalExpressionNoIn | shiftExpression > relationalExpressionNoIn | shiftExpression <= relationalExpressionNoIn | shiftExpression >= relationalExpressionNoIn | shiftExpression instanceof relationalExpressionNoIn
+debuggerStatement : Debugger eos
 
-shiftExpression	: additiveExpression | additiveExpression << shiftExpression | additiveExpression >>  shiftExpression | additiveExpression >>> shiftExpression
+functionDeclaration : Function identifier '(' formalParameterList ')' '{' functionBody '}' | Function identifier '(' ')' '{' functionBody '}'
 
-additiveExpression	: multiplicativeExpression | multiplicativeExpression + additiveExpression | multiplicativeExpression -  additiveExpression
+formalParameterList : identifier ',' formalParameterList| identifier
 
-multiplicativeExpression	: unaryExpression | unaryExpression * multiplicativeExpression| unaryExpression /  multiplicativeExpression | unaryExpression %  multiplicativeExpression
+functionExpression	: Function '(' formalParameterList ')' '{' functionBody '}'	| Function  '(' ')' '{' functionBody '}'
 
-unaryExpression	: postfixExpression	| delete unaryExpression | void unaryExpression | typeof unaryExpression | ++ unaryExpression | -- unaryExpression | + unaryExpression | - unaryExpression | ~ unaryExpression |  unaryExpression
-	
-postfixExpression	: leftHandSideExpression ++ | leftHandSideExpression -- | leftHandSideExpression
+functionBody : sourceElements |
+    
+arrayLiteral : '[' elementList ',' elision ']' | '[' elementList ',' ']' |'[' elementList ']' | '[' ',' elision ']' | '[' ',' ']' |'[' elision ']' | '['']'
+ 
+elementList : elision singleExpression elementList | elision singleExpression | singleExpression |elision elementList
 
-primaryExpression	: this	| identifier	| literal	| arrayLiteral	| objectLiteral	| (  expression  )
-	
-arrayLiteral	: [  assignmentExpression arrayLiteral1  ] | [  arrayLiteral1  ]
+elision : ',' | ',' elision
 
-arrayLiteral1	:   | , assignmentExpression arrayLiteral1 | , 
-       
-objectLiteral	: {  propertyNameAndValue1 }
-	
-propertyNameAndValue1 : propertyNameAndValue | propertyNameAndValue ,  propertyNameAndValue1  
-	
-propertyNameAndValue	: propertyName  :  assignmentExpression
+objectLiteral : '{' '}' | '{' propertyNameAndValueList '}' |'{' propertyNameAndValueList ','  '}'
 
-propertyName	: identifier	| StringLiteral	| NumericLiteral
+propertyNameAndValueList : propertyAssignment ',' propertyNameAndValueList | propertyAssignment
+    
+propertyAssignment : propertyName ':' singleExpression | 'get' identifier '(' ')' '{' functionBody '}'| 'set' identifier '(' propertySetParameterList ')' '{' functionBody '}'
+    
+propertyName : identifierName | StringLiteral | numericLiteral
+    
+propertySetParameterList : identifier
 
-literal	: null	| true	| false	| StringLiteral	| NumericLiteral	
-	
-NumericLiteral	: DecimalLiteral	| HexIntegerLiteral
-	
+arguments : '(' argumentList ')' |  '(' ')'
+    
+argumentList : singleExpression ',' argumentList | singleExpression 
+    
+expressionSequence : singleExpression expressionSequence | singleExpression
+
+singleExpression : functionExpression | singleExpression '[' expressionSequence ']' | singleExpression '.' identifierName | singleExpression arguments | New singleExpression arguments | New singleExpression | singleExpression '++' | singleExpression '--' | Delete singleExpression | Void singleExpression | Typeof singleExpression | '++' singleExpression | '--' singleExpression | '+' singleExpression | '-' singleExpression | '~' singleExpression | '!' singleExpression | singleExpression '*' singleExpression | singleExpression '/' singleExpression | singleExpression '%' singleExpression | singleExpression '+' singleExpression | singleExpression '-' singleExpression | singleExpression '<<' singleExpression | singleExpression '>>' singleExpression | singleExpression '>>>' singleExpression | singleExpression '<' singleExpression | singleExpression '>' singleExpression | singleExpression '<=' singleExpression | singleExpression '>=' singleExpression | singleExpression Instanceof singleExpression | singleExpression In singleExpression | singleExpression '==' singleExpression | singleExpression '!=' singleExpression | singleExpression '===' singleExpression | singleExpression '!==' singleExpression | singleExpression '&' singleExpression | singleExpression '^' singleExpression | singleExpression '|' singleExpression | singleExpression '&&' singleExpression | singleExpression '##' singleExpression | singleExpression '?' singleExpression ':' singleExpression | singleExpression '=' expressionSequence | singleExpression assignmentOperator expressionSequence | This | identifier | literal | arrayLiteral | objectLiteral | '(' expressionSequence ')'
+
+assignmentOperator : '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '>>>=' | '&=' | '^=' | '|='
+
+literal : nullLiteral | booleanLiteral | StringLiteral | RegularExpressionLiteral | numericLiteral
+
+numericLiteral : DecimalLiteral | HexIntegerLiteral | OctalIntegerLiteral
+
+identifierName : identifier | reservedWord
+
+reservedWord : keyword | futureReservedWord | nullLiteral | booleanLiteral
+
+keyword : Break | Do | Instanceof | Typeof | Case | Else | New | Var | Catch | Finally | Return | Void | Continue | For | Switch | While | Debugger | Function | This | With | Default | If | Throw | Delete | In | Try
+
+futureReservedWord : Class | Enum | Extends | Super | Const | Export | Import | Implements | Let | Private | Public | Interface | Package | Protected | Static | Yield
+
+eos : ';'
+
+nullLiteral : 'null'
+
+booleanLiteral : 'true' | 'false'
+
+Break      : 'break'
+Do         : 'do'
+Instanceof : 'instanceof'
+Typeof     : 'typeof'
+Case       : 'case'
+Else       : 'else'
+New        : 'new'
+Var        : 'var'
+Catch      : 'catch'
+Finally    : 'finally'
+Return     : 'return'
+Void       : 'void'
+Continue   : 'continue'
+For        : 'for'
+Switch     : 'switch'
+While      : 'while'
+Debugger   : 'debugger'
+Function   : 'function'
+This       : 'this'
+With       : 'with'
+Default    : 'default'
+If         : 'if'
+Throw      : 'throw'
+Delete     : 'delete'
+In         : 'in'
+Try        : 'try'
+
+Class   : 'class'
+Enum    : 'enum'
+Extends : 'extends'
+Super   : 'super'
+Const   : 'const'
+Export  : 'export'
+Import  : 'import'
+Implements : 'implements'
+Let        : 'let'
+Private    : 'private'
+Public     : 'public'
+Interface  : 'interface'
+Package    : 'package'
+Protected  : 'protected'
+Static     : 'static'
+Yield      : 'yield'
+
 identifier : Ident
-
-keyword : break | do | instanceof | typeof | case | else | new | var | catch | finally | return | void | continue | for | switch | while | debugger | function | this | with | default | if | throw | delete | in | try | null | true | false | class | enum | extends | super | const | export | import | implements | let | private | public | interface | package | protected | static | yield
 
