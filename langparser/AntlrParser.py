@@ -143,6 +143,7 @@ class AntlrParser(object):
                 f = open(fileName, 'a+')
                 if stat(fileName).st_size == ZERO:
                     dump(d.get(nt), f, HIGHEST_PROTOCOL)
+                    f.close()
                 else:
                     dictOfDict1 = load(f)
                     d1 = defaultdict(list)
@@ -150,14 +151,15 @@ class AntlrParser(object):
                         keys1 = d.get(nt).keys()
                         if dictOfDict1 is not None:
                             keys = dictOfDict1.keys()
-                            for key in keys:
-                                if key in keys1:
-                                    d.get(nt).get(key).append(dictOfDict1.get(key))
+                            for key in keys1:#extracted keys
+                                if key not in keys:
+                                    temp=d.get(nt).get(key)
+                                    d.get(nt).update(dictOfDict1)
                                 else:
                                     d1[key] = dictOfDict1.get(key)
                                     d.get(nt).update(d1)
+                        f = open(fileName, 'w')
                         dump(d.get(nt), f, HIGHEST_PROTOCOL)
-                f.close()
                 
     def retrieveCodeFrag(self, parsetree, nT, nonT, position):
             val = parsetree.split()
