@@ -63,8 +63,6 @@ class AntlrParser(object):
             if pContext.children is not None:
                 self.listTerminals(pContext.getChild(0));
                 self.selectSubtrees(None, pContext.getChild(0));
-            print self.parseTr
-            raw_input()
             return self.parseTr
         except (AttributeError, FailedPredicateException):
             return ""
@@ -88,7 +86,6 @@ class AntlrParser(object):
                     self.terminals.append(s.getText())
         except TypeError as e:
             return "Syntax Error"
-            
 
     def selectSubtrees(self, nonT, s) :
         try:
@@ -118,50 +115,50 @@ class AntlrParser(object):
             else:
                 parseTr = self.parseTree(None,fileName)
         d = defaultdict(dict)
-        
-        position = 0
-        directory = DEFAULT_DATABASE_PATH
-        if not path.exists(directory):
-            makedirs(directory)
-            
-        for nt in self.non_Terminals:
-            code = self.retrieveCodeFrag(parseTr, self.non_Terminals, nt, position)
-            d1 = defaultdict(list)
-            if len(code) > 0:
-                if d.has_key(nt):
-                    if d.get(nt).has_key(code):
-                        d.get(nt).get(code).append(DEFAULT_SCORE)
+        if len(parseTr) >0:
+            position = 0
+            directory = DEFAULT_DATABASE_PATH
+            if not path.exists(directory):
+                makedirs(directory)
+                
+            for nt in self.non_Terminals:
+                code = self.retrieveCodeFrag(parseTr, self.non_Terminals, nt, position)
+                d1 = defaultdict(list)
+                if len(code) > 0:
+                    if d.has_key(nt):
+                        if d.get(nt).has_key(code):
+                            d.get(nt).get(code).append(DEFAULT_SCORE)
+                        else:
+                            d1[str(code)].append(DEFAULT_SCORE)
+                            d.get(nt).update(d1)
                     else:
                         d1[str(code)].append(DEFAULT_SCORE)
-                        d.get(nt).update(d1)
-                else:
-                    d1[str(code)].append(DEFAULT_SCORE)
-                    d[str(nt)] = d1
-            position += 1
-        nonTerms = set(self.non_Terminals)
-        
-        for nt in nonTerms:
-            fileName = directory + "/" + str(nt)
-            #print path.abspath(fileName)
-            f = open(fileName, 'a+')
-            if stat(fileName).st_size == ZERO:
-                dump(d.get(nt), f, HIGHEST_PROTOCOL)
-            else:
-                dictOfDict1 = load(f)
-                d1 = defaultdict(list)
-                if d.get(nt) is not None:
-                    keys1 = d.get(nt).keys()
-                    if dictOfDict1 is not None:
-                        keys = dictOfDict1.keys()
-                        for key in keys:
-                            if key in keys1:
-                                d.get(nt).get(key).append(dictOfDict1.get(key))
-                            else:
-                                d1[key] = dictOfDict1.get(key)
-                                d.get(nt).update(d1)
-                    dump(d.get(nt), f, HIGHEST_PROTOCOL)
-            f.close()
+                        d[str(nt)] = d1
+                position += 1
+            nonTerms = set(self.non_Terminals)
             
+            for nt in nonTerms:
+                fileName = directory + "/" + str(nt)
+                #print path.abspath(fileName)
+                f = open(fileName, 'a+')
+                if stat(fileName).st_size == ZERO:
+                    dump(d.get(nt), f, HIGHEST_PROTOCOL)
+                else:
+                    dictOfDict1 = load(f)
+                    d1 = defaultdict(list)
+                    if d.get(nt) is not None:
+                        keys1 = d.get(nt).keys()
+                        if dictOfDict1 is not None:
+                            keys = dictOfDict1.keys()
+                            for key in keys:
+                                if key in keys1:
+                                    d.get(nt).get(key).append(dictOfDict1.get(key))
+                                else:
+                                    d1[key] = dictOfDict1.get(key)
+                                    d.get(nt).update(d1)
+                        dump(d.get(nt), f, HIGHEST_PROTOCOL)
+                f.close()
+                
     def retrieveCodeFrag(self, parsetree, nT, nonT, position):
             val = parsetree.split()
             posTrack = 0;

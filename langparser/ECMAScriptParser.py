@@ -631,8 +631,14 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
+            
         finally:
             self.exitRule()
         return localctx
@@ -684,6 +690,9 @@ class ECMAScriptParser ( Parser ):
                     break
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -740,6 +749,9 @@ class ECMAScriptParser ( Parser ):
 
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -927,6 +939,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -976,6 +991,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 150
             self.match(self.T__40)
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -1031,6 +1049,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -1081,6 +1102,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 159 
             self.eos()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -1138,6 +1162,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -1189,6 +1216,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -1231,6 +1261,9 @@ class ECMAScriptParser ( Parser ):
             self.singleExpression(0)
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -1267,6 +1300,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 176
             self.match(self.T__9)
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -1307,6 +1343,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 178 
             self.expressionSequence()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -1377,6 +1416,9 @@ class ECMAScriptParser ( Parser ):
 
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -1731,6 +1773,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -1786,6 +1831,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 256 
             self.eos()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -1843,6 +1891,9 @@ class ECMAScriptParser ( Parser ):
             self.eos()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -1899,6 +1950,9 @@ class ECMAScriptParser ( Parser ):
             self.eos()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -1954,6 +2008,9 @@ class ECMAScriptParser ( Parser ):
             self.statement()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2008,6 +2065,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 280 
             self.caseBlock()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2080,6 +2140,9 @@ class ECMAScriptParser ( Parser ):
             self.match(self.T__40)
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2133,6 +2196,9 @@ class ECMAScriptParser ( Parser ):
                     break
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2193,6 +2259,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2246,6 +2315,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2293,6 +2365,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 312 
             self.statement()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2344,6 +2419,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 316 
             self.eos()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2428,6 +2506,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2483,6 +2564,9 @@ class ECMAScriptParser ( Parser ):
             self.block()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2528,6 +2612,9 @@ class ECMAScriptParser ( Parser ):
             self.block()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2572,6 +2659,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 343 
             self.eos()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2644,6 +2734,9 @@ class ECMAScriptParser ( Parser ):
             self.match(self.T__40)
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2699,6 +2792,9 @@ class ECMAScriptParser ( Parser ):
                 _la = self._input.LA(1)
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2781,6 +2877,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -2826,6 +2925,9 @@ class ECMAScriptParser ( Parser ):
 
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2894,6 +2996,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 394
             self.match(self.T__30)
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -2973,6 +3078,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -3020,6 +3128,9 @@ class ECMAScriptParser ( Parser ):
                     break
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -3078,6 +3189,9 @@ class ECMAScriptParser ( Parser ):
             self.match(self.T__40)
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -3133,6 +3247,9 @@ class ECMAScriptParser ( Parser ):
                 _alt = self._interp.adaptivePredict(self._input,38,self._ctx)
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -3283,6 +3400,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -3347,6 +3467,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -3386,6 +3509,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 458 
             self.identifier()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -3436,6 +3562,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 464
             self.match(self.T__37)
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -3493,6 +3622,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -3548,6 +3680,9 @@ class ECMAScriptParser ( Parser ):
                 _alt = self._interp.adaptivePredict(self._input,43,self._ctx)
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5148,6 +5283,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -5188,6 +5326,9 @@ class ECMAScriptParser ( Parser ):
                 self._errHandler.recoverInline(self)
             self.consume()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5270,6 +5411,9 @@ class ECMAScriptParser ( Parser ):
 
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -5318,6 +5462,9 @@ class ECMAScriptParser ( Parser ):
                 self._errHandler.recoverInline(self)
             self.consume()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5374,6 +5521,9 @@ class ECMAScriptParser ( Parser ):
                 raise NoViableAltException(self)
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5448,6 +5598,9 @@ class ECMAScriptParser ( Parser ):
                 raise NoViableAltException(self)
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5567,6 +5720,9 @@ class ECMAScriptParser ( Parser ):
             self.consume()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -5655,6 +5811,9 @@ class ECMAScriptParser ( Parser ):
             self.consume()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -5691,6 +5850,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 646
             self.match(self.T__35)
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5733,6 +5895,9 @@ class ECMAScriptParser ( Parser ):
             self.consume()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -5771,6 +5936,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 650
             self.match(self.Ident)
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5815,6 +5983,9 @@ class ECMAScriptParser ( Parser ):
             self.identifier()
         except RecognitionException as re:
             localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
+            localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
         finally:
@@ -5857,6 +6028,9 @@ class ECMAScriptParser ( Parser ):
             self.state = 656 
             self.identifier()
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)
@@ -5922,6 +6096,9 @@ class ECMAScriptParser ( Parser ):
 
 
         except RecognitionException as re:
+            localctx.exception = re
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
             localctx.exception = re
             self._errHandler.reportError(self, re)
             self._errHandler.recover(self, re)

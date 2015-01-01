@@ -21,3 +21,16 @@ antlr4 -Dlanguage=Python2 ECMAScript.g4 -o ../gparser/
 
 
 https://wiki.mozilla.org/JavaScript:New_to_SpiderMonkey
+
+
+1. import an error module in ECMAScript
+
+            else:
+                raise NoViableAltException(self)
+
+        except RecognitionException as re:
+            localctx.exception = re
+            self._errHandler.reportError(self, re)
+            self._errHandler.recover(self, re)
+            if isinstance( re, NoViableAltException ):
+                    raise NoViableAltException(self)
