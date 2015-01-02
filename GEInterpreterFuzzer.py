@@ -9,22 +9,45 @@ import sys
 
 JS_SHELL_PATH="/home/spandan/js-1.8.5/js/src/dist/bin/js"
 CREATE_FRAG_POOL=False
-TargetDirectory = os.path.join(os.path.dirname(__file__), "../generatedTestCases")
-TestCasesDirectory=os.path.join(os.path.dirname(__file__), "../testsamples")
+TargetDirectory =  "../generatedTestCases"
+TestCasesDirectory= "../testsamples"
+FragPoolDirName="database"
+FragPool= "../"+FragPoolDirName
 
 
-def options():
-    return lower(raw_input("Do you want to create fragment pool (Default: No)? Y/N"))
+def options(choice):
+    if choice == 1:
+        return lower(raw_input("Do you want to Append Fragment Pool ? Y/N : "))
+    else:
+        return lower(raw_input("Do you want to create fragment pool ? Y/N : "))
 
 if __name__ == "__main__":
     sys.setrecursionlimit(100000)
     print datetime.now()
     
     while True:
-        input=options()
+        input=options(0)
         if input in ['y','n']:
             if input=='y':
                 CREATE_FRAG_POOL=True
+                fileList=os.listdir(FragPoolDirName)
+                if len(fileList):
+                    while True:
+                        input1=options(1)
+                        if input1 in ['y','n']:
+                            if input1=='y':
+                                raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
+                                break;
+                            else:
+                                raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
+                                for f in fileList:
+                                    os.remove(FragPoolDirName+"/"+f)
+                                
+                                break;
+                        else:
+                            print "Answer must be 'Y' or 'N'"
+
+                
             break;
         else:
              print "Answer must be 'Y' or 'N'"

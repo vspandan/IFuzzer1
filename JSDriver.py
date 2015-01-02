@@ -361,7 +361,7 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
             os.chdir(os.path.dirname(options.manifest))
         try:
             results = ResultsSink()
-            #run_tests(options, test_list, results)
+            run_tests(options, test_list, results)
             while True:
                 filename = os.path.join(os.path.dirname(__file__), "generatedTestCases/jstests_generated.list")
                 runFuzzer(filename,testCasesDirectory,targetDirectory)
