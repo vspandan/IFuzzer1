@@ -123,14 +123,18 @@ class AntlrParser(object):
                 
             for nt in self.non_Terminals:
                 code = self.retrieveCodeFrag(parseTr, self.non_Terminals, nt, position)
-                d1 = defaultdict(list)
                 if len(code) > 0:
+                    d1 = defaultdict(list)
                     if d.has_key(nt):
+                        """
                         if d.get(nt).has_key(code):
                             d.get(nt).get(code).append(DEFAULT_SCORE)
                         else:
                             d1[str(code)].append(DEFAULT_SCORE)
                             d.get(nt).update(d1)
+                        """
+                        d1[str(code)].append(DEFAULT_SCORE)
+                        d.get(nt).update(d1)
                     else:
                         d1[str(code)].append(DEFAULT_SCORE)
                         d[str(nt)] = d1
@@ -148,18 +152,27 @@ class AntlrParser(object):
                     dictOfDict1 = load(f)
                     d1 = defaultdict(list)
                     if d.get(nt) is not None:
-                        keys1 = d.get(nt).keys()
+                        update=False
+                        temp=d.get(nt)
+                        keys1 = temp.keys()
                         if dictOfDict1 is not None:
                             keys = dictOfDict1.keys()
                             for key in keys1:#extracted keys
                                 if key not in keys:
+                                    """
                                     temp=d.get(nt).get(key)
                                     d.get(nt).update(dictOfDict1)
+                                    """
+                                    dictOfDict1[key]=temp.get(key)
+                                    update=True
+                                """
                                 else:
                                     d1[key] = dictOfDict1.get(key)
                                     d.get(nt).update(d1)
-                        f = open(fileName, 'w')
-                        dump(d.get(nt), f, HIGHEST_PROTOCOL)
+                                """
+                        if update:
+                            f = open(fileName, 'w')
+                            dump(dictOfDict1, f, HIGHEST_PROTOCOL)
                 
     def retrieveCodeFrag(self, parsetree, nT, nonT, position):
             val = parsetree.split()
