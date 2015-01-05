@@ -1,0 +1,1 @@
+try { eval . source ; $ERROR ( '#1.1: RegularExpressionChar :: BackslashSequence :: \\Paragraph separator is incorrect. Actual: ' + ( eval ( "/a\\\u2029/" ) . source ) ) ; } catch ( e ) { if ( ( e instanceof SyntaxError ) !== true ) { OBJECT . valueOf = String . prototype . valueOf ; } }

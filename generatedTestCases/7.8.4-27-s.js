@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( '1==2' ) ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } temp ( testcase ) ;

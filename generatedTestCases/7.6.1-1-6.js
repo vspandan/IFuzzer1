@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { continue : 0 , for : 1 , switch : 2 } ; var arr = [ 'continue' , 'for' , false ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) continue theloop ; } continue temp ; } runTestCase ( testcase ) ;

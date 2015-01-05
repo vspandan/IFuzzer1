@@ -1,0 +1,1 @@
+function testcase ( ) { return ! new TestCase ( SECTION , "0xc" , 12 , 0xc ) ; } runTestCase ;

@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; tokenCodes [ false ] = 0 ; tokenCodes [ 'let' ] = 1 ; tokenCodes [ 'private' ] = 2 ; var arr = [ 'implements' , false , 'private' ] ; for ( var i = 0 ; i < arr . length ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) ;

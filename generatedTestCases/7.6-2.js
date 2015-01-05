@@ -1,0 +1,1 @@
+function testcase ( ) { new TestCase ( SECTION , "new Boolean(false)" , false , ( new Boolean ( false ) ) . valueOf ) } runTestCase ( testcase ) ;

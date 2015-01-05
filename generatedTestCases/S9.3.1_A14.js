@@ -1,0 +1,1 @@
+if ( temp !== + temp ) { $ERROR ( TestCase ( SECTION , "-0 - -0" , 0 , - 0 - - 0 ) , ( 'do not crash' , 'No Crash' , 'No Crash' ) ) ; }

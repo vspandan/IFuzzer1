@@ -1,0 +1,1 @@
+with ( Math ) { temp ( ) ; test1 ( sin ) ; }

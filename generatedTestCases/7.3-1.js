@@ -1,0 +1,1 @@
+function temp ( ) { { new TestCase ( SECTION , "(new Date(" + d + ")).getUTCDate()" , temp ( d ) , ( new Date ( d ) ) . getUTCDate ( ) ) ; } ; return ( prop === 66 ) && ( ( typeof test7_3_1 ) === "undefined" ) ; } HEX_STRING = "-0X0" , HEX_VALUE = 0 , POWER = 0 ;

@@ -1,0 +1,1 @@
+"use strict" ; with ( obj ) { f = function ( ) { var a = 1 ; return eval ( s ) ; } ; } function _13_1_1_fun ( eval ) { }

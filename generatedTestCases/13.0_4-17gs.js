@@ -1,0 +1,1 @@
+"use strict" ; var temp = new function ( 'eval = 42;' ) ; throw NotEarlyError ;

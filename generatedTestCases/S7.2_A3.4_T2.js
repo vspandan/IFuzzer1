@@ -1,0 +1,1 @@
+var x = 0 ; if ( x !== 0 ) { temp = ( notevil + 1645 ) / 2 ; }

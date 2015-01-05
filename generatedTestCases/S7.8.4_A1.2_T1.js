@@ -1,0 +1,1 @@
+try { [ ] . __proto__ ( ) ; } catch ( ex ) { print ( actual = ex + null ) ; }

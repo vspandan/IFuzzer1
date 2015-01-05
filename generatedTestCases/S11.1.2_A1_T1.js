@@ -1,0 +1,1 @@
+if ( this . x !== undefined ) { $ERROR ( '#1: this.x === undefined. Actual: ' + ( this . x ) ) ; } var object = new Object ( ) ; if ( object . prop !== undefined ) { temp ; } this . y ++ ; if ( isNaN ( ) !== true ) { $ERROR ( ) ; }

@@ -1,0 +1,1 @@
+out3 : while ( i < 1000 ) { if ( i == 100 ) { var k = 0 ; out4 : while ( k < 1000 ) { if ( k == null ) { i ++ ; out5 : do { if ( i == 100 ) { var k = 0 ; out6 : do { if ( k == 500 ) { i ++ ; continue out5 ; } k ++ ; } while ( k < 1000 ) ; j = 3000 ; } j ++ ; i ++ ; } while ( i < 1000 ) ; } k ++ ; } j = 3000 ; } j ++ ; i ++ ; } 3

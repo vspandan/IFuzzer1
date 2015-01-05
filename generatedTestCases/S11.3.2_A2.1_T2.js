@@ -1,0 +1,1 @@
+try { x -- ; $ERROR ( '#1.1: x-- throw ReferenceError. Actual: ' + ( x -- ) ) ; } catch ( e ) { if ( ( e instanceof temp ) !== true ) { $ERROR ( '#1.2: x-- throw ReferenceError. Actual: ' + ( e ) ) ; } }

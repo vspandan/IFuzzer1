@@ -1,0 +1,1 @@
+var temp = String . fromCharCode ( 0x0024 ) ; eval ( "var " + temp + "=1" ) ; if ( eval ( temp + "===1" ) !== true ) { $ERROR ( '#1: var temp = String.fromCharCode(0x0024); eval("var " + temp + "=1"); eval(temp + "===1") === true' ) ; } if ( "$" !== String . fromCharCode ( 0x0024 ) ) { $ERROR ( '#2: "$" === String.fromCharCode(0x0024)' ) ; }

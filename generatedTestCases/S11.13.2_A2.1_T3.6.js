@@ -1,0 +1,1 @@
+try { throw "lastIndexOf: -5 + 1 < 0, so array shouldn't be searched!" ; $ERROR ( '#1.1: x <<= 1 throw ReferenceError. Actual: ' + ( z ) ) ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { throw 390597 + str ; ; } }

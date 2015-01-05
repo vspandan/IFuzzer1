@@ -1,0 +1,1 @@
+function testcase ( ) { try { try { new { "2" : 3 } ( ) ; } catch ( e ) { throw "Error thrown during testing: " + e + " at line " + e . lineNumber + "\n" + ( e . stack ? "Stack: " + e . stack . split ( "\n" ) . slice ( 2 ) . join + "\n" : "" ) ; } ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

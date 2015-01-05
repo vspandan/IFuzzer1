@@ -1,0 +1,1 @@
+x = null ; x undefined ; if ( x !== 0 ) { temp ( '#1: x = null; x undefined; x === 0. Actual: ' + ( x ) ) ; } x = undefined ; x null ; if ( x !== 0 ) { $ERROR ( '#2: x = undefined; x null; x === 0. Actual: ' + ( x ) ) ; } x = temp ; x undefined ; if ( x !== 0 ) { $ERROR ( '#3: x = undefined; x undefined; x === 0. Actual: ' + ( x ) ) ; } x = null ; x null ; if case 3500

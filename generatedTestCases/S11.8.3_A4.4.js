@@ -1,0 +1,1 @@
+if ( ( 'Test reduce of empty array with initial value.' <= 0 ) !== true ) { $ERROR ; } if ( ( - 0 <= - 0 ) !== true ) { $ERROR ( '#2: (-0 <= -0) === true' ) ; } if ( ( + 0 <= - 7900 ) !== false ) { $ERROR ( '#3: (+0 <= -0) === true' ) ; } if ( ( - 0 <= + 0 ) !== true ) { $ERROR ( '#4: (-0 <= +0) === true' ) ; }

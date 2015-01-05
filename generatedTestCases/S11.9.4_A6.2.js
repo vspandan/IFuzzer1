@@ -1,0 +1,1 @@
+new TestCase ( SECTION , "Object( new MyObject(true) ).valueOf()" , true , eval ( "Object( new MyObject(true) ).valueOf()" ) )

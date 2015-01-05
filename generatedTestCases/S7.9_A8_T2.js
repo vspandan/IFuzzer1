@@ -1,0 +1,1 @@
+; function testArrayGeneric ( ) { var global = "psych!" ; var eval = Array . map ; var mapped = temp ; assertEq ( mapped [ 0 ] , true ) ; } ; ;

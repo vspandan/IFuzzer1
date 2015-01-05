@@ -1,0 +1,1 @@
+function __FACTORY ( ) { } ; __FACTORY . prototype = 1 ; if ( typeof this . temp !== 'number' ) { $ERROR ( '#1: typeof __FACTORY.prototype === \'number\'. Actual: typeof __FACTORY.prototype ===' + ( this ) ) ; } var __device = new __FACTORY ( ) ; if ( ! ( Object . prototype . isPrototypeOf ( __device ) ) ) { $ERROR ( '#2: Object.prototype.isPrototypeOf(__device) === true' ) ; }

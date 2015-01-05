@@ -1,0 +1,1 @@
+"use strict" try { var counter = 0 ; eval ( "for ( counter = 0;\ncounter <= 1\ncounter++ ) {\nresult += \": got inside for loop\")" ) ; } catch ( e ) { result = expect ; exception = e . toString ( ) ; } var _11_4_1_5 = "var STRING = new String(\"hi\"); result = new STRING();" ; throw NotEarlyError ; delete _11_4_1_5 ;

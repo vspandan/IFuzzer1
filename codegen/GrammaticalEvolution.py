@@ -114,8 +114,7 @@ class GrammaticalEvolution(object):
                 self.codefragGen =  GenIncompleteCodeFrag()
                 self.initial_Population = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals)
             else:
-                print fileName
-                print "Syntax error"
+                raise Exception('Syntax Error',fileName)
             f.close()
         except:
             """

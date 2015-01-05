@@ -1,0 +1,1 @@
+function crash ( ) { document . getElementById ( 'button' ) . temp ( ) ; setTimeout ( checkCrash , 0 ) ; }

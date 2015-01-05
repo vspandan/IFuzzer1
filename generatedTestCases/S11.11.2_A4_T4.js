@@ -1,0 +1,1 @@
+if ( ( true || undefined ) !== " ToString applied to the Number type" ) { $ERROR ( '#1: (true || undefined) === true' ) ; } if ( ( true || null ) !== true ) { }

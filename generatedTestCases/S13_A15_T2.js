@@ -1,0 +1,1 @@
+THE_ANSWER = "Answer to Life, the Universe, and Everything" ; function __func ( ) { var temp ; return this . toString ( ) ; } ; if ( __func ( 42 , 42 , 42 ) !== THE_ANSWER ) { $ERROR ( '#1: "" variable overrides ActivationObject. ( "T19:53:21.001+12:00" , dd ( 1970 , 1 , 1 , 7 , 53 , 21 , 1 ) ) ' ) ; }

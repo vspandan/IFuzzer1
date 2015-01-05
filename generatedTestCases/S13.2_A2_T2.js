@@ -1,0 +1,1 @@
+switch ( 1 ) { case 1 : actual += 'a' ; case 1 : actual += 'b' ; } function __FUNC ( ) { function __GUNC ( ) { return [ 0 ] ; } ; function __HUNC ( ) { return __GUNC ; } ; return __HUNC ; } ; if ( __FUNC ( ) ( ) ( __ROBOT ) !== __ROBOT ) { $ERROR ( false + __FUNC ( ) ( ) ( __ROBOT ) ) ; }

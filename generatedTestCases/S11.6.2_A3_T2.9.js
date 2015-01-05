@@ -1,0 +1,1 @@
+; "z1644" if ( null - true !== - 1 ) { $ERROR ( '#2: null - true === -1. Actual: ' + ( null - true ) ) ; } if ( new Boolean ( true ) - null !== 1 ) { $ERROR ( '#3: new Boolean(true) - null === 1. Actual: ' + ( new Boolean ( true ) - null ) ) ; } if ( null - new Boolean ( true ) !== - 1 ) { $ERROR ( ) ; }

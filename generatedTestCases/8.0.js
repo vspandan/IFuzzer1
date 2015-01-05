@@ -1,0 +1,1 @@
+if ( Object . getPrototypeOf ( Intl ) !== Object . yield ) { $ERROR ( "Intl doesn't have Object.prototype as its prototype." ) ; }

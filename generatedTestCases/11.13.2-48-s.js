@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var obj = { } ; Object . preventExtensions ( obj ) ; try { obj . len += 10 ; ; "z380" notevil notevil 2 } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

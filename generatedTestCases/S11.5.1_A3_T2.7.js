@@ -1,0 +1,1 @@
+if ( "1" * null !== 0 ) { $ERROR ( ) ; } if ( null * "1" !== 0 ) { $ERROR ( '#2: null * "1" === 0. Actual: ' + ( null * "1" ) ) ; } if ( new String ( "1" ) * null !== 0 ) { $ERROR ( '#3: new String("1") * null === 0. Actual: ' + ( new String ( "1" ) * null ) ) ; } if ( null * new String ( "1" ) !== 0 ) { $ERROR ; }

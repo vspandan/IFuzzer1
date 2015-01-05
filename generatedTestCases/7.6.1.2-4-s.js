@@ -1,0 +1,1 @@
+function temp return chars . join ( '' ) ; runTestCase ( testcase ) function MyFunction ( ) { var s = "return" ; eval ; }

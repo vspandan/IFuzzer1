@@ -1,0 +1,1 @@
+if ( null !== null ) { this ( '#1: null === null' ) ; }

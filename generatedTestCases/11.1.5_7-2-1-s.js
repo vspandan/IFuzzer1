@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; for ( i = null ; i < numParens ; i ++ ) { pattern += closeParen ; } } runTestCase ( testcase ) ;

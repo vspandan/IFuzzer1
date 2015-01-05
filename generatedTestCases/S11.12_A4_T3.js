@@ -1,0 +1,1 @@
+if ( ( "1" ? "" : "1" ) !== "" ) { $ERROR ( '#1: ("1" ? "" : "1") === ""' ) ; } var y = new String ( ) ; if ( ( "1" ? y : "" ) !== y ) for ( var i = 0 ; i != 1000 ; ++ i ) { var tmp2 = Array ( 12 ) . join ( ' ' ) ; } var y = new String ( "y" ) ; if ( ( y ? y : "1" ) !== y ) { $ERROR ( '#3: (var y = new String("y"); (y ? y : "1") === y' ) ; }

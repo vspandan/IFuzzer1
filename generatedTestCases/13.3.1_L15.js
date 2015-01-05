@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) ; temp ( Date . prototype . temp , true , false , [ ] , 0 ) ;

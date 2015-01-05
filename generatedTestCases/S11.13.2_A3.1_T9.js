@@ -1,0 +1,1 @@
+try { var local5 = y ; } catch ( e ) { local5 = e . name ; } x &= 1 ; if ( temp !== 1 ) { $ERROR ( '#1: var x = 1; x &= 1; x === 1. Actual: ' + ( x ) ) ; } y = 1 ; y &= 1 ; if ( y !== 1 ) { try { result = ( void 0 ) . valueOf ( ) ; } catch ( e ) { result = expect ; exception = e . toString ( ) ; } ; }

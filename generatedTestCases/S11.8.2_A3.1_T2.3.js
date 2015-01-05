@@ -1,0 +1,1 @@
+function f ( ) { var a = [ ] ; for ( var i = 0 ; i != 10 ; ++ i ) { a [ 1 << i ] = 9999 ; } return a ; } if ( null > 1 !== false ) { $ERROR ( '#2: null > 1 === false' ) ; } if ( new Number ( 1 ) > null !== true ) { $ERROR ( '#3: new Number(1) > null === true' ) ; } if ( null > new Number ( 1 ) !== false ) { $ERROR ( '#4: null > new Number(1) === false' ) ; }

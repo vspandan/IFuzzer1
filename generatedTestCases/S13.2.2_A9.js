@@ -1,0 +1,1 @@
+function FACTORY ( ) { this . id = 0 ; this . id = this . func ( ) ; this . func = function ( ) { return 5 ; } } try { throw "Bad value for " + name + ".name: " + uneval ( tmp ) ; throw new Error ( "no error thrown for function" ) ; ; } catch ( e ) { if ( e instanceof Test262Error ) throw e ; }

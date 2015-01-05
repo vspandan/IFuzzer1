@@ -1,0 +1,1 @@
+try { var z = ( x -= 1 ) ; $ERROR ( - x = eval ( src ) . source ) ; } catch ( temp ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ( '#1.2: x -= 1 throw ReferenceError. Actual: ' + ( e ) ) ; } }

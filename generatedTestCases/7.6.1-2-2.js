@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; tokenCodes . break = 0 ; tokenCodes . case = 1 ; tokenCodes . do = "sqrt" ; var arr = [ 'break' , 'case' , 'do' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( arr [ p1 ] === p ) { } } } return true ; } runTestCase ( testcase ) ;

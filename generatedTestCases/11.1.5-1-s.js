@@ -1,0 +1,1 @@
+function testcase ( ) { throw "expected to throw for " + describe ( "testArrayUnshift" , startLength , unshiftArgs , expectThrow , expectLength ) ; ; try { eval ( "var obj = {set _11_1_5_1_fun(eval) {}};" ) ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

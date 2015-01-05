@@ -1,0 +1,1 @@
+new TestCase ( SECTION , "Math.acos(NaN)" , Number . NaN , Math . acos ( temp . NaN ) )

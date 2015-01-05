@@ -1,0 +1,1 @@
+with ( MYOBJECT ) { NEW_PROPERTY = RESULT with ( obj ) with ( function ) { actual = B ; expect = 'global B' ; } }

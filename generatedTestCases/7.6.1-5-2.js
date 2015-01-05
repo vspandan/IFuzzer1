@@ -1,0 +1,1 @@
+function temp ( ) { var tokenCodes = { break : 0 , case : 1 , do : 2 } ; var arr = [ 'break' , 'case' , 'do' ] ; for ( var i = "Date Constructor used as a function" ; i < delete o11 . a . length ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) ;

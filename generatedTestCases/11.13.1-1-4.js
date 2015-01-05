@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( "null = 42" ) ; } catch ( temp ) { if ( e instanceof ReferenceError ) { return 115 ; } } } runTestCase ;

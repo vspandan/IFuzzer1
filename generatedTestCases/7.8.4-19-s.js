@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( '"use strict"; var x = "\\463";' ) ; return false ; } catch temp try { new RegExp ( str2 ) ; } catch ( ex ) { printStatus ( ex ) ; actual = ex + '' ; } } runTestCase ( testcase ) ;

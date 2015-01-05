@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( fnGlobalObject ( ) . Intl , false , true , [ ] ) ; testBuiltInObject ;

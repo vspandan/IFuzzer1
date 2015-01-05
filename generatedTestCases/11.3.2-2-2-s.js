@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var blah = eval ; try { eval ( "eval--;" ) ; return false ; } catch ( e ) { return 'String == should short circuit for object identify' } } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { return ! Object . getOwnPropertyDescriptor ( new function ( "'use strict';" ) , "caller" ) . configurable ; } runTestCase ( testcase ) ;

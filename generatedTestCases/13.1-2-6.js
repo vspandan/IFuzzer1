@@ -1,0 +1,1 @@
+function testcase ( ) { eval ( "(function foo( ){});" ) ; return true ; } runTestCase ( testcase ) ;

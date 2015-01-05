@@ -1,0 +1,1 @@
+function temp ( ) { u [ 0 ] = c - 48 } runTestCase ( testcase ) ;

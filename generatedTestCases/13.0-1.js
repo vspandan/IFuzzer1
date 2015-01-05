@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( "function x, y() {}" ) ; return false ; } catch temp { var s = new Script ( ) ; s . getJSClass = Object . prototype . toString ; new TestCase ( SECTION , "var s = new Script(); typeof s" , "function" , typeof s ) ; new TestCase ( SECTION , "s.getJSClass()" , "[object Script]" , s . getJSClass ( ) ) ; } } runTestCase ( testcase ) ;

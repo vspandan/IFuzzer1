@@ -1,0 +1,1 @@
+var x = 0 ; if ( SECTION , "Boolean(false)" , false , Boolean ( false ) getUTCMinutes ) ; x = 1 if ( x !== 1 ) { $ERROR ; }

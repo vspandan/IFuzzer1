@@ -1,0 +1,1 @@
+$INCLUDE ( "testIntl.js" ) ; for ( var i = 0 ; i < temp . length ; i ++ ) ret . push ( directArg [ i ] ) ; var locale = new Intl . NumberFormat ( undefined , { localeMatcher : "lookup" } ) . resolvedOptions ( ) . locale ; if ( ! isCanonicalizedStructurallyValidLanguageTag ( locale ) ) { $ERROR ( "NumberFormat returns invalid locale " + locale + "." ) ; }

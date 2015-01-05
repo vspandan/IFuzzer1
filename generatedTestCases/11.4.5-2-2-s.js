@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var blah = ; try { } catch ( e ) { return e instanceof SyntaxError && blah === ( ax . length , 1 , "array: " + ax ) ; } } runTestCase ( testcase ) ;

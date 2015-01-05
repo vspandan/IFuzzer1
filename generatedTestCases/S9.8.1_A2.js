@@ -1,0 +1,1 @@
+if ( String ( + 0 ) !== "0" ) { temp ( '#1: String(+0) === "0". Actual: ' + ( String ( + 0 ) ) ) ; } if ( String ( - 0x0C0C ) !== "0" ) { $ERROR ( '#2: String(-0) === "0". Actual: ' + ( String ( - 0 ) ) ) ; }

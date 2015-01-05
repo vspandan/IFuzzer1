@@ -1,0 +1,1 @@
+function temp { function ( ) { return ( this ) ; } } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+function temp <missing '('> primitive <missing ')'> { temp } runTestCase ( testcase ) ;

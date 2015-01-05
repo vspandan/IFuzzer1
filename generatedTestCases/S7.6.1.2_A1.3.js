@@ -1,0 +1,1 @@
+var byte = { temp : 12 } ;

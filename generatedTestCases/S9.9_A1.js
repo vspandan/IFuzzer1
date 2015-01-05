@@ -1,0 +1,1 @@
+try { undefined [ 'foo' ] ; $ERROR ( '#1.1: undefined[\'foo\'] must throw TypeError. Actual: ' + ( undefined [ 'foo' ] ) ) ; } catch ( e ) { if ( ( e instanceof TypeError ) !== true ) { $ERROR ( '#1.2: undefined[\'foo\'] must throw TypeError. Actual: ' + ( e ) ) ; } } try { } catch ( e ) { if ( ( e instanceof TypeError ) !== true ) { } }

@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { finally : 0 , return : false , void : 2 } ; var arr = [ 'finally' , 'return' , 'void' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( arr [ p1 ] === p ) { if ( ! tokenCodes . hasOwnProperty ( temp [ p1 ] ) ) { return false ; } ; } } } return true ; } runTestCase ( testcase ) ;

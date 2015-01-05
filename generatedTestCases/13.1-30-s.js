@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( "var _13_1_30_fun = function (param, param) { 'use strict'; };" ) ; return null ; } catch ( e ) { return e instanceof SyntaxError ; } } var T = LocalTime ( t ) ; ;

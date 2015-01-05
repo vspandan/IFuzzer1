@@ -1,0 +1,1 @@
+var x = 0 ; var temp = ( x |= 1 ) ; break ; notevil = ( notevil + 412 ) / 2 notevil + 792 ; notevil = ( notevil + 1553 ) / 2 ; break ; var x = 0 ; var y = 1 ; var z = ( x |= y ) ; if ( z !== 1 ) { $ERROR ( '#2: var x = 0; var y = 1; var z = (x |= y); z === 1. Actual: ' + ( z ) ) ; }

@@ -1,0 +1,1 @@
+if ( Number ( ".12345e6" ) !== + ( 3893 ) * 1e1 ) { $ERROR ( '#1: Number(".12345e6") === +("12345")*1e1' ) ; } if ( string , '000' , ',00' >> SECTION , "Number(new Boolean(false))" , 0 , Number ( new Boolean ( false ) ) ) { $ERROR ; }

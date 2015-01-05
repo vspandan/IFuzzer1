@@ -1,0 +1,1 @@
+function testcase ( ) { var foo = function ( "'use strict';" ) ; try { var temp = foo . caller ; return false ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( this ) ;

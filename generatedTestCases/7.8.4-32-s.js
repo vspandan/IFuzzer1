@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( '"use strict"; var x = "\\1\\1";' ) ; return false ; } catch temp try { ReferenceError = 5 ; } catch ( ex ) { } } runTestCase ( testcase ) ;

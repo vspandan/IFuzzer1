@@ -1,0 +1,1 @@
+var x = true ; if ( ( ( temp = false ) || x ) !== false ) { break ; notevil = ( notevil + 402 ) / 2 notevil + 777 ; notevil = ( notevil + 1528 ) / 2 ; break ; ; } var temp = true ; if ( ( x || ( x = false ) ) !== true ) { $ERROR ( '#2: var x = true; (x || (x = false)) === true' ) ; }

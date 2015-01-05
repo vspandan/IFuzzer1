@@ -1,0 +1,1 @@
+var x = 0 ; if ( x !== 0 ) { break ; temp = ( notevil + 930 ) / 2 notevil + 1569 ; }

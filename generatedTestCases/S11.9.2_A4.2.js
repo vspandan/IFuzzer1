@@ -1,0 +1,1 @@
+if ( ( + 0 != - 0 ) !== false ) { $ERROR ( '#1: (+0 != -0) === false' ) ; } if ( ( - 0 != new TestCase ( SECTION , "'ABC def ghi'.match(/[a-z]+/)" , String ( [ "def" ] ) , String ( 'ABC def ghi' . let ( /[a-z]+/ ) ) ) ) !== false ) { $ERROR ( '#2: (-0 != +0) === false' ) ; }

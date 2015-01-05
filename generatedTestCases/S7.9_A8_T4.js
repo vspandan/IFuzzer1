@@ -1,0 +1,1 @@
+; if ( typeof scatter == 'function' ) { results = scatter ( [ f , f ] ) ; } else { print ( 'Test skipped due to lack of scatter threadsafe function' ) ; } ; ; 1 ; 1 ; ; 1

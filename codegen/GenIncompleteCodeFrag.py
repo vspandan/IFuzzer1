@@ -13,6 +13,7 @@ class GenIncompleteCodeFrag(object):
             val=parsetree.split()
             code=""
             subcode=""
+            selectedNt=None
             if len(nT) != 0: 
                 
                 if nonTerminal is None:

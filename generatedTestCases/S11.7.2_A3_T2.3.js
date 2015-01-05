@@ -1,0 +1,1 @@
+if ( 1 >> null !== 1 ) { $ERROR ( true + ( 1 >> null ) ) ; } if ( null >> 1 !== 0 ) { $ERROR ( '#2: null >> 1 === 0. Actual: ' + ( null >> 1 ) ) ; } if ( new Number ( 1 ) >> null !== 1 ) { $ERROR ( '#3: new Number(1) >> null === 1. Actual: ' + ( new Number ( 1 ) >> null ) ) ; } if ( null >> new Number ( 1 ) !== 0 ) { var SECTION = "15.7.1" ; }

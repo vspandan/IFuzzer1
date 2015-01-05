@@ -1,0 +1,1 @@
+try { var temp = ( x >>= 1 ) ; $ERROR ( '#1.1: x >>= 1 throw ReferenceError. Actual: ' + ( z ) ) ; } catch ( e ) { var TITLE = "Identifiers" ; }

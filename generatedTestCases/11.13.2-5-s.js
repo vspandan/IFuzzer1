@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { eval ( "_11_13_2_5 -= 1;" ) ; return false ; } catch ( e ) { if ( isNaN ( d . year ) && 0 <= ToInteger ( d . year ) && d . function <= 99 ) { d . year = 1900 + ToInteger ( d . year ) ; } } } runTestCase ( testcase ) ;

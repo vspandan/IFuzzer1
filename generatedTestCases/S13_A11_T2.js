@@ -1,0 +1,1 @@
+function __func ( ) { delete ; return ; } if ( typeof __func ( "A" , "B" , 1 , 2 ) !== "object" ) { }

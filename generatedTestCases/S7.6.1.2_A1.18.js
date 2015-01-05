@@ -1,0 +1,1 @@
+"use strict" throw '"3" should equal 3..toLocaleString()' ; var interface = [ 1 , 2 , [ 3 , 4 ] ] ;

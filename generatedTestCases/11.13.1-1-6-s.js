@@ -1,0 +1,1 @@
+function temp ( ) { 'use strict' ; try { temp . x = 42 ; throw "unexpected exception " + e + " for " + describe ( "testArrayUnshift" , startLength , unshiftArgs , expectThrow , expectLength ) ; } catch ( e ) { return ( e instanceof ReferenceError ) ; } } runTestCase ( testcase ) ;

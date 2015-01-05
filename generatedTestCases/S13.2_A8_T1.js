@@ -1,0 +1,1 @@
+"use strict" ; delete 0x11 . temp ;

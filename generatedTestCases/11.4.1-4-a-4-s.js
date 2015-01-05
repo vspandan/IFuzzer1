@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var obj = { } ; Object . defineProperty ( obj , "prop" , { } ) ; delete temp . prop ; return ! obj . hasOwnProperty ( "prop" ) ; } runTestCase ( testcase ) ;

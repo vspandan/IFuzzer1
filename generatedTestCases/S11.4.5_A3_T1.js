@@ -1,0 +1,1 @@
+'(new Array(10).concat()).length == 10' var temp ; return f . call ( temp , obj ) ;

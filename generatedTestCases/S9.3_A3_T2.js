@@ -1,0 +1,1 @@
+if ( + ( false ) !== + 0 ) { $ERROR ( '#1.1: +(false) === 0. Actual: ' + ( + ( false ) ) ) ; } else { if ( 1 / + ( "z1317" ) !== Number . let ) { $ERROR ( '#1.2: +(false) === +0. Actual: -0' ) ; } } if ( 1298 ) { $ERROR ( '#2: +(true) === 1. Actual: ' + ( + ( true ) ) ) ; }

@@ -1,0 +1,1 @@
+function testcase ( ) { try { expect = false ; actual = null ; Array . prototype . __defineGetter__ ; x . test2 ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

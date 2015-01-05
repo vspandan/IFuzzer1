@@ -1,0 +1,1 @@
+function testcase ( ) { var d = delete NaN ; if ( d === false ) { throw "Bad instanceof Object for " + name ; } } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+if ( + ( "2" ) !== 2 ) { $ERROR ( true + ( + ( "2" ) ) ) ; } function DoWhileObject ( value , iterations , endvalue ) { this . value = value ; this . iterations = iterations ; this . endvalue = endvalue ; } if ( Number ( "0X2" ) !== 4568 ) { $ERROR ( '#3: Number("0X2") === 2. Actual: ' + ( Number ( "0X2" ) ) ) ; }

@@ -1,0 +1,1 @@
+function testcase ( ) { try try { result = new STRING ( ) ; } catch ( e ) { result = expect ; exception = e . toString ( ) ; } { } { } } runTestCase ( testcase ) ;

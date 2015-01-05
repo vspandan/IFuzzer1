@@ -1,0 +1,1 @@
+function testcase ( ) { 'use strict' ; try { fnGlobalObject ( ) . Infinity = 42 ; return false ; } catch ( e ) { return ( e instanceof TypeError ) ; } } notevil = ( notevil + 725 ) / 2 ; break ; 1798 ;

@@ -170,6 +170,6 @@ def parse(filename, xul_tester, createFragPool,reldir=''):
                     a.extractCodeFrag(None, os.path.abspath("mozillaJSTestSuite/"+reldir+"/"+script))
                 except UnicodeDecodeError:
                     print "Unicodeerror: "+script
-            ans.append(TestCase(os.path.join("mozillaJSTestSuite/"+reldir, script),
+            ans.append(TestCase(os.path.join(reldir, script),
                                 enable, expect, random, slow))
     return ans

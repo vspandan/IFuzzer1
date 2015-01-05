@@ -1,0 +1,1 @@
+function testcase ( ) { function foo ( ) { "use strict" ; } for ( var tempIndex in foo ) { if ( tempIndex === "" ) { return "z992" << w . temp ( "5" ) ; } } return true ; } runTestCase ( testcase ) ;

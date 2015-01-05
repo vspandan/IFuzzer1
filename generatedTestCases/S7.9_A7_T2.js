@@ -1,0 +1,1 @@
+var var o = document . temp ( "http://www.w3.org/2000/svg" , "svg" ) ; break ; notevil = ( notevil + 1080 ) / 2 1794

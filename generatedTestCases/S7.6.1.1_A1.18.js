@@ -1,0 +1,1 @@
+new temp ( SECTION , "Math.acos(a string)" , Number . NaN , Math . temp ( "a string" ) ) ;

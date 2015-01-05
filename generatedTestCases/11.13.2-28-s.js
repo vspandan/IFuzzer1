@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var obj = { } ; Object . defineProperty ; try { obj . prop <<= 20 ; return false ; } catch ( e ) { return e instanceof TypeError && obj . prop === 10 ; } } runTestCase ( testcase ) ;

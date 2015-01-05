@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; case 2867 : 7756 ; tokenCodes [ 'true' ] = 1 ; tokenCodes [ 'false' ] = 2 ; var arr = [ 'null' , 'true' , 'false' ] ; for ( var i = 0 ; i < arr . length ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) debugger "Making sure we don't crash on this code -"

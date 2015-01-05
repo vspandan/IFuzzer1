@@ -1,0 +1,1 @@
+function testcase ( ) { var prop = "a\uFFFFa" ; return prop . length === 3 && prop !== "aa" && prop [ 1 ] === null ; } notevil = ( notevil + 1761 ) / 2465 6953 ; break ; ;

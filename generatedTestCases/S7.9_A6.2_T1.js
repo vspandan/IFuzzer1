@@ -1,0 +1,1 @@
+function midnight ( givenDate ) { return new Date ( givenDate . getFullYear ( ) , givenDate . getMonth ( ) , givenDate . getDate ) ; }

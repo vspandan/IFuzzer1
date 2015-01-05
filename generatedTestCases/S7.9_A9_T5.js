@@ -1,0 +1,1 @@
+do { var TITLE = "Variable Instantiation: function Declarations" ; } while ( ( false ) ) <EOF>

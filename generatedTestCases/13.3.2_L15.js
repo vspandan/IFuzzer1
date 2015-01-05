@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( Date . temp . toLocaleDateString , true , false , [ ] , 0 ) ;

@@ -1,0 +1,1 @@
+assertEq ( resultsY . temp , 42 )

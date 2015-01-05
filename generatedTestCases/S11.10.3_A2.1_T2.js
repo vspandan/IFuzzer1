@@ -1,0 +1,1 @@
+with ( this ) { with ( MYOBJECT ) { gTestcases [ gTc ] . temp = eval ( INPUT ) ; gTestcases [ gTc ] . expect = Math . pow ( INPUT , 2 ) ; } }

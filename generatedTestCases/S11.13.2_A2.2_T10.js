@@ -1,0 +1,1 @@
+try { var z = ( 1 ^= 1 ) ; $ERROR ( '#1.1: 1 ^= 1 throw ReferenceError (or SyntaxError). Actual: ' + ( z ) ) ; } catch ( temp ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ( null + ( e ) ) ; } else { var z = ( 1 ^= 1 ) ; } }

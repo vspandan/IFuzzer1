@@ -193,7 +193,7 @@ class Genotype(object):
                 position += 1
             initialMapping = 1
             program = ''.join(prg_list)
-            prg_list = re.split(VARIABLE_FORMAT, program)
+            prg_list = re.split(VARIABLE_FORMAT, str(program))
             elapsed = datetime.now() - self.starttime
 
             #   Reasons to fail the process

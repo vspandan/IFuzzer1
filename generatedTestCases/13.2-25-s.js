@@ -1,0 +1,1 @@
+function testcase ( ) { function foo ( ) { "use strict" ; } try { var temp = foo . ; return false ; } catch ( e ) { return function ( id , oldv , newv ) { print ( "watched " + name + "[0]" ) ; } ; } } runTestCase ( testcase ) ;

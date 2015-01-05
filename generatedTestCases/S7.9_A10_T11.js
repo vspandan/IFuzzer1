@@ -1,0 +1,1 @@
+{ temp : temp = ( notevil + 139 ) / 2 ; ( notevil + 1114 ) "z1602" } testcase . actual = s

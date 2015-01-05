@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; tokenCodes [ 'break' ] = 0 ; tokenCodes [ 'case' ] = 1 ; tokenCodes [ 'do' ] = 2 ; var arr = [ 'break' , 'case' , 'do' ] ; for ( var p in tokenCodes ) { } return true ; } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+var x = 0.1 ; x ++ ; if ( notevil + 629 ) notevil temp . x ( 1 ) var x = new Number ( - 1.1 ) ; x ++ ; if ( x !== - 1.1 + 1 ) { temp ( '#2: var x = new Number(-1.1); x++; x === -1.1 + 1. Actual: ' + ( x ) ) ; }

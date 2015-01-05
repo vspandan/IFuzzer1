@@ -1,0 +1,1 @@
+var temp = 1 ; if ( TestCase ( SECTION , "-Number.MAX_VALUE / Number.NEGATIVE_INFINITY" , 0 , - Number . MAX_VALUE / Number . NEGATIVE_INFINITY ) != cnName , cnNameSetter !== 1 ) { $ERROR ( '#1: var\\nx\\n=\\n1\\n; x === 1. Actual: ' + ( x ) ) ; }

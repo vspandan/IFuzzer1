@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var obj = { } ; writeHeaderToLog ( SECTION + " Scope Chain and Identifier Resolution" ) ; try { } catch ( e ) { } } runTestCase ( testcase ) ;

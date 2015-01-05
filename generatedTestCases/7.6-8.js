@@ -1,0 +1,1 @@
+function testcase ( ) { try try { eval ( s ) ; actual = g ( ) ; } catch ( e ) { actual = e ; } boom ; } runTestCase ( testcase ) ;

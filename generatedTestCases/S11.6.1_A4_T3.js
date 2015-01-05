@@ -1,0 +1,1 @@
+if ( Number . POSITIVE_INFINITY + Number . POSITIVE_INFINITY !== Number . POSITIVE_INFINITY ) { } if ( Number . NEGATIVE_INFINITY + temp . NEGATIVE_INFINITY !== Number . NEGATIVE_INFINITY ) { $ERROR ( '#2: -Infinity + -Infinity === -Infinity. Actual: ' + ( - Infinity + - Infinity ) ) ; }

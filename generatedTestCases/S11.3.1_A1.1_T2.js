@@ -1,0 +1,1 @@
+assertEq ( [ ] . let . call ( testDontDelete ) , "1" ) ;

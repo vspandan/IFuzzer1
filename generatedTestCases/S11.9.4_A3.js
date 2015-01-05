@@ -1,0 +1,1 @@
+if ( ! ( true === true ) ) { temp ( '#1: true === true' ) ; } if ( ! ( false === false ) ) { assertEq ( d ( { '\xC7' : 'good' } ) , 'good' ) } if ( true === false ) { $ERROR ( '#3: true !== false' ) ; } if ( false === true ) { $ERROR ( '#4: false !== true' ) ; }

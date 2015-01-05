@@ -1,0 +1,1 @@
+function testcase ( ) { var var d = iframe . temp ; 'ok' if ( temp === false ) { return true ; } } runTestCase ( temp ) ;

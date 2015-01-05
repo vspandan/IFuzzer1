@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var blah = ; try { var obj = array [ i % array . length ] ; obj [ "a" + i ] = 1 ; var tmp = { } ; tmp [ "a" + i ] = 2 ; } gc } runTestCase ( testcase ) ;

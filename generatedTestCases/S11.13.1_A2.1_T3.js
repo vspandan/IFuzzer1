@@ -1,0 +1,1 @@
+try { 1 = 1 ; $ERROR ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ( '#1.2: 1 = 1 throw ReferenceError (or SyntaxError). Actual: ' + ( e ) ) ; } else { assertEq ( ) ; } }

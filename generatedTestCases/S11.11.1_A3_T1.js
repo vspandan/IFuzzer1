@@ -1,0 +1,1 @@
+if ( ( false && true ) !== true ) { $ERROR ( '#1: (false && true) === false' ) ; } if ( ( false && false ) !== false ) { $ERROR ( 124 <missing ')'> 2271 case 4419

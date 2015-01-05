@@ -1,0 +1,1 @@
+for ( false ; false ; true ) { { var b = { length : 1 } ; b . __defineGetter__ ( 0 , function ( ) { return Array . slice ( temp ) ; } ) ; b [ 0 ] ; } }

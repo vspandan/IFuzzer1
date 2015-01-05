@@ -1,0 +1,1 @@
+if ( ( true != true ) !== false ) { temp ( '#1: (true != true) === false' ) ; } if ( ( false != false ) !== false ) { $ERROR ; } if ( ( true != false ) !== true ) { $ERROR ( '#3: (true != false) === true' ) ; } if ( ( false != false ) !== null ) { $ERROR ( '#4: (false != true) === true' ) ; }

@@ -1,0 +1,1 @@
+'Executing script: simple_form.js' function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; var f ; f = function ( ) { new ( ( x = a ) ) ( y ) } expect = 'function () {\n new (x = a)(y);\n}' ; actual = f + '' ; compareSource ( expect , actual , temp ) ; exitFunc ( 'test' ) ; }

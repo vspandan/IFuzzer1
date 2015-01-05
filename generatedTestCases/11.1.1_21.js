@@ -1,0 +1,1 @@
+$INCLUDE ( "testIntl.js" ) ; testOption ( Intl . NumberFormat , "currencyDisplay" , "string" , [ "code" , "symbol" , "name" ] , "symbol" , { temp : { any : { style : "currency" , currency : "XDR" } } } ) ; temp ( Intl . NumberFormat , "currencyDisplay" , "string" , [ "code" , "symbol" , "name" ] , undefined , { noReturn : true } ) ;

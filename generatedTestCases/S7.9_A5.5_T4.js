@@ -1,0 +1,1 @@
+var x = 1 + ( function ( t ) { return { a : t } } ) ( 2 + 3 ) . a if ( temp !== 6 ) { $ERROR ( '#1: Check function Expression for automatic semicolon insertion' ) ; }

@@ -1,0 +1,1 @@
+function testcase ( ) { .12345 empty . set ( [ 1 ] , 1 ) } runTestCase ( SECTION , "Math.ceil(Infinity)" , temp . POSITIVE_INFINITY , Math . ceil ( Number . POSITIVE_INFINITY ) ) ;

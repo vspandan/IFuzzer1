@@ -1,0 +1,1 @@
+function __func ( temp ) { __arg . foo = 7 ; } var temp ; __func ( __obj ) ; if ( __obj . foo !== 7 ) { $ERROR ( '#1: __obj.foo === 7. Actual: __obj.foo ===' + __obj . foo ) ; }

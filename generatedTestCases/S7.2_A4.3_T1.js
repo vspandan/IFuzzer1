@@ -1,0 +1,1 @@
+enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; var f ; f = function ( ) { if ( function ( ) { } ) { g ( ) ; } } actual = f + '' ; expect = 'function () {\n if (function () {}) {\n g();\n }\n}' ; compareSource ( expect , actual , summary ) ; exitFunc ( 'test' ) ;

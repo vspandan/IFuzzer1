@@ -1,0 +1,1 @@
+function testcase ( ) { try { var temp ; continue ; if ( d === true ) { return true ; } } finally { JSON = o ; } } runTestCase ( testcase ) ;

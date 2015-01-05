@@ -1,0 +1,1 @@
+function testcase ( ) { try { temp ( "true = 42" ) ; } catch ( e ) { if ( e instanceof ReferenceError ) { return true ; } } } temp ( testcase ) ;

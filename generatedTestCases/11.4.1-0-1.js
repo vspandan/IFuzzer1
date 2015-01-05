@@ -1,0 +1,1 @@
+function testcase ( ) { var x = 1 ; var y = null ; var z = 3 ; if ( ( ! delete temp || delete y ) && delete delete z ) { return true ; } } runTestCase ( testcase ) ;

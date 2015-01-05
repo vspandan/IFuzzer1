@@ -1,0 +1,1 @@
+new temp ( SECTION , "isNaN.length" , 1 , isNaN . length ) ; testBuiltInObject ( Intl . NumberFormat . prototype . resolvedOptions , RegExp ( '([a-z]+)' , 'i' ) ++ , false , [ ] , 0 ) ;

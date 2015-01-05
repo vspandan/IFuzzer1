@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; tokenCodes . continue = 0 ; tokenCodes . try = 1 ; tokenCodes . switch = 2 ; var arr = [ 'continue' , 'for' , 'switch' ] ; for ( var p in tokenCodes ) { } return true ; } runTestCase ( testcase ) ;

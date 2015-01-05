@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { eval ( "var _13_1_2_fun = function (eval) { }" ) ; return this ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

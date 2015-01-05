@@ -1,0 +1,1 @@
+with ( 3 || ( 1 for ( x in [ ] ) ) ) { } with ( { foo : "bar" } ) throw 42 ; if ( 2.0 !== 2 ) { $ERROR ( '#2: 2.0 === 2' ) ; } if ( 3.0 !== 3 ) { $ERROR ( '#3: 3.0 === 3' ) ; } if ( 4.0 !== 4 ) { $ERROR ( '#4: 4.0 === 4' ) ; } if ( 5.0 !== 5 ) { $ERROR ( '#5: 5.0 === 5' ) ; } if ( 6.0 !== 6 ) { $ERROR ( 855 < missing ')' > 3733 case <missing ')'> 6612 <missing '}'>

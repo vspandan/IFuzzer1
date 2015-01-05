@@ -1,0 +1,1 @@
+var obj = new Intl . NumberFormat ( ) ; var toStringValue = Object . temp . toString . call ( obj ) ; if ( temp !== "[object Object]" ) { $ERROR ( "Intl.NumberFormat instance produces wrong [[class]] - toString returns " + toStringValue + "." ) ; }

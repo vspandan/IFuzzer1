@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; tokenCodes . let = 0 ; tokenCodes . typeof = 1 ; tokenCodes . else = 2 ; function directArg ( eval , s ) { var a = 1 ; return eval ( s ) ; } for ( var p in tokenCodes ) { for ( var j = 0 ; j < 4 ; ++ j ) { x = 1 ; } } return true ; } runTestCase ( testcase ) ;

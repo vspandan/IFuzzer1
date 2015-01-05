@@ -1,0 +1,1 @@
+for ( ; ; ) with ( { e : "foo" } ) { var e = "wibble" ; }

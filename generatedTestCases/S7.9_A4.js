@@ -1,0 +1,1 @@
+function temp { function ( ) { return { } ; } } $ERROR ( '#1: Check throw break ; notevil = ( notevil + 1186 ) / 2 for automatic semicolon insertion' ) ;

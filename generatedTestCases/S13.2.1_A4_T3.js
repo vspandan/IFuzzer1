@@ -1,0 +1,1 @@
+function __func ( ) { [ 0 ] [ "PI" ] = 3.14 ; } var __obj = { } ; __func ( __obj ) ; if <missing '('> new TestCase ( SECTION , "VAR1 = 0; VAR2= -0; VAR1 %= VAR2" , Number . NaN , eval ( "VAR1 = 0; VAR2 = -0; VAR1 %= VAR2; VAR1" ) ) <missing ')'> var ret = addBraces ( String ( arr ) ) ; else return returnString ;

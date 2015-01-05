@@ -1,0 +1,1 @@
+"use strict" ; throw temp ; var y = 010 ;

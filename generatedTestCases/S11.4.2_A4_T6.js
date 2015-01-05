@@ -1,0 +1,1 @@
+var x = 0 ; if ( void ( x = 1 ) !== undefined ) { 70 in TestCase ( SECTION , "0 < Number.NaN" , false , 0 < Number . NaN ) ; } else { if ( temp !== 1 ) { temp ( '#1: var x = 0; void (x = 1); x === 1. Actual: ' + ( x ) ) ; } }

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var temp ; try { eval ( "delete funObj;" ) ; return false ; } catch ( e ) { } } runTestCase ( testcase ) ;

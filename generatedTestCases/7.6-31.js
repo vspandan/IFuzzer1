@@ -1,0 +1,1 @@
+function testcase ( ) { try { "z873" } catch ( e ) { return temp instanceof SyntaxError ; } } runTestCase ( testcase ) ;

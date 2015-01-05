@@ -1,0 +1,1 @@
+function __func ( ) { return delete ; } if ( __func ( ) ) { $ERROR ( '#1: property has attribute { DontDelete }' ) ; }

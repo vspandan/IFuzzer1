@@ -1,0 +1,1 @@
+try { new this ; $ERROR ( '#1: new this throw TypeError' ) ; } catch ( e ) { if ( ( e instanceof TypeError ) !== true ) { $ERROR ( '#1: new this throw TypeError' ) ; } } try { 0x10F5 "z948" } catch ( temp ) { if ( ( e instanceof TypeError ) !== true ) { } }

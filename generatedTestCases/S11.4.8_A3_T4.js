@@ -1,0 +1,1 @@
+if ( ~ void 0 !== - 1 ) { out4 : while ( k < 1000 ) { if ( k == 500 ) { i ++ ; continue out3 ; } k ++ ; } ; } if ( ~ null !== - 1 ) { temp ( '#2: ~null === -1. Actual: ' + ( ~ null ) ) ; }

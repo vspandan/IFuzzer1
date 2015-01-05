@@ -1,0 +1,1 @@
+try { x * 1 ; $ERROR ( '#1.1: x * 1 throw ReferenceError. Actual: ' + ( x * 1 ) ) ; } catch ( e ) { temp : for ( j = 0 ; j < 1000 ; j ++ ) { if ( j == 500 ) break out1 ; } }

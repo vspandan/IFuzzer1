@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( "var typeo\u0066 = 123;" ) ; return false ; } catch ( e ) { return temp instanceof SyntaxError ; } } runTestCase ( testcase ) ;

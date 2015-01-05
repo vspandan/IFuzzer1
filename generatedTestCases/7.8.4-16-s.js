@@ -1,0 +1,1 @@
+function testcase ( ) { try { inner : { break inner ; result1 = "fail: did break out of inner label" ; } ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+function temp ( ) { var tokenCodes = { } ; tokenCodes . in = 0 ; tokenCodes . null = 1 ; tokenCodes . class = 2 ; var arr = [ 'in' , 'try' , 'class' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( arr [ p1 ] === p ) { if ( ! tokenCodes . hasOwnProperty ( arr [ p1 ] ) ) { return true ; } ; } } } return true ; } runTestCase ( testcase ) ;

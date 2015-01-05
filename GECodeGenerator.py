@@ -37,81 +37,91 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
-        
+    
     
     
     #Author: Spandan Veggalam
     def initialize():
-
-        try:
-            bnf=""
-            fileName=inputFile.get()
-            if len(fileName.strip()) <=0:
-                raise StandardError("Input Grammar File");
-            else:
-                ges = GrammaticalEvolution()
-                ges.setGrammarFile(fileName)
-                ges.set_bnf(bnf)
-                ges.set_genotype_length(int(start_gene_length.get()), int(max_gene_length.get()))
-                ges.set_population_size(long(population_size.get()))
-                ges.set_wrap(bool(wrap.get()))
-                ges.set_max_generations(int(set_max_generations.get()))
-                ges.set_fitness_type(variable.get().lower(), float(set_fitness_traget_val.get()))
-                
-                ges.set_max_program_length(int(set_max_program_length.get()))
-                ges.set_timeouts(int(set_min_timeout.get()), int(set_max_timeout.get()))
-                ges.set_fitness_fail(float(set_fitness_failvalue.get()))
-                
-                ges.set_mutation_rate(float(set_mutation_rate.get()))
-                
-                ges.set_fitness_selections(
-                    FitnessElites(ges.fitness_list, .05),
-                    FitnessTournament(ges.fitness_list, tournament_size=int(set_fitness_tournmant_size.get())))
-                ges.set_max_fitness_rate(float(set_max_fitness_rate.get()))
-                
-                ges.set_crossover_rate(float(set_crossover_rate.get()))
-                ges.set_children_per_crossover(int(set_children_per_crossover.get()))
-                
-                if variable1.get() == "SINGLE":           
-                    ges.set_mutation_type('s')
-                if variable1.get() == "MULTIPLE":           
-                    ges.set_mutation_type('m')
-                
-                ges.set_max_fitness_rate(float(set_max_fitness_rate.get()))
-                
-                ges.set_replacement_selections(
-                        ReplacementTournament(ges.fitness_list, tournament_size=int(set_replacement_tournmant_size.get())))
-                
-                ges.set_maintain_history(maintain_history.get())
-                ges.set_extend_genotype(extend_genotype.get())
-                testfiles_list=listAllTestCases(testCasesDir)
-                
-                def process(file,string):     
-                    if ges.create_genotypes(file):
-                        ges.run()
-                        ges.fitness_list.sorted()
-                        gene = ges.population[ges.fitness_list.best_member()]
-                        generatedPrg= gene.get_program()
-                        fileName=targetDirectory+"/"+string
-                        f=open(fileName,'w')
-                        f.write(generatedPrg)
-                        f.close
-                        f=open(trackingFile,'a+')
-                        f.write("script "+fileName+"\n")
-                        f.close
-                
-                count =1
-                for file in testfiles_list:
-                    thread=threading.Thread(target=process(file,str(count)+".js"))
-                    count+=1
-                    thread.start()
-                    thread.join()
-
-                frame.quit()
-
-        except AttributeError as e:
-            print e
+        def process(file,filName):
+            try:
+                bnf=""
+                fileName=inputFile.get()
+                if len(fileName.strip()) <=0:
+                    raise StandardError("Input Grammar File");
+                else:
+                    ges = GrammaticalEvolution()
+                    ges.setGrammarFile(fileName)
+                    ges.set_bnf(bnf)
+                    ges.set_genotype_length(int(start_gene_length.get()), int(max_gene_length.get()))
+                    ges.set_population_size(long(population_size.get()))
+                    ges.set_wrap(bool(wrap.get()))
+                    ges.set_max_generations(int(set_max_generations.get()))
+                    ges.set_fitness_type(variable.get().lower(), float(set_fitness_traget_val.get()))
+                    
+                    ges.set_max_program_length(int(set_max_program_length.get()))
+                    ges.set_timeouts(int(set_min_timeout.get()), int(set_max_timeout.get()))
+                    ges.set_fitness_fail(float(set_fitness_failvalue.get()))
+                    
+                    ges.set_mutation_rate(float(set_mutation_rate.get()))
+                    
+                    ges.set_fitness_selections(
+                        FitnessElites(ges.fitness_list, .05),
+                        FitnessTournament(ges.fitness_list, tournament_size=int(set_fitness_tournmant_size.get())))
+                    ges.set_max_fitness_rate(float(set_max_fitness_rate.get()))
+                    
+                    ges.set_crossover_rate(float(set_crossover_rate.get()))
+                    ges.set_children_per_crossover(int(set_children_per_crossover.get()))
+                    
+                    if variable1.get() == "SINGLE":           
+                        ges.set_mutation_type('s')
+                    if variable1.get() == "MULTIPLE":           
+                        ges.set_mutation_type('m')
+                    
+                    ges.set_max_fitness_rate(float(set_max_fitness_rate.get()))
+                    
+                    ges.set_replacement_selections(
+                            ReplacementTournament(ges.fitness_list, tournament_size=int(set_replacement_tournmant_size.get())))
+                    
+                    ges.set_maintain_history(maintain_history.get())
+                    ges.set_extend_genotype(extend_genotype.get())
+                    
+                    
+                       
+                    try:  
+                        print "Processing ::" + file
+                        if ges.create_genotypes(file):
+                            ges.run()
+                            ges.fitness_list.sorted()
+                            gene = ges.population[ges.fitness_list.best_member()]
+                            generatedPrg= gene.get_program()
+                            
+                            newFile=targetDirectory+"/"+filName
+                            f=open(newFile,'w')
+                            f.write(generatedPrg)
+                            f.close
+                            f=open(trackingFile,'a+')
+                            f.write("script "+newFile+"\n")
+                            f.close
+                    except:
+                        print "Skipping "+file+" due to exception while processing"
     
+            except AttributeError as e:
+                print e
+                
+        def listAllTestCases(testCasesDir):
+            for f in listdir(testCasesDir):
+                fi=join(testCasesDir,f)
+        
+                if isfile(fi):
+                    if f.endswith(".js") and f not in EXCLUDED:
+                        process(fi,f)
+                else:
+                    listAllTestCases(fi)
+            
+        
+        listAllTestCases(testCasesDir)
+        frame.quit()
+        
     root = Tk()
     root.title("Interpreter Fuzzer")
     root.geometry("800x400+30+30")
@@ -157,7 +167,7 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     
     label6= Label(frame,text="Generations",width=15).grid(row = 6,column=2)
     set_max_generations=Entry(frame,width=20)
-    set_max_generations.insert(0,"10")
+    set_max_generations.insert(0,"3")
     set_max_generations.grid(row=6,column=3)
     
     label7= Label(frame,text="Max Program Length",width=15).grid(row = 7,column=2)
@@ -269,15 +279,3 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
     frame.mainloop()    
         
-def listAllTestCases(testCasesDir):
-    fileList=[]
-    for f in listdir(testCasesDir):
-        fileName=join(testCasesDir,f)
-        
-        if isfile(fileName):
-            if fileName.endswith(".js") and f not in EXCLUDED:
-                fileList.append(fileName)
-        else:
-            fileList += listAllTestCases(fileName)
-    return fileList
-    

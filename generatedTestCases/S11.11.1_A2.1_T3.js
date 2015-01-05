@@ -1,0 +1,1 @@
+try { new TestCase ( SECTION , "var a=4,b=3;a^b" , 7 , eval ) } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ( '#1.2: true && y throw ReferenceError. Actual: ' + ( e ) ) ; } }

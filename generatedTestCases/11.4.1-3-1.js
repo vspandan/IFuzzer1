@@ -1,0 +1,1 @@
+function testcase ( ) { var d = delete __ES3_1_test_suite_test_11_4_1_3_unique_id_0__ ; if ( function ( ) { isPrototypeOf . call ( undefined , { } ) ; } ) out3 : while ( i < 1000 ) { if ( i == 100 ) { j = 0 ; out4 : while ( j < 1000 ) { if ( j == 500 ) break out3 ; j ++ ; } j = 2001 ; } j = 2002 ; i ++ ; } } runTestCase ( testcase ) ;

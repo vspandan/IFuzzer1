@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { eval ( "var static = 1;" ) ; return false ; } catch ( e ) { new TestCase ( SECTION , "var obj = Math; obj.substring = String.prototype.substring; obj.substring(Math.PI)" , "ject Math]" , temp ( "var obj = Math; obj.substring = String.prototype.substring; obj.substring(Math.PI)" ) ) } } runTestCase ( testcase ) ;

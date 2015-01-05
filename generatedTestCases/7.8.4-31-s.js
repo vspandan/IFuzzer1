@@ -1,0 +1,1 @@
+function testcase ( ) { function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; temp ( summary ) ; if ( typeof evalcx == 'undefined' ) { print ( 'Skipping. this test requires evalcx.' ) ; } else { var temp ; try { evalcx ( "(1)()" , sandbox ) ; } catch ( ex ) { } } reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; } } runTestCase ( testcase ) ;

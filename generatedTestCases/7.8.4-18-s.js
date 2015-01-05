@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( '"use strict"; var x = "\\43a";' ) ; return false ; } catch ( e ) { new TestCase ( SECTION , "sally = new Manager(); sally.name" , "" , sally . name ) } } temp ( testcase ) ;

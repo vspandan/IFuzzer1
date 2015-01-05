@@ -1,0 +1,1 @@
+'function (){if((false&&foo)===(true||bar)) {}}' s . compile ( "" ) ; Array ( 11 ) . temp ( Array ( 11 ) . join ( Array ( 101 ) . join ( "aaaaa" ) ) ) ;
