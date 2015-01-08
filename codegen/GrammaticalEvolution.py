@@ -42,7 +42,7 @@ DEFAULT_LOG_FILE = 'GECodeGen.log'
 logging.basicConfig(format='%(asctime)s %(message)s',
                     filename=DEFAULT_LOG_FILE,
                     level=logging.INFO)
-
+INCLUDE_NT_LIST=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
 
 class GrammaticalEvolution(object):
 
@@ -112,7 +112,7 @@ class GrammaticalEvolution(object):
             self.parseRepr=self.parser.parseTree(f.read())
             if self.parseRepr is not None and len(self.parseRepr)>0:
                 self.codefragGen =  GenIncompleteCodeFrag()
-                self.initial_Population = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals)
+                self.initial_Population = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals,INCLUDE_NT_LIST)
             else:
                 raise Exception('Syntax Error',fileName)
             f.close()
@@ -513,7 +513,7 @@ class GrammaticalEvolution(object):
                 parent1 = flist[i]
                 parent2 = flist[i + 1]
 
-                child1, child2 = self._crossover(parent1, parent2,True)
+                child1, child2 = self._crossover(parent1, parent2)
                 if self._children_per_crossover == 2:
                     child_list.append(child1)
                     child_list.append(child2)
@@ -523,7 +523,7 @@ class GrammaticalEvolution(object):
         return child_list
 
     #Modified Author : Spandan Veggalam 
-    def _crossover(self, parent1, parent2, ind=None):
+    def _crossover(self, parent1, parent2):
         if not isinstance(parent1, Genotype):
             raise ValueError("Parent1 is not a genotype")
         if not isinstance(parent2, Genotype):
@@ -539,20 +539,6 @@ class GrammaticalEvolution(object):
         child1_binary = child1.binary_gene
         child2_binary = child2.binary_gene
         
-        if ind is None:
-            minlength = min(len(child1_binary), len(child2_binary))
-            crosspoint = randint(2, minlength - 2)
-    
-            child1_binary, child2_binary = self._crossover_function(
-                child1.binary_gene, child2.binary_gene, crosspoint)
-            
-            child1.set_binary_gene(child1_binary)
-            child1.generate_decimal_gene()
-            child2.set_binary_gene(child2_binary)
-            child2.generate_decimal_gene()
-        
-            return (child1, child2)
-    
         child1Prg=child1.get_program()
         child2Prg=child2.get_program()
         
@@ -561,7 +547,7 @@ class GrammaticalEvolution(object):
         child2ParseTree=self.parseCode(child2Prg)
         non_term2=self.parser.non_Terminals
 
-        commonNonTerm=[val for val in non_term1 if val in set(non_term2)]
+        commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in INCLUDE_NT_LIST)]
         
         if len(commonNonTerm) > 0:
             selectedNt= choice(commonNonTerm)

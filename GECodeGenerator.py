@@ -174,6 +174,7 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     set_max_program_length=Entry(frame,width=20)
     set_max_program_length.insert(0,"500")
     set_max_program_length.grid(row=7,column=3)
+    set_max_program_length.config(state=DISABLED)
     
     label8= Label(frame,text="Fitness Type",width=15).grid(row = 8,column=0)
     OPTIONS = ["MIN",    "MAX",    "CENTER"]

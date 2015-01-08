@@ -184,7 +184,6 @@ class Genotype(object):
         
                 if item in self._keys:
                     if check_stoplist and position >= 0:
-                        
                         if initialMapping == 0:
                             prg_list[position] = self.resolve_variable(item)
                         else:
@@ -214,7 +213,7 @@ class Genotype(object):
                     raise StandardError(msg)
                     # continue_map = False
 
-            if len(program) > self._max_program_length:
+            """if len(program) > self._max_program_length:
                 #   Runaway process
                 msg = "program length, %s is beyond max program length: %s" % (
                             len(program), self._max_program_length)
@@ -225,7 +224,7 @@ class Genotype(object):
                 self._fitness = self._fitness_fail
                 continue_map = False;
                 # continue_map = False
-
+            """
             if continue_map is False:
                 return program
 

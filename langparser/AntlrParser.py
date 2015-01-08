@@ -89,7 +89,6 @@ class AntlrParser(object):
 
     def selectSubtrees(self, nonT, s) :
         try:
-            #print s.__class__.__name__
             childCount = s.getChildCount()
             
             if childCount > 0:
@@ -116,7 +115,7 @@ class AntlrParser(object):
                 parseTr = self.parseTree(None,fileName)
         d = defaultdict(dict)
         if len(parseTr) >0:
-            position = 0
+            position = 1
             directory = DEFAULT_DATABASE_PATH
             if not path.exists(directory):
                 makedirs(directory)

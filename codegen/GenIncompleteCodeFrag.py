@@ -1,11 +1,10 @@
 from random import randint, choice
 
-
 #Author: Spandan Veggalam
 class GenIncompleteCodeFrag(object):
     
     #Author: Spandan Veggalam
-    def genCodeFrag(self, parsetree, population_size,nT,subTree = None,nonTerminal=None):
+    def genCodeFrag(self, parsetree, population_size,nT,subTree = None,nonTerminal=None,INCLUDE_NT_LIST =None):
         population = []
         
         for pop_count in range(0, population_size):            
@@ -17,8 +16,14 @@ class GenIncompleteCodeFrag(object):
             if len(nT) != 0: 
                 
                 if nonTerminal is None:
-                    self.selected=randint(0,len(nT)-1)
-                    selectedNt=nT[self.selected-1]
+                    while True:
+                        self.selected=randint(0,len(nT)-1)
+                        selectedNt=nT[self.selected-1]
+                        if INCLUDE_NT_LIST is not None:
+                            if selectedNT in INCLUDE_NT_LIST:
+                                break
+                        else:
+                            break
                 else:
                     selectedNt=nonTerminal
                     indices = [i for i, x in enumerate(nT) if x == nonTerminal]
