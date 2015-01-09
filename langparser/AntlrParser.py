@@ -24,9 +24,7 @@ class AntlrParser(object):
     
     def init(self):
         self.m = defaultdict(str)
-        self.terminals = []
         self.non_Terminals = []
-        self.non_Terminals_val = []
         self.rules = []
         self.count = 0;
         self.parseTr = ""
@@ -47,7 +45,7 @@ class AntlrParser(object):
         self.input = FileStream(DEFAULT_FILE)
         remove(DEFAULT_FILE)
     
-    def parseTree(self, program=None, fileName=None):
+    def parseTree(self, program=None, fileName=None, extractCF=False):
         try:
             if program is not None:
                 self._createFileInputStream(program)
@@ -61,58 +59,46 @@ class AntlrParser(object):
             self.rules = self.parser.ruleNames
             pContext = self.parser.program();
             if pContext.children is not None:
-                self.listTerminals(pContext.getChild(0));
-                self.selectSubtrees(None, pContext.getChild(0));
+                self.selectSubtrees(None, pContext.getChild(0),extractCF);
             return self.parseTr
         except (AttributeError, FailedPredicateException):
             return ""
         except:
             return ""
         
-    def listTerminals(self, s) :
-        try:
-            childCount = s.getChildCount();
-            if childCount > 0:
-                rC = s.getPayload()
-                self.non_Terminals.append(self.rules[rC.getRuleIndex()])
-                    
-                for i in range(0, childCount):
-                    self.listTerminals(s.getChild(i))
-            else:
-                    if s.getParent() is not None :
-                        self.non_Terminals_val.append(s.getText())
-                    else:
-                        self.non_Terminals_val.append("~")
-                    self.terminals.append(s.getText())
-        except TypeError as e:
-            return "Syntax Error"
-
-    def selectSubtrees(self, nonT, s) :
+    def selectSubtrees(self, nonT, s, extractCF, isIdentifier=False) :
         try:
             childCount = s.getChildCount()
             
             if childCount > 0:
                 rC = s.getPayload()
-                self.parseTr = self.parseTr + "<<<" + (self.rules[rC.getRuleIndex()]) + ": "
-                if (self.rules[rC.getRuleIndex()] == 'identifier'):
+                nTerminal=self.rules[rC.getRuleIndex()]
+                self.parseTr = self.parseTr + "<<<" + nTerminal + ": "
+                self.non_Terminals.append(nTerminal)
+                if (nTerminal == 'identifier'):
                     self.identifiers.append(s.getText())
+                    isIdentifier=True
                 for i in range(0, childCount):
-                    self.selectSubtrees(nonT, s.getChild(i))
+                    self.selectSubtrees(nonT, s.getChild(i),extractCF, isIdentifier)
                 self.parseTr = self.parseTr + " >>> "
             else :
-                self.parseTr = self.parseTr+s.getText()+" "
+                if isIdentifier and extractCF:
+                    self.parseTr = self.parseTr+"___identifier___"
+                    isIdentifier = False
+                else:
+                    self.parseTr = self.parseTr+s.getText()+" "
         except:
             #TODO EOS always reaches this point. Handle this
             print 
 
     def extractCodeFrag(self, program=None,fileName=None):
         if program is not None:
-            parseTr = self.parseTree(program)
+            parseTr = self.parseTree(program,None,True)
         else:
             if fileName is None:
                 sys.exit()
             else:
-                parseTr = self.parseTree(None,fileName)
+                parseTr = self.parseTree(None,fileName,True)
         d = defaultdict(dict)
         if len(parseTr) >0:
             position = 1
@@ -173,8 +159,8 @@ class AntlrParser(object):
                             f = open(fileName, 'w')
                             dump(dictOfDict1, f, HIGHEST_PROTOCOL)
                 
-    def retrieveCodeFrag(self, parsetree, nT, nonT, position):
-            val = parsetree.split()
+    def retrieveCodeFrag(self, pTreeRepr, nT, nonT, position):
+            val = pTreeRepr.split()
             posTrack = 0;
             indicator = False
             temp = 0
@@ -212,4 +198,5 @@ if __name__ == '__main__':
         #p.extractCodeFrag("var a=10000+\"s\"+6.4;")
         input=raw_input()
         print input
-        p.extractCodeFrag(None,input)
+        #p.extractCodeFrag(None,input)
+        print p.parseTree(None,input)

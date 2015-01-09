@@ -42,7 +42,7 @@ DEFAULT_LOG_FILE = 'GECodeGen.log'
 logging.basicConfig(format='%(asctime)s %(message)s',
                     filename=DEFAULT_LOG_FILE,
                     level=logging.INFO)
-INCLUDE_NT_LIST=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
+INCLUDE_NT_LIST=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
 
 class GrammaticalEvolution(object):
 
@@ -51,6 +51,7 @@ class GrammaticalEvolution(object):
         self.population = []
         self.parser = AntlrParser()
         self.initial_Population = []
+        self.identifiers = []
         self.non_Terminals=[]
         self.stopping_criteria = {
                 STOPPING_MAX_GEN: None,
@@ -112,7 +113,7 @@ class GrammaticalEvolution(object):
             self.parseRepr=self.parser.parseTree(f.read())
             if self.parseRepr is not None and len(self.parseRepr)>0:
                 self.codefragGen =  GenIncompleteCodeFrag()
-                self.initial_Population = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals,INCLUDE_NT_LIST)
+                self.initial_Population,self.identifiers = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals,INCLUDE_NT_LIST)
             else:
                 raise Exception('Syntax Error',fileName)
             f.close()
@@ -472,7 +473,10 @@ class GrammaticalEvolution(object):
             self.population.append(gene)
             member_no += 1
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
+            for id in self.identifiers[member_no-1]:
+                self.parser.identifiers.remove(id)
             gene._identifiers=self.parser.identifiers
+            
         return True;  
 
     def _perform_endcycle(self):

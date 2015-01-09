@@ -134,7 +134,7 @@ class Genotype(object):
             keys = d.keys()
             return keys[random.randint(0, len(keys) - 1)]
         else:
-            print "No related mapping found"
+            print "No related mapping found for "+item
             return self.resolve_variable(item)
             
     
@@ -164,11 +164,10 @@ class Genotype(object):
                     position += 1
                     continue
         
-                if item == "identifier":
+                if item == "identifier" or item=="___identifier___":
                     l=len(self._identifiers)
                     if l>0:
                         prg_list[position]= str(self._identifiers[randint(0,l-1)])
-                    prg_list[position]= 'temp'
                     position += 1
                     continue
 

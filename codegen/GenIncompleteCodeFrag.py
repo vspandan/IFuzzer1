@@ -6,9 +6,10 @@ class GenIncompleteCodeFrag(object):
     #Author: Spandan Veggalam
     def genCodeFrag(self, parsetree, population_size,nT,subTree = None,nonTerminal=None,INCLUDE_NT_LIST =None):
         population = []
-        
-        for pop_count in range(0, population_size):            
-            
+        identifers=[]
+        for pop_count in range(0, population_size):
+            identiferList=[]            
+            identifier=False
             val=parsetree.split()
             code=""
             subcode=""
@@ -53,9 +54,14 @@ class GenIncompleteCodeFrag(object):
                     if indicator:
                         #for complete parse representation that is being replaced use below code statement.
                         #subcode=subcode + " " +v
+                        if "<<<identifier" in v:
+                            identifier=True
                         if "<<<" not in v :
                             if ">>>" not in v:
                                 subcode=subcode+" "+v
+                                if identifier:
+                                    identiferList.append(v)
+                                    identifier=False
                     if not indicator:
                         if "<<<" not in v :
                             if ">>>" not in v:
@@ -69,9 +75,11 @@ class GenIncompleteCodeFrag(object):
                     return code.strip(),selectedNt
                 if subTree is not None:                    
                     return subcode.strip()
+            identifers.append(identiferList)
             population.append(code.strip())
-                
-        return population
+        
+
+        return population,identifers
         
             
     
