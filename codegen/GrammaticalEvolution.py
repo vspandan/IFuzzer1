@@ -17,6 +17,7 @@ from codegen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
 from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
+import random
 
 
 STOPPING_MAX_GEN = 'max_generations'
@@ -83,7 +84,20 @@ class GrammaticalEvolution(object):
 
         self._bnf = {}
         self._population_size = 0
-
+        
+        self.dynamic_mutation = 0
+        self.dynamic_crossover = 0
+        
+    #Author : Spandan Veggalam
+    def dynamic_mutation_rate(self, ind ):
+        self.dynamic_mutation = ind
+        self._mutation_rate=0.5
+    
+    #Author : Spandan Veggalam
+    def dynamic_crossover_rate(self, ind):
+        self.dynamic_crossover = ind
+        self._crossover_rate=0.5
+    
     #Author : Spandan Veggalam	
     def set_ind(self, ind):
         self._ind=ind
@@ -474,18 +488,33 @@ class GrammaticalEvolution(object):
             member_no += 1
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
             for id in self.identifiers[member_no-1]:
-                self.parser.identifiers.remove(id)
+                if id in self.parser.identifiers: 
+                    self.parser.identifiers.remove(id)
             gene._identifiers=self.parser.identifiers
             
         return True;  
 
     def _perform_endcycle(self):
-        fitness_pool = self._evaluate_fitness()
-        child_list = self._perform_crossovers(fitness_pool)
-
-        fitness_pool.extend(child_list)
-        self._perform_mutations(fitness_pool)
-        self._perform_replacements(fitness_pool)
+        choice=random.choice([0,1])
+        childList=[]
+        while len(childList) < self._population_size:
+            fitness_pool = self._evaluate_fitness()
+            if choice == 1:
+                child_list = self._perform_crossovers(fitness_pool)
+                childList.extend(child_list)
+                #fitness_pool.extend(child_list)
+                child_list = self._perform_mutations(fitness_pool)
+                if child_list is not None:
+                    childList.extend(child_list)
+            else:
+                child_list = self._perform_mutations(fitness_pool)
+                if child_list is not None:
+                    childList.extend(child_list)
+                child_list = self._perform_crossovers(fitness_pool)
+                childList.extend(child_list)
+                #fitness_pool.extend(child_list)
+            break; #TODO remove break and make this working#re-implement mutation
+        self._perform_replacements(childList)
 
     def _evaluate_fitness(self):
         flist = []
@@ -509,7 +538,7 @@ class GrammaticalEvolution(object):
 
     def _perform_crossovers(self, flist):
         child_list = []
-        length = len(flist)
+        length = int(round(self._crossover_rate * float(self._population_size)))
         if length % 2 == 1:
             length -= 1
         if length >= 2:
@@ -593,26 +622,21 @@ class GrammaticalEvolution(object):
         return (child1, child2) 
         
 
-    @staticmethod
-    def _crossover_function(child1_binary, child2_binary, crosspoint):
-        child1_binary, child2_binary = child1_binary[0:crosspoint] + \
-                                    child2_binary[crosspoint:], \
-                                    child2_binary[0:crosspoint] + \
-                                    child1_binary[crosspoint:]
-
-        return (child1_binary, child2_binary)
-
     #Author: Spandan Veggalam
     def _perform_mutations(self, mlist):
+        mutatedList=[]
         for gene in mlist:
-            prg=gene.get_program()
-            incompl=self.parseCode(prg)
-            gene.set_identifiers(self.parser.identifiers)
-            if len(incompl.strip()) >0:
-                gene.local_bnf['CodeFrag'],selectedNt=self.codefragGen.genCodeFrag(incompl,1,self.codefragGen.extractNonTerminal(incompl.split()))
-                position1=gene.local_bnf['CodeFrag'].find(selectedNt)
-                position2=position1+len(selectedNt)            
-                gene.mutate(self._mutation_rate, self._mutation_type,position1, position2)
+            if random.random() < self._mutation_rate:
+                prg=gene.get_program()
+                incompl=self.parseCode(prg)
+                gene.set_identifiers(self.parser.identifiers)
+                if len(incompl.strip()) >0:
+                    gene.local_bnf['CodeFrag'],selectedNt=self.codefragGen.genCodeFrag(incompl,1,self.codefragGen.extractNonTerminal(incompl.split()))
+                    position1=gene.local_bnf['CodeFrag'].find(selectedNt)
+                    position2=position1+len(selectedNt)            
+                    gene._single_mutate(position1, position2)
+            mutatedList.append(gene)
+        return mutatedList
 
     def _perform_replacements(self, fitness_pool):
         position = 0

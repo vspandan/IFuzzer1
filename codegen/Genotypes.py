@@ -311,33 +311,6 @@ class Genotype(object):
                 return 0    
             return 1    
 
-    def mutate(self, mutation_rate, mutation_type, position1=None, position2=None):
-        if mutation_type == MUT_TYPE_S:
-            if random.random() < mutation_rate:
-                self._single_mutate(position1, position2)
-        elif mutation_type == MUT_TYPE_M:
-            self._multiple_mutate(mutation_rate)
-        else:
-            raise ValueError("The mutation type must be either '%s' or '%s'",
-                MUT_TYPE_S, MUT_TYPE_M)
-
-    def _multiple_mutate(self, mutation_rate):
-        if mutation_rate < 0.0:
-            raise ValueError("The mutation rate must be >= 0.0")
-        elif mutation_rate > 1.0:
-            raise ValueError("The mutation rate must be <= 1.0")
-        else:
-            pass
-
-        gene = self.binary_gene
-        length = len(gene)
-        for i in range(length):
-            if random.random() < mutation_rate:
-                gene = self._mutate(gene, i)
-
-        self.set_binary_gene(''.join(gene))
-        self.generate_decimal_gene()
-
     def get_binary_gene_length(self):
        return self._gene_length * 8
     
