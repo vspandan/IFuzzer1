@@ -21,7 +21,8 @@ ZERO = 0
 
 class AntlrParser(object):
 
-    
+    def __init__(self,que):
+        self.que=    que
     def init(self):
         self.m = defaultdict(str)
         self.non_Terminals = []
@@ -92,6 +93,7 @@ class AntlrParser(object):
             print 
 
     def extractCodeFrag(self, program=None,fileName=None):
+        print fileName
         if program is not None:
             parseTr = self.parseTree(program,None,True)
         else:
@@ -124,8 +126,11 @@ class AntlrParser(object):
                         d1[str(code)].append(DEFAULT_SCORE)
                         d[str(nt)] = d1
                 position += 1
-            nonTerms = set(self.non_Terminals)
             
+            if self.que is not None:
+                self.que.put(d)
+            """
+            nonTerms = set(self.non_Terminals)
             for nt in nonTerms:
                 fileName = directory + "/" + str(nt)
                 #print path.abspath(fileName)
@@ -144,20 +149,21 @@ class AntlrParser(object):
                             keys = dictOfDict1.keys()
                             for key in keys1:#extracted keys
                                 if key not in keys:
-                                    """
+                                    ""
                                     temp=d.get(nt).get(key)
                                     d.get(nt).update(dictOfDict1)
-                                    """
+                                    ""
                                     dictOfDict1[key]=temp.get(key)
                                     update=True
-                                """
+                                ""
                                 else:
                                     d1[key] = dictOfDict1.get(key)
                                     d.get(nt).update(d1)
-                                """
+                                ""
                         if update:
                             f = open(fileName, 'w')
                             dump(dictOfDict1, f, HIGHEST_PROTOCOL)
+            """
                 
     def retrieveCodeFrag(self, pTreeRepr, nT, nonT, position):
             val = pTreeRepr.split()

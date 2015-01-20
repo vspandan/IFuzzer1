@@ -25,6 +25,8 @@ from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 import threading
 from datetime import datetime
+import multiprocessing
+
 EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'user.js', 'sta.js',
                     'test262-browser.js', 'test262-shell.js',
@@ -34,6 +36,7 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
 
 #Author: Spandan Veggalam
 def runFuzzer(trackingFile,testCasesDir,targetDirectory):
+    listAllTestCasesDir(testCasesDir)
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
@@ -101,9 +104,7 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
                             f=open(newFile,'w')
                             f.write(generatedPrg)
                             f.close
-                            f=open(trackingFile,'a+')
-                            f.write("script "+newFile+"\n")
-                            f.close
+                            
                     except Exception as e:
                         print "Skipping "+file+" due to exception while processing"
                         print e
@@ -111,18 +112,34 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
             except AttributeError as e:
                 print e
                 
-        def listAllTestCases(testCasesDir):
-            for f in listdir(testCasesDir):
-                fi=join(testCasesDir,f)
-        
+        for subDir in TestCaseSubDirs :
+            PROCESSLIST=[]
+            for f in listdir(subDir) :
+                fi=join(subDir,f)
+    
                 if isfile(fi):
-                    if f.endswith(".js") and f not in EXCLUDED:
-                        process(fi,f)
-                else:
-                    listAllTestCases(fi)
-            
-        
-        listAllTestCases(testCasesDir)
+                    if f.endswith(".js") and f not in EXCLUDED :
+                        #process(fi,f)
+                        p=multiprocessing.Process(target=process,args=(fi, f))
+                        #p=threading.Thread(target=process,args=(fi, f))
+                        PROCESSLIST.append(p)
+            processCount=len(PROCESSLIST)
+            s=0
+            t=10
+            continueLoop=True
+            #At max 100 multiple process are executed
+            while True:
+                if t > processCount:
+                    t=processCount
+                    continueLoop = False
+                for i in range(s,t):
+                    PROCESSLIST[i].start()
+                for i in range(s,t):
+                    PROCESSLIST[i].join(300)
+                if not continueLoop:
+                    break
+                s=t
+                t=t+10
         frame.quit()
         
     root = Tk()
@@ -308,4 +325,13 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     startBtn=Button(frame, text='START', command=initialize).grid(row=18, column=1)
     closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
     frame.mainloop()    
+        
+def listAllTestCasesDir(testCasesDir):
+        for f in listdir(testCasesDir):
+            fi=join(testCasesDir,f)
+            if not isfile(fi):
+                TestCaseSubDirs.append(fi)
+                listAllTestCasesDir(fi)
+        
+        
         

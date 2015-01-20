@@ -168,6 +168,8 @@ class Genotype(object):
                     l=len(self._identifiers)
                     if l>0:
                         prg_list[position]= str(self._identifiers[randint(0,l-1)])
+                    else:
+                        prg_list[position]="id"
                     position += 1
                     continue
 
@@ -306,8 +308,10 @@ class Genotype(object):
         else:                
             print "executing \t" + program
             p = subprocess.Popen(["js24 -e \'" + program + "\'"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            (out, err) = p.communicate()
-            if 'SyntaxError' in err :
+            out, err = p.communicate()
+            
+            if 'SyntaxError' in err or 'Syntax error' in err:
+                print "err:"+err
                 return 0    
             return 1    
 

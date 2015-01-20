@@ -7,7 +7,7 @@ from subprocess import *
 
 from tests import TestCase
 
-from langparser.AntlrParser import AntlrParser
+fileList = []
 
 class XULInfo:
     def __init__(self, abi, os, isdebug):
@@ -38,7 +38,7 @@ class XULInfo:
             if os.path.isfile(path):
                 break
             if os.path.dirname(dir) == dir:
-                print "Can't find config/autoconf.mk on a directory containing the JS shell (searched from %s)" % jsdir
+                print "Can't find config/autoconf.mk on a directory containing the JS shell (searched from %s)"%jsdir
                 sys.exit(1)
             dir = os.path.dirname(dir)
 
@@ -69,7 +69,7 @@ class XULInfoTester:
         """Test a XUL predicate condition against this local info."""
         ans = self.cache.get(cond, None)
         if ans is None:
-            cmd = [ self.js_bin, '-e', self.js_prolog, '-e', 'print(!!(%s))' % cond ]
+            cmd = [ self.js_bin, '-e', self.js_prolog, '-e', 'print(!!(%s))'%cond ]
             p = Popen(cmd, stdin=PIPE, stdout=PIPE, stderr=PIPE)
             out, err = p.communicate()
             if out in ('true\n', 'true\r\n'):
@@ -77,7 +77,7 @@ class XULInfoTester:
             elif out in ('false\n', 'false\r\n'):
                 ans = False
             else:
-                raise Exception("Failed to test XUL condition '%s'" % cond)
+                raise Exception("Failed to test XUL condition '%s'"%cond)
             self.cache[cond] = ans
         return ans
 
@@ -86,7 +86,7 @@ class NullXULInfoTester:
     def test(self, cond):
         return False
 
-def parse(filename, xul_tester, createFragPool,reldir=''):
+def parse(filename, xul_tester, reldir = ''):
     ans = []
     comment_re = re.compile(r'#.*')
     dir = os.path.dirname(filename)
@@ -94,7 +94,7 @@ def parse(filename, xul_tester, createFragPool,reldir=''):
     try:
         f = open(filename)
     except IOError:
-        print "warning: include file not found: '%s'" % filename
+        print "warning: include file not found: '%s'"%filename
         return ans
 
     for line in f:
@@ -106,7 +106,7 @@ def parse(filename, xul_tester, createFragPool,reldir=''):
         elif parts[0] == 'include':
             include_file = parts[1]
             include_reldir = os.path.join(reldir, os.path.dirname(include_file))
-            ans += parse(os.path.join(dir, include_file), xul_tester, createFragPool,include_reldir)
+            ans += parse(os.path.join(dir, include_file), xul_tester, include_reldir)
         elif parts[0] == 'url-prefix':
             # Doesn't apply to shell tests
             pass
@@ -148,7 +148,7 @@ def parse(filename, xul_tester, createFragPool,reldir=''):
                         random = True
                     pos += 1
                 elif parts[pos] == 'script':
-                    script = parts[pos + 1]
+                    script = parts[pos+1]
                     pos += 2
                 elif parts[pos] == 'slow':
                     slow = True
@@ -159,17 +159,11 @@ def parse(filename, xul_tester, createFragPool,reldir=''):
                         expect = enable = False
                     pos += 1
                 else:
-                    print 'warning: invalid manifest line element "%s"' % parts[pos]
+                    print 'warning: invalid manifest line element "%s"'%parts[pos]
                     pos += 1
 
             assert script is not None
-            if createFragPool:
-                print script
-                try:
-                    a = AntlrParser()
-                    a.extractCodeFrag(None, os.path.abspath("mozillaJSTestSuite/"+reldir+"/"+script))
-                except UnicodeDecodeError:
-                    print "Unicodeerror: "+script
-            ans.append(TestCase(os.path.join(reldir, script),
+            fileList.append(os.path.abspath("mozillaJSTestSuite/"+reldir+"/"+script))
+            ans.append(TestCase(os.path.join(reldir, script), 
                                 enable, expect, random, slow))
     return ans
