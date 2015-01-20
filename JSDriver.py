@@ -305,18 +305,35 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
         xul_tester = mozillaJSTestSuite.manifest.XULInfoTester(xul_info, JS)
     test_list = mozillaJSTestSuite.manifest.parse(options.manifest, xul_tester)
     fileList=mozillaJSTestSuite.manifest.fileList
+    
     processList=[]
     resultQueue=multiprocessing.Queue()
+    codeFrags=defaultdict(dict)
+
+    threads=False
     for f in fileList:
+        if threads:
             a = AntlrParser(resultQueue)
-            t=multiprocessing.Process(target=a.extractCodeFrag,args=(None,f))
+            t=threading.Thread(target=a.extractCodeFrag,args=(None,f))
             processList.append(t)
+        else:
+            a = AntlrParser()
+            d=a.extractCodeFrag(None,f)
+            keys=codeFrags.keys()
+            if d is not None:
+                for nt in d.keys():
+                    if nt not in keys:
+                        codeFrags[nt]=d.get(nt)
+                    else:
+                        codeFrags.get(nt).update(d.get(nt))
+                    
+
     processCount = len(processList)
     continueLoop=True
     s=0
     t=100
-    processCount=10
-    while True:
+    
+    while True and threads:
         if t > processCount:
             t=processCount
             continueLoop = False
@@ -329,20 +346,27 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
         s=t
         t=t+100
     
-    codeFrags=defaultdict(dict)
+    
+    print "Spandan1"
+    print datetime.datetime.now()
+    if threads:
+        for i in range(resultQueue.qsize()):
+            d=resultQueue.get()
+            keys=codeFrags.keys()
+            for nt in d.keys():
+                    if nt not in keys:
+                        codeFrags[nt]=d.get(nt)
+                    else:
+                        codeFrags.get(nt).update(d.get(nt))
 
-    for i in range(resultQueue.qsize()):
-        d=resultQueue.get()
-        keys=codeFrags.keys()
-        for nt in d.keys():
-                if nt not in keys:
-                    codeFrags[nt]=d.get(nt)
-                else:
-                    codeFrags.get(nt).update(d.get(nt))
-                        
+                            
     for key in codeFrags.keys():
         print key
         print codeFrags.get(key)
+    
+    print "Spandan2"
+    print datetime.datetime.now()
+    
     if options.check_manifest:
         check_manifest(test_list)
         if JS is None:

@@ -34,6 +34,8 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js'))
 
+TestCaseSubDirs=[]
+
 #Author: Spandan Veggalam
 def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     listAllTestCasesDir(testCasesDir)

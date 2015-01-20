@@ -21,7 +21,7 @@ ZERO = 0
 
 class AntlrParser(object):
 
-    def __init__(self,que):
+    def __init__(self,que=None):
         self.que=    que
     def init(self):
         self.m = defaultdict(str)
@@ -101,6 +101,7 @@ class AntlrParser(object):
                 sys.exit()
             else:
                 parseTr = self.parseTree(None,fileName,True)
+            print parseTr
         d = defaultdict(dict)
         if len(parseTr) >0:
             position = 1
@@ -129,6 +130,8 @@ class AntlrParser(object):
             
             if self.que is not None:
                 self.que.put(d)
+            else:
+                return d
             """
             nonTerms = set(self.non_Terminals)
             for nt in nonTerms:
