@@ -26,7 +26,9 @@ from codegen.GrammaticalEvolution import GrammaticalEvolution
 import threading
 from datetime import datetime
 import multiprocessing
+import os
 
+FILECOUNT = 0
 EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'user.js', 'sta.js',
                     'test262-browser.js', 'test262-shell.js',
@@ -35,10 +37,11 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js'))
 
 TestCaseSubDirs=[]
-
+GENERATEDFILELIST=[]
 #Author: Spandan Veggalam
-def runFuzzer(trackingFile,testCasesDir,targetDirectory):
+def runFuzzer(testCasesDir,targetDirectory):
     listAllTestCasesDir(testCasesDir)
+    FILECOUNT = len(os.listdir(targetDirectory))    
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
@@ -47,6 +50,7 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     
     #Author: Spandan Veggalam
     def initialize():
+        FILECOUNT = len(os.listdir(targetDirectory))
         def process(file,filName):
             try:
                 bnf=""
@@ -101,8 +105,8 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]
                             generatedPrg= gene.get_program()
-                            
-                            newFile=targetDirectory+"/"+filName
+                            newFile=targetDirectory+"/"+str(filName)
+                            GENERATEDFILELIST.append(newFile)
                             f=open(newFile,'w')
                             f.write(generatedPrg)
                             f.close
@@ -118,13 +122,15 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
             PROCESSLIST=[]
             for f in listdir(subDir) :
                 fi=join(subDir,f)
-    
                 if isfile(fi):
                     if f.endswith(".js") and f not in EXCLUDED :
-                        #process(fi,f)
-                        p=multiprocessing.Process(target=process,args=(fi, f))
+                        FILECOUNT += 1
+                        process(fi,FILECOUNT)
+                        #p=multiprocessing.Process(target=process,args=(fi, f))
                         #p=threading.Thread(target=process,args=(fi, f))
-                        PROCESSLIST.append(p)
+                        #PROCESSLIST.append(p)
+                        frame.quit()
+                        return 
             processCount=len(PROCESSLIST)
             s=0
             t=10
@@ -143,6 +149,7 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
                 s=t
                 t=t+10
         frame.quit()
+        return GENERATEDFILELIST
         
     root = Tk()
     root.title("Interpreter Fuzzer")
@@ -189,7 +196,7 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     
     label6= Label(frame,text="Generations",width=25).grid(row = 6,column=2)
     set_max_generations=Entry(frame,width=20)
-    set_max_generations.insert(0,"3")
+    set_max_generations.insert(0,"2")
     set_max_generations.grid(row=6,column=3)
     
     label7= Label(frame,text="Max Program Length",width=25).grid(row = 7,column=2)
@@ -327,7 +334,7 @@ def runFuzzer(trackingFile,testCasesDir,targetDirectory):
     startBtn=Button(frame, text='START', command=initialize).grid(row=18, column=1)
     closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
     frame.mainloop()    
-        
+    return GENERATEDFILELIST    
 def listAllTestCasesDir(testCasesDir):
         for f in listdir(testCasesDir):
             fi=join(testCasesDir,f)

@@ -170,6 +170,9 @@ class TestResult:
             if rc == 3:
                 result = cls.FAIL
             else:
+                f=open("../crashList","a+")
+                f.write(str(test)+"\n")
+                f.close()
                 result = cls.CRASH
         else:
             if (rc or passes > 0) and failures == 0:

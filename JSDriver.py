@@ -16,6 +16,11 @@ from langparser.AntlrParser import AntlrParser
 import threading
 import multiprocessing
 from _collections import defaultdict
+from os import makedirs
+from pickle import dump, HIGHEST_PROTOCOL, load
+
+
+DATABSEDIR="database"
 
 def exclude_tests(test_list, exclude_files):
     exclude_paths = []
@@ -304,69 +309,80 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
             xul_info = mozillaJSTestSuite.manifest.XULInfo(xul_abi, xul_os, xul_debug)
         xul_tester = mozillaJSTestSuite.manifest.XULInfoTester(xul_info, JS)
     test_list = mozillaJSTestSuite.manifest.parse(options.manifest, xul_tester)
-    fileList=mozillaJSTestSuite.manifest.fileList
-    
-    processList=[]
-    resultQueue=multiprocessing.Queue()
-    codeFrags=defaultdict(dict)
-
-    threads=False
-    for f in fileList:
-        if threads:
-            a = AntlrParser(resultQueue)
-            t=threading.Thread(target=a.extractCodeFrag,args=(None,f))
-            processList.append(t)
-        else:
-            a = AntlrParser()
-            d=a.extractCodeFrag(None,f)
-            keys=codeFrags.keys()
-            if d is not None:
-                for nt in d.keys():
-                    if nt not in keys:
-                        codeFrags[nt]=d.get(nt)
-                    else:
-                        codeFrags.get(nt).update(d.get(nt))
+    if createFragPool:
+        fileList=mozillaJSTestSuite.manifest.fileList
+        
+        processList=[]
+        resultQueue=multiprocessing.Queue()
+        codeFrags=defaultdict(dict)
+        count =0
+        threads=True
+        for f in fileList:
+            if threads:
+                a = AntlrParser(resultQueue)
+                t=threading.Thread(target=a.extractCodeFrag,args=(None,f))
+                processList.append(t)
+                           
+            else:
+                a = AntlrParser()
+                d=a.extractCodeFrag(None,f)
+                keys=codeFrags.keys()
+                if d is not None:
                     
-
-    processCount = len(processList)
-    continueLoop=True
-    s=0
-    t=100
+                    for nt in d.keys():
+                        if nt not in keys:
+                            codeFrags[nt]=d.get(nt)
+                        else:
+                            codeFrags.get(nt).update(d.get(nt))
+                        
     
-    while True and threads:
-        if t > processCount:
-            t=processCount
-            continueLoop = False
-        for i in range(s,t):
-            processList[i].start()
-        for i in range(s,t):
-            processList[i].join(300)
-        if not continueLoop:
-            break
-        s=t
-        t=t+100
+        processCount = len(processList)
+        continueLoop=True
+        s=0
+        t=100
+        
+        while True and threads:
+            if t > processCount:
+                t=processCount
+                continueLoop = False
+            for i in range(s,t):
+                processList[i].start()
+            for i in range(s,t):
+                processList[i].join(300)
+            if not continueLoop:
+                break
+            s=t
+            t=t+100
+        
+        
+        #print datetime.datetime.now()
+        if threads:
+            for i in range(resultQueue.qsize()):
+                d=resultQueue.get()
+                keys=codeFrags.keys()
+                for nt in d.keys():
+                        if nt not in keys:
+                            codeFrags[nt]=d.get(nt)
+                        else:
+                            codeFrags.get(nt).update(d.get(nt))
     
-    
-    print "Spandan1"
-    print datetime.datetime.now()
-    if threads:
-        for i in range(resultQueue.qsize()):
-            d=resultQueue.get()
-            keys=codeFrags.keys()
-            for nt in d.keys():
-                    if nt not in keys:
-                        codeFrags[nt]=d.get(nt)
-                    else:
-                        codeFrags.get(nt).update(d.get(nt))
-
-                            
-    for key in codeFrags.keys():
-        print key
-        print codeFrags.get(key)
-    
-    print "Spandan2"
-    print datetime.datetime.now()
-    
+        if not os.path.exists(DATABSEDIR):
+            makedirs(DATABSEDIR)
+        for key in codeFrags.keys():
+            fileName = DATABSEDIR + "/" + key
+            f = open(fileName, 'a+')
+            if os.stat(fileName).st_size == 0:
+                dump(codeFrags.get(key), f, HIGHEST_PROTOCOL)
+            else:
+                temp=load(f)
+                temp.update(codeFrags.get(key))
+                f.close()
+                f = open(fileName, 'w')
+                dump(temp, f, HIGHEST_PROTOCOL)
+            f.close()
+        sys.exit()
+        #print datetime.datetime.now()
+        
     if options.check_manifest:
         check_manifest(test_list)
         if JS is None:
@@ -427,16 +443,16 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
             os.chdir(os.path.dirname(options.manifest))
         try:
             results = ResultsSink()
-            #run_tests(options, test_list, results)
+            run_tests(options, test_list, results)
             while True:
                 filename = os.path.join(os.path.dirname(__file__), "jstests_generated.list")
-                runFuzzer(filename,testCasesDirectory,targetDirectory)
+                generatedFileList=runFuzzer(testCasesDirectory,targetDirectory)
                 if os.path.isfile(filename):
-                    test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester, createFragPool)
-                    #run_tests(options, test_list, results)
-                
-                break
-            
+                    f=open(filename,"a+")
+                    for files in generatedFileList:
+                        f.write("script "+files+"\n")
+                    test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester)
+                    run_tests(options, test_list, results)
         finally:
             os.chdir(curdir)
 
