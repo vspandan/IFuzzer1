@@ -13,7 +13,6 @@ from tkMessageBox import askyesno, showwarning, showinfo, showerror
 import tkMessageBox
 
 from langparser.AntlrParser import *
-from codegen.GenIncompleteCodeFrag import GenIncompleteCodeFrag
 from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
@@ -118,18 +117,16 @@ class GrammaticalEvolution(object):
     #Author : Spandan Veggalam
     def parseCode(self,codeFragment):
         codeFragment= codeFragment.replace('\n', '')
-        return self.parser.parseTree(codeFragment)
+        return self.parser.parseTree_(codeFragment)
     
     #Author : Spandan Veggalam
     def _prepareInitial_Population (self,fileName):
         try:
-            f=open(fileName,'r')
-            self.parseRepr=self.parser.parseTree(f.read())
+            self.parseRepr=self.parser.parseTree(path.abspath(fileName))
             if self.parseRepr is not None and len(self.parseRepr)>0:
-                self.codefragGen =  GenIncompleteCodeFrag()
-                self.initial_Population,self.identifiers = self.codefragGen.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals,INCLUDE_NT_LIST)
+                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.non_Terminals,INCLUDE_NT_LIST)
             else:
-                raise Exception('Syntax Error',fileName)
+                raise Exception('No Parse Tree')
             f.close()
         except:
             """
@@ -588,8 +585,8 @@ class GrammaticalEvolution(object):
             return (child1, child2)
         
         #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
-        subString1=self.codefragGen.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
-        subString2=self.codefragGen.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
+        subString1=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
+        subString2=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
         
         subString1=sub(r'\s+', ' ',subString1)
         subString2=sub(r'\s+', ' ',subString2)
@@ -611,8 +608,8 @@ class GrammaticalEvolution(object):
         incompl2=self.parseCode(child2Prg_)
         child2.set_identifiers(self.parser.identifiers)
         
-        child1.local_bnf['CodeFrag'],dummy =  self.codefragGen.genCodeFrag(incompl1,1,self.codefragGen.extractNonTerminal(incompl1.split()))
-        child2.local_bnf['CodeFrag'],dummy =  self.codefragGen.genCodeFrag(incompl2,1,self.codefragGen.extractNonTerminal(incompl2.split()))
+        child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,1,self.parser.extractNonTerminal(incompl1.split()))
+        child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,1,self.parser.extractNonTerminal(incompl2.split()))
         
         child1.set_binary_gene(child1_binary)
         child1.generate_decimal_gene()
@@ -631,7 +628,7 @@ class GrammaticalEvolution(object):
                 incompl=self.parseCode(prg)
                 gene.set_identifiers(self.parser.identifiers)
                 if len(incompl.strip()) >0:
-                    gene.local_bnf['CodeFrag'],selectedNt=self.codefragGen.genCodeFrag(incompl,1,self.codefragGen.extractNonTerminal(incompl.split()))
+                    gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl.split()))
                     position1=gene.local_bnf['CodeFrag'].find(selectedNt)
                     position2=position1+len(selectedNt)            
                     gene._single_mutate(position1, position2)

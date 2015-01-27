@@ -12,6 +12,7 @@ from os.path import abspath
 
 from GECodeGenerator import runFuzzer 
 from langparser.AntlrParser import AntlrParser
+#from langparser.AntlrParser import extractCodeFrags,totalFileList
 
 import threading
 import multiprocessing
@@ -19,8 +20,10 @@ from _collections import defaultdict
 from os import makedirs
 from pickle import dump, HIGHEST_PROTOCOL, load
 
+import time
 
 DATABSEDIR="database"
+class TimeLimitExpired(Exception): pass
 
 def exclude_tests(test_list, exclude_files):
     exclude_paths = []
@@ -310,78 +313,41 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
         xul_tester = mozillaJSTestSuite.manifest.XULInfoTester(xul_info, JS)
     test_list = mozillaJSTestSuite.manifest.parse(options.manifest, xul_tester)
     if createFragPool:
-        fileList=mozillaJSTestSuite.manifest.fileList
-        
-        processList=[]
-        resultQueue=multiprocessing.Queue()
-        codeFrags=defaultdict(dict)
-        count =0
-        threads=True
-        for f in fileList:
-            if threads:
-                a = AntlrParser(resultQueue)
-                t=threading.Thread(target=a.extractCodeFrag,args=(None,f))
-                processList.append(t)
-                           
-            else:
-                a = AntlrParser()
-                d=a.extractCodeFrag(None,f)
-                keys=codeFrags.keys()
-                if d is not None:
-                    
-                    for nt in d.keys():
-                        if nt not in keys:
-                            codeFrags[nt]=d.get(nt)
-                        else:
-                            codeFrags.get(nt).update(d.get(nt))
-                        
-    
-        processCount = len(processList)
-        continueLoop=True
-        s=0
-        t=100
-        
-        while True and threads:
-            if t > processCount:
-                t=processCount
-                continueLoop = False
-            for i in range(s,t):
-                processList[i].start()
-            for i in range(s,t):
-                processList[i].join(300)
-            if not continueLoop:
-                break
-            s=t
-            t=t+100
-        
-        
-        #print datetime.datetime.now()
-        if threads:
-            for i in range(resultQueue.qsize()):
-                d=resultQueue.get()
-                keys=codeFrags.keys()
-                for nt in d.keys():
-                        if nt not in keys:
-                            codeFrags[nt]=d.get(nt)
-                        else:
-                            codeFrags.get(nt).update(d.get(nt))
-    
         if not os.path.exists(DATABSEDIR):
             makedirs(DATABSEDIR)
-        for key in codeFrags.keys():
-            fileName = DATABSEDIR + "/" + key
-            f = open(fileName, 'a+')
-            if os.stat(fileName).st_size == 0:
-                dump(codeFrags.get(key), f, HIGHEST_PROTOCOL)
-            else:
-                temp=load(f)
-                temp.update(codeFrags.get(key))
-                f.close()
-                f = open(fileName, 'w')
-                dump(temp, f, HIGHEST_PROTOCOL)
-            f.close()
-        sys.exit()
-        #print datetime.datetime.now()
+        fileList=mozillaJSTestSuite.manifest.fileList
+        codeFrags=defaultdict(dict)
+        totalFileList=fileList
+        
+        for f in fileList:
+                a=AntlrParser(DATABSEDIR)
+                #codeFrags = a.extractCodeFrag(f)
+                t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f })
+                t.start()
+                t.join(300)
+                if t.isAlive():
+                    #print "is alive"
+                    try:
+                        raise TimeLimitExpired()
+                    except:
+                        #print "killed"
+                        pass
+                
+                """
+                for key in codeFrags.keys():
+                    fileName = DATABSEDIR + "/" + key
+                    f = open(fileName, 'a+')
+                    if os.stat(fileName).st_size == 0:
+                        dump(codeFrags.get(key), f, HIGHEST_PROTOCOL)
+                    else:
+                        temp=load(f)
+                        temp.update(codeFrags.get(key))
+                        f.close()
+                        f = open(fileName, 'w')
+                        dump(temp, f, HIGHEST_PROTOCOL)
+                    f.close()
+                time.sleep(.4)
+                """
         
     if options.check_manifest:
         check_manifest(test_list)
@@ -443,16 +409,19 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
             os.chdir(os.path.dirname(options.manifest))
         try:
             results = ResultsSink()
-            run_tests(options, test_list, results)
+            #run_tests(options, test_list, results)
             while True:
                 filename = os.path.join(os.path.dirname(__file__), "jstests_generated.list")
                 generatedFileList=runFuzzer(testCasesDirectory,targetDirectory)
+                """
                 if os.path.isfile(filename):
                     f=open(filename,"a+")
                     for files in generatedFileList:
                         f.write("script "+files+"\n")
                     test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester)
                     run_tests(options, test_list, results)
+                """
+                break
         finally:
             os.chdir(curdir)
 

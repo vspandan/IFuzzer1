@@ -124,30 +124,12 @@ def runFuzzer(testCasesDir,targetDirectory):
                 fi=join(subDir,f)
                 if isfile(fi):
                     if f.endswith(".js") and f not in EXCLUDED :
-                        FILECOUNT += 1
                         process(fi,FILECOUNT)
                         #p=multiprocessing.Process(target=process,args=(fi, f))
                         #p=threading.Thread(target=process,args=(fi, f))
                         #PROCESSLIST.append(p)
-                        frame.quit()
-                        return 
-            processCount=len(PROCESSLIST)
-            s=0
-            t=10
-            continueLoop=True
-            #At max 100 multiple process are executed
-            while True:
-                if t > processCount:
-                    t=processCount
-                    continueLoop = False
-                for i in range(s,t):
-                    PROCESSLIST[i].start()
-                for i in range(s,t):
-                    PROCESSLIST[i].join(300)
-                if not continueLoop:
-                    break
-                s=t
-                t=t+10
+                        #frame.quit()
+                        #return             
         frame.quit()
         return GENERATEDFILELIST
         
