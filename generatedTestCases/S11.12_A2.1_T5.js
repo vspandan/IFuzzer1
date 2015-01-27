@@ -1,1 +1,0 @@
-var y = new Object ( ) ; if ( ( true ? y : z ) !== temp ) { $ERROR ( '#1: var y = new Object(); (true ? y : z) === y' ) ; }

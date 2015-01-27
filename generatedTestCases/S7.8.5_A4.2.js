@@ -1,1 +1,0 @@
-var regexp1 = /(?:)/ ; var regexp2 = /(?:)/ ; if ( regexp1 === regexp2 ) { $ERROR ( "z1664" ) ; }

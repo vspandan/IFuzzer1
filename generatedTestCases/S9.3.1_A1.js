@@ -1,1 +1,0 @@
-if ( Number ( "" ) !== 0 ) throw "FAIL get 3" ; else { if ( 1 / Number ( "" ) !== Number . POSITIVE_INFINITY ) { $ERROR ( '#1.2: Number("") == +0. Actual: -0' ) ; } }

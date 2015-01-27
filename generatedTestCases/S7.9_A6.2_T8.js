@@ -1,1 +1,0 @@
-for ( true ; false ) <missing ';'> { break ; }

@@ -1,1 +1,0 @@
-function temp ( ) { try { } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( temp ) ;

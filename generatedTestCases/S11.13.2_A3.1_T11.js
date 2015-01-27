@@ -1,1 +1,0 @@
-var x = 0 ; x |= 1 ; if ( x !== 1 ) { continue theloop ; ; } y = 1 ; y |= false ; if ( y !== 1 ) { $ERROR ( '#2: y = 1; y |= 0; y === 1. Actual: ' + ( y ) ) continue out5 ; }

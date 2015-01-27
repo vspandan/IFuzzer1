@@ -1,1 +1,0 @@
-try { var z = ( 1 <<= 1 ) ; $ERROR ( false + ( z ) ) ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { continue out1 ; ; } else { var z = ( 1 <<= 1 ) ; } }

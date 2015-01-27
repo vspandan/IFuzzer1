@@ -1,1 +1,0 @@
-function testcase ( ) { function foo ( a , temp ) { var d = delete a ; return ( d === false && a === 1 ) ; } for ( i = 0 ; i < ( 1024 * 1024 ) / 2 ; i ++ ) m += "\n" } runTestCase ( testcase ) ;

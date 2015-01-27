@@ -1,1 +1,0 @@
-var x = 0 ; if ( ( x = 1 ) + x !== 2 ) var expect , actual ; var x = 0 ; if ( x + ( temp = 1 ) !== 1 ) { $ERROR ( '#2: var x = 0; x + (x = 1) === 1. Actual: ' + ( x + ( x = 1 ) ) ) ; }

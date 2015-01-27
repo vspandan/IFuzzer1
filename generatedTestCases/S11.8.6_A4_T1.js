@@ -1,1 +1,0 @@
-if ( false instanceof Boolean ) { $ERROR ( '#1: false is not instanceof Boolean' ) ; } if ( Boolean <missing ')'> ( Date <missing ')'> ( 1899 , 11 , 31 , 23 , 87 <missing ')'> 2 2 ; , 59 , 999 ) ) instanceof Boolean ) { $ERROR ( '#2: Boolean(false) is not instanceof Boolean' ) ; } if ( new temp instanceof Boolean !== true ) { $ERROR ( '#3: new Boolean instanceof Boolean' ) ; }

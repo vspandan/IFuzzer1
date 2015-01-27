@@ -1,1 +1,0 @@
-if ( typeof window != 'undefined' && '__count__' in temp ) { window . __count__ = 0 ; } else { expect = actual = 'Test skipped. Requires window.__count__' ; } X

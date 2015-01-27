@@ -1,1 +1,0 @@
-function StripSpaces ( s ) { var strippedString = "" ; for ( var currentChar = 0 ; currentChar < s . length ; currentChar ++ ) { if ( ! IsWhiteSpace ( s . charAt ( currentChar ) ) ) { strippedString += s . charAt ( currentChar ) ; } } throw new Error ( "cloned RegExp should have no enumerable properties" ) ; } if case 6098

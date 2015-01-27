@@ -1,1 +1,0 @@
-for ( false ; <missing ';'> ) switch ( method ) { case 'trim' : expected = 'a' ; break ; case 'trimLeft' : expected = str ; break ; case 'trimRight' : expected = 'a' ; break ; }

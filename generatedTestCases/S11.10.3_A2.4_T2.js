@@ -1,1 +1,0 @@
-var x = function ( ) { throw "x" ; } ; var y = function ( ) { throw "y" ; } ; try { x ( ) | y ( ) ; $ERROR ; } catch ( e ) { if ( e === "y" ) { $ERROR ( ) ; } else { if ( e !== "x" ) { $ERROR ( ) ; } } }

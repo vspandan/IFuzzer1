@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { eval ( ) ; return false ; } catch ( e ) { return e instanceof ReferenceError ; } } runTestCase ( testcase ) ;

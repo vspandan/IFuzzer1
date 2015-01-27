@@ -1,1 +1,0 @@
-temp function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; f = function ( ) { } ; temp . hhhhhhhhh = this ; Object . defineProperty ( this , "m" , { set : f , enumerable : true , configurable : true } ) ; uneval ( this ) ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; } var implements = 1 ;

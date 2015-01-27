@@ -1,1 +1,0 @@
-var temp = 'do not assert: map->depth > 0" in js_LeaveSharpObject' ; "svg"

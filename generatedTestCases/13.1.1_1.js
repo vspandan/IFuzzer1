@@ -1,1 +1,0 @@
-var invalidValues = [ temp , null ] ; invalidValues . temp ( function ( value ) { } ) ;

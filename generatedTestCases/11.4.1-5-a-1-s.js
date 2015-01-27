@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" var summary = 'do not assert: (pnkey)->pn_arity == PN_NULLARY && ' + '((pnkey)->pn_type == TOK_NUMBER || (pnkey)->pn_type == TOK_STRING || ' + '(pnkey)->pn_type == TOK_NAME)' ; var temp = 5 ; try { eval ( "delete _11_4_1_5;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

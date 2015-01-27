@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { instanceof : 0 , typeof : 1 , else : 2 } ; var arr = [ 'instanceof' , 'typeof' , 'else' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( arr [ p1 ] === p ) { if ( ! tokenCodes . hasOwnProperty ) { return false ; } ; } } } return true ; } runTestCase ( testcase ) ;

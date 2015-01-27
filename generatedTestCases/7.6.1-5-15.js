@@ -1,1 +1,0 @@
-function testcase ( ) { var temp = { package : 0 , protected : 1 , static : 2 } ; var SECTION = "dowhile-002" ; for ( var i = 0 ; i < temp . length ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) ;

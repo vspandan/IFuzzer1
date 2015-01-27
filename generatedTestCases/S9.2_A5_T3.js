@@ -1,1 +1,0 @@
-if ( Boolean !== true ) { $ERROR ( -- status = summary + ": " + word + ": normal function expression argument" ) ; } if ( Boolean ( "Nonempty String" ) !== true ) { $ERROR ( '#2: Boolean("Nonempty String") === true. Actual: ' + ( Boolean ( "Nonempty String" ) ) ) ; }

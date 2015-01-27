@@ -1,1 +1,0 @@
-with ( { } ) with ( Number ) { actual = B ; expect = 'local B' ; }

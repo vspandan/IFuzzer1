@@ -1,1 +1,0 @@
-if ( delete ( x ) !== true ) { $ERROR ( '#1: delete (x) === true' ) ; "z890" new RegExp ( 'o?pqrst' ) case 5353 : } if ( typeof ( x ) !== "undefined" ) { $ERROR ; }

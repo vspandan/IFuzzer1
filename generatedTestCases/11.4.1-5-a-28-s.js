@@ -1,1 +1,0 @@
-eval ( "'use strict'; " + word + ": while (false);" ) ; throw "Bad value for " + name + ".name: " + uneval ( tmp ) ; ; runTestCase ( testcase ) ;

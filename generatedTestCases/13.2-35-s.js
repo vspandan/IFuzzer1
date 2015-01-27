@@ -1,1 +1,0 @@
-function testcase ( ) { return ! Object . getOwnPropertyDescriptor ( new function ( "'use strict';" ) , "" ) . temp ; } runTestCase ( testcase ) ;

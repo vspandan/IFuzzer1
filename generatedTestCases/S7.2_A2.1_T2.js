@@ -1,1 +1,0 @@
-if ( " str ing " !== "\u0009str\u0009ing\u0009" ) { temp ( notevil = ( notevil + 210 ) / 2 <missing ')'> ; 1327 ) ; }

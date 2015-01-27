@@ -1,1 +1,0 @@
-$INCLUDE ( "testIntl.js" ) ; taintDataProperty ( Intl , "DateTimeFormat" ) ; new Date ( ) . toLocaleString ( ) ; new Date ( ) . temp ( ) ; new Date ( ) . toLocaleTimeString ( ) continue ;

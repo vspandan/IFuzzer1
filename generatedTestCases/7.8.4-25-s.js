@@ -1,1 +1,0 @@
-function testcase ( ) { try { -- + ( "3.e+1" ) ; return true ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

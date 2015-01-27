@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" throw 17 ; var blah = ( SECTION , "null.valueOf()" , "error" , eval ( "null.valueOf()" ) ) ; try { eval ( "++;" ) ; return false ; } catch ( e ) { "print('trap')" { DateCase . setHours ( hours , min , sec ) ; } } } runTestCase ( testcase ) ;

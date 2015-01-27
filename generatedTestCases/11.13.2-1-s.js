@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { eval ( "_11_13_2_1 *= 1;" ) ; return false ; } catch temp try { strings . forEach ( ) ; actual = 'no error' ; } catch ( e ) { actual = e . name ; } } runTestCase ( testcase ) ;

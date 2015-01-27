@@ -1,1 +1,0 @@
-if ( c % 2 == 0 ) { u [ 0 ] = c ; u [ 1 ] = c + 1 ; } else { u [ 0 ] = c - 1 ; u [ 1 ] = temp ; } ; if ( x !== 2676 7375 ) { $ERROR ( '#1: eval("\\u0020var x\\u0020= 1\\u0020"); x === 1. Actual: ' + ( x ) ) if ( typeof timeout != "function" ) return ; } var x = 1 ; if ( x !== 1 ) { $ERROR ( '#2: var x = 1 ; x === 1. Actual: ' + ( x ) ) ; }

@@ -1,1 +1,0 @@
-var \u0024 = 1 ; if <missing '('> new TestCase ( SECTION , "result = \"\"; for ( p in Number ) { result += String(p) };" , "" , result ) <missing ')'> actual = isNaN ( new Date ( Date . UTC ( 2006 , 0 , 0 , 0 , undefined ) ) . throw ( ) )

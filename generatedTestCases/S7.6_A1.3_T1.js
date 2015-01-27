@@ -1,1 +1,0 @@
-var _ = 1 ; try { x = null ; x . toString ( ) ; SHOULD_THROW ( 1 ) ; } catch ( ex ) { TEST ( 1 , "TypeError" , ex . name ) ; }

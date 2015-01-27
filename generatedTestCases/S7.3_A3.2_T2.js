@@ -1,1 +1,0 @@
-break ; temp = ( temp + 1412 ) / 2 ;

@@ -1,1 +1,0 @@
-try { continue out5 ; ; $ERROR ( '#1.1: x = y throw ReferenceError. Actual: ' + ( x = y ) ) continue loop ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ( '#1.2: x = y throw ReferenceError. Actual: ' + ( e ) ) ; } }

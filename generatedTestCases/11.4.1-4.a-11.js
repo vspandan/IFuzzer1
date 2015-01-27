@@ -1,1 +1,0 @@
-function temp ( ) { 0x0023 } runTestCase ( testcase ) ;

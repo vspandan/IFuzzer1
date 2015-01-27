@@ -1,1 +1,0 @@
-if ( ! "1" !== false ) { $ERROR ( '#1: !"1" === false' ) ; } if ( ! new String ( "0" ) !== false ) { $ERROR ( null ) ; } if ( ! "x" !== false ) { $ERROR ( '#3: !"x" === false' ) ; } if ( ! "" !== true ) { $ERROR ( '#4: !"" === true' ) ; } if ( ! new String ( null ) !== false ) { $ERROR ( '#5: !new String("") === false' ) ; }

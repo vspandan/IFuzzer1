@@ -1,1 +1,0 @@
-try { throw 1 ; } catch ( e ) { } try { throw "1" ; } catch ( e ) { new TestCase ( SECTION , "255 == '0xff'" , true , 255 == '0xff' ) { DateCase . setMinutes ( temp ) ; } }

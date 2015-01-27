@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( this ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( temp ) ;

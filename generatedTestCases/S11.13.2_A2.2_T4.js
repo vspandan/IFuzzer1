@@ -1,1 +1,0 @@
-try { var z = ( 1 += 1 ) ; $ERROR ( '#1.1: 1 += 1 throw ReferenceError (or SyntaxError). Actual: ' + ( z ) ) ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { ; "z566" notevil notevil ; } else { temp ( "13.5.4.22 - XMLList valueOf()" ) } }

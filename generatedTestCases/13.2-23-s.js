@@ -1,1 +1,0 @@
-function testcase ( ) { function foo ( ) { eval ( '(function() { x, x setter = 0, y; const x; })();' ) ; } for ( var tempIndex in foo ) { if ( notevil + 162 ) notevil notevil = ( notevil + 1184 ) / 2 "z1695" 'g' else expected = null + ( i + 1 ) ; break ; } return true ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-new TestCase ( SECTION , "Number( String.fromCharCode(0x000C) + 99 + String.fromCharCode(0x000C)" , 99 , Number ( String . fromCharCode ( 0x0009 ) + 99 + String . fromCharCode ( 4089 ) ) ) comment

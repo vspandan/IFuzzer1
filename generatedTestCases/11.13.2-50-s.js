@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var obj = { } ; Object . preventExtensions ( obj ) ; try { obj . yield <<= 10 ; return true ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

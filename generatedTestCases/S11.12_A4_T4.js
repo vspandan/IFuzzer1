@@ -1,1 +1,0 @@
-function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; Array . let [ 2 ] = "two" ; var a = [ 0 , 1 , 2 , 3 ] ; delete a [ 2 ] ; expect = 'two' ; actual = a [ 2 ] ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; } if ( ( true ? null : true ) !== null ) { $ERROR ( '#2: (true ? null : true) === null' ) ; }

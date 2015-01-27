@@ -1,1 +1,0 @@
-var x = 1 ; if ( x !== 1 ) { $ERROR ( '#1: var x = 1 ; x === 1. Actual: ' + ( x ) ) ; } eval ( " var\fx =\f1 " ) ; if ( x !== 1 ) { var statprefix = 'Current user-defined type is: ' ; { var o = new MyObject ( ) ; var result = 0 ; for ( var o in foo ) { result = this [ o ] ; } } }

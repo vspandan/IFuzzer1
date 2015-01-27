@@ -1,1 +1,0 @@
-function __func ( ) { } ; if ( __func . length !== 0 ) { new TestCase ( SECTION , "Number.MAX_VALUE - Number.MAX_VALUE" , 0 , Number . temp - Number . MAX_VALUE ) ; } function temp { s } ; if ( __gunc . length !== 3 ) { $ERROR ( '#2: __gunc.length === 3. Actual: __gunc.length ===' + __gunc . length ) ; }

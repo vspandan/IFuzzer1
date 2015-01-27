@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; [ 1 ] = 7 ; [ 1 ] -- ; return [ 1 ] === 6 ; } runTestCase ( testcase ) ;

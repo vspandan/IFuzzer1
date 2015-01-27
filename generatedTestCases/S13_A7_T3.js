@@ -1,1 +1,0 @@
-function temp ( ) { \ A \ B \ C } ;

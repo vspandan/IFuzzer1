@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { array1 . unshift ( 96 ) "z1703" } catch ( e ) { } } runTestCase ( testcase ) ;

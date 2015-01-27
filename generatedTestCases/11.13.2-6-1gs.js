@@ -1,1 +1,0 @@
-null ; throw NotEarlyError ; eval *= 20 ;

@@ -1,1 +1,0 @@
-if ( isNaN ( Number . POSITIVE_INFINITY + Number . temp ) !== true ) { $ERROR ( '#1: Infinity + -Infinity === Not-a-Number. Actual: ' + ( Infinity + - Infinity ) ) ; } if ( isNaN ( Number . NEGATIVE_INFINITY + Number . temp ) !== true ) { $ERROR ( '#2: -Infinity + Infinity === Not-a-Number. Actual: ' + + myfunc3 . toString = Object . prototype . toString ) ; }

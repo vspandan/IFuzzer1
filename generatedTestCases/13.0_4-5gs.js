@@ -1,1 +1,0 @@
-"use strict" ; throw NotEarlyError ; function temp ( ) { eval = 42 ; } ;

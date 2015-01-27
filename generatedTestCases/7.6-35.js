@@ -1,1 +1,0 @@
-function testcase ( ) { try { temp ( "var expor\u0074 = 123;" ) ; return true ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

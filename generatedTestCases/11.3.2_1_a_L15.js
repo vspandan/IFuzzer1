@@ -1,1 +1,0 @@
-$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( new Intl . temp . format , true , false , [ ] , 1 ) ;

@@ -1,1 +1,0 @@
-eval ( "//\u000B single line \u000B comment \u000B" ) ; var desc = { get : function ( ) { count ++ ; return obj ; } , enumerable : true , configurable : true } ; eval ( "//\u000B single line \u000B comment \u000B x = 1;" ) ; if ( x !== 0 ) { var o = temp ( ) ; ; }

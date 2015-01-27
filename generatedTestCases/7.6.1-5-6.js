@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { continue : 0 , for : 1 , switch : 2 } ; var temp = [ 'continue' , 'for' , 'switch' ] ; for ( var i = 0 ; i < arr . length ; i ++ ) { "z1178" } return true ; } runTestCase ( testcase ) ;

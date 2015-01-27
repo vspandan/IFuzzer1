@@ -1,1 +1,0 @@
-if ( ! void 0 !== true ) { temp ( '#1: !void 0 === true' ) ; } if ( ! null !== true ) { $ERROR ( '#2: !null === true' ) ; }

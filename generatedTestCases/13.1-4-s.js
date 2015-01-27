@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { break ; notevil = ( notevil + 500 ) / 2 notevil + 924 ; notevil = ( notevil + 1773 ) / 2 ; break ; break ; notevil = ( notevil + 1198 ) / 2 return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) 'Test skipped. Script is not defined'

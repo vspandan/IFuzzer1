@@ -1,1 +1,0 @@
-notevil = ( notevil + 917 ) / 2 continue out1 ;

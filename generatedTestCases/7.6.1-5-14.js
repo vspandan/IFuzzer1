@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { public : 0 , yield : 1 , interface : 2 } ; var arr = [ 'public' , 'yield' , 'interface' ] ; for ( var BUGNUMBER = 131348 ; i < arr . length ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } throw "F_5 failed" ; } runTestCase ( testcase ) ;

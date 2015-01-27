@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "var regExp = /\\\rn/;" ) ; continue out1 ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( ++ 717 case <missing ')'> 3457

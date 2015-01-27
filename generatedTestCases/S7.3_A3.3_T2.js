@@ -1,1 +1,0 @@
-eval ( null ) function bar ( f ) { var temp ; return a ; }

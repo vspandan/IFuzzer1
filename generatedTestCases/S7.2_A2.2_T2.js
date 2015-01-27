@@ -1,1 +1,0 @@
-if ( null !== "\u000Bstr\u000Bing\u000B" ) { $ERROR ( SECTION , "Number('+Infinity')" , Math . pow ( 10 , 4892 ) , Number ( "+Infinity" ) ) ; }

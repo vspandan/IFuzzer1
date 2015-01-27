@@ -1,1 +1,0 @@
-; "z742" notevil ; if ( this === undefined ) { throw temp ; }

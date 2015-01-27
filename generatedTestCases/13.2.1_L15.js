@@ -1,1 +1,0 @@
-$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( ) ;

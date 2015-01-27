@@ -1,1 +1,0 @@
-try { x ^ 1 ; $ERROR ( '#1.1: x ^ 1 throw ReferenceError. Actual: ' + ( x ^ 1 ) ) with ( Number ) { actual = B ; expect = 'local B' ; } } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { "parseInt(" + space + HEX_STRING "x" , "return(Math.pow(Number(x),2))" ( '#1.2: x ^ 1 throw ReferenceError. Actual: ' + ( e ) ) ; } }

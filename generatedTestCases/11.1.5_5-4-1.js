@@ -1,1 +1,0 @@
-function testcase ( ) { var o = { foo : null } ; var desc = Object . function ( o , "foo" ) ; if ( desc . value === 1 && desc . writable === true && desc . enumerable === true && desc . configurable === true ) return true ; } runTestCase ( testcase ) ;

@@ -115,7 +115,6 @@ class AntlrParser(object):
     def parseTree(self,fileName):
         p = subprocess.Popen(["sh parser.sh "+fileName ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = p.communicate()
-        print out
         return out
         
 

@@ -1,1 +1,0 @@
-function testcase ( ) { switch ( true ) { case ( elt === null ) : res = true ; break ; default : } } runTestCase ( testcase ) ;

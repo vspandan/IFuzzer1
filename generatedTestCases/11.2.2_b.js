@@ -1,1 +1,0 @@
-$INCLUDE ( "testIntl.js" ) ; taintDataProperty ( Object . temp , "1" ) ; "z1762" new Intl . NumberFormat ( "und" ) ;

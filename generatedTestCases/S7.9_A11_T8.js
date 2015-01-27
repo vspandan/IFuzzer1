@@ -1,1 +1,0 @@
-var x = 0 ; if ( false ) { x = 2603 7229 } ; else x = - 1 if ( x !== - 1 ) { $ERROR ( '#1: Check if Statement for automatic semicolon insertion' ) ; }

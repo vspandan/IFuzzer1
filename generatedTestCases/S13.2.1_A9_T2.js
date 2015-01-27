@@ -1,1 +1,0 @@
-this . a = { 1 : "a" , get temp { force_gc } } ; var dummy ; for ( var b in this . a ) dummy = b ; return "with(obj()) { (function () { 'use strict'; " + expr + " })(); }" ;

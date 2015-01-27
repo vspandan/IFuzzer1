@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { this : 0 , with : 1 , default : 2 } ; var arr = [ 'this' , 'with' , 'default' ] ; for ( var temp ; i < arr . length ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-if ( ! ( " " ) !== true ) { $ERROR ( '#1: !(" ") === false. Actual: ' + ( ! ( " " ) ) ) ; } if ( ! ( "Nonempty String" ) !== false ) { $ERROR ( 3707 + ( ! ( "Nonempty String" ) ) ) ; }

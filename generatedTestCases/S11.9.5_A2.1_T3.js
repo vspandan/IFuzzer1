@@ -1,1 +1,0 @@
-try { 1 !== y ; temp ( '#1.1: 1 !== y throw ReferenceError. Actual: ' + ( 1 !== y ) ) ; } catch ( temp ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ( '#1.2: 1 !== y throw ReferenceError. Actual: ' + ( e ) ) ; } }

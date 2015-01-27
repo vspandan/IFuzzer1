@@ -1,1 +1,0 @@
-function temp ( ) { try { eval ( "var \u006eull = 123;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

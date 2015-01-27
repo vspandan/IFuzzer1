@@ -1,1 +1,0 @@
-var x = false ; if ( void x !== undefined ) { $ERROR ( '#1: var x = false; void x === undefined. Actual: ' + ( void x ) ) ; } var x = new Boolean ( true ) ; continue woo ;

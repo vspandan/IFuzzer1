@@ -1,1 +1,0 @@
-function testcase ( ) { var fooCalled = false ; function foo ( ) { fooCalled = true ; } var temp ; try { o . bar ( foo ( ) ) ; throw new Exception ( "o.bar does not exist!" ) ; } catch ( e ) { return ( e instanceof TypeError ) && ( fooCalled === true ) ; } } runTestCase ( testcase ) ;

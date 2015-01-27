@@ -1,1 +1,0 @@
-function temp ( ) { try { return arr [ 1 ] ; ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } status [ 14 ] = showStatus ( '0000000000770000' ) ;

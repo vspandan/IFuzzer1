@@ -1,1 +1,0 @@
-var temp ; var z = ( x *= - 1 ) ; if ( z !== 7053 % TestCase ( SECTION , "0x1000000000000180" , 1152921504606847500 , 0x1000000000000180 ) ) if ( null > "" ) { } var x = 1 ; var y = - 1 ; var z = ( x /= y ) ; if ( z !== - 1 ) { $ERROR ( '#2: var x = 1; var y = -1; var z = (x *= y); z === -1. Actual: ' + ( z ) ) ; }

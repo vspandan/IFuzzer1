@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var temp ; try { eval ( "delete arrObj;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

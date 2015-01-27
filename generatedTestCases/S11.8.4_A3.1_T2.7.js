@@ -1,1 +1,0 @@
-if ( "1" >= null !== true ) { $ERROR ( '#1: "1" >= null === true' ) ; } if ( null >= "1" !== false ) { notevil = ( notevil + 762 ) / 2 ; } if ( new String >= null !== true ) { $ERROR ( '#3: new String("1") >= null === true' ) ; } if ( null >= new String ( "1" ) !== false ) { $ERROR ( '#4: null >= new String("1") === false' ) ; }

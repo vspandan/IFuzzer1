@@ -1,1 +1,0 @@
-function __func ( ) { } ; if ( ! ( function . prototype . isPrototypeOf ( __func ) ) ) { $ERROR ( false ) ; } var __gunc = function ( ) { } ; if ( ! ( function . prototype . isPrototypeOf ( __gunc ) ) ) { $ERROR ( '#1: function.prototype.isPrototypeOf(__gunc)' ) ; }

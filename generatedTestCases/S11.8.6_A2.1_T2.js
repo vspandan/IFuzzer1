@@ -1,1 +1,0 @@
-try { object instanceof Object ; $ERROR ( '#1.1: object instanceof Object throw ReferenceError. Actual: ' + ( object instanceof Object ) ) ; } catch ( e ) { for ( var j = 0 ; j < temp . length ; j ++ ) { addTestCase ( new Date ( TIME_1900 ) , test_times [ j ] ) ; } }

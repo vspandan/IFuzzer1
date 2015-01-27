@@ -1,1 +1,0 @@
-if ( typeof Intl . NumberFormat . prototype . format !== "string" ) { var expected = '{\n' + ' "a": {\n' + ' "b": [\n' + ' 1,\n' + ' 2\n' + ' ],\n' + ' "c": {\n' + ' "d": 3,\n' + ' "e": 4\n' + ' },\n' + ' "f": [],\n' + ' "g": {},\n' + ' "h": [\n' + ' 5\n' + ' ],\n' + ' "i": {\n' + false + ' }\n' + ' }\n' + '}' ; ; }

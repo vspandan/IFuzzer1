@@ -1,1 +1,0 @@
-function testcase ( ) { try { r = r + r ; } 8 { } } runTestCase ( testcase ) ;

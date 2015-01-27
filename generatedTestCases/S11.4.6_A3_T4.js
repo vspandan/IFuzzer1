@@ -1,1 +1,0 @@
-if ( isNaN ( + void 0 ) !== true ) { $ERROR ( '#1: +void 0 === Not-a-Number. Actual: ' + ( + void 0 ) ) ; } if ( + null !== 0 ) { for ( j = 0 , i = 0x0020 ; i < 0x007e ; i ++ , j ++ ) { new TestCase ( SECTION , "TEST_STRING.charCodeAt(" + j + ")" , temp , TEST_STRING . charCodeAt ( j ) ) ; } }

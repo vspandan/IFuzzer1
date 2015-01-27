@@ -1,1 +1,0 @@
-if ( ( false || temp ) !== undefined ) { $ERROR ( '#1: (false || undefined) === undefined' ) ; } if ( ( true || null ) !== null ) { $ERROR ( '#2: (false || null) === null' ) ; }

@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var blah = ; try { eval ( "var = 20;" ) if ( c % 2 == 0 ) { u [ 0 ] = c ; u [ 1 ] = c + 1 ; } else { u [ 0 ] = c - 1 ; u [ 1 ] = c ; } return false ; } catch ( e ) { return e instanceof SyntaxError && blah === ; } } runTestCase ( testcase ) ;

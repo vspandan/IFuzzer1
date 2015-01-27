@@ -1,1 +1,0 @@
-if ( eval ( "'\u000Astr\u000Aing\u000A'" ) === 'var s = "PAS\\u0027SED"; s' ) { ; "z424" notevil notevil 2 ; }

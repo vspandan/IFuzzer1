@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var obj = { } ; Object . temp ( obj ) ; try { obj . temp %= 10 ; var d = new MyDate ( ) ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

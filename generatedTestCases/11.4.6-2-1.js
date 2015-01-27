@@ -1,1 +1,0 @@
-function testcase ( ) { return + "" === temp ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-if ( ( 1 ) !== 1 ) { $ERROR ; } var temp = new Number ; if ( ( x ) !== x ) { $ERROR ( '#2: var x = new Number(1); (x) === x. Actual: ' + ( ( x ) ) ) ; }

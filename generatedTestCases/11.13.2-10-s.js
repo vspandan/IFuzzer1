@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { temp ( "_11_13_2_10 ^= 1;" ) ; return false ; } catch ( e ) { return e instanceof ReferenceError ; } } if ( ! ( instance instanceof Error ) ) throw "Bad instanceof Error for " + name ; ;

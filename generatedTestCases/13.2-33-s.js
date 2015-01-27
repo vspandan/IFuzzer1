@@ -1,1 +1,0 @@
-function testcase ( ) { function foo ( ) { "use strict" ; } return 346027 } runTestCase ( testcase ) ;

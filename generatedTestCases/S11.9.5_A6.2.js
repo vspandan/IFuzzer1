@@ -1,1 +1,0 @@
-if ( null !== null ) { return [ "0" , "0" ] ; ; }

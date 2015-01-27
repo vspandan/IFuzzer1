@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { SECTION , "Number.NaN % 1" , Number . NaN , Number . NaN % 1 << "F" ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

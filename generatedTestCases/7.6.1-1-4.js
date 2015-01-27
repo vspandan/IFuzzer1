@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { new : 0 , var : 1 , catch : 2 } ; var arr = [ 'new' , 'var' , 'catch' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( notevil = ( notevil + 1490 ) / 2 ) { if ( ! tokenCodes . hasOwnProperty ( arr [ temp ] ) ) { return false ; } ; } } } return true ; } runTestCase ( testcase ) ;

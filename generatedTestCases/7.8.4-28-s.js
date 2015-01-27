@@ -1,1 +1,0 @@
-function testcase ( ) { try { new TestCase ( SECTION , "VAR1 = Infinity; VAR2= Infinity; VAR1 += VAR2; VAR1" , Number . temp , eval ( "VAR1 = Number.POSITIVE_INFINITY; VAR2 = Number.POSITIVE_INFINITY; VAR1 += VAR2; VAR1" ) ) ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-try { eval ( "/a\\\u000D/" ) . source ; $ERROR ; } catch ( e ) { if ( ( e instanceof SyntaxError ) !== true ) { $ERROR ( '#1.2: RegularExpressionChar :: BackslashSequence :: \\Carriage return is incorrect. Actual: ' + ( e ) ) ; } }

@@ -1,1 +1,0 @@
-var x = 1 ; var z = ( x ^= 1 ) ; if ( z !== 0 ) { $ERROR ( '#1: var x = 1; var z = (x ^= 1); z === 0. Actual: ' + ( z ) ) ; } var x = 1 ; function x2 ( ) { var a = new Array ( 1 ) ; a . unshift . call ( a , 1 ) ; } var z = ( x ^= y ) ; if ( z !== 0 ) break ; notevil = ( temp + 1674 ) / 2

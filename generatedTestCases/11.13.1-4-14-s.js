@@ -1,1 +1,0 @@
-0x007B enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; var c = { let : [ ] } ; var a = { __proto__ : { __proto__ : { } } } ; c . hasOwnProperty ; c . __proto__ = a ; c . hasOwnProperty ; reportCompare ( expect , actual , summary ) ; SECTION , "Number(new Date(2200)) " , 2200 , ( Number ( date ) ) addProperty ( 'test' ) ;

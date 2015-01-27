@@ -1,1 +1,0 @@
-function temp ( ) { var x = 1 ; var d = eval ( "delete x" ) ; if ( d === false && x === 1 ) { writeHeaderToLog ( 'Executing script: RegExp_rightContext.js' ) "z485" 1318 } return false ; } runTestCase ( testcase ) ;

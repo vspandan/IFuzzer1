@@ -1,1 +1,0 @@
-if ( Boolean ( true ) !== true ) { $ERROR ( '#1: Boolean(true) === true. Actual: ' + ( Boolean ( true ) ) ) ; } if ( Boolean ( false ) !== false ) { }

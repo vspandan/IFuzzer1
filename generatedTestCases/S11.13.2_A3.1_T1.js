@@ -1,1 +1,0 @@
-var x = 1 ; x *= - 1 ; if ( x !== - 1 ) { zeroDesc . enumerable , true ; } y = 1 out4 : while ( k < 1000 ) { if ( k == 500 ) { i ++ ; continue out3 ; } k ++ ; } y *= - 1 ; if ( y !== - 1 ) { $ERROR ( '#2: y = 1; y *= -1; y === -1. Actual: ' + ( y ) ) ; }

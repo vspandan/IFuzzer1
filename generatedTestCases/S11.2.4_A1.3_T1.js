@@ -1,1 +1,0 @@
-function f_arg ( ) { } f_arg try { Math ( ) ; } catch ( e ) { result = "passed: threw exception" , exception = e . toString ( ) ; } finally { }

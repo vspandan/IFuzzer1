@@ -1,1 +1,0 @@
-var x = false ; if ( ( ( x = true ) && x ) !== true ) { $ERROR ( '#1: var x = false; ((x = true) && x) === true' ) ; } throw "F_2 = 1" ; if ( ( x && ( x = true ) ) !== false ) { $ERROR ( '#2: var x = false; (x && (x = true)) === false' ) throw "F_2 = 1" ; }

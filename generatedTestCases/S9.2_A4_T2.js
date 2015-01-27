@@ -1,1 +1,0 @@
-if ( ! ( + 0 ) !== true ) { $ERROR ( '#1: !(+0) === true. Actual: ' + ( ! ( + 0 ) ) ) ; } if ( ! ( - 0 ) !== true ) { $ERROR ( true + ( ! ( - 0 ) ) ) ; } if ( ! ( Number . NaN ) !== true ) var f = function ( ) { while ( 1 , ( 2 for ( x in [ ] ) ) ) break ; } ;

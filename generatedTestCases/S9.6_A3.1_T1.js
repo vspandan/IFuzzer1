@@ -1,1 +1,0 @@
-throw "FAIL get 2" ; if ( ( false 0 ) !== 0 ) { $ERROR ( '#2: (false 0) === 0. Actual: ' < missing ')' > + ( ( false 0 ) ) ) ; }

@@ -1,1 +1,0 @@
-if ( ( true ) !== true ) { $ERROR ( ) ; } var x = new temp ( true ) ; if ( ( temp ) !== x ) { $ERROR ( '#2: var x = new Boolean(true); (x) === x. Actual: ' + ( ( x ) ) ) ; }

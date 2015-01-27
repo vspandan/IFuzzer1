@@ -1,1 +1,0 @@
-function testcase ( ) { temp ( "(function foo(eval){});" ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; temp ( summary ) ; q = [ ] ; q . __defineGetter__ ( "0" , q . toString ) ; q [ 2 ] = q ; q . toSource ( ) ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; } } runTestCase ( testcase ) ;

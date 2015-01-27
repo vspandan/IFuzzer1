@@ -1,1 +1,0 @@
-var x = 0 ; if ( false ) x = this if ( x !== 0 ) { { this = false ; gc ( ) ; } }

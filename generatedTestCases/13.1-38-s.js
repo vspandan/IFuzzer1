@@ -1,1 +1,0 @@
-function testcase ( ) { var temp = { } ; with ( f ) { actual = par ; } } runTestCase ( testcase ) ;

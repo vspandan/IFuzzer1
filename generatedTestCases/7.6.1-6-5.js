@@ -1,1 +1,0 @@
-function testcase ( ) { var temp ; tokenCodes . finally = 0 ; tokenCodes . return = 1 ; tokenCodes . void = 2 ; var i = 28800000 ; for ( var i = 0 ; i < arr . length ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) ;

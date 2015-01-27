@@ -1,1 +1,0 @@
-$INCLUDE ( "testBuiltInObject.js" ) for ( var i in object ) o += i + ' = ' + object [ i ] + '\n' testBuiltInObject ( String . prototype . localeCompare , true , false , [ ] , 1 ) ;

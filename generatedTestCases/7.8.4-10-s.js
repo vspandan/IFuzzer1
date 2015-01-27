@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( '"use strict"; var x = " \\10 ";' ) ; return false ; } catch ( e ) { if ( parseInt == null ) { } { actual = getJSClass ( e ) ; expect = 'Error' ; } } } runTestCase ( testcase ) ;

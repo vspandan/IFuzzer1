@@ -1,1 +1,0 @@
-try { 1 % y ; this ; } catch ( e ) { if ( this ) { $ERROR ( '#1.2: 1 % y throw ReferenceError. Actual: ' + ( e ) ) ; } }

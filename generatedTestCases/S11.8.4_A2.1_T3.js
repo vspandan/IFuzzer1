@@ -1,1 +1,0 @@
-"var o = new MyObject(); var result = 0; for ( var i, p in this) { result += this[p]; }"

@@ -1,1 +1,0 @@
-function temp ( ) { for ( i = 0 ; i < size ; i ++ ) { array1 . push ( array1 . shift ( ) ) ; array2 . unshift ( array2 . pop ( ) ) ; } return prop === "66\u2028123" && prop [ 2 ] === "\u2028" && prop . length === 6 ; } runTestCase ( testcase ) ;

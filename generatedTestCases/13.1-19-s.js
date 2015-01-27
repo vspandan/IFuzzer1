@@ -1,1 +1,0 @@
-function testcase ( ) { try try { eval ( 'let (a) {} print(42);' ) ; actual = 'No Error' ; } catch ( ex ) { actual = ex + '' ; } ; } runTestCase ( testcase ) ;

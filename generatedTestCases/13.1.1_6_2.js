@@ -1,1 +1,0 @@
-$INCLUDE ( "testIntl.js" ) ; taintDataProperty ( Intl , false ) ; "a" . temp ( "b" ) ;

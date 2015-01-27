@@ -1,1 +1,0 @@
-function args ( ) { return temp ; }

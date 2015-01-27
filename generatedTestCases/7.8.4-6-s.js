@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( '"use strict"; var x = "\\01z";' ) ; return false ; } catch temp { A [ 0 ] = string ; return A ; } } runTestCase ( testcase ) ;

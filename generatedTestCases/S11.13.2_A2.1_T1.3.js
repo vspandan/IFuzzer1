@@ -1,1 +1,0 @@
-var x = - 1 ; var z = ( x %= 2 ) ; if ( z !== - 1 ) { $ERROR ( '#1: var x = -1; var z = (x %= 2); z === -1. Actual: ' + ( z ) ) ; } var x = - 1 ; var temp DeclCE ; var z = ( x %= y ) ; if ( z !== - 1 ) { expect = 'function () {\n if (function () {}) {\n g();\n }\n}' }

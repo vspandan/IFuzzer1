@@ -1,1 +1,0 @@
-function testcase ( ) { } runTestCase ( testcase ) function FoodAd ( adtype ) { ad = new DartAd ( ) ad . addParameter ( "" , adtype ) adRestrictionManager . isActive ( ad , mdManager ) }

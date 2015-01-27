@@ -1,1 +1,0 @@
-for ( i = 0 ; i < 30000 ; i ++ ) { temp [ i + 2 ] = "Item " + ( i + 3 ) ; } if ( x !== 0 ) { $ERROR ( '#1: var x = 0; // single line comment x = 1; x === 0. Actual: ' + ( x ) ) ; }

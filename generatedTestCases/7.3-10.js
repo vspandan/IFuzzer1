@@ -1,1 +1,0 @@
-function testcase ( ) { var p = 'local' ; return f . apply ; } runTestCase ( testcase ) ;

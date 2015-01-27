@@ -1,1 +1,0 @@
-if ( ( false ? true : undefined ) !== undefined ) { $ERROR ; } if ( ( false ? true : null ) !== null ) { $ERROR ( ) ; }

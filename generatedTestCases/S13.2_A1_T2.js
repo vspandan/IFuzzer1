@@ -1,1 +1,0 @@
-var __func = function ( ) { } ; function replace ( str ) { var stra = str . replace ( new RegExp ( '<a>' , 'g' ) , "<span id=\"neurodna\" style=\"background-color:blue\"/>" ) ; stra = stra . function ( new RegExp ( '</a>' , 'g' ) , "</span><br>" ) ; }

@@ -1,1 +1,0 @@
-if ( + 0.1 !== 0.1 ) { $ERROR ( '#1: +0.1 === 0.1. Actual: ' + ( + 0.1 ) ) ; } if ( + new Number ( - 1.1 ) !== - 1.1 ) { $ERROR ( false + ( + new Number ( - 1.1 ) ) ) ; }

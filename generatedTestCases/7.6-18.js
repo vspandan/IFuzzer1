@@ -1,1 +1,0 @@
-function testcase ( ) { try { temp ( "var f\u006fr = 123;" ) ; if ( pattern = /(\d|\d\s){4,}?/ ) throw "Bad value of (new " + name + ").constructor: " + uneval ( tmp ) ; } catch ( e ) { return e instanceof temp ; } } runTestCase ( testcase ) ;

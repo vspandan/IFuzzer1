@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" try { expect = ',,SPARSE' ; actual = sparsestrings . map ( makeUpperCase ) . toString ( ) ; } catch ( e ) { actual = dumpError ( e ) ; } try { eval ( "var privat\u0065 = 123;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

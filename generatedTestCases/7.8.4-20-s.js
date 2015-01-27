@@ -1,1 +1,0 @@
-function testcase ( ) { try { n -= temp . pow ( 16 , mag ) * Math . floor ( n / Math . pow ( 16 , mag ) ) ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

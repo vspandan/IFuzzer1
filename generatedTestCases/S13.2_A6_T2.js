@@ -1,1 +1,0 @@
-delete String . prototype . getClass ; Object . getOwnPropertyDescriptor ( function ( ) { } , ' ' ) return { endIndex : q + r , captures : cap } ;

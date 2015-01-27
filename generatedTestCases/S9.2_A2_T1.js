@@ -1,1 +1,0 @@
-if ( Boolean ( null ) !== false ) { temp ( '#1: Boolean(null) === false. Actual: ' + ( Boolean ( null ) ) ) ; }

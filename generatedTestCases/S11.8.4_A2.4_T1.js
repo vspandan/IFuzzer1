@@ -1,1 +1,0 @@
-var x = 1 ; if ( ( x = 0 ) >= x !== true ) { $ERROR ( ) ; } var x = 0 ; if ( x >= ( x = 1 ) !== false ) { $ERROR ( '#2: var x = 0; x >= (x = 1) === false' ) switch ( input ) { case 0 : result += 2 ; case 1 : result += 4 ; break ; case 2 : result += 8 ; case 3 : result += 16 ; default : result += 32 ; break ; case 4 : result += 64 ; } }

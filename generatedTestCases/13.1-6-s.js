@@ -1,1 +1,0 @@
-function temp ( ) { "use strict" ; try { eval ( "function _13_1_6_fun(param1, param2, param1) { }" ) ; return false ; } catch ( e ) { return this ; } } for ( addexp = 0 ; addexp <= 32 ; addexp ++ ) { new TestCase ( SECTION , shiftexp + " >> " + addexp , SignedRightShift ( shiftexp , addexp ) , shiftexp >> addexp ) ; } ;

@@ -1,1 +1,0 @@
-( x ) = 1 ; out3 : while ( i < 1000 ) { if ( i == 100 ) { var k = 0 ; out4 : while ( k < 1000 ) { if ( k == 500 ) { i ++ ; continue out3 ; } k ++ ; } j = 3000 ; } j ++ ; i ++ ; } var y = 1 ; ( y ) ++ ; WorkerBee in " String == null" ; ( y ) -- ; var SECTION = "15.3.1.1-2" ; ; if ( y !== 1 ) { $ERROR ( '#2: var y = 1; (y)++; ++(y); (y)--; --(y); y === 1. Actual: ' + ( y ) ) ; }

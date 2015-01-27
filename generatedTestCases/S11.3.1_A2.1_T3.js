@@ -1,1 +1,0 @@
-try { 1 ++ ; this ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ; } else { 1 ++ ; } }

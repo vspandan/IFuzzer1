@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { } ; tokenCodes [ 'instanceof' ] = 0 ; tokenCodes [ 'typeof' ] = 1 ; tokenCodes [ 'else' ] = 2 ; var arr = [ 'instanceof' , 'typeof' , 'else' ] ; for ( var temp in tokenCodes ) { } return true ; } runTestCase ( testcase ) ;

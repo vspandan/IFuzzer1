@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var blah = ( 'xxxxxxx' . match ( /x{1,2}x{1,}/ ) ) ; try { eval ( " += 20;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError && blah === ; } } runTestCase ( testcase ) ;

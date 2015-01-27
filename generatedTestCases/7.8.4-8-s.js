@@ -1,1 +1,0 @@
-function temp { childObject } runTestCase ( testcase ) ;

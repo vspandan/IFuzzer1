@@ -1,1 +1,0 @@
-function temp ( t , min , sec , ms ) { var TIME = temp ( t ) ; var MIN = Number ( min ) ; var SEC = ( sec == void 0 ) ? SecFromTime ( TIME ) : Number ( sec ) ; var MS = ( ms == void 0 ) ? msFromTime ( TIME ) : Number ( ms ) ; var RESULT5 = MakeTime ( HourFromTime ( TIME ) , MIN , SEC , MS ) ; return ( TimeClip ( UTC ( MakeDate ( Day ( TIME ) , RESULT5 ) ) ) ) ; }

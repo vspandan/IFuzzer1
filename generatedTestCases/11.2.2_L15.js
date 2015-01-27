@@ -1,1 +1,0 @@
-$INCLUDE ( "testBuiltInObject.js" ) ; switch ( true ) { case ( undefined === null ) : actual = true ; break ; default : actual = false ; } ;

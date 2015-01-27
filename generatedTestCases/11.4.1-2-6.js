@@ -1,1 +1,0 @@
-new TestCase runTestCase ( testcase ) ;

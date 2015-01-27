@@ -1,1 +1,0 @@
-function __func ( ) { return ( "var a\r\nb = 5; ab=10;ab" ) ; } ; with ( obj ) { }

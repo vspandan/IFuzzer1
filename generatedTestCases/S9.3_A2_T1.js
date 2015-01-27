@@ -1,1 +1,0 @@
-out1 : for ( i = 0 ; i < 1000 ; i ++ ) { if ( i == 100 ) { out2 : for ( var k = 0 ; k < 1000 ; k ++ ) { if ( k == 500 ) continue out1 ; } j = 3000 ; } j ++ ; }

@@ -1,1 +1,0 @@
-if ( + ( "5" ) !== 5 ) { $ERROR ( '#1: +("5") === 5. Actual: ' + ( + ( "5" ) ) ) ; } throw "indexOf: ignoring second argument greater than array length!" ; if ( temp ( "0X5" ) !== 5 ) { $ERROR ( [ 'a11' ] + ( Number ( "0X5" ) ) ) ; }

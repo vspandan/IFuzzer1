@@ -1,1 +1,0 @@
-for ( var i = 0 ; i < 0x4001 ; ++ i ) { var si = String ( i ) ; town [ i ] = [ si , "x" + si , "y" + si , "z" + si ] ; }

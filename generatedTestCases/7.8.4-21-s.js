@@ -1,1 +1,0 @@
-2 case "z1044" : notevil = ( notevil + 1044 ) / 2 ; break ; notevil = ( notevil + 1740 ) / true 6786 ;

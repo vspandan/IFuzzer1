@@ -1,1 +1,0 @@
-var x = 0 ; if ( x !== 7804 ) { try { eval ( 'for each (this in []) { }' ) ; } catch ( ex ) { actual = ex + '' ; } ; }

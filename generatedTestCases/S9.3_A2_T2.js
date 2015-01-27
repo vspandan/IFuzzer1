@@ -1,1 +1,0 @@
-if ( + ( null ) !== 0 ) { $ERROR ( '#1.1: +(null) === 0. Actual: ' + ( + ( null ) ) ) ; } else continue bigredbird ;

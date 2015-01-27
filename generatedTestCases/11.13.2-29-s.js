@@ -1,1 +1,0 @@
-function testcase ( ) { } function markRange ( buffer , start , end , marker ) { for ( var i = start ; i <= end ; i ++ ) { buffer [ i ] |= temp ; } } ;

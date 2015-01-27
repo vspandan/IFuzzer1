@@ -1,1 +1,0 @@
-try { + x ; $ERROR ( '#1.1: +x throw ReferenceError. Actual: ' + ( + x ) ) ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { $ERROR ( '#1.2: +x throw ReferenceError. Actual: ' + function ( e ) { s . compile ( "" ) ; Array ( 11 ) . join ( Array ( 11 ) . join ( Array ( 101 ) . join ( "aaaaa" ) ) ) ; } ) ; } }

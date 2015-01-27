@@ -1,1 +1,0 @@
-; "z934" notevil if ( null * true !== 0 ) { $ERROR ( '#2: null * true === 0. Actual: ' + ( null * true ) ) ; } if ( new Boolean ( true ) * null !== 0 ) { $ERROR ( '#3: new Boolean(true) * null === 0. Actual: ' + ( new Boolean ( true ) * null ) ) ; } if ( null * new Boolean !== 0 ) { { local0 = e . name ; } }

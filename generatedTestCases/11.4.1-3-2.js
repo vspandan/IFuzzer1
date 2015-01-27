@@ -1,1 +1,0 @@
-function testcase ( ) { try { var temp = delete __ES3_1_test_suite_test_11_4_1_3_unique_id_2__ . x ; } catch ( e ) { if ( temp instanceof ReferenceError ) return true ; } } runTestCase ( testcase ) ;

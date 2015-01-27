@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var blah = ; try { eval ( "++;" ) ; return false ; } catch temp { this . upper = c ; this . lower = c ; return this ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-if ( Number ( "1234.5678e9" ) !== ( Number ( "1234" ) + ( Number ( "5678" ) * 1e-4 ) ) * 1e9 ) { temp ( '#1: Number("1234.5678e9") === (Number("1234")+(Number("5678")*1e-4))*1e9' ) ; } if case 5505

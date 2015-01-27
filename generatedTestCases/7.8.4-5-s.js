@@ -1,1 +1,0 @@
-function testcase ( ) { f result = "failed: no exception thrown" ; exception = null ; try { result = new Math ( ) ; } catch ( e ) { result = "passed: threw exception" , exception = e . toString ( ) ; } finally { new TestCase ( SECTION , "new Math() [ exception is " + exception + " ]" , "passed: threw exception" , result ) ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( [ 2 ] ) ; return false ; } catch ( e ) { return ( [ "A2" ] ) ; } } runTestCase ( testcase ) ;

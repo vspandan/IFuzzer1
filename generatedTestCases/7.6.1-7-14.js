@@ -1,1 +1,0 @@
-function temp <missing '('> isThisFast <missing ')'> { MyDate } { value : 3 , writable : false , enumerable : true , configurable : false } ;

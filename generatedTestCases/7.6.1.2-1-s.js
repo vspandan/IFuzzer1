@@ -1,1 +1,0 @@
-function testcase ( ) { testSyntax ( " ).split(" , true ) ; try { eval ( "var implements = 1;" ) ; return false ; } catch ( temp ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

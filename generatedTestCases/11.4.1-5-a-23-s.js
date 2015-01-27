@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; with ( { foo : "bar" } ) eval ( s ) } runTestCase ( testcase ) ;

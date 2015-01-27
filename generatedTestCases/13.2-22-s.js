@@ -1,1 +1,0 @@
-function testcase ( ) { function foo ( ) { CompareSplitWithLimit ( "hello" , "l" , 0 ) ; } try { foo . caller = 41 ; return false ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

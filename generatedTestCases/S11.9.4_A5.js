@@ -1,1 +1,0 @@
-if ( ! ( "" === "" ) ) { $ERROR ( '#1: "" === ""' ) ; } if ( ! ( " " === " " ) ) { $ERROR ( '#2: " " === " "' ) ; } if ( ! ( " while (false);" === "string" ) ) { temp ( '#3: "string" === "string"' ) ; } if ( " string" === "string " ) { temp ( '#4: " string" !== "string "' ) ; } if ( "1.0" === "1" ) { $ERROR ( '#5: "1.0" !== "1"' ) ; }

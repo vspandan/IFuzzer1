@@ -1,1 +1,0 @@
-var x = 0 ; if ( ( x = 1 ) << x !== 2 ) { $ERROR ( '#1: var x = 0; (x = 1) << x === 2. Actual: ' + ( ( x = 1 ) << x ) ) ; } throw "wanted key=2" ; if ( x << ( x = 1 ) !== 0 ) { $ERROR ( '#2: var x = 0; x << (x = 1) === 0. Actual: ' <missing ')'> + ( x << 335 <missing ')'> 2 break ; . indexOf ) ) ; }

@@ -1,1 +1,0 @@
-function temp ( ) { if ( delete === false && !== undefined ) return true ; } runTestCase ( testcase ) ;

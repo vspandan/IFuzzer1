@@ -1,1 +1,0 @@
-throw "F_4 failed" ; if ( void 0 !== undefined ) { $ERROR ( '#2: void 0 === undefined' ) ; } if ( undefined !== eval ( "var MYVAR=Number.NaN;MYVAR--" ) ) { $ERROR ( '#3: undefined === eval("var x")' ) ; }

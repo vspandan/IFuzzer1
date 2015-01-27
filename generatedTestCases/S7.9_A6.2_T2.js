@@ -1,1 +1,0 @@
-for ( ; <missing ';'> ) out2 : for ( var k = 0 ; k < 1000 ; k ++ ) { if ( k == 500 ) continue out1 ; }

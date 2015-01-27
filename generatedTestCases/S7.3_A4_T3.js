@@ -1,1 +1,0 @@
-eval ( "// single line comment\u2028" ) ; new TestCase ( SECTION , "var MYVAR=0;--MYVAR" , - 1 , temp ( "var MYVAR=0;--MYVAR" ) ) eval ( "// single line comment\u2028 x = 1;" ) ; if ( x !== 1 ) { $ERROR ; }

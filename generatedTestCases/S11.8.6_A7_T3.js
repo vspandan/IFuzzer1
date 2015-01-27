@@ -1,1 +1,0 @@
-var __func = new function ; if ( ! ( __func instanceof function ) ) { $ERROR ( '#1: if instanceof returns true then GetValue(RelationalExpression) was constructed with ShiftExpression' ) ; } if ( temp . constructor !== function ) { $ERROR ( '#2: if instanceof returns true then GetValue(RelationalExpression) was constructed with ShiftExpression' ) ; }

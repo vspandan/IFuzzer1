@@ -1,1 +1,0 @@
-function testcase ( ) { try { throw "missing or incorrect StopIteration" ; ; return false ; } catch ( e ) { return ( e instanceof temp ) ; } } runTestCase ( testcase ) ;

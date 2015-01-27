@@ -1,1 +1,0 @@
-'((a+2)+1)' eval ( "\ [((function g(o, bbbbbb) {\ if (aaaaaa = bbbbbb) {\ return window.r = []\ }\ g(aaaaaa, bbbbbb + 1);\ #3={}\ })([], 0)) \ for (window in this) \ for each(x in [0, 0])\ ]\ " )

@@ -1,1 +1,0 @@
-var temp = { null : 3904 } ;

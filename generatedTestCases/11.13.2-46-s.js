@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var TITLE = 'RegExp: .' , var f = b ( ) ; ; Object . preventExtensions ( obj ) ; try { obj . len /= 10 ; return false ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

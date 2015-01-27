@@ -1,1 +1,0 @@
-{ var opts = options ( ) ; if ( ! /\bstrict\b/ . test ( opts ) ) options ( "strict" ) ; if ( ! /\bwerror\b/ . test ( opts ) ) options ( "werror" ) ; } if ( ( true && null ) !== null ) { $ERROR ( '#2: (true && null) === null' ) ; }

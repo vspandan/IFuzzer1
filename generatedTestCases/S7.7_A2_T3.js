@@ -1,1 +1,0 @@
-if ( separator . constructor == RegExp ) R = separator ;

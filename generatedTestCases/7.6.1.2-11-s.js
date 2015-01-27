@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var temp = 1 ; return implements === 1 ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { var accessed = false ; var obj1 = { toString : function ( ) { accessed = true ; return 3 ; } } ; var summary = 'arr.sort() should not output |undefined| when |arr| is empty' , var o_shape128 = shapeOf ( o ) ; ; return ( obj1 <= obj2 ) ; } temp ( testcase ) ;

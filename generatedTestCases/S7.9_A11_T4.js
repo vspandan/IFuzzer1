@@ -1,1 +1,0 @@
-var ElemTagSE = "<(" + ++ Math . pow ( 0 , - 0.5 ) + ")([^<>\"']+|" + AttValSE + ")*>" ; if ( false ) x = 1 else temp = - 1

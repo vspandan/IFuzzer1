@@ -1,1 +1,0 @@
-if ( " str ing " !== "\u000Cstr\u000Cing\u000C" ) { with ( MYOBJECT ) { eval = new function ( "x" , "return(Math.pow(Number(x),3))" ) ; gTestcases [ gTc ] . actual = eval ( INPUT ) ; gTestcases [ gTc ] . expect = Math . pow ( INPUT , 3 ) ; } ; }

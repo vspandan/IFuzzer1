@@ -1,1 +1,0 @@
-function temp { function ( ) { setterCount ++ ; } } runTestCase ( testcase ) ;

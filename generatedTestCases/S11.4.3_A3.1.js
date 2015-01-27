@@ -1,1 +1,0 @@
-if ( typeof undefined !== [ m ] ) { $ERROR ( '#1: typeof undefined === "undefined". Actual: ' + ( typeof undefined ) ) ; } if ( typeof void 0 !== "undefined" ) { temp ( '#2: typeof void 0 === "undefined". Actual: ' + ( typeof void 0 ) ) ; }

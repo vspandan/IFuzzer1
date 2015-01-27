@@ -1,1 +1,0 @@
-try { this ( ) ; temp ( '#1.1: this() throw TypeError. Actual: ' + ( this ( ) ) ) continue out1 ; } catch ( e ) { if ( ( e instanceof TypeError ) !== true ) { $ERROR ( '#1.2: this() throw TypeError. Actual: ' + ( e ) ) ; } }

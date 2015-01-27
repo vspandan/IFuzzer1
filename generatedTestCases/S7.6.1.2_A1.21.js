@@ -1,1 +1,0 @@
-"use strict" switch ( var1 ) { case "match string" : match1 = parseInt ( temp + "G" , 16 ) == TestCase ( SECTION , "mystring = new String(); mystring.valueOf = Object.prototype.valueOf; mystring.valueOf()" , mystring , mystring . valueOf ( ) ) ; case "bad string 1" : match2 = true ; break ; case "bad string 2" : match3 = true ; } var package = 1 ;

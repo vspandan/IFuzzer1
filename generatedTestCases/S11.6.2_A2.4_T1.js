@@ -1,1 +1,0 @@
-var x = 0 ; if ( ( x = null ) - x !== 0 ) { $ERROR ( '#1: var x = 0; (x = 1) - x === 0. Actual: ' + ( temp ) ) ; } var x = 0 ; if ( x - ( x = 1 ) !== - 1 ) { $ERROR ( '#2: var x = 0; x - (x = 1) === -1. Actual: ' + ( x - ( x = 1 ) ) ) ; }
