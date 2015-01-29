@@ -76,7 +76,7 @@ class AntlrParser {
 				parseTr = parseTr + " >>> ";
 			} else {
 				if (isIdentifier && extractCF) {
-					parseTr = parseTr + "___identifier___";
+					parseTr = parseTr + "__id__"+s.getText();
 					isIdentifier = false;
 				} else {
 					parseTr = parseTr + s.getText() + " ";
@@ -131,7 +131,6 @@ class AntlrParser {
 
 	public HashMap<String, String> extractCodeFrag(String program,
 			String fileName, boolean extractCF) {
-		System.out.println(fileName);
 		if (program != null)
 			parseTr = parseTree(program, null, extractCF);
 		else if (fileName == null)
@@ -150,8 +149,6 @@ class AntlrParser {
 			for (int i = 0; i < non_Terminals.size(); i++) {
 				String nt = non_Terminals.get(i);
 				String code = retrieveCodeFrag(parseTr, nt, position);
-				System.out.println(nt);
-				System.out.println(code);
 				if (code.length() > 0) {
 
 					d.put(nt, code);
@@ -165,7 +162,6 @@ class AntlrParser {
 	public static void main(String[] args) {
 		AntlrParser a = new AntlrParser();
 		if (!args[0].equals("null")){
-			System.out.println(args[0]);
 			System.out.println(a.parseTree(null, args[0], true));
 		}
 		else {

@@ -16,6 +16,7 @@ from langparser.AntlrParser import AntlrParser
 
 import threading
 import multiprocessing
+import Queue
 from _collections import defaultdict
 from os import makedirs
 from pickle import dump, HIGHEST_PROTOCOL, load
@@ -316,38 +317,51 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
         if not os.path.exists(DATABSEDIR):
             makedirs(DATABSEDIR)
         fileList=mozillaJSTestSuite.manifest.fileList
-        codeFrags=defaultdict(dict)
+        codeFragPool=[]
+        codeFrags2=defaultdict(list)
         totalFileList=fileList
-        
         for f in fileList:
-                a=AntlrParser(DATABSEDIR)
-                #codeFrags = a.extractCodeFrag(f)
+                que=Queue.Queue()
+                a=AntlrParser(que)
                 t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f })
                 t.start()
-                t.join(300)
+                t.join(90)
                 if t.isAlive():
-                    #print "is alive"
+                    print "is alive"
                     try:
                         raise TimeLimitExpired()
                     except:
                         #print "killed"
-                        pass
-                
-                """
-                for key in codeFrags.keys():
-                    fileName = DATABSEDIR + "/" + key
-                    f = open(fileName, 'a+')
-                    if os.stat(fileName).st_size == 0:
-                        dump(codeFrags.get(key), f, HIGHEST_PROTOCOL)
-                    else:
-                        temp=load(f)
-                        temp.update(codeFrags.get(key))
-                        f.close()
-                        f = open(fileName, 'w')
-                        dump(temp, f, HIGHEST_PROTOCOL)
-                    f.close()
-                time.sleep(.4)
-                """
+                        continue
+                t=que.get()
+                if t is not None:
+                    codeFragPool.append(t)
+        print datetime.datetime.now()
+        print "Finalizing: Grouping Common Frags"
+        for codeFrags in codeFragPool:
+            
+            keys=codeFrags2.keys()
+            for key in codeFrags.keys():
+                if key in keys:
+                    codeFrags2[key] = codeFrags2.get(key)+codeFrags.get(key)
+                else:
+                    codeFrags2[key]=codeFrags.get(key)
+        print datetime.datetime.now()
+        print "Finalizing: Writing to file"
+        for key in codeFrags2.keys():
+            fileName = DATABSEDIR + "/" + key
+            f = open(fileName, 'a+')
+            if os.stat(fileName).st_size == 0:
+                dump(codeFrags2.get(key), f, HIGHEST_PROTOCOL)
+            else:
+                temp=load(f)
+                temp.update(codeFrags2.get(key))
+                f.close()
+                f = open(fileName, 'w')
+                dump(temp, f, HIGHEST_PROTOCOL)
+            f.close()
+        print datetime.datetime.now()
+        print "Finished; Code generation and testing begins"
         
     if options.check_manifest:
         check_manifest(test_list)
@@ -409,19 +423,16 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
             os.chdir(os.path.dirname(options.manifest))
         try:
             results = ResultsSink()
-            #run_tests(options, test_list, results)
+            run_tests(options, test_list, results)
             while True:
                 filename = os.path.join(os.path.dirname(__file__), "jstests_generated.list")
                 generatedFileList=runFuzzer(testCasesDirectory,targetDirectory)
-                """
                 if os.path.isfile(filename):
                     f=open(filename,"a+")
                     for files in generatedFileList:
                         f.write("script "+files+"\n")
                     test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester)
                     run_tests(options, test_list, results)
-                """
-                break
         finally:
             os.chdir(curdir)
 

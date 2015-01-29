@@ -103,7 +103,7 @@ class Genotype(object):
     @staticmethod
     def _dec2bin_gene(dec_gene):
        
-        bin_gene = []
+        bin_gene = []executing
         for item in dec_gene:
             bin_gene.append(base10tobase2(item, zfill=8))
         return ''.join(bin_gene)
@@ -131,8 +131,8 @@ class Genotype(object):
             # TODO apply strategy to select based on its score values
             d = load(f)
             f.close()
-            keys = d.keys()
-            return keys[random.randint(0, len(keys) - 1)]
+            #keys = d.keys()
+            return d[random.randint(0, len(d) - 1)]
         else:
             print "No related mapping found for "+item
             return self.resolve_variable(item)
@@ -164,10 +164,11 @@ class Genotype(object):
                     position += 1
                     continue
         
-                if item == "identifier" or item=="___identifier___":
+                if item == "identifier" or "__id__" in item:
                     l=len(self._identifiers)
                     if l>0:
-                        prg_list[position]= str(self._identifiers[randint(0,l-1)])
+                        ident=str(self._identifiers[randint(0,l-1)])
+                        prg_list[position]= ident.replace("__id__","")
                     else:
                         prg_list[position]="id"
                     position += 1

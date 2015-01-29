@@ -122,14 +122,13 @@ def runFuzzer(testCasesDir,targetDirectory):
             PROCESSLIST=[]
             for f in listdir(subDir) :
                 fi=join(subDir,f)
-                if isfile(fi):
-                    if f.endswith(".js") and f not in EXCLUDED :
-                        process(fi,FILECOUNT)
-                        #p=multiprocessing.Process(target=process,args=(fi, f))
-                        #p=threading.Thread(target=process,args=(fi, f))
-                        #PROCESSLIST.append(p)
-                        #frame.quit()
-                        #return             
+                if isfile(fi) and f.endswith(".js") and f not in EXCLUDED :
+                    process(fi,FILECOUNT)
+                    #p=multiprocessing.Process(target=process,args=(fi, f))
+                    #p=threading.Thread(target=process,args=(fi, f))
+                    #PROCESSLIST.append(p)
+                    #frame.quit()
+                    #return             
         frame.quit()
         return GENERATEDFILELIST
         

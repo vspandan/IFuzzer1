@@ -1,15 +1,16 @@
 from fileinput import input
-from os import remove, system, makedirs, removedirs, pathsep, path, stat,getcwd
+from os import remove, system, makedirs, removedirs, pathsep, path, stat,getcwd, kill
 
 from random import choice, randint
 from collections import defaultdict
 from pickle import dump, load, HIGHEST_PROTOCOL
 
-
+import threading
 import subprocess
+import sys
+import time
 
 DEFAULT_SCORE = 0
-DEFAULT_DATABASE_PATH = "database"
 DEFAULT_FILE = "temp"
 WRITE = 'w'
 APPEND = "a+"
@@ -17,15 +18,19 @@ ZERO = 0
 
 class AntlrParser(object):
 
-    def __init__(self,dBDir=None):
-        DEFAULT_DATABASE_PATH=dBDir
-
+    def __init__(self,que=None):
+        self.que=que
+        self.out=""
+        self.p=None
+        self.err=None
 
     def genCodeFrag(self, parsetree, population_size,nT,subTree = None,nonTerminal=None,INCLUDE_NT_LIST =None):
         population = []
         identifers=[]
+        extractIdentifiers=True
+        identiferList=[]            
         for pop_count in range(0, population_size):
-            identiferList=[]            
+            #identiferList=[]            
             identifier=False
             val=parsetree.split()
             code=""
@@ -52,7 +57,13 @@ class AntlrParser(object):
                 temp=0
                 
                 for v in val:
-                    
+                    if extractIdentifiers:
+                        if identifier:
+                            if "<<<identifier" not in v:
+                                identiferList.append(v)
+                                identifier=False
+                        if "<<<identifier" in v:
+                                identifier=True
                     if '<<<' in v:
                         nTposition=nTposition+1
                         if indicator:
@@ -71,14 +82,10 @@ class AntlrParser(object):
                     if indicator:
                         #for complete parse representation that is being replaced use below code statement.
                         #subcode=subcode + " " +v
-                        if "<<<identifier" in v:
-                            identifier=True
                         if "<<<" not in v :
                             if ">>>" not in v:
                                 subcode=subcode+" "+v
-                                if identifier:
-                                    identiferList.append(v)
-                                    identifier=False
+                                
                     if not indicator:
                         if "<<<" not in v :
                             if ">>>" not in v:
@@ -94,9 +101,9 @@ class AntlrParser(object):
                     return subcode.strip()
             identifers.append(identiferList)
             population.append(code.strip())
-        
-
-        return population,identifers
+            extractIdentifiers=False
+        return population,identiferList
+        #return population,identifers
         
      
     def extractNonTerminal(self,val):        
@@ -107,50 +114,65 @@ class AntlrParser(object):
         return nT
 
     def parseTree_(self,program):
-        p = subprocess.Popen(["sh parser.sh null "+program ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        out, err = p.communicate()
-        return out
+        cmd="sh parser.sh null "+program 
+        t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
+        t.start()
+        t.join(60)
+        if t.isAlive():
+            if self.p is not None:
+                print "killing process handling file ("+str(self.p.pid)+"): "+fileName
+                try:
+                    import signal
+                    if sys.platform != 'win32':
+                        kill(self.p.pid, signal.SIGKILL)
+                    time.sleep(.1)
+                except OSError:
+                    pass
+        return self.out
 
-
-    def parseTree(self,fileName):
-        p = subprocess.Popen(["sh parser.sh "+fileName ], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        out, err = p.communicate()
-        return out
+    def run_cmd(self,cmd):
+        self.p = subprocess.Popen([cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        self.out, self.err = self.p.communicate()
         
-
+    def parseTree(self,fileName):
+        cmd="sh parser.sh "+fileName 
+        t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
+        t.start()
+        t.join(60)
+        if t.isAlive():
+            if self.p is not None:
+                print "killing process handling file ("+str(self.p.pid)+"): "+fileName
+                try:
+                    import signal
+                    if sys.platform != 'win32':
+                        kill(self.p.pid, signal.SIGKILL)
+                    time.sleep(.1)
+                except OSError:
+                    pass
+        return self.out
+                
     def extractCodeFrag(self, fileName):
         parseTr=self.parseTree(fileName)
         print fileName
-        d = defaultdict(dict)
+        d = defaultdict(list)
         if len(parseTr) >0:
             position = 1
-            directory = DEFAULT_DATABASE_PATH
-            if not path.exists(directory):
-                makedirs(directory)
-                
             for nt in self.extractNonTerminal(parseTr.split()):
+                d1 = []
                 code = self.retrieveCodeFrag(parseTr, nt, position)
                 if len(code) > 0:
-                    d1 = defaultdict(list)
                     if d.has_key(nt):
-                        d.get(nt).update(d1)
+                        d.get(nt).append(code)
                     else:
-                        d1[str(code)].append(DEFAULT_SCORE)
+                        d1.append(code)
                         d[str(nt)] = d1
                 position += 1
-            for key in d.keys():
-                    fileName = directory + "/" + key
-                    f = open(fileName, 'a+')
-                    if stat(fileName).st_size == 0:
-                        dump(d.get(key), f, HIGHEST_PROTOCOL)
-                    else:
-                        temp=load(f)
-                        temp.update(d.get(key))
-                        f.close()
-                        f = open(fileName, 'w')
-                        dump(temp, f, HIGHEST_PROTOCOL)
-                    f.close()
-            
+        else:
+            d=None
+        if self.que is not None:
+            self.que.put(d)
+        if self.que is None:
+            return d
                 
     def retrieveCodeFrag(self, pTreeRepr, nonT, position):
             val = pTreeRepr.split()
