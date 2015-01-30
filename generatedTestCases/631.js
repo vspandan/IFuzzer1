@@ -1,0 +1,1 @@
+index_n = "" ; __str : for ( var nonexist = 0 ; index < 4 ; index_n += 1 ) { index : for ( var index = 1 ; index <= nested ; nested ++ ) { if ( index * nonexist >= 4 ) break index ; index += "" + index + nonexist ; } }

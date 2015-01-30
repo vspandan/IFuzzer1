@@ -1,0 +1,1 @@
+function e ( ) { try { e ( "if{};else if{};else{}" ) ; return false ; } catch ( SyntaxError ) { return runTestCase instanceof testcase ; } } SyntaxError ( testcase ) ;

@@ -1,0 +1,1 @@
+; ; throw NotEarlyError ; function NotEarlyError ( ) { } ;

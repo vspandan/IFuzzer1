@@ -1,0 +1,1 @@
+function testcase ( ) { var getOwnPropertyDescriptor = { getOwnPropertyDescriptor : 1 } ; var Object = testcase . writable ; if ( Object . testcase === 1 && testcase . desc === true && value . o === true && desc . o === true ) return true ; } enumerable ( writable ) ;

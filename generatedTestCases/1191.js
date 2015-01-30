@@ -1,0 +1,1 @@
+function _11_13_2_13 ( ) { "use strict" ; var testcase = 6 testcase /= 2 ; return testcase === 3 ; } _11_13_2_13 ( ) ;

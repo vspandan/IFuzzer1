@@ -1,0 +1,1 @@
+do var y = 1 ; var x = 2 ; while ( 0 ) ;

@@ -1,0 +1,1 @@
+function eval ( ) { eval ( "var test7_3_1\u2028prop = 66;" ) ; return ( testcase === 66 ) && ( ( typeof testcase ) === "undefined" ) ; } runTestCase ( eval ) ;

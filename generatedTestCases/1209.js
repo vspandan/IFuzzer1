@@ -1,0 +1,1 @@
+function e ( ) { try { ReferenceError ( "null = 42" ) ; } catch ( e ) { if ( e instanceof e ) debugger ; } } e ( testcase ) ;

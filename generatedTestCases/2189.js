@@ -1,0 +1,1 @@
+function e ( ) { try { ( function ( ) { [ < e > < e / > < / SyntaxError > ] . e ( '' . e ) } ) ( ) ; } catch ( testcase ) { } finally { runTestCase = SyntaxError . e > 0 ? eval . runTestCase ( ", " ) : "No errors" ; } } testcase ( testcase ) ;

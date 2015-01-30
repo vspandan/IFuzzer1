@@ -1,0 +1,1 @@
+var LABEL1 = 0 , x = 0 ; y : do { LABEL1 ++ ; ( function ( ) { break LABEL1 ; } ) ( ) ; y ++ ; } while ( 0 ) ;

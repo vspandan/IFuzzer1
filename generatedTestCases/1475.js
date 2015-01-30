@@ -1,0 +1,1 @@
+var get = { } ; o . o ; if ( foo . o !== get ) { throw "'this' had incorrect value!" ; }

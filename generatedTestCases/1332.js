@@ -1,0 +1,1 @@
+var my_eval = eval ; if ( eval ( "\"use strict\";\nthis" ) !== my_eval ( ) ) { }

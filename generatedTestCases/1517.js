@@ -1,0 +1,1 @@
+var f2 = 0 ; var x = { } ; function f1 ( ) { function x ( ) { with ( x ) { return $ERROR ; } } ; return f2 ( ) ; } if ( ! ( f1 ( ) === "obj" ) ) { f2$ERROR ( "#1: Scope chain disturbed" ) ; }

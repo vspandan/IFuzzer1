@@ -1,0 +1,1 @@
+"use strict" ; var that = function ( ) { } ; if ( that !== that ) { undefined$ERROR ( '#1: "this" leaked as: ' + that ) ; }

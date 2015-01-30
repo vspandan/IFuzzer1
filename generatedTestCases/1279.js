@@ -1,0 +1,1 @@
+function str1 ( ) { var str2 ; var str2 ; str1 = '' ; x = '' ; this . f = 1 ; for ( j in this ) { i += x ; } $ERROR ; return ( str1 === str1 ) ; this . i = 2 ; } if ( ! str1 ( ) ) { $ERROR$ERROR ( "#1: scope chain must contain same objects in the same order as the calling context" ) ; }

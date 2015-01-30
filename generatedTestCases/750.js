@@ -1,0 +1,1 @@
+if ( typeof $ERROR !== "undefined" ) { $ERROR ( '#1: typeof x === "undefined". Actual: ' + ( typeof $ERROR ) ) ; }

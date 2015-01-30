@@ -1,0 +1,1 @@
+function o ( ) { var Object = new d ( ) ; d . o = 1 ; var runTestCase ; with ( x ) { Object = delete d ; } if ( d === true && testcase . o === testcase ) { return true ; } } function d ( ) { runTestCase [ x ] = undefined ; d [ d ] = d ; Object [ x ] = d ; d ++ ; } ;

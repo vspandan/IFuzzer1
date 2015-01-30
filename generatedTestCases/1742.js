@@ -1,0 +1,1 @@
+function eval ( ) { try { e ( "var \u0077\u0068\u0069\u006c\u0065 = 123;" ) break ; return false ; } catch ( eval ) { return e instanceof eval ; } } testcase ( testcase ) ;

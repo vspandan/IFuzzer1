@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) ; toLocaleString ( $INCLUDE . testBuiltInObject . prototype , true , false , [ ] , 0 ) ;

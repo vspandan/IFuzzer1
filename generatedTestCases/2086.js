@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; try { e ( "var _7_8_3_5 = 07;" ) break ; return false ; } catch ( _7_8_3_5 ) { return SyntaxError instanceof SyntaxError && typeof runTestCase === "undefined" ; } } eval ( testcase ) ;

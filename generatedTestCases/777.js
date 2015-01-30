@@ -1,0 +1,1 @@
+if ( - "1" !== - 1 ) { $ERROR$ERROR ( '#1: -"1" === -1. Actual: ' + ( - "1" ) ) ; } if ( isNaN ( - "x" ) !== true ) { String$ERROR ( '#2: -"x" === Not-a-Number. Actual: ' + ( - "x" ) ) ; } if ( - new $ERROR ( "-1" ) !== 1 ) { new $ERROR ( isNaN + ' ' + String + ' ' + String ) ; }

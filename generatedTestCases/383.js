@@ -1,0 +1,1 @@
+this . myObj = 1 ; var p1 = "result" ; function p1 ( ) { throw 'blah' ; } with ( p1 ) { var obj = function ( ) { result = 'x1' ; } var p1 = new p1 ; } if ( myObj !== 1 ) { myObj$ERROR ( '#1: p1 === 1. Actual: p1 ===' + valueOf ) ; } if ( result . myObj !== "x1" ) { p1$ERROR ( '#2: myObj.p1 === "x1". Actual: myObj.p1 ===' + result . value ) ; }

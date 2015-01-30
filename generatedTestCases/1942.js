@@ -1,0 +1,1 @@
+var $ERROR = 0 ; if ( y !== 0 ) { ; ; } var $ERROR ; if ( y !== undefined ) { y$ERROR ( '#3: var // y = 1; \\n y; y === undefined. Actual: ' + ( $ERROR ) ) ; } this . y ++ ; if ( y ( $ERROR ) !== true ) { y$ERROR ( '#6: //var this.y = 1; \\n this.y++; y === Not-a-Number. Actual: ' + ( y ) ) ; }

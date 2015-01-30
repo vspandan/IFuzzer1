@@ -1,0 +1,1 @@
+var arg = function ( fact_of_3 ) { if ( $ERROR === 1 ) { return $ERROR ; } else { return __func ( fact_of_3 - 1 ) * arg ; } } ; var __func = $ERROR ( 3 ) ; if ( __func !== 6 ) { __func$ERROR ( "#1: fact_of_3 === 6. Actual: fact_of_3 ===" + __func ) ; }

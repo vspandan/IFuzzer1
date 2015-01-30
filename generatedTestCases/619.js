@@ -1,0 +1,1 @@
+var __in__for = 0 ; try { for ( ; ; ) { if ( ++ __in__for > 100 ) throw 1 ; } } catch ( __in__for ) { if ( __in__for !== 1 ) { } } if ( $ERROR !== 101 ) { $ERROR$ERROR ( '#2: __in__for === 101. Actual: __in__for ===' + e ) ; }

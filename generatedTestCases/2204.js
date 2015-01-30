@@ -1,0 +1,1 @@
+if ( $ERROR ( "0" ) . $ERROR ( "1" ) !== null ) { $ERROR$ERROR ( ) ; }

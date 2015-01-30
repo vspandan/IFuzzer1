@@ -1,0 +1,1 @@
+function runTestCase ( ) { var testcase = testcase ( "\"use strict\";\nreturn typeof this;" ) ; return runTestCase ( ) === "undefined" ; } testcase ( Function ) ;

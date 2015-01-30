@@ -1,0 +1,1 @@
+function Object ( ) { return ! testcase . runTestCase ( runTestCase ( "'use strict';" ) , "caller" ) . Object ; } configurable ( ) ;

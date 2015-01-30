@@ -1,0 +1,1 @@
+function Math ( ) { var testcase = delete runTestCase . LN2 ; if ( runTestCase === false ) { return true ; } } testcase ( d ) ;

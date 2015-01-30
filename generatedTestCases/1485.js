@@ -1,0 +1,1 @@
+function fnGlobalObject ( ) { function testcase ( ) { "use strict" ; return this ; } ; return runTestCase . fnGlobalObject ( testcase ( ) ) === f ( ) ; } fnGlobalObject ( fnGlobalObject ) ;

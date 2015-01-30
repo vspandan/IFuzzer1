@@ -1,0 +1,1 @@
+var DateTimeFormat = new obj . obj ( ) ; var Intl = Intl . actualPrototype ( $ERROR ) ; if ( DateTimeFormat !== actualPrototype . Object . Intl ) { break Object ; ; } if ( ! $ERROR . actualPrototype ( Intl ) ) { prototype$ERROR ( "Object constructed by Intl.DateTimeFormat must be extensible." ) ; }

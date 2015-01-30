@@ -1,0 +1,1 @@
+try { if ( ( function ( ) { throw 1 } ) ( ) ) abracadabra } catch ( $ERROR ) { if ( $ERROR !== 1 ) { e$ERROR ( '#1: Exception === 1. Actual: Exception ===' + abracadabra ) ; } } try { if ( ( function ( ) { throw 1 } ) ( ) ) e ; else $ERROR ; } catch ( $ERROR ) { if ( blablachat !== 1 ) { e$ERROR ( '#2: Exception === 1. Actual: Exception ===' + e ) ; } }

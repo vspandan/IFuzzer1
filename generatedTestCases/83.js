@@ -1,0 +1,1 @@
+function testcase ( ) { try { testcase ( "(function (){});" ) ; return true ; } catch ( testcase ) { } } testcase ( runTestCase ) ;

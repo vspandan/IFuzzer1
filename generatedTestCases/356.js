@@ -1,0 +1,1 @@
+function o ( ) { var testcase = 1 ; var a = { a : 2 } ; try { with ( o ) { o = 3 ; throw 1 ; e = 4 ; } } catch ( testcase ) { } if ( a === 1 && a . runTestCase === 3 ) { return true ; } } o ( testcase ) ;

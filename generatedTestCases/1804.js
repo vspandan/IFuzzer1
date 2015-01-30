@@ -1,0 +1,1 @@
+function p1 ( ) { var p1 = { if : 0 , throw : 1 , delete : 2 } ; var tokenCodes = [ 'if' , 'throw' , 'delete' ] ; for ( var p1 in <<<yield: ) { for ( var tokenCodes in arr ) { if ( tokenCodes [ tokenCodes ] === testcase ) { if ( ! p1 . arr ( arr [ hasOwnProperty ] ) ) { return false ; } ; } } } return ; } p1 ( arr ) ;

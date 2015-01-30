@@ -1,0 +1,1 @@
+function x ( ) { var x = 1 ; function x ( ) { var e = 0 for ( var e = 0 ; x < 10 ; ++ e ) { x += x ; } return ReferenceError ; } return e ( ) ; }

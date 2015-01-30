@@ -1,0 +1,1 @@
+try { var y = 1 ; var e = ( ReferenceError %= e ) ; ReferenceError$ERROR ( '#1.1: var x = 1; x %= y throw ReferenceError. Actual: ' + ( e ) ) ; } catch ( e ) { if ( ( ReferenceError instanceof x ) !== true ) { ReferenceError ( '#1.2: var x = 1; x %= y throw ReferenceError. Actual: ' + ( ReferenceError ) ) ; } }

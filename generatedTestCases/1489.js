@@ -1,0 +1,1 @@
+function ( 1 ) ( ) { "use strict" ; function runTestCase ( ) { runTestCase [ 1 ] = 12 ; return runTestCase [ 0 ] = 30 && ( 2 , 30 ) [ 1 ] === false ; } ; return testcase ( 30 ) ; } _10_5_7_b_3_fun ( testcase ) ;

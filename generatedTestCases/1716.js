@@ -1,0 +1,1 @@
+function runTestCase ( ) { try { testcase ( "var thro\u0077 = 123;" ) ; return false ; } catch ( testcase ) { } } e ( e ) ;

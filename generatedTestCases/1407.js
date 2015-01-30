@@ -1,0 +1,1 @@
+function apply ( ) { function testcase ( ) { "use strict" ; return this === testcase ; } ; return f . testcase ( f ) ; } f ( f ) ;

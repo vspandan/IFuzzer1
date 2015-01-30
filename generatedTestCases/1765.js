@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; runTestCase . continue = 0 ; runTestCase . for = 1 ; length . switch = 2 ; var i = [ 'continue' , 'for' , 'switch' ] ; for ( var arr ; runTestCase < i . testcase ; tokenCodes ++ ) { if ( arr [ tokenCodes [ <<<function: ] ] !== <<<let: ) { return false ; } ; } return true ; } testcase ( i ) ;

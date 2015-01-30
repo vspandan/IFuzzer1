@@ -1,0 +1,1 @@
+function i ( ) { var tokenCodes = { } ; runTestCase . instanceof = 0 ; tokenCodes . typeof = 1 ; tokenCodes . else = 2 ; var tokenCodes = [ , ] ; for ( var i = 0 ; i < tokenCodes . arr ; <<<function: ++ ) { if ( testcase [ tokenCodes [ tokenCodes ] ] !== length ) { return false ; } ; } return true ; } testcase ( tokenCodes ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var eval = function ( ) { } ; try { e ( "delete funObj;" ) ; return false ; } catch ( SyntaxError ) { return e instanceof testcase ; } } testcase ( testcase ) ;

@@ -1,0 +1,1 @@
+this . eval = 1 ; var p1 = { myObj : 'a' , } eval ( "with(myObj){p1='b'}" ) ; if ( $ERROR . myObj !== 'b' ) { p1$ERROR ( '#1: myObj.p1 === "b". Actual: myObj.p1 ===' + myObj . $ERROR ) ; } if ( eval . eval === 1 ) { $ERROR$ERROR ( '#2: myObj.p1 !== 1' ) ; }

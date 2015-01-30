@@ -1,0 +1,1 @@
+function e ( ) { try { e ( '"use strict"; var x = "\\000";' ) ; return false ; } catch ( eval ) { return ( e instanceof eval ) ; } } if ( typeof testcase === "function" ) runTestCase ( true , true ) ;

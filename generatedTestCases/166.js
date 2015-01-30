@@ -1,0 +1,1 @@
+var $ERROR ; var x = function ( ) { $ERROR = 1 ; return ; } if ( x ( ) !== __func ) { ( 1 + ( 4 ) ) ( ) ; __func = 'No Error' ; } ; if ( x !== 1 ) { x$ERROR ( '#2: x === 1. Actual: x === ' + __func ) ; }

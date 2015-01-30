@@ -1,0 +1,1 @@
+function e ( ) { 'use strict' ; try { var eval = 'check for numerical overflow in regexps in back reference and bounds for {} quantifier' ; } catch ( testcase ) { return ( e instanceof runTestCase ) ; } } testcase ( SyntaxError ) ;

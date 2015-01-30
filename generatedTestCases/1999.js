@@ -1,0 +1,1 @@
+function id ( ) { try { yield <missing ':'> 0 ; } finally { id = [ ] ; } }

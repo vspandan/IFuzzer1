@@ -1,0 +1,1 @@
+function callee ( ) { try { callee . callee ; return true ; } catch ( e ) { } } testcase ( e ) ;

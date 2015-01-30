@@ -1,0 +1,1 @@
+var y ; var j ; str1 = '' ; str2 = '' ; str1 = 1 ; for ( eval in this ) { i += str1 ; } y ( { 0 : "hello" } ) ; if ( ! ( str2 === $ERROR ) ) { i$ERROR ( "#1: scope chain must contain same objects in the same order as the calling context" ) ; } i = 2 ;

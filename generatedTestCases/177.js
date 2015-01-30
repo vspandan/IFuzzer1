@@ -1,0 +1,1 @@
+function __x ( ) { x = 1 ; return e ; } try { e = x ; e$ERROR ( '#0: "x=x" lead to throwing exception' ) ; } catch ( __func ) { if ( x instanceof __x ) throw $ERROR ; } { __x = 'recorder started, ' ; } if ( e !== 1 ) { e$ERROR ( '#2: __x === 1. Actual: __x ===' + $ERROR ) ; } if ( x !== 1 ) { Test262Error$ERROR ( '#3: x === 1. Actual: x ===' + $ERROR ) ; }

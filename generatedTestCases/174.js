@@ -1,0 +1,1 @@
+function $ERROR ( ) { } ; __device . __FACTORY = 1 ; if ( typeof isPrototypeOf . $ERROR !== 'number' ) { __FACTORY$ERROR ( '#1: typeof __FACTORY.prototype === \'number\'. Actual: typeof __FACTORY.prototype ===' + ( typeof $ERROR . prototype ) ) ; } var __FACTORY = new $ERROR ( ) ; if ( ! ( prototype . Object . isPrototypeOf ( __FACTORY ) ) ) { $ERROR$ERROR ; }

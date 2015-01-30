@@ -1,0 +1,1 @@
+function runTestCase ( ) { var <<<reservedWord: = { enum : 0 , extends : 1 , super : 2 } ; var <<<reservedWord: = [ 'enum' , 'extends' , 'super' ] ; for ( var runTestCase = 0 ; i < tokenCodes . length ; tokenCodes ++ ) { if ( <<<reservedWord: [ testcase [ length ] ] !== arr ) { return false ; } ; } return true ; } i ( i ) ;

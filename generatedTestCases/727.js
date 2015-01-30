@@ -1,0 +1,1 @@
+try { var x = new e ( ) ; e = x . $ERROR ( 0 ) ; } finally { } try { var x = true ; $ERROR ( ) ; $ERROR$ERROR ( '#2.1: var x = true; x() throw TypeError. Actual: ' + ( e ( ) ) ) } catch ( TypeError ) { if ( ( x instanceof e ) !== true ) { TypeError$ERROR ( '#2.2: var x = true; x() throw TypeError. Actual: ' + ( e ) ) } }

@@ -1,0 +1,1 @@
+function tokenCodes ( ) { var runTestCase = { public : 0 , yield : 1 , interface : 2 } ; var <<<let: = [ 'public' , 'yield' , 'interface' ] ; for ( var arr in p ) { for ( var p1 in p1 ) { if ( p1 [ testcase ] === arr ) { if ( ! <<<yield: . testcase ( arr [ p ] ) ) { return false ; } ; } } } return true ; } p ( runTestCase ) continue ;

@@ -1,0 +1,1 @@
+function ex ( ) { "use strict" ; try { var foo = function ( ) { } ex . ex = 20 ; return false ; } catch ( ex ) { return ex instanceof foo ; } } ex ( foo ) ;

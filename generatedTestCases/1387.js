@@ -1,0 +1,1 @@
+function testcase ( ) { debugger ; ; return function ( "return f();" ) ( ) ; } runTestCase ( f ) ;

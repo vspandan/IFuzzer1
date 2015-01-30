@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; try { runTestCase ( "function _13_1_6_fun(param1, param2, param1) { }" ) ; return false ; } catch ( eval ) { return e instanceof testcase ; } } SyntaxError ( SyntaxError ) ;

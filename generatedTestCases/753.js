@@ -1,0 +1,1 @@
+if ( typeof 0 !== "number" ) { $ERROR$ERROR ( '#1: typeof 0 === "number". Actual: ' + ( typeof 0 ) ) ; } var x = 0 ; if ( typeof x !== "number" ) { x$ERROR ( '#2: typeof x === "number". Actual: ' + ( typeof $ERROR ) ) ; } var x = new x ( ) ; if ( typeof x !== "object" ) if ( $ERROR == 10 ) { $ERROR += "A" ; }

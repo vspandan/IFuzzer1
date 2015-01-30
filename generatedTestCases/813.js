@@ -1,0 +1,1 @@
+function d ( ) { var testcase = 1 ; var d = testcase ( "delete x" ) ; if ( d === false && runTestCase === 1 ) { return true ; } return false ; } d ( eval ) ;

@@ -1,0 +1,1 @@
+__str = "" for ( __str = 0 ; __str < 10 ; index += 0 ) { if ( __str < 5 ) continue ; index += __str ; } if ( __str !== "56789" ) { __str$ERROR ( '#1: __str === "56789". Actual: __str ===' + __str ) ; }

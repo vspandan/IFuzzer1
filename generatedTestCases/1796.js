@@ -1,0 +1,1 @@
+function tokenCodes ( ) { var testcase = { } ; tokenCodes [ 'package' ] = 0 ; testcase [ 'protected' ] = 1 ; i [ 'static' ] = 2 ; var i = [ 'package' , 'protected' , 'static' ] eos for ( var arr = 0 ; i < length . testcase ; runTestCase ++ ) { if ( i [ tokenCodes [ tokenCodes ] ] !== tokenCodes ) { return false ; } ; } return true ; } tokenCodes ( tokenCodes ) ;

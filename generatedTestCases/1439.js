@@ -1,0 +1,1 @@
+function undefined ( ) { function runTestCase ( ) { 'use strict' ; return typeof ( this ) ; } function foo ( ) { return typeof ( this ) ; } return bar . undefined ( foo ) === 'undefined' && bar . call ( ) === 'object' eos } runTestCase ( call ) ;

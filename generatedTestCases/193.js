@@ -1,0 +1,1 @@
+var __obj = 1 ; var result = function ( ) { return result ; } ; var $ERROR = { result : 2 } ; with ( result ) { __func = result ( ) ; } if ( __obj !== 1 ) { result$ERROR ( '#1: result === 1. Actual: result ===' + result ) ; }

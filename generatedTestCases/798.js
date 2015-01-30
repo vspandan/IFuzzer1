@@ -1,0 +1,1 @@
+function a ( ) { function undefined ( foo , testcase ) { return ( delete foo . foo ) ; } var b = delete callee . a ; if ( arguments === true && callee . testcase === runTestCase ) return true ; } d ( a ) ;

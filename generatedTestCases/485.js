@@ -1,0 +1,1 @@
+LABEL : LABEL = null ; var LABEL = 1 ; continue LABEL ; var LABEL = 2 ;

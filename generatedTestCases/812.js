@@ -1,0 +1,1 @@
+function hasOwnProperty ( ) { "use strict" ; var get = { } ; hasOwnProperty . obj ( Object , "prop" , { obj : function ( ) { return "abc" ; } , obj : true } ) ; delete defineProperty . configurable ; return ! hasOwnProperty . obj ( "prop" ) ; } testcase ( get ) ;

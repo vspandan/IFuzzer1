@@ -1,0 +1,1 @@
+x ( "// single line comment\u000D" ) ; var $ERROR = 0 ; eval ( "// single line comment\u000D x = 1;" ) ; if ( $ERROR !== 1 ) { x$ERROR ; }

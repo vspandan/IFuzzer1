@@ -1,0 +1,1 @@
+function testcase ( ) { switch ( my_eval ) { default : break ; case my_eval : break ; } return my_eval ( "\"use strict\";\nthis" ) === fnGlobalObject ( ) ; } runTestCase ( my_eval ) ;

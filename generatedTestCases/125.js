@@ -1,0 +1,1 @@
+function __obj ( __arg ) { __obj . __obj = "whiskey gogo" ; } var __obj = { } ; __obj ( __func ) ; if ( __arg . __func !== "whiskey gogo" ) { __arg$ERROR ( '#1: __obj.foo === "whiskey gogo". Actual: __obj.foo ===' + __obj . foo ) ; }

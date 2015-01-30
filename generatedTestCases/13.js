@@ -1,0 +1,1 @@
+__func = "Letov is alive" function $ERROR ( ) { function ALIVE ( ) { return __cont ; } ; if ( delete $ERROR ) { __cont$ERROR ( '#1: delete __func returning false' ) ; } try { $ERROR = new $ERROR ( __cont ) . __func ( __func ) + '' ; } catch ( ALIVE ) { ALIVE = __func + '' ; } } ; __func ( ) ;

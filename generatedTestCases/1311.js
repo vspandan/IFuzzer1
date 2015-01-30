@@ -1,0 +1,1 @@
+function o ( ) { var o = { } ; function o ( ) { "use strict" ; return this === bind ; } ; return f . f ( f ) ( ) ; } bind ( o ) ;

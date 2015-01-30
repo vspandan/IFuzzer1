@@ -1,0 +1,1 @@
+try { var e = ( e 1 ) ; do { for ( e . x in [ ] ) { } } while ( "c\\d" ) ; ; } catch ( e ) { if ( ( z instanceof z ) !== true ) { ReferenceError$ERROR ( '#1.2: x 1 throw ReferenceError. Actual: ' + ( $ERROR ) ) ; } }

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { throw new ARGUMENTS ( "..." ) ; return false ; } catch ( testcase ) { return Error instanceof ARGUMENTS ; } } Error ( testcase ) ;

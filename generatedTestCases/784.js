@@ -1,0 +1,1 @@
+function runTestCase ( ) { if ( delete testcase === false && undefined !== arguments ) return true ; } arguments ( arguments ) ;

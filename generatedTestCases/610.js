@@ -1,0 +1,1 @@
+e = 5 ; try { if ( __evaluated ) { supreme = "PASS" ; } else { __evaluated = "FAIL: HIT OUTER CATCH BLOCK" ; } } catch ( eval ) { $ERROR = 'error' ; $ERROR = '' ; }

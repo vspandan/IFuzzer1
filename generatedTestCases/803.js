@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; try { testcase ( "delete function;" ) ; return false ; } catch ( runTestCase ) { return runTestCase instanceof e ; } } testcase ( eval ) ;

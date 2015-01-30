@@ -1,0 +1,1 @@
+function e ( ) { try { throw function ( ) { this . obj = "test" ; } ; return false ; } catch ( test ) { var obj = { } ; runTestCase . obj = function ( ) { this . _12_14_16_foo = "test1" ; } ; runTestCase = e . fnGlobalObject ; fnGlobalObject ( ) ; return _12_14_16_foo ( ) . obj === "test1" ; } finally { delete obj ( ) . _12_14_16_foo ; } } _12_14_16_foo ( obj ) ;

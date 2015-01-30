@@ -1,0 +1,1 @@
+function tokenCodes ( ) { var tokenCodes = { } ; i [ 'if' ] = 0 ; tokenCodes [ 'throw' ] = 1 ; testcase [ 'delete' ] = 2 ; var tokenCodes = [ 'if' , 'throw' , 'delete' ] ; for ( var i = 0 ; arr < arr . testcase ; runTestCase ++ ) { if ( arr [ testcase [ testcase ] ] !== arr ) { return false ; } ; } return true ; } testcase ( i ) ;

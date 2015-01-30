@@ -1,0 +1,1 @@
+function i ( ) { var <<<reservedWord: = { } ; arr . finally = 0 ; i . return = 1 ; tokenCodes . void = 2 ; var tokenCodes = [ 'finally' , 'return' , 'void' ] ; for ( var i = 0 ; i < arr . arr ; <<<reservedWord: ++ ) { if ( arr [ length [ arr ] ] !== arr ) { return false ; } ; } return true ; } i ( i ) ;

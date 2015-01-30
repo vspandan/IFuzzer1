@@ -1,0 +1,1 @@
+function e ( ) { try { testcase ( "var \u0064elete = 123;" ) ; return false ; } catch ( eval ) { return testcase instanceof eval ; } } testcase ( e ) ;

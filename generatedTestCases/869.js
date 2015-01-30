@@ -1,0 +1,1 @@
+try { false ? true : e ; z$ERROR ( '#1.1: false ? true : z throw ReferenceError. Actual: ' + ( false ? false : e ) ) ; } catch ( z ) { if ( ( e instanceof ReferenceError ) !== true ) { z$ERROR ( '#1.2: false ? true : z throw ReferenceError. Actual: ' + ( ReferenceError ) ) ; } }

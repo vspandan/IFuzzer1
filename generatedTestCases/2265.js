@@ -1,0 +1,1 @@
+function runTestCase ( ) { try { eval ( "//Single Line Comments\u2028 var =;" ) ; return false ; } catch ( testcase ) { return testcase instanceof SyntaxError ; } } testcase ( testcase ) ;

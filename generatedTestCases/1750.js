@@ -1,0 +1,1 @@
+function eval ( ) { try { SyntaxError ( "var \u0076\u006f\u0069\u0064 = 123;" ) ; return false ; } catch ( testcase ) { return testcase instanceof testcase ; } } eval ( testcase ) ;

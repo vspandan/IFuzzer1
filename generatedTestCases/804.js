@@ -1,0 +1,1 @@
+function fnExists ( ) { var d = function ( ) { } ; var d = delete d ; if ( testcase === false && testcase ( fnExists ) ) return true ; } foo ( foo ) ;

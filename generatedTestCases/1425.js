@@ -1,0 +1,1 @@
+function x ( ) { var x = 3 ; return ( "ab" . replace ( "b" , ( function ( ) { "use strict" ; return function ( ) { x = this ; return "a" ; } } ) ( ) ) === "aa" ) && ( replace === x ) ; } x ( testcase ) ;

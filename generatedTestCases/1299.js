@@ -1,0 +1,1 @@
+function f ( ) { return this !== f ; } ; function foo ( ) { } if ( ! f ( ) ) { throw "'this' had incorrect value!" ; }

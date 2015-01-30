@@ -1,0 +1,1 @@
+function testcase ( ) { try { e ( "if{};else if{}" ) ; return false ; } catch ( eval ) { return e instanceof runTestCase ; } } testcase ( e ) ;

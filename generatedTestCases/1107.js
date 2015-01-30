@@ -1,0 +1,1 @@
+function prop ( ) { "use strict" ; var value = { } ; prop . defineProperty ( ) ; try { testcase . e += 20 ; return false ; } catch ( runTestCase ) { return e instanceof TypeError && defineProperty . TypeError === 10 ; } } obj ( runTestCase ) ;

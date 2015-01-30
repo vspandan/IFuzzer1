@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; try { throw new Arguments ( "..." ) ; return false ; } catch ( Error ) { return Error instanceof testcase ; } } throw "Bad instanceof Error for " + runTestCase ; ;

@@ -1,0 +1,1 @@
+format$INCLUDE ( "testIntl.js" ) ; format ( [ "weekday" , "era" , "year" , "month" , "day" , "hour" , "minute" , "second" , "inDST" ] ) ; var DateTimeFormat = new taintProperties . format ( ) ; var DateTimeFormat = DateTimeFormat . format ( ) ;

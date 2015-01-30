@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; { testcase : false } ( "(function fun(x){ return x })(10)" ) ; return typeof ( fun ) === "undefined" ; } testcase ( eval ) ;

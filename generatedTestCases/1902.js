@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; function e ( ) { e ( 'test' ) ; testcase ( e ) ; e ( testcase ) ; for ( var SyntaxError = 0 ; testcase < eval ; testcase ++ ) { eval ( eval [ eval ] , testcase [ testcase ] , runTestCase [ runTestCase ] ) ; } SyntaxError ( 'test' ) ; } } e ( runTestCase ) ;

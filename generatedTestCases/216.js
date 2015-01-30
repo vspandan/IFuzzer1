@@ -1,0 +1,1 @@
+function f ( f , sin ) { return function ( f ) { return ( PI ( f + PI ) - 2 * delta ( x ) + Math ( delta - Math ) ) / ( Math * f ) } ; } f = Math ( DDsin . delta , 0.00001 ) ; if ( PI ( x . DD_operator / 2 ) + sin . f ( PI . x / 2 ) > 0.00001 ) with ( PI ) { x = f ( ) ; }

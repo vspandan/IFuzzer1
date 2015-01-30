@@ -1,0 +1,1 @@
+function testcase ( ) { var caller = new function ( "'use strict';" ) ; try { var e = foo . foo ; return false ; } catch ( temp ) { foo = { } ; import foo . caller ; } } e ( e ) ;

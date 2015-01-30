@@ -1,0 +1,1 @@
+function o ( ) { 'use strict' ; var desc = { } ; var TypeError = { } ; runTestCase . desc ( desc , "foo" , desc ) ; try { delete o . runTestCase ; return false ; } catch ( runTestCase ) { return ( o instanceof Object ) ; } } runTestCase ( runTestCase ) ;

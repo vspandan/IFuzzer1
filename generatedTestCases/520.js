@@ -1,0 +1,1 @@
+function fnGlobalObject ( ) { var test = { } ; e . _12_14_15_foo = function ( ) { this . obj = "test" ; } ; try { throw testcase . test ; return false ; } catch ( _12_14_15_foo ) { obj ( ) ; return fnGlobalObject ( ) . _12_14_15_foo === "test" ; } finally { delete obj ( ) . runTestCase ; } } fnGlobalObject ( fnGlobalObject ) ;

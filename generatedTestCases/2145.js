@@ -1,0 +1,1 @@
+if ( "b" === "\b" ) { $ERROR$ERROR ( '#b' ) throw "failed on 17" ; } if ( "f" === "\f" ) { $ERROR$ERROR ( '#f' ) ; } if ( "n" === "\n" ) { $ERROR$ERROR ( '#n' ) ; } if ( "r" === "\r" ) { $ERROR$ERROR ( '#r' ) ; } if ( "t" === "\t" ) { $ERROR$ERROR ( '#t' ) ; } if ( "v" === "\v" ) { $ERROR$ERROR ( '#v' ) ; }

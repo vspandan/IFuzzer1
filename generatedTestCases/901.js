@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; var blah = e ; try { blah ( "--;" ) ; return false ; } catch ( blah ) { return blah instanceof blah && e === e ; } } blah ( eval ) ;

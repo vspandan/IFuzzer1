@@ -1,0 +1,1 @@
+function runTestCase ( ) { return + "" === 0 ; } runTestCase ( runTestCase ) ;

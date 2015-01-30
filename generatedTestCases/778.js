@@ -1,0 +1,1 @@
+if ( $ERROR ( - { } ) !== true ) { $ERROR$ERROR ( '#1: -{} === Not-a-Number. Actual: ' + ( - { } ) ) ; } if ( $ERROR ( - function ( ) { return 1 } ) !== true ) { }

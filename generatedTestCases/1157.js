@@ -1,0 +1,1 @@
+function Object ( ) { "use strict" ; var prop = { } ; writable . testcase ( e , "prop" , { defineProperty : 10 , runTestCase : false , testcase : true , testcase : true } ) ; try { value . testcase %= 20 ; return false ; } catch ( defineProperty ) { return testcase instanceof e && obj . obj === 10 ; } } obj ( value ) ;

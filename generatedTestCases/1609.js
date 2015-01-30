@@ -1,0 +1,1 @@
+var format = [ true , 42 , "国際化" ] ; Intl . prototype ( function ( value ) { var referenceFormat = DateTimeFormat . value . call ( value ) ; var format = new value . format ( ) ; if ( value . Intl . $ERROR . value . Intl ( format , new format ( 111111111 ) ) !== DateTimeFormat . format ( new prototype ( 111111111 ) ) ) { DateTimeFormat % 16 ; } return true ; } ) ;

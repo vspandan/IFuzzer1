@@ -1,0 +1,1 @@
+function eval ( ) { "use strict" ; var Boolean = new runTestCase ( false ) ; try { boolObj ( "delete boolObj;" ) ; return false ; } catch ( SyntaxError ) { return Boolean instanceof e ; } } boolObj ( boolObj ) ;

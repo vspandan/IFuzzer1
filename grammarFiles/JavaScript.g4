@@ -10,7 +10,7 @@ block : '{' statementList '}' |  '{' '}'
 
 statementList : statement | statement statementList
 
-variableStatement : Var variableDeclarationList eos
+variableStatement : Var variableDeclarationList ';'
 
 variableDeclarationList : variableDeclaration ',' variableDeclarationList | variableDeclaration
 
@@ -24,13 +24,13 @@ expressionStatement : expressionSequence
 
 ifStatement : If '(' expressionSequence ')' statement Else statement | If '(' expressionSequence ')' statement 
 
-iterationStatement : Do statement While '(' expressionSequence ')' eos | While '(' expressionSequence ')' statement | For '(' ';' ';' ')' statement | For '(' ';' ';' expressionSequence ')' statement | For '(' ';' expressionSequence ';' ')' statement | For '(' ';' expressionSequence ';' expressionSequence ')' statement | For '(' expressionSequence ';' ';' ')' statement | For '(' expressionSequence ';' ';' expressionSequence ')' statement | For '(' expressionSequence ';' expressionSequence ';' ')' statement | For '(' expressionSequence ';' expressionSequence ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' ';' ')' statement | For '(' Var variableDeclarationList ';' ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' expressionSequence ')' statement | For '(' singleExpression In expressionSequence ')' statement | For '(' Var variableDeclaration In expressionSequence ')' statement
+iterationStatement : Do statement While '(' expressionSequence ')' ';' | While '(' expressionSequence ')' statement | For '(' ';' ';' ')' statement | For '(' ';' ';' expressionSequence ')' statement | For '(' ';' expressionSequence ';' ')' statement | For '(' ';' expressionSequence ';' expressionSequence ')' statement | For '(' expressionSequence ';' ';' ')' statement | For '(' expressionSequence ';' ';' expressionSequence ')' statement | For '(' expressionSequence ';' expressionSequence ';' ')' statement | For '(' expressionSequence ';' expressionSequence ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' ';' ')' statement | For '(' Var variableDeclarationList ';' ';' expressionSequence ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' ')' statement | For '(' Var variableDeclarationList ';' expressionSequence ';' expressionSequence ')' statement | For '(' singleExpression In expressionSequence ')' statement | For '(' Var variableDeclaration In expressionSequence ')' statement
 
-continueStatement : Continue identifier eos | Continue eos
+continueStatement : Continue identifier ';' | Continue ';'
 
-breakStatement : Break identifier eos | Break eos
+breakStatement : Break identifier ';' | Break ';'
 
-returnStatement : Return expressionSequence eos | Return eos
+returnStatement : Return expressionSequence ';' | Return ';'
 
 withStatement : With '(' expressionSequence ')' statement
 
@@ -46,7 +46,7 @@ defaultClause : Default ':' statementList | Default ':'
 
 labelledStatement : identifier ':' statement
 
-throwStatement : Throw expressionSequence eos
+throwStatement : Throw expressionSequence ';'
 
 tryStatement : Try block catchProduction | Try block finallyProduction | Try block catchProduction finallyProduction
 
@@ -54,7 +54,7 @@ catchProduction : Catch '(' identifier ')' block
 
 finallyProduction : Finally block
 
-debuggerStatement : Debugger eos
+debuggerStatement : Debugger ';'
 
 functionDeclaration : Function identifier '(' formalParameterList ')' '{' functionBody '}' | Function identifier '(' ')' '{' functionBody '}'
 
@@ -101,8 +101,6 @@ reservedWord : keyword | futureReservedWord | nullLiteral | booleanLiteral
 keyword : Break | Do | Instanceof | Typeof | Case | Else | New | Var | Catch | Finally | Return | Void | Continue | For | Switch | While | Debugger | Function | This | With | Default | If | Throw | Delete | In | Try
 
 futureReservedWord : Class | Enum | Extends | Super | Const | Export | Import | Implements | Let | Private | Public | Interface | Package | Protected | Static | Yield
-
-eos : ';'
 
 nullLiteral : 'null'
 

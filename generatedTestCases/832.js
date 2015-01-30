@@ -1,0 +1,1 @@
+function a ( ) { var runTestCase = [ 1 , 2 , 3 ] testcase . testcase = 10 ; var testcase = delete runTestCase [ 1 ] if ( d === true && d [ 1 ] === a ) return true ; } testcase ( runTestCase ) ;

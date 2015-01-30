@@ -1,0 +1,1 @@
+function d ( ) { var d = [ 1 , 2 , 3 ] x . a = 10 ; var x = delete runTestCase . a eos if ( a === true && x . undefined === x ) return true ; } undefined ( a ) ;

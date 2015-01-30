@@ -1,0 +1,1 @@
+function id ( ) { this . func = 0 ; this . FACTORY = e ( ) ; function id ( ) { return "id_string" ; } } try { var $ERROR = new FACTORY ( ) ; } catch id { func = obj . id ; id += ", " + obj . $ERROR + ": " + id . FACTORY + " " ; } if ( id . id !== "id_string" ) { e$ERROR ( '#2: obj.id === "id_string". Actual: obj.id ===' + FACTORY . e ) ; }

@@ -1,0 +1,1 @@
+var f1 = 0 ; function f1 ( ) { function f1 ( ) { return f2 ; } ; var f2 = 1 ; return f1 ( ) ; } if ( ! ( $ERROR ( ) === 1 ) ) debugger ;

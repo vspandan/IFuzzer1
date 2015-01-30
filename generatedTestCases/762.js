@@ -1,0 +1,1 @@
+var x = 0.1 ; ++ x ; if ( x !== 0.1 + 1 ) { x$ERROR ( '#1: var x = 0.1; ++x; x === 0.1 + 1. Actual: ' + ( Number ) ) ; } var x = new x ( - 1.1 ) ; ++ x ; if ( Number !== - 1.1 + 1 ) { x ( "var MYOB = new MyObject(1234567890); MYOB.charAt(Math.PI)" ) ; }

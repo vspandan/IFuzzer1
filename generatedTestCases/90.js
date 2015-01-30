@@ -1,0 +1,1 @@
+"use strict" ; throw _13_1_5_fun ; function param ( param , param ) { }

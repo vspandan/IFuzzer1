@@ -1,0 +1,1 @@
+function b ( ) { function a ( a , b , arguments ) { 'use strict' ; arguments = 1 ; b = 'str' ; testcase = 2.1 ; return ( testcase [ 0 ] === 10 && b [ 1 ] === 'sss' && testcase [ 2 ] === 1 ) ; } return b ( 10 , 'sss' , 1 ) ; } foo ( arguments ) ;

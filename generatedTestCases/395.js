@@ -1,0 +1,1 @@
+e ( "Infinity" in e , true , "numeric index stringified correctly" ) testcase ( testcase , "skip" , "SyntaxError" ) ;

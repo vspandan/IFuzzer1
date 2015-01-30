@@ -103,7 +103,7 @@ class Genotype(object):
     @staticmethod
     def _dec2bin_gene(dec_gene):
        
-        bin_gene = []executing
+        bin_gene = []
         for item in dec_gene:
             bin_gene.append(base10tobase2(item, zfill=8))
         return ''.join(bin_gene)
@@ -140,6 +140,7 @@ class Genotype(object):
     
     # Modified Author : Spandan Veggalam 
     def _map_variables(self, program, check_stoplist):
+        #print program
         initialMapping = 0
         def on_stoplist(item):
             status = False
@@ -158,7 +159,6 @@ class Genotype(object):
             while position < len(prg_list):
                 #TODO check this process
                 item = prg_list[position]
-                
                 if item in self.keywords:
                     prg_list[position]=lower(item)
                     position += 1
@@ -186,12 +186,15 @@ class Genotype(object):
         
                 if item in self._keys:
                     if check_stoplist and position >= 0:
+                        #print item
                         if initialMapping == 0:
                             prg_list[position] = self.resolve_variable(item)
                         else:
                             prg_list[position] = self._converge(item)
                         continue_map = True
+                        #print prg_list[position]
                 position += 1
+                
             initialMapping = 1
             program = ''.join(prg_list)
             prg_list = re.split(VARIABLE_FORMAT, str(program))

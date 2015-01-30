@@ -1,0 +1,1 @@
+function runTestCase ( ) { var foo = new runTestCase ( "'use strict'; for (var tempIndex in this) {if (tempIndex===\"caller\") {return false;}}; return true;" ) ; return foo ( ) ; } testcase ( runTestCase ) ;

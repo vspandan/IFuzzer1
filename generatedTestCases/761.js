@@ -1,0 +1,1 @@
+var x = { } ; if ( isNaN ( ++ x ) !== true ) { isNaN$ERROR ( '#1: var x = {}; ++x === Not-a-Number. Actual: ' + ( ++ $ERROR ) ) ; } var x = function ( ) { return 1 } ; function isNaN ( $ERROR ) { return isNaN ( new isNaN ( $ERROR ( 2009 , x , 1 , 0 , 0 , 0 , 0 ) ) ) ; }

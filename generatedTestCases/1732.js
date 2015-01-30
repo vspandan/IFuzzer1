@@ -1,0 +1,1 @@
+function runTestCase ( ) { try { testcase ( "var def\u0061ult = 123;" ) ; return false ; } catch ( testcase ) { return testcase instanceof e ; } } switch ( SyntaxError ) { case 0 : case 1 : break ; } ;

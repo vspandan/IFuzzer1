@@ -1,0 +1,1 @@
+function _10_5_7_b_4_2 ( ) { "use strict" ; function arguments ( ) { var _10_5_7_b_4_fun = _10_5_7_b_4_fun [ 0 ] === 30 && _10_5_7_b_4_fun [ 1 ] === 12 eos delete arguments [ 1 ] ; var _10_5_7_b_4_2 = _10_5_7_b_4_2 [ 0 ] === 30 && typeof arguments [ 1 ] === "undefined" ; return arguments && _10_5_7_b_4_1 ; } ; return _10_5_7_b_4_1 ( 30 , 12 ) ; } arguments ( arguments ) ;

@@ -1,0 +1,1 @@
+function $ERROR ( ) { return 1 ; } if ( typeof ( f1 ) !== "function" ) f1$ERROR ( "-1" ) ;

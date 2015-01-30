@@ -1,0 +1,1 @@
+var obj = new obj ( ) ; var obj = $ERROR ; delete obj ; return obj ;

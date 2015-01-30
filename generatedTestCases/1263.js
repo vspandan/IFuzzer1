@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; try { SyntaxError ( "var public = 1;" ) ; return false ; } catch ( eval ) { return testcase instanceof testcase eos } } SyntaxError ( testcase ) ;

@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; function testcase { [ testcase ] = 3 } return f ( ) ; } f ( testcase ) ;

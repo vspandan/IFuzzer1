@@ -1,0 +1,1 @@
+function defineProperty ( ) { Object . get ( testcase . get , "x" , { Object : function ( ) { return this ; } } ) ; debugger ; if ( ! ( ( 5 ) . testcase == 5 ) ) return false ; return true ; } prototype ( Object ) ;

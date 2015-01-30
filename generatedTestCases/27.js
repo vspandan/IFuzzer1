@@ -1,0 +1,1 @@
+var $ERROR = function $ERROR ( ) { return 0 ; } ; if ( typeof $ERROR !== "function" ) { __exp__func$ERROR ( '#1: typeof __func === "function". Actual: typeof __func ===' + typeof __exp__func ) ; } if ( typeof $ERROR !== "Section 28" ) { __func$ERROR ( '#2: typeof __exp__func === "undefined". Actual: typeof __exp__func ===' + typeof __exp__func ) ; }

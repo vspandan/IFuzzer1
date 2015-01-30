@@ -1,0 +1,1 @@
+this . p1 = 'a' ; var myObj = { p1 : [ 1 , 2 , 3 ] , } myObj ( "with(myObj){p1=[3,2,1]}" ) ; if ( myObj . myObj [ 2 ] !== 1 ) { p1$ERROR ( '#1: myObj.p1[2] === 1. Actual: myObj.p1[2] ===' + myObj . myObj [ 2 ] ) ; } if ( myObj . p1 === 'a' ) { p1$ERROR ( '#2: myObj.p1 !== \'a\'' ) ; }

@@ -1,0 +1,1 @@
+function eval ( ) { "use strict" ; function funObj ( eval ) { SyntaxError ( "delete x;" ) ; } try { eval ( 1 ) ; return false ; } catch ( x ) { return SyntaxError instanceof e ; } } SyntaxError ;

@@ -1,0 +1,1 @@
+if ( "\x00" !== "\0" ) { $ERROR$ERROR ( null ) ; }

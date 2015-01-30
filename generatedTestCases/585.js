@@ -1,0 +1,1 @@
+var i = 0 ; i : { do { woohoo ++ ; if ( ! ( this ) ) { break i ; $ERROR$ERROR ( '#1.1: "break woohoo" must break loop' ) ; } } while ( true ) ; if ( i !== 10 ) i$ERROR ( '#1.2: i===10. Actual: i===' + i ) ; }

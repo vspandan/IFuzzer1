@@ -1,0 +1,1 @@
+get$INCLUDE ( "testBuiltInObject.js" ) ; Intl ( getOwnPropertyDescriptor . testBuiltInObject ( Intl . get . prototype , "compare" ) . Collator , true , true , [ ] , 0 ) ;

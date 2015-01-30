@@ -1,0 +1,1 @@
+function SyntaxError ( ) { try { eval ( '"use strict"; var x = "\\106";' ) ; return false ; } catch ( testcase ) { } } testcase ( testcase ) ;

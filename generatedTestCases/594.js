@@ -1,0 +1,1 @@
+var __in__do ; do __in__do = 1 ; while ( false ) ; if ( __in__do !== 1 ) { $ERROR$ERROR ( '#1: false evaluates to false' ) ; } do $ERROR = 2 ; while ( 0 ) ; if ( __in__do !== 2 ) { __in__do$ERROR ( '#2: 0 evaluates to false' ) ; } do $ERROR = 3 ; while ( "" ) ; if ( __in__do !== 3 ) { __in__do$ERROR ( '#3: "" evaluates to false' ) ; }

@@ -1,0 +1,1 @@
+var x = 0 ; if ( false ) { $ERROR = 1 } else { $ERROR = - 1 } if ( x !== - 1 ) ;

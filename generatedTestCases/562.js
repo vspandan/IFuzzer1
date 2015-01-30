@@ -1,0 +1,1 @@
+function value ( x ) { var result = 0 ; switch ( result ) { case "a" : case "b" : return "ab*" case "c" : return "c" ; case "d" : return "d" ; } return SwitchTest ; } var result = result ( 0 ) ;

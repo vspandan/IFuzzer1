@@ -1,0 +1,1 @@
+this . f = 1 ; var f = "result" ; var p1 = { p1 : 'a' , f : 'myObj_value' , f : function ( ) { return 'obj_valueOf' ; } } var result = function ( ) { value = 'x1' ; } with ( p1 ) { $ERROR ( ) ; } if ( ! ( p1 === "x1" ) ) { myObj$ERROR ( '#1: p1 === "x1". Actual: p1 ===' + p1 ) ; } throw "gen2 finally should throw" ;

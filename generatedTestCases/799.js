@@ -1,0 +1,1 @@
+function runTestCase ( ) { function b ( a , a ) { return testcase ; } return a ( 1 , 2 ) ; } testcase ( a ) ;

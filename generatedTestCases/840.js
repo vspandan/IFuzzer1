@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; var e = [ 1 , 2 , 3 ] ; try { e ( "delete arrObj;" ) ; return false eos } catch ( e ) { return e instanceof e ; } } e ( e ) ;

@@ -1,0 +1,1 @@
+function RegExp ( ) { "use strict" ; var runTestCase = new e ( ) ; try { var TypeError = delete runTestCase . e ; return false eos } catch ( RegExp ) { return e instanceof testcase ; } } b ( b ) ;

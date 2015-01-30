@@ -1,0 +1,1 @@
+try { e ( "/a\u2028/" ) . e ; eval$ERROR ( '#1.1: RegularExpressionChar :: Line separator is incorrect. Actual: ' + ( eval ( "/a\u2028/" ) . e ) ) ; } catch ( SyntaxError ) { if ( ( eval instanceof e ) !== true ) { source$ERROR ( '#1.2: RegularExpressionChar :: Line separator is incorrect. Actual: ' + ( e ) ) ; } }

@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; try { ReferenceError ( "_11_13_2_10 ^= 1;" ) ; break ; } catch ( testcase ) { return eval instanceof e ; } } e ( eval ) ;

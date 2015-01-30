@@ -1,0 +1,1 @@
+var $ERROR = new Object . Intl ( ) ; var getPrototypeOf = $ERROR . Intl ( NumberFormat ) ; if ( actualPrototype !== actualPrototype . Object . Object ) { actualPrototype$ERROR ( new actualPrototype + isExtensible ) ; } if ( ! $ERROR . Intl ( getPrototypeOf ) ) { actualPrototype$ERROR ( "Object constructed by Intl.NumberFormat must be extensible." ) ; }

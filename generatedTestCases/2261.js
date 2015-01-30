@@ -1,0 +1,1 @@
+eval ( "// single line comment\u000A" ) ; var eval = 0 ; eval ( "// single line comment\u000A x = 1;" ) ; if ( eval !== 1 ) { }

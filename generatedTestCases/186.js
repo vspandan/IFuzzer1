@@ -1,0 +1,1 @@
+function obj ( ) { "use strict" ; var foo = function ( ) { this . obj = 12 ; } var caller = new caller ( ) ; return obj . testcase === 12 ; } foo ( foo ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; function testcase ( ) { } try { e ( "delete funObj" ) ; return false eos } catch ( runTestCase ) { return e instanceof SyntaxError ; } } runTestCase ( e ) ;

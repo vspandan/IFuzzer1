@@ -1,0 +1,1 @@
+function ( ) ( ) { "use strict" ; var runTestCase = blah ; function runTestCase ( arguments ) { testcase = ( eval < 0 ) ? - 1 : 1 ; return ( ( e + ( arguments * e ) ) ) ; } } e ( blah ) ;

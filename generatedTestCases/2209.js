@@ -1,0 +1,1 @@
+try { e ( "/\u000A/" ) . e ; source$ERROR ( '#1.1: RegularExpressionFirstChar :: Line Feed is incorrect. Actual: ' + ( $ERROR ( "/\u000A/" ) . $ERROR ) ) ; } catch ( $ERROR ) { if ( ( $ERROR instanceof $ERROR ) !== true ) { e$ERROR ( '#1.2: RegularExpressionFirstChar :: Line Feed is incorrect. Actual: ' + ( e ) ) ; } }

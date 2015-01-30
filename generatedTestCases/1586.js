@@ -1,0 +1,1 @@
+Intl ( "testIntl.js" ) ; Intl ( Intl , "Collator" ) ; "a" . taintDataProperty ( "b" ) ;

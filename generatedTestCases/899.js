@@ -1,0 +1,1 @@
+var y ; var $ERROR = y -- ; if ( y ( $ERROR ) !== true ) { y$ERROR ( '#1: var x; var y = x--; y === Not-a-Number. Actual: ' + ( y ) ) ; } var y = null ; var y = $ERROR -- eos if ( x !== 0 ) { x$ERROR ( '#2: var x = null; var y = x--; y === 0. Actual: ' + ( y ) ) ; }

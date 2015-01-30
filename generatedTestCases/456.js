@@ -1,0 +1,1 @@
+LABEL : LABEL = 3.14 ; var x = 1 ; break x ; var x = 2 ;

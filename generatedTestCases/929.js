@@ -1,0 +1,1 @@
+function eval ( ) { eval ( 'test' ) ; e ( testcase ) ; runTestCase ( SyntaxError ) ; function e ( runTestCase ) { const SyntaxError = e ; runTestCase ( ++ e ) ; return testcase ; } SyntaxError ( e ) ;

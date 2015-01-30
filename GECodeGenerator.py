@@ -28,6 +28,7 @@ from datetime import datetime
 import multiprocessing
 import os
 
+import sys
 FILECOUNT = 0
 EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'user.js', 'sta.js',
@@ -37,9 +38,8 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js'))
 
 TestCaseSubDirs=[]
-GENERATEDFILELIST=[]
 #Author: Spandan Veggalam
-def runFuzzer(testCasesDir,targetDirectory):
+def runFuzzer(testCasesDir,targetDirectory,genfilesList):
     listAllTestCasesDir(testCasesDir)
     FILECOUNT = len(os.listdir(targetDirectory))    
     def selectGrammarFIle():
@@ -105,11 +105,15 @@ def runFuzzer(testCasesDir,targetDirectory):
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]
                             generatedPrg= gene.get_program()
-                            newFile=targetDirectory+"/"+str(filName)
-                            GENERATEDFILELIST.append(newFile)
-                            f=open(newFile,'w')
-                            f.write(generatedPrg)
-                            f.close
+                            if gene.get_fitness() != gene.get_fitness_fail():
+                                newFile=targetDirectory+"/"+str(filName)+".js"
+                                f=open(newFile,'w')
+                                f.write(generatedPrg)
+                                f.close
+                                f=open(genfilesList,"a+")
+                                f.write("script "+newFile+"\n")
+                                f.close()
+
                             
                     except Exception as e:
                         print "Skipping "+file+" due to exception while processing"
@@ -123,14 +127,16 @@ def runFuzzer(testCasesDir,targetDirectory):
             for f in listdir(subDir) :
                 fi=join(subDir,f)
                 if isfile(fi) and f.endswith(".js") and f not in EXCLUDED :
+                    FILECOUNT = len(os.listdir(targetDirectory))    
+                    FILECOUNT+=1
                     process(fi,FILECOUNT)
                     #p=multiprocessing.Process(target=process,args=(fi, f))
                     #p=threading.Thread(target=process,args=(fi, f))
                     #PROCESSLIST.append(p)
                     #frame.quit()
-                    #return             
+                    #return      
+
         frame.quit()
-        return GENERATEDFILELIST
         
     root = Tk()
     root.title("Interpreter Fuzzer")
@@ -315,7 +321,7 @@ def runFuzzer(testCasesDir,targetDirectory):
     startBtn=Button(frame, text='START', command=initialize).grid(row=18, column=1)
     closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
     frame.mainloop()    
-    return GENERATEDFILELIST    
+
 def listAllTestCasesDir(testCasesDir):
         for f in listdir(testCasesDir):
             fi=join(testCasesDir,f)

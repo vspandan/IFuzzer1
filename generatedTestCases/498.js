@@ -1,0 +1,1 @@
+function testcase ( ) { function capturedFoo ( ) { return foo } ; testcase = "prior to throw" ; try { throw new capturedFoo ( ) ; } catch ( testcase ) { var foo ; return foo ( ) !== "initializer in catch" ; } } capturedFoo ( foo ) ;

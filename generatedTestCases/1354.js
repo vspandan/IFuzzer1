@@ -1,0 +1,1 @@
+function f1 ( ) { runTestCase : f1 = 'http://a.uri/' > < testcase : ; function testcase ( ) { return ( ( function ( ) { return typeof this ; } ) ( ) === "undefined" ) && ( ( typeof this ) === "undefined" ) ; } return runTestCase ( ) ; } f1 ( f1 ) ;

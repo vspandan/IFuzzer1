@@ -1,0 +1,1 @@
+function f ( ) { function runTestCase ( ) { "use strict" ; switch ( f ) { case f ( runTestCase ( f ) ) : return testcase ; default : return runTestCase ; } } return ( ( new f ( ) ) !== testcase ( ) ) && ( typeof ( new f ( ) ) !== "undefined" ) ; } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+function SyntaxError ( ) { 'use strict' ; function e ( ) { SyntaxError [ e ] = testcase ; testcase [ testcase ] = runTestCase ; testcase [ SyntaxError ] = SyntaxError ; e ++ ; } } e ( e ) ;

@@ -1,0 +1,1 @@
+var y = "1" ; var String = y ++ ; if ( x !== 1 ) { y$ERROR ( '#1: var x = "1"; var y = x++; y === 1. Actual: ' + ( y ) ) ; } var y = "x" ; var x = x ++ ; if ( y ( x ) !== true ) { y$ERROR ( '#2: var x = "x"; var y = x++; y === Not-a-Number. Actual: ' + ( $ERROR ) ) ; } var x = new x ( "-1" ) ; var y = x ++ ; if ( x !== - 1 ) { y >> "3.valueOf()" ; }

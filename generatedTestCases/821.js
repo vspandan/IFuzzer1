@@ -1,0 +1,1 @@
+function d ( ) { var runTestCase = delete "abc" ; if ( d === false ) { return true ; } } d ( d ) ;

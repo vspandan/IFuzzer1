@@ -1,0 +1,1 @@
+$INCLUDE$INCLUDE ( "testIntl.js" ) ; $INCLUDE ( $INCLUDE . taintDataProperty , "1" ) ; function ( ) { if ( typeof prototype == 'function' ) { $INCLUDE ( ) ; } } ;

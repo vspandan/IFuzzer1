@@ -1,0 +1,1 @@
+function o ( ) { function x ( innerf ) { var f = null ; function testcase ( o ) { with ( innerf ) { return o ; } } return o ( testcase ) ; } if ( x ( { } ) === 42 ) { return true ; } } o ( innerf ) ;

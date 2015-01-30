@@ -1,0 +1,1 @@
+function runTestCase ( ) { ; testcase = 1 ; delete testcase [ 0 ] ; e [ 0 ] = - 1 ; return runTestCase ; } testcase ( e ) ;

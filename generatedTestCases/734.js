@@ -1,0 +1,1 @@
+function fooCalled ( ) { if ( this !== fooCalled ( ) ) { return ; } var testcase = false ; function testcase ( ) { foo = true ; } try { this . fooCalled ( testcase ( ) ) ; throw new fooCalled ( "this.bar does not exist!" ) ; } catch ( testcase ) { return ( e instanceof TypeError ) && ( bar === true ) ; } } fnGlobalObject ( fooCalled ) ;

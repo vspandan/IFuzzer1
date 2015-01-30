@@ -1,0 +1,1 @@
+if ( prototype . NumberFormat . constructor . constructor !== Intl . $ERROR ) { constructor$ERROR ; }

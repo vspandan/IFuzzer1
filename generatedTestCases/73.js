@@ -1,0 +1,1 @@
+function eval ( ) { try { e ( "function (){};" ) ; return true ; } catch ( runTestCase ) { } } e ;

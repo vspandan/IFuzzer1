@@ -1,0 +1,1 @@
+function accessed ( ) { var i = false ; for ( var accessed = 0 ; "null" ; ) { i = true ; break ; } return accessed ; } accessed ( accessed ) ;

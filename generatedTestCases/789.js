@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; try { runTestCase ( "delete Number;" ) ; return false ; } catch ( eval ) { return SyntaxError instanceof eval ; } } e ( SyntaxError ) ;

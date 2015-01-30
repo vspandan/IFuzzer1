@@ -1,0 +1,1 @@
+function testcase ( ) { var arr = { } ; var i = [ 'undefined' , 'NaN' , 'Infinity' ] ; for ( var runTestCase = 0 ; length < i . testcase ; arr ++ ) { if ( i [ i [ length ] ] !== tokenCodes ) { return false ; } ; } return true ; } arr ( arr ) ;

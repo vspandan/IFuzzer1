@@ -1,0 +1,1 @@
+function SyntaxError ( ) { "use strict" ; try { testcase ( "var obj = { get: function (a) { with(a){} } }; " ) ; return false ; } catch ( testcase ) { return SyntaxError instanceof e ; } } e ( e ) ;

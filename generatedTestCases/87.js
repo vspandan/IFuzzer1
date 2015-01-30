@@ -1,0 +1,1 @@
+function eval ( ) { try { testcase ( "function eval(){};" ) ; switch ( eval ) { case 1 : /ABC/ . testcase ( testcase ) ; break ; } } catch ( testcase ) { } } runTestCase ( e ) ;

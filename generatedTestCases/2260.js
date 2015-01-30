@@ -1,0 +1,1 @@
+x ( "/*\u2029 multi line \u2029 comment \u2029*/" ) ; var eval = 0 ; x ( "/*\u2029 multi line \u2029 comment \u2029 x = 1;*/" ) ; if ( eval !== 0 ) var x = new $ERROR ( ) ;

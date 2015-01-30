@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; var blah = blah ; try { SyntaxError ( "() = 20;" ) ; return false ; } catch ( ( SyntaxError ) ) { continue ; } } e ( blah ) ;

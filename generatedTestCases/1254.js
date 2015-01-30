@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; var testcase = 1 ; return eos 1 ; } testcase ( testcase ) ;

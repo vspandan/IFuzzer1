@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { eval ( "delete Boolean;" ) runTestCase : : return false ; } catch ( testcase ) { return SyntaxError instanceof runTestCase ; } } e ( e ) ;

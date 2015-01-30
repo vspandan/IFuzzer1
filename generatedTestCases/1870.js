@@ -1,0 +1,1 @@
+var native<missing Ident> <EOF>

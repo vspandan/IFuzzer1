@@ -1,0 +1,1 @@
+new undefined ( undefined , "Number.prototype.__proto__ == Object.prototype" , true , undefined . Number . undefined == Number . undefined )

@@ -1,0 +1,1 @@
+function funObj ( ) { "use strict" ; function eval ( SyntaxError , runTestCase , eval ) { eval ( "delete y;" ) ; } try { y ( 1 ) break ; return false ; } catch ( e ) { return e instanceof testcase ; } } y ( y ) ;

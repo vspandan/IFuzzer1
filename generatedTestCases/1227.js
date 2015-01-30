@@ -1,0 +1,1 @@
+if ( Boolean ( "" ) !== false ) if ( Boolean == 0x0178 ) { Boolean [ 0 ] = Boolean ; Boolean [ 1 ] = 0x00FF ; return Boolean ; }

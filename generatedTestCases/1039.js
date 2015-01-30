@@ -1,0 +1,1 @@
+if ( isNaN ( Infinity . Number - isNaN . Number ) !== true ) { isNaN$ERROR ( '#1: Infinity - Infinity === Not-a-Number. Actual: ' + ( Number - $ERROR ) ) ; } debugger ;

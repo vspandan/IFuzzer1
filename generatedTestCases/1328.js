@@ -1,0 +1,1 @@
+function f ( ) { "use strict" ; return this ; } ; if ( fnGlobalObject . f ( fnGlobalObject ( ) ) !== f ( ) ) { }

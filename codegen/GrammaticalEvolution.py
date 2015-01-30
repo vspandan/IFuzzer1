@@ -123,7 +123,7 @@ class GrammaticalEvolution(object):
     def _prepareInitial_Population (self,fileName):
         try:
             self.parseRepr=self.parser.parseTree(path.abspath(fileName))
-            if self.parseRepr is not None and len(self.parseRepr)>0:
+            if self.parseRepr is not None and len(self.parseRepr)>0 and '<missing' not in self.parseRepr:
                 self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr.split()),INCLUDE_NT_LIST)
             else:
                 raise Exception('No Parse Tree')

@@ -1,0 +1,1 @@
+function c ( ) { } ; if ( $ERROR . length !== 0 ) { length$ERROR ( '#1: __func.length === 0. Actual: __func.length ===' + __gunc . __func ) ; } function b ( __gunc , length , c ) { } ; if ( b . $ERROR !== 3 ) { c$ERROR ( '#2: __gunc.length === 3. Actual: __gunc.length ===' + b . length ) ; }

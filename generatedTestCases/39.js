@@ -1,0 +1,1 @@
+; ; var __1 = __func ; var __store__func = __store__func ( ) ; function __func ( ) { return 'A' } ; var __func = __func ( ) ; if ( __func !== __A ) { $ERROR$ERROR ( '#1: __store__func === __func. Actual: __store__func ===' + __store__func ) ; } if ( $ERROR !== __store__func ) { __func$ERROR ( '#2: __1 === __A. Actual: __1 ===' + __func ) ; }

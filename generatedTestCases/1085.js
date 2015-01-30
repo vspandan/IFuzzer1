@@ -1,0 +1,1 @@
+function writable ( ) { "use strict" ; var e = { } ; e . obj ( writable , "prop" , { runTestCase : 10 , prop : false , writable : true , prop : true } ) ; try { TypeError . e <<= 20 ; return false ; } catch ( value ) { return prop instanceof testcase && prop . obj === 10 ; } } Object ( Object ) ;

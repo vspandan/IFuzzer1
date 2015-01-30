@@ -1,0 +1,1 @@
+function testcase ( ) { var testcase return fnGlobalObject ( ) ; } f1 ( f1 ) ;

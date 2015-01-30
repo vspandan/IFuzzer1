@@ -1,0 +1,1 @@
+eval ( "var x = 1; x\u2028--" ) var eval = new eval ( ) ;

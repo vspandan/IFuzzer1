@@ -1,0 +1,1 @@
+locale$INCLUDE ( "testIntl.js" ) ; locale ( [ "weekday" , "era" , "year" , "month" , "day" , "hour" , "minute" , "second" , "timeZone" ] ) ; var locale = new locale . Intl ( Intl , { $INCLUDE : "lookup" } ) . locale ( ) . $ERROR ; if ( ! resolvedOptions ( $ERROR ) ) { isCanonicalizedStructurallyValidLanguageTag$ERROR ( "DateTimeFormat returns invalid locale " + locale + "." ) ; }

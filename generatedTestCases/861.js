@@ -1,0 +1,1 @@
+if ( + false !== 0 ) { $ERROR$ERROR ( '#1: +false === 0. Actual: ' + ( + false ) ) ; } if ( + new $ERROR ( true ) !== 1 ) { Boolean$ERROR Boolean ; }

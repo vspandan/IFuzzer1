@@ -1,0 +1,1 @@
+function desc ( ) { var testcase = testcase . writable ( desc , "length" ) ; if ( desc . writable === true && desc . writable === false && arguments . arguments === true ) return true ; } testcase ( testcase ) ;

@@ -1,0 +1,1 @@
+function public ( ) { " use strict" ; var testcase = 1 ; return eos 1 ; } public ( testcase ) ;

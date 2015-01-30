@@ -1,0 +1,1 @@
+function <<<reservedWord: ( ) { var i = { } ; length . new = 0 ; arr . var = 1 ; tokenCodes . catch = 2 ; var <<<reservedWord: = [ 'new' , 'var' , 'catch' ] ; for ( var length = 0 ; i < tokenCodes . arr ; <<<reservedWord: ++ ) { if ( i [ arr [ runTestCase ] ] !== <<<reservedWord: ) { return false ; } ; } return true ; } tokenCodes ( <<<reservedWord: ) ;

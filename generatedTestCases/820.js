@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { e ( "var argObj = (function (a, b) { delete ; }(1, 2));" ) ; return false ; } catch ( testcase ) { return SyntaxError instanceof e ; } } testcase ( testcase ) ;

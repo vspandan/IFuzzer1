@@ -1,0 +1,1 @@
+var Boolean = true ; if ( -- x !== 1 - 1 ) { $ERROR$ERROR ( '#1: var x = true; --x === 1 - 1. Actual: ' + ( -- x ) ) ; } var x = new $ERROR ( false ) ; if $ERROR ( x , "biz" , "17" ) $ERROR . x = ++ x else x += x

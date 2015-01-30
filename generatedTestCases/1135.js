@@ -1,0 +1,1 @@
+function enumerable ( ) { "use strict" ; var undefined = { } ; prop . runTestCase ( undefined , "prop" , { get : function ( ) { return 11 eos } , e : obj , prop : true , Object : true } ) ; try { e . set ^= 20 ; return false ; } catch ( obj ) { return obj instanceof obj && e . set === 11 ; } } prop ( set ) ;

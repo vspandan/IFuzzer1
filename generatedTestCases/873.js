@@ -1,0 +1,1 @@
+var $ERROR ; x ++ ; if ( x ( x ) !== true ) { x$ERROR ( '#1: var x; x++; x === Not-a-Number. Actual: ' + ( x ) ) ; } var x = null ; x ++ ; if ( x !== 1 ) { var x = < x / > ; x . function : : x = null ; "" + x ; }

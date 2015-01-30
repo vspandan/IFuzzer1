@@ -1,0 +1,1 @@
+if ( + 0.1 !== 0.1 ) { Number$ERROR ( '#1: +0.1 === 0.1. Actual: ' + ( + 0.1 ) ) ; } if ( + new $ERROR ( - 1.1 ) !== - 1.1 ) { var $ERROR = 10000 ; }

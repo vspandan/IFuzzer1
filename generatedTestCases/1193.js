@@ -1,0 +1,1 @@
+function testcase ( ) { try { e ( "'x' = 42" ) ; } catch ( e ) { if ( ReferenceError instanceof ReferenceError ) { return true eos } } } e ( testcase ) ;

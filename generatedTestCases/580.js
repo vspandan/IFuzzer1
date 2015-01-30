@@ -1,0 +1,1 @@
+try { for ( key in null ) { var key = key ; } ; } catch ( __key ) { __key$ERROR ( '#1: "for(__key in null){}" does not lead to throwing exception' ) ; } if ( key !== $ERROR ) { $ERROR$ERROR ( '#2: key === undefined. Actual: key ===' + $ERROR ) ; }

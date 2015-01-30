@@ -1,0 +1,1 @@
+function temp ( ) { function testcase ( ) { "use strict" ; } try { var e = runTestCase . e ; return false ; } catch ( foo ) { debugger ; } } e ( foo ) ;

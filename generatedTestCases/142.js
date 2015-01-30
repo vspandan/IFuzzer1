@@ -1,0 +1,1 @@
+var x ; var x = function ( ) { __func = true ; } if ( x ( ) !== x ) { x ! __func ( ) . __func ( /strict/ ) ; } ; if ( ! __func ) { x$ERROR ( '#2: x === true. Actual: x === ' + $ERROR ) ; }

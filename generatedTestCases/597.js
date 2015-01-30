@@ -1,0 +1,1 @@
+function String ( ) { var i = false ; var testcase = new i ( "" ) ; for ( var accessed = 0 ; String ; ) { strObj = true ; break ; } return testcase ; } strObj ( i ) ;

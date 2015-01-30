@@ -1,0 +1,1 @@
+var x = '' ; y = ReferenceError ; try { for ( ; ; ) { e ( ) ; e . $ERROR ; } } catch ( $ERROR ) { $ERROR ( e ) ; }

@@ -1,0 +1,1 @@
+var toStringValue = new toString . toString ( ) ; var call = toStringValue . toString . toString . $ERROR ( obj ) ; if ( this ) { obj$ERROR ( "Intl.Collator instance produces wrong [[class]] - toString returns " + toStringValue + "." ) ; }

@@ -1,0 +1,1 @@
+var $ERROR = function ( ) { [ 0 for ( x in [ ] ) ] ; } ; function $ERROR ( ) { var f1 = 1 ; function x ( ) { return $ERROR ; } ; return x ( ) ; } if ( ! ( f1 ( ) === 1 ) ) { x$ERROR ( "#1: Scope chain disturbed" ) ; }

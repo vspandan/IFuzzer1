@@ -1,0 +1,1 @@
+var eval ; var y ; j = '' ; str2 = '' ; var eval = 1 ; var y = 2 ; for ( i in this ) { i += str1 ; } $ERROR ( '+' , i ) ; if ( ! ( str2 === str1 ) ) { str2$ERROR ( "#1: scope chain must contain same objects in the same order as the calling context" ) ; }

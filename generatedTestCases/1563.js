@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var argObj = function ( ) { return argObj ; } ; var _10_6_14_c_1 = false ; for ( var ( argObj ) in testcase ) { if ( runTestCase . argObj ( argObj ) && runTestCase === "callee" ) { _10_6_14_c_1 = true ; } } return ! hasOwnProperty && _10_6_14_c_1 . verifyEnumerable ( "callee" ) ; } _10_6_14_c_1 ( argObj ) ;

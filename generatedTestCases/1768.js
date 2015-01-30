@@ -1,0 +1,1 @@
+function <<<reservedWord: ( ) { var length = { in : 0 , try : 1 , class : 2 } ; var <<<reservedWord: = [ 'in' , 'try' , 'class' ] ; for ( var tokenCodes = 0 ; <<<reservedWord: < i . testcase ; i ++ ) { if ( tokenCodes [ runTestCase [ i ] ] !== length ) { return false ; } ; } return true ; } i ( i ) ;

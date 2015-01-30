@@ -1,0 +1,1 @@
+for ( class = class . class ; class < 32 ; class ++ ) { class = "0" + class ; }

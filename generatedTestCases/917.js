@@ -1,0 +1,1 @@
+function testcase ( ) { try { runTestCase ( "({set foo(arg){}, get foo(){}, set foo(arg1){}});" ) ; return false ; } catch ( SyntaxError ) { return testcase instanceof testcase ; } } e ( testcase ) ;

@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; var f1 = function ( ) { { runTestCase ( f1 . testcase ( runTestCase [ runTestCase ] ) >= 0 , true , testcase [ f1 ] + " should be a property name on a RegExp" ) ; } } return f1 ( ) ; } f1 ( testcase ) ;

@@ -1,0 +1,1 @@
+function eval ( ) { "use strict" ; try { _11_1_5_6_2_1 ( "var obj = {\ get _11_1_5_6_2_1() {\ public = 42;\ return public;\ }\ };" ) ; var runTestCase = e . eval ; return false ; } catch ( e ) { return e instanceof e ; } } obj ( testcase ) ;

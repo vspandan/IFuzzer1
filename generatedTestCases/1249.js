@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; try { var obj = { } ; eval . get ( runTestCase , "accProperty" , { obj : function ( ) { SyntaxError ( "public = 1;" ) ; return 11 ; } } ) ; var e = e . accProperty === 11 ; return false ; } catch ( obj ) { return temp instanceof get ; } } eval ( Object ) ;

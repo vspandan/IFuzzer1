@@ -1,0 +1,1 @@
+function Object ( ) { "use strict" ; var o = { } ; o . o ( Object , "foo" , { foo : function ( ) { return this ; } } ) ; return get . defineProperty === o ; } Object ( o ) ;

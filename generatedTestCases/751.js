@@ -1,0 +1,1 @@
+if ( typeof undefined !== "undefined" ) { undefined$ERROR ( '#1: typeof undefined === "undefined". Actual: ' + ( typeof undefined ) ) ; } if ( typeof { 0x100000badf00d0 : undefined } !== "undefined" ) { $ERROR$ERROR ( '#2: typeof void 0 === "undefined". Actual: ' + ( typeof void 0 ) ) ; }

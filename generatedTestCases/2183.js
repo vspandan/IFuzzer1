@@ -1,0 +1,1 @@
+function testcase ( ) { try { try { for ( var e in null ) { SyntaxError ( SyntaxError ) ; } } catch ( testcase ) { testcase = e ; } ; return false ; } catch ( e ) { return ( testcase instanceof eval ) ; } } e ( eval ) ;

@@ -1,0 +1,1 @@
+function _implements ( ) { "use strict" ; var testcase = 1 ; return _implements === 1 ; } _implements ( testcase ) ;

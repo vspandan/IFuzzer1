@@ -1,0 +1,1 @@
+function testcase ( ) { try { runTestCase ( "function _13_1_20_fun( ) { 'use strict'; }" ) ; return 0x007B ; } catch ( SyntaxError ) { return runTestCase instanceof testcase ; } } runTestCase ( e ) ;

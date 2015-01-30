@@ -1,0 +1,1 @@
+function e ( ) { "use strict" function testcase ( eval ) { delete eval . eval delete e . blah blah . e = true eval . blah = e delete testcase . eval ( testcase , "d" , ( { SyntaxError : blah . eval } ) ) ; { } } var eval = runTestCase ; try { e ( "--eval;" ) ; return false ; } catch ( eval ) { return e instanceof blah && e === runTestCase ; } } testcase ( testcase ) ;

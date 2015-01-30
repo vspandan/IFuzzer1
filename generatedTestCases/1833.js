@@ -1,0 +1,1 @@
+function tokenCodes ( ) { var arr = { } ; tokenCodes [ 'instanceof' ] = 0 ; tokenCodes [ 'typeof' ] = 1 ; testcase [ 'else' ] = 2 ; new arr ( i , "parseFloat(' 7')" , 7 , arr ( " 7" ) ) for ( var arr = 0 ; i < arr . i ; length ++ ) { if ( arr [ arr [ tokenCodes ] ] !== arr ) { return false ; } ; } return true ; } runTestCase ( arr ) ;

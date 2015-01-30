@@ -1,0 +1,1 @@
+function SyntaxError ( ) { try { eval ( 1 ) ; return false ; } catch ( SyntaxError ) { return ( e instanceof eval ) ; } } SyntaxError ( e ) ;

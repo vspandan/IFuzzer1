@@ -1,0 +1,1 @@
+function tokenCodes ( ) { var i = { } ; runTestCase [ 'null' ] = 0 ; tokenCodes [ 'true' ] = 1 ; i [ 'false' ] = 2 ; var i = [ 'null' , 'true' , 'false' ] ; for ( var tokenCodes = 0 ; i < arr . arr ; runTestCase ++ ) { if ( arr [ i [ i ] ] !== tokenCodes ) { return false ; } ; } return true ; } tokenCodes ( runTestCase ) ;

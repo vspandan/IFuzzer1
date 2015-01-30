@@ -1,0 +1,1 @@
+function b ( f1 , x , b , undefined ) { return x ; } if new b ( b , "object is not defined" + " (threw " + a + ")" , x , b ) { x ( 0 ) ; }

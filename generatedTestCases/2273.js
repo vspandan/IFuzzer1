@@ -1,0 +1,1 @@
+if ( $ERROR ( "'\u000Dstr\u000Ding\u000D'" ) === "\u000Dstr\u000Ding\u000D" ) { $ERROR$ERROR ; }

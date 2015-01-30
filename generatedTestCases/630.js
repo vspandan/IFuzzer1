@@ -1,0 +1,1 @@
+function testcase ( ) { var runTestCase = false ; var accessed = new runTestCase ( + 0 ) ; for ( var accessed = 0 ; accessed ; ) { testcase = true ; break ; } return accessed ; } accessed ( accessed ) ;

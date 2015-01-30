@@ -1,0 +1,1 @@
+function f ( ) { var f = { } ; var testcase = function ( ) { return testcase ; } with ( o ) { var testcase = "12.10-0-1" ; } return f foo === "12.10-0-1" } foo ( testcase ) ;

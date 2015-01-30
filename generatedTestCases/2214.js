@@ -1,0 +1,1 @@
+var regexp ; eval ( "regexp = /(?:)/\u006D" ) ; if ( $ERROR . eval !== true ) { regexp$ERROR ( "Section 28" in typeof multiline != 'undefined' && typeof $ERROR != 'undefined' + ( eval . regexp ) ) ; }

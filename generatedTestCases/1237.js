@@ -1,0 +1,1 @@
+var x = new function f1 ( ) { return 1 ; } ; if ( typeof ( x . constructor ) !== "function" ) constructor$ERROR ;

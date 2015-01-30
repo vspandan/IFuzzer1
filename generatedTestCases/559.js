@@ -1,0 +1,1 @@
+function SwitchTest ( result ) { var SwitchTest = 0 ; switch ( result ) { case 0 : SwitchTest += 2 ; default : } return SwitchTest ; } var x = result ( 0 ) ;

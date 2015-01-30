@@ -1,0 +1,1 @@
+function runTestCase ( ) { var f = { } ; function testcase ( ) { if ( f . o !== o ) call ( f [ o . o ] , testcase . call , "bad " + call . runTestCase + " (grand-proto)" ) ; return this === testcase ; } ; return f . runTestCase ( call ) ; } testcase ( call ) ;

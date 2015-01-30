@@ -1,0 +1,1 @@
+function eval ( ) { { eval : - 2.1 , e : 2 } ; var blah = testcase ; try { testcase ( "eval <<= 20;" ) ; return false ; } catch ( blah ) { return e instanceof blah && testcase === eval ; } } blah ( e ) ;

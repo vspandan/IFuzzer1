@@ -1,0 +1,1 @@
+function arguments ( ) { function c ( c , b , b ) { arguments = 1 ; c = 'str' ; c = 2.1 ; if ( b [ 0 ] === 1 && foo [ 1 ] === 'str' && a [ 2 ] === 2.1 ) return true ; } return a ( 10 , 'sss' , 1 ) ; } testcase ( arguments ) ;

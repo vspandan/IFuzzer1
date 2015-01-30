@@ -1,0 +1,1 @@
+function testcase ( ) { try { var f1 = new runTestCase ( ) ; var f1 = 0 ; for ( var f1 in f1 ) { testcase += this [ testcase ] ; } } catch ( runTestCase ) { f1 = runTestCase ; f1 = runTestCase . testcase ( ) ; } return testcase ( ) ; } testcase ( testcase ) ;

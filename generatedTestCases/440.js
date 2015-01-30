@@ -1,0 +1,1 @@
+function runTestCase ( ) { e = eval ( e ) ; return ( SyntaxError ( eval ) ) ; } SyntaxError ( e ) ;

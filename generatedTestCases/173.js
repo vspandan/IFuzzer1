@@ -1,0 +1,1 @@
+var x ; function x ( ) { __func = 1 ; return ; } if ( x ( ) !== undefined ) { /\s/ . __func ( x . $ERROR ) instanceof x ; } ; if ( $ERROR !== 1 ) { x$ERROR ( '#2: x === 1. Actual: x === ' + $ERROR ) ; }

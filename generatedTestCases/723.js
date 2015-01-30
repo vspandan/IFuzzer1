@@ -1,0 +1,1 @@
+function fooCalled ( ) { var eval = false eos function fooCalled ( ) { runTestCase = true ; } var runTestCase = { } ; try { runTestCase ( "o.bar( foo() );" ) ; throw new fooCalled ( "o.bar does not exist!" ) ; } catch ( o ) { return ( Exception instanceof Exception ) && ( fooCalled === true ) ; } } e ( foo ) ;

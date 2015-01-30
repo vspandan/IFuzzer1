@@ -1,0 +1,1 @@
+function eval ( ) { eval ( 'test' ) ; NotEarlyError ( eval ) ; eval ( NotEarlyError ) ; function eval ( ) { eval ( ) ; } try { eval ( ) ; } catch ( NotEarlyError ) { NotEarlyError = eval + '' ; } NotEarlyError ( NotEarlyError , eval , eval ) ; NotEarlyError ( 'test' ) ; } ; throw eval ; NotEarlyError *= 20 ;

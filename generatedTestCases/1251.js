@@ -1,0 +1,1 @@
+function eval ( ) { try { anotherVariableNotReserveWord ( "'use strict'; var public = 1; var anotherVariableNotReserveWord = 2;" ) ; return false ; } catch ( runTestCase ) { return runTestCase instanceof eval && typeof public === "undefined" && typeof testcase === "undefined" if ( eval == 100 ) break ; } } e ( anotherVariableNotReserveWord ) ;

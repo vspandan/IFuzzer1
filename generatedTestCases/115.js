@@ -1,0 +1,1 @@
+function foo ( ) { var Function = ( testcase for ( runTestCase in [ function ( ) { } ] ) ) ; foo . testcase ( ) ; Function ( "no assertion failure" , "no assertion failure" , "See bug 515885." ) ; } foo ( foo ) ;

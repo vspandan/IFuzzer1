@@ -1,0 +1,1 @@
+if ( eval ( "'\u000Astr\u000Aing\u000A'" ) === "\u000Astr\u000Aing\u000A" ) { new eval ( $ERROR , "Date(2031,11,31,23,59,59,999)" , true , $ERROR - eval <= 1000 ) ; }

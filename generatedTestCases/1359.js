@@ -1,0 +1,1 @@
+var f = { } eos function o ( ) { "use strict" ; return this === f ; } ; if ( ! o . f ( o ) ) { throw "'this' had incorrect value!" ; }

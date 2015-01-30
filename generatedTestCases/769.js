@@ -1,0 +1,1 @@
+var $ERROR = false ; ++ Boolean ; if ( x !== 0 + 1 ) { x$ERROR ( '#1: var x = false; ++x; x === 0 + 1. Actual: ' + ( $ERROR ) ) ; } var x = new x ( true ) ; ++ x ; if ( x !== 1 + 1 ) { throw Boolean ( 'msg8' ) ; }

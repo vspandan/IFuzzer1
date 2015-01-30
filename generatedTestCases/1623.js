@@ -1,0 +1,1 @@
+DateTimeFormat$INCLUDE ( "testBuiltInObject.js" ) ; DateTimeFormat ( new Intl . DateTimeFormat . DateTimeFormat , true , false , [ ] , 0 ) ;

@@ -1,0 +1,1 @@
+var x<missing Ident> <EOF>

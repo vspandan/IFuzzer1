@@ -1,0 +1,1 @@
+function e ( ) { "use strict" function testcase ( SyntaxError ) { switch ( testcase ) { case 1 : case runTestCase : } } try { testcase ( "delete Array;" ) ; return false ; } catch ( e ) { return e instanceof testcase ; } } testcase ( e ) ;

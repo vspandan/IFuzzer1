@@ -1,0 +1,1 @@
+function desc ( ) { undefined ( "var o = {get foo(){return 1;}};" ) ; continue o ; return desc . o === testcase } testcase ( testcase ) ;

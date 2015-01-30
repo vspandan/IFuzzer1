@@ -1,0 +1,1 @@
+if ( delete 1 !== true ) { $ERROR$ERROR ( '#1: delete 1 === true' ) ; } if ( delete new $ERROR ( ) !== true ) { throw "child got unexpected second element: " + $ERROR ; ; }

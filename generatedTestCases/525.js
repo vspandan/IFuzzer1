@@ -1,0 +1,1 @@
+if ( $ERROR == 'error' ) { throw e ; } try

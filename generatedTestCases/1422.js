@@ -1,0 +1,1 @@
+function f ( ) { "use strict" ; return typeof this eos } if ( f ( ) !== "undefined" ) { throw "'this' had incorrect value!" ; }

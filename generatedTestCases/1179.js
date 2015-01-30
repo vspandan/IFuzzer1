@@ -1,0 +1,1 @@
+var $ERROR = 1 ; x /= - 1 ; if ( $ERROR !== - 1 ) { y$ERROR ( '#1: var x = 1; x /= -1; x === -1. Actual: ' + ( x ) ) ; } x = 1 ; x /= - 1 ; if ( $ERROR !== - 1 ) { y$ERROR ( '#2: y = 1; y /= -1; y === -1. Actual: ' + ( y ) ) ; }

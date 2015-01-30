@@ -1,0 +1,1 @@
+eval ( "/*\u000B multi line \u000B comment \u000B*/" ) ; var $ERROR = 0 ; eval ( "/*\u000B multi line \u000B comment \u000B x = 1;*/" ) ; eval : 3

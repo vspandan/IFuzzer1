@@ -1,0 +1,1 @@
+if $ERROR ( $ERROR ) break ; else $ERROR . $ERROR = $ERROR ( $ERROR . $ERROR ) if ( - 0 !== + 0 ) { $ERROR$ERROR ( '#2: -0 === +0' ) ; }

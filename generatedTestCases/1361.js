@@ -1,0 +1,1 @@
+function bind ( ) { function f ( ) { "use strict" ; return this === null ; } ; return runTestCase . bind ( '' ) ( ) ; } testcase ( f ) ;

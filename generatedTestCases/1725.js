@@ -1,0 +1,1 @@
+function runTestCase ( ) { try { runTestCase ( "var \u0069\u0066 = 123;" ) ; return false ; } catch ( runTestCase ) { return e instanceof testcase ; } } continue ; ;

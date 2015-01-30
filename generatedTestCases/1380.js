@@ -1,0 +1,1 @@
+function bind ( ) { "use strict" ; function undefined ( ) { var undefined = new undefined ( ) ; f [ 'name' ] = 'Just a name' ; undefined [ 'if' ] = false ; f [ 'some text' ] = 'correct' ; } } ; if ( ! ( f . bind ( f ) ( ) ) ) { throw "'this' had incorrect value!" ; }

@@ -1,0 +1,1 @@
+function tempIndex ( ) { this . testcase = "" ; this . foo = "general" ; } testcase ( foo ) ;

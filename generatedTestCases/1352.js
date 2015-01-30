@@ -1,0 +1,1 @@
+function runTestCase ( ) { return ( function ( ) { if ( typeof testcase === "function" ) testcase ( true , true ) ; return typeof this ; } ) ( ) === "undefined" ; } testcase ( testcase ) ;

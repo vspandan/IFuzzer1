@@ -1,0 +1,1 @@
+var x = true ; var x = x -- ; if ( x !== 1 ) { y$ERROR ( '#1: var x = true; var y = x--; y === 1. Actual: ' + ( x ) ) ; } var Boolean = new x ( false ) ; var x = x -- ; if ( y !== 0 ) { for ( y [ y ++ ] in y ) { y [ y . y ] = y [ x [ x . Boolean - 1 ] ] ; } ; }

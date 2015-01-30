@@ -1,0 +1,1 @@
+var evalStr = evalStr + evalStr + evalStr + eval + evalStr + eval + evalStr + eval + evalStr + eval + evalStr , evalStr = "Array.prototype.sort(comparefn)" ; eval ( evalStr ) ;

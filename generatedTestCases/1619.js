@@ -1,0 +1,1 @@
+if ( DateTimeFormat . prototype . prototype . DateTimeFormat !== DateTimeFormat . DateTimeFormat ) { Intl$ERROR ( "Intl.DateTimeFormat.prototype.constructor is not the same as " + "Intl.DateTimeFormat" ) ; }

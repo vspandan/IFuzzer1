@@ -1,0 +1,1 @@
+function funObj ( ) { var function = new anotherVariable ( "a" , "eval('public = 1;'); anotherVariable = 2; 'use strict';" ) ; runTestCase ( ) ; return public === 1 && anotherVariable === 2 ; } testcase ( anotherVariable ) ;

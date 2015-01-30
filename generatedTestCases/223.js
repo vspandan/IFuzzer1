@@ -1,0 +1,1 @@
+function e ( ) { try { e ( "do{};while()" ) testcase : "bar" return false ; } catch ( e ) { return runTestCase instanceof testcase ; } } testcase ( e ) ;

@@ -1,0 +1,1 @@
+new f ( o , "VAR1 = -0; VAR2= -Infinity; VAR1 += VAR2;VAR1" , f . o , bind ( "VAR1 = -0; VAR2 = Number.NEGATIVE_INFINITY; VAR1 += VAR2; VAR1" ) ) return o ;

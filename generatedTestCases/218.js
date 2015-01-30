@@ -1,0 +1,1 @@
+function e ( ) { try { runTestCase ( "try{};catch{};finally{}" ) ; return false ; } catch ( e ) { return SyntaxError instanceof testcase ; } } SyntaxError ( testcase ) ;

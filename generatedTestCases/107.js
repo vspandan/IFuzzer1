@@ -1,0 +1,1 @@
+function caller ( ) { function caller ( ) { "use strict" ; } try { foo . runTestCase = 41 ; return false ; } catch ( foo ) { return e instanceof foo ; } } e ( runTestCase ) ;

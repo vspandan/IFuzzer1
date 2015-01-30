@@ -1,0 +1,1 @@
+function eval ( ) { try { runTestCase ( "var regExp = /[\u2029]/" ) ; e . testcase ( "" ) ; return false ; } catch ( eval ) { return eval instanceof regExp ; } } regExp ( eval ) ;

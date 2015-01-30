@@ -1,0 +1,1 @@
+function NaN ( ) { var testcase = delete runTestCase ; if ( runTestCase === d ) { return true ; } } runTestCase ( d ) ;

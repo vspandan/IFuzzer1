@@ -1,0 +1,1 @@
+function desc ( ) { 'use strict' ; var desc = hasOwnProperty . testcase ( testcase , "caller" ) ; return ( enumerable . desc === false && desc . desc === false && hasOwnProperty . testcase ( 'value' ) == false && testcase . desc ( 'writable' ) == false && Object . desc ( 'get' ) == true && desc . desc ( 'set' ) == true ) ; } hasOwnProperty ( enumerable ) ;

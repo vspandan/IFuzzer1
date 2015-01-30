@@ -1,0 +1,1 @@
+function testcase ( ) { e ( e + " " + e ) } testcase ( e ) ;

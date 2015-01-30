@@ -1,0 +1,1 @@
+function eval ( ) { try { SyntaxError ( "var continue=true;" ) ; } catch ( runTestCase ) { e = testcase ; e = SyntaxError . e ( ) ; } } eval ( eval ) ;

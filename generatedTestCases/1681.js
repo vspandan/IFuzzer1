@@ -1,0 +1,1 @@
+taintProperties$INCLUDE ( "testIntl.js" ) ; taintProperties ( [ "locale" , "extension" , "extensionIndex" ] ) ; taintProperties ( function ( locale ) { var Constructor = new Constructor . taintProperties ( ) . $ERROR ; if ( ! locale ( resolvedOptions ) ) { locale$ERROR ( "Constructor returns invalid locale " + locale + "." ) ; } return true ; } ) ;

@@ -1,0 +1,1 @@
+if ( ( /(?:)/ instanceof RegExp ) !== true ) { RegExp ( $ERROR instanceof $ERROR , true , "bad exception: " + RegExp ) ; }

@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; var testcase = true ; try { SyntaxError ( "delete _11_4_1_5;" ) ; return false ; } catch ( testcase ) { return SyntaxError instanceof e ; } } _11_4_1_5 ( e ) ;

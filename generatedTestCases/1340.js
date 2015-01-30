@@ -1,0 +1,1 @@
+function call ( ) { return this === f ( ) ; } ; if ( ! ( ( function ( ) { true ; return f . f ( null ) ; } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

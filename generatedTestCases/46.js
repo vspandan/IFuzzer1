@@ -1,0 +1,1 @@
+THE_ANSWER = "Answer to Life, the Universe, and Everything" ; function THE_ANSWER ( ) { var __func = THE_ANSWER ; THE_ANSWER : $ERROR = "http://schemas.xmlsoap.org/soap/encoding/" > < THE_ANSWER : } ; if ( THE_ANSWER ( 42 , 42 , 42 ) !== $ERROR ) { __func$ERROR ( '#1: " " variable overrides ActivationObject.' ) ; }

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; return ; } eval ( testcase ) ;

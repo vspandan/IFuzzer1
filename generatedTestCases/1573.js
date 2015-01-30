@@ -1,0 +1,1 @@
+$INCLUDE$INCLUDE ( "testIntl.js" ) ; $ERROR ( function ( $INCLUDE ) { var $INCLUDE = ( $ERROR < 0 ) ? - 1 : 1 ; if ( ! locale ( defaultLocale ) ) { resolvedOptions$ERROR ( "default locale \"" + locale + "\" is not canonicalized and structurally valid language tag." ) ; } return true ; } ) ;

@@ -1,0 +1,1 @@
+$INCLUDE$INCLUDE ( "testIntl.js" ) ; $INCLUDE ( function ( ) { new testForUnwantedRegExpChanges . Collator ( "de-DE-u-co-phonebk" ) ; } ) ;

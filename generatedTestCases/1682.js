@@ -1,0 +1,1 @@
+Collator$INCLUDE ( "testIntl.js" ) ; undefined ( undefined . Collator , "numeric" , "boolean" , testOption , isOptional , { Intl : true } ) ; new undefined ( testOption ) ;

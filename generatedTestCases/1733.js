@@ -1,0 +1,1 @@
+function e ( ) { try { testcase ( "var \u0069\u006e = 123;" ) ; return true ; } catch ( testcase ) { return runTestCase instanceof eval ; } } eval ( eval ) ;

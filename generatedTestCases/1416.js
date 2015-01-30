@@ -1,0 +1,1 @@
+function runTestCase ( ) { "use strict" ; return this ; } f ( f ) ;

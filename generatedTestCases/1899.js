@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; try { testcase ( "var \u0070\u0072\u006f\u0074\u0065\u0063\u0074\u0065\u0064 = 123;" ) ; return false ; } catch testcase { return 1 ; } } e ( SyntaxError ) ;

@@ -1,0 +1,1 @@
+function eval ( ) { try { eval ( '"use strict"; var x = "\\474";' ) ; return false ; } catch ( eval ) { return ( testcase instanceof testcase ) ; } } runTestCase ( eval ) ;

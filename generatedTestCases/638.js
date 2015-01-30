@@ -1,0 +1,1 @@
+index = "" for ( index = 0 ; index < 10 ; __str += 1 ) { if ( index > 5 ) break ; index += $ERROR ; } if ( index !== "012345" ) { __str$ERROR ( '#1:__str === "012345". Actual: __str ===' + $ERROR ) ; }

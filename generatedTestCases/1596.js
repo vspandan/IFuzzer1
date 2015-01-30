@@ -1,0 +1,1 @@
+toLocaleString$INCLUDE ( "testIntl.js" ) ; taintDataProperty ( taintDataProperty , "NumberFormat" ) ; ( 0.0 ) . toLocaleString ( ) ;

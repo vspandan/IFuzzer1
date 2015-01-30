@@ -1,0 +1,1 @@
+var object = { lbl : 1 , i : 1 } ; var lbl = 0 ; result : for ( var i in result ) { lbl += i [ lbl ] ; break $ERROR ; } if ( ! ( i === 1 ) ) { result$ERROR ( "'break label' should break execution of labelled iteration continue ;" ) ; }

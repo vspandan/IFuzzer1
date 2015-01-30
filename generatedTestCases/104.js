@@ -1,0 +1,1 @@
+function SyntaxError { while ( { } = ( runTestCase ) ( e ) ) ; } e ( testcase ) ;

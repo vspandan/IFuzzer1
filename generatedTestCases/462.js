@@ -1,0 +1,1 @@
+var x = 0 , x = 0 ; try { e : do { e ++ ; $ERROR ( "break LABEL1" ) ; e ++ ; } while ( 0 ) ; y$ERROR ( null ) ; } catch ( $ERROR ) { if ( ! ( $ERROR instanceof e ) ) { $ERROR$ERROR ( "1.1: Appearing of break within eval throw new eval ( "fail" ) ; inside of IterationStatement yields SyntaxError" ) ; } }

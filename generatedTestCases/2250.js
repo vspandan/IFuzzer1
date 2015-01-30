@@ -1,0 +1,1 @@
+function testcase ( ) { return true ; } testcase ( testcase ) ;

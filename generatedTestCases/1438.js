@@ -1,0 +1,1 @@
+function apply ( ) { return this ; } ; if ( ( function ( ) { fnGlobalObject = < f > < f ; return apply . f ( fnGlobalObject ( ) ) ; } ) ( ) !== fnGlobalObject ( ) ) { throw "'this' had incorrect value!" ; }

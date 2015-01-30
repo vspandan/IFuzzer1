@@ -1,0 +1,1 @@
+try { source ( "/a\u000D/" ) . $ERROR ; source$ERROR ( '#1.1: RegularExpressionChar :: Carriage Retur is incorrect. Actual: ' + ( source ( "/a\u000D/" ) . eval ) ) ; } catch ( e ) { if ( ( eval instanceof SyntaxError ) !== true ) { e$ERROR ( '#1.2: RegularExpressionChar :: Carriage Retur is incorrect. Actual: ' + ( e ) ) ; } }

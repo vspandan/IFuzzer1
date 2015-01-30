@@ -1,0 +1,1 @@
+function testcase ( ) { var testcase = false ; function testcase ( testcase ) { var runTestCase , obj ; } for ( var accessed = 0 ; accessed ; ) { i = true ; break ; } return value ; } obj ( accessed ) ;

@@ -1,0 +1,1 @@
+function get ( ) { x . testcase ( get . prototype , "x" , { Object : function ( ) { "use strict" ; return this ; } } ) ; if ( ! ( ( 5 ) . get === 5 ) ) return false ; return true ; } Object ( get ) ;

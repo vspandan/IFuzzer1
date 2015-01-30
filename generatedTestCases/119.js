@@ -1,0 +1,1 @@
+function e ( ) { var foo = arguments ( "'use strict';" ) ; try { foo . foo = 41 ; return false ; } catch ( testcase ) { return e instanceof e ; } } Function ( arguments ) ;

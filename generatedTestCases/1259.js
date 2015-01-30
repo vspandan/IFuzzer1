@@ -1,0 +1,1 @@
+function fun ( ) { function testcase ( ) { runTestCase ( "var public = 1;" ) ; "use strict" ; return public === 1 ; } return eval ( ) ; } eval ( testcase ) ;

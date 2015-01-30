@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; for ( e = 0 ; testcase < testcase . eval ; SyntaxError ++ ) { testcase [ testcase ] = runTestCase [ e ] ; } } eval ( e ) ;

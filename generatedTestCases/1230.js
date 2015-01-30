@@ -1,0 +1,1 @@
+; var Boolean = $ERROR . Boolean ( - 1 ) + "\n" ; $ERROR = Boolean ( $ERROR + 1 ) . Boolean ( $ERROR ) ; var undefined = 0 ; undefined = Boolean . undefined ( /F/g , function ( ) { ++ Boolean ; return "F" + Boolean ; } ) var Boolean = Boolean . $ERROR ; var undefined = Boolean ( ) ; $ERROR ( Boolean ) ; return undefined ( ) - Boolean ;

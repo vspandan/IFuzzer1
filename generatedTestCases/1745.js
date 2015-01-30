@@ -1,0 +1,1 @@
+function testcase ( ) { try { e ( "var co\u006est = 123;" ) ; return false ; } catch ( SyntaxError ) { return testcase instanceof runTestCase ; } } testcase ( testcase ) ;

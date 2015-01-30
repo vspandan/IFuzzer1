@@ -1,0 +1,1 @@
+function runTestCase ( ) { var testcase = { o : "12.10-0-3 before" } ; var prop ; with ( testcase ) { prop = function ( ) { return f ; } } testcase . o = "12.10-0-3 after" ; return o ( ) === "12.10-0-3 after" } f ( prop ) ;

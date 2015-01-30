@@ -1,0 +1,1 @@
+var x = 0 ; if ( $ERROR !== 0 ) { $ERROR$ERROR ( '#1: var x = 0; /* multi line comment x = 1;*/ x === 0. Actual: ' + ( x ) ) ; }

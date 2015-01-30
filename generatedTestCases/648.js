@@ -1,0 +1,1 @@
+try { } catch ( Math ) { if ( e instanceof e !== true ) { e$ERROR ( '#1: 1 instanceof Math throw TypeError' ) ; } }

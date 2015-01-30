@@ -1,0 +1,1 @@
+if ( ! ( ( function ( ) { "use strict" ; id : id = "1" } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

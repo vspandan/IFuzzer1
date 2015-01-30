@@ -1,0 +1,1 @@
+function Object ( ) { "use strict" ; var runTestCase = { } ; obj . Object ( testcase , "prop" , { obj : function ( ) { return "abc" ; } , obj : false } ) ; try { delete TypeError . get ; return false ; } catch ( get ) { return e instanceof testcase && testcase . obj === "abc" ; } } obj ( testcase ) ;

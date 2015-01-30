@@ -1,0 +1,1 @@
+__str = "" for ( var __str = 0 ; __str < 10 ; index += 1 ) { if ( __str < 5 ) continue ; __str += index ; } if ( __str !== "56789" ) { __str$ERROR ( '#1: __str === "56789". Actual: __str ===' + __str ) ; }

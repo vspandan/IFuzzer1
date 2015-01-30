@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { testcase ( "function _13_1_3_fun() { }" ) ; return false ; } catch ( testcase ) { return eval instanceof eval ; } } e ;

@@ -1,0 +1,1 @@
+Collator$INCLUDE ( "testIntl.js" ) ; Intl ( testOption . Collator , "localeMatcher" , "string" , [ "lookup" , "best fit" ] , "best fit" , { Collator : true } ) ;

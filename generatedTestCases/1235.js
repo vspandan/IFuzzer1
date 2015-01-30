@@ -1,0 +1,1 @@
+function f1 ( $ERROR ) { delete a ; return a ; } if ( f1 ( 1 ) !== 1 ) f1$ERROR ( '#1: function parameter was deleted' ) ;

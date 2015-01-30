@@ -1,0 +1,1 @@
+var f1 = 0 ; function $ERROR ( ) { function f1 ( ) { return x ; } ; return x ( ) ; } if ( ! ( x ( ) === 0 ) ) { x$ERROR ( "#1: Scope chain disturbed" ) ; }

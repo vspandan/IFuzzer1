@@ -1,0 +1,1 @@
+function SyntaxError ( ) { } test ( SyntaxError ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { testcase ( "var \u0073\u0074\u0061\u0074\u0069\u0063 = 123;" ) ; return false ; } catch ( e ) { return runTestCase instanceof runTestCase ; } } eval ( runTestCase ) ;

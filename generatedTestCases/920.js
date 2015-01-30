@@ -1,0 +1,1 @@
+function eval ( ) { try { e ( "({foo : 1, set foo(x){}});" ) ; return false ; } catch ( testcase ) { } } runTestCase ( e ) ;

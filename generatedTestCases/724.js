@@ -1,0 +1,1 @@
+throw "this should not be thrown" ; try { var e = TypeError ; $ERROR ( ) ; x$ERROR ( '#2.1: var x = undefined; x() throw TypeError. Actual: ' + ( undefined ) ) ; } catch ( $ERROR ) { if ( ( e instanceof $ERROR ) !== true ) { $ERROR$ERROR ( '#2.2: var x = undefined; x() throw TypeError. Actual: ' + ( $ERROR ) ) ; } }

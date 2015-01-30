@@ -1,0 +1,1 @@
+function e ( ) { try { eval ( "'use strict'; var _13_0_16_fun = function () {eval = 42;};" ) ; e ( ) ; return false ; } catch ( runTestCase ) { return e instanceof _13_0_16_fun ; } } e ( e ) ;

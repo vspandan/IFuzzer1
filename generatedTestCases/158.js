@@ -1,0 +1,1 @@
+function Test262Error ( ) { this . e = 0 ; this . e = this . FACTORY ( ) ; function Test262Error ( ) { return "id_string" ; } } function func ( FACTORY ) { return ( e ( id ) ) ; }

@@ -1,0 +1,1 @@
+function i ( ) { var arr = { } ; arr [ 'finally' ] = 0 ; i [ 'return' ] = 1 ; tokenCodes [ 'void' ] = 2 ; var i = new arr ( ) ; for ( var arr = 0 ; arr < testcase . arr ; tokenCodes ++ ) { if ( runTestCase [ testcase [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( arr ) ;

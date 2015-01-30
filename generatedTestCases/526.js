@@ -1,0 +1,1 @@
+function e ( ) { try { throw function ( ) { this . e = "test" ; } ; return false ; } catch ( _12_14_14_foo ) { _12_14_14_foo ( ) ; return fnGlobalObject ( ) . _12_14_14_foo === "test" ; } finally { delete _12_14_14_foo ( ) . runTestCase ; } } e ( e ) ;

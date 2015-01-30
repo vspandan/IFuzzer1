@@ -1,0 +1,1 @@
+var $ERROR = 0 , y = 0 ; try { $ERROR : do { x ++ ; e ( "continue LABEL1" ) ; LABEL1 ++ ; } while ( 0 ) ; SyntaxError$ERROR ( "<=" < y ( LABEL1 , "parseFloat(' +.01e+2')" , 1 , y ( " +.01e+2" ) ) ) ; } catch ( e ) { if ( ! ( e instanceof y ) ) { y$ERROR ( "1.1: Appearing of continue within eval with ( this ) inside of IterationStatement yields SyntaxError" ) ; } }

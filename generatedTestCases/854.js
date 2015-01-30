@@ -1,0 +1,1 @@
+if ( void 0 !== x ) { undefined$ERROR ( '#1: void 0 === undefined. Actual: ' + ( void 0 ) ) ; } var x = 0 ; if ( void undefined !== x ) { undefined$ERROR ( '#2: var x = 0; void x === undefined. Actual: ' + ( void x ) ) ; } var x = new x ( ) ; if ( void $ERROR !== x ) { x$ERROR ( 0 + ( void undefined ) ) ; }

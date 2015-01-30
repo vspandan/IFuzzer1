@@ -1,0 +1,1 @@
+function i ( ) { var i = false ; var i = new boolObj ( ) ; for ( var testcase = 0 ; i ; ) { testcase = true ; break ; } return testcase ; } boolObj ( accessed ) ;

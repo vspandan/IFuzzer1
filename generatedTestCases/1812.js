@@ -1,0 +1,1 @@
+function arr ( ) { var p1 = { while : 0 , debugger : 1 , function : 2 } ; var arr = [ 'while' , 'debugger' , 'function' ] ; for ( var p1 in p1 ) { for ( var <<<reservedWord: in arr ) { if ( <<<reservedWord: [ arr ] === arr ) { if ( ! hasOwnProperty . p ( <<<reservedWord: [ p ] ) ) { return false ; } ; } } } return true ; } runTestCase ( testcase ) ;

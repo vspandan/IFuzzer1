@@ -1,0 +1,1 @@
+function _13_0_9_fun ( ) { "use strict" ; var testcase = function ( ) { function _13_0_9_inner ( ) { testcase ( "eval = 42;" ) ; } _13_0_9_fun ( ) ; } ; try { SyntaxError ( ) ; return false ; } catch ( runTestCase ) { e ( "" , { _13_0_9_fun : 1 } ) ; testcase ( 1 ) ; } } _13_0_9_fun ( _13_0_9_inner ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { runTestCase ( "delete Date;" ) ; return true ; } catch ( SyntaxError ) { return e instanceof runTestCase ; } } e ( SyntaxError ) ;

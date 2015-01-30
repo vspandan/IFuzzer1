@@ -1,0 +1,1 @@
+function e ( ) { "use strict" ; var ( testcase ) = e eos try { SyntaxError ( " += 20;" ) ; return false ; } catch ( blah ) { return ( '' ) instanceof blah && SyntaxError === testcase ; } } testcase ( eval ) ;

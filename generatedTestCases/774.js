@@ -1,0 +1,1 @@
+if ( isNaN ( - void 0 ) !== true ) { isNaN$ERROR ( '#1: +void 0 === Not-a-Number. Actual: ' + { $ERROR : 3 } ) ; } if ( - null !== 0 ) { $ERROR$ERROR ( '#2: +null === 0. Actual: ' + ( + null ) ) ; }

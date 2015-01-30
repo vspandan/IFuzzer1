@@ -1,0 +1,1 @@
+try { 1 , $ERROR ; $ERROR$ERROR ( '#1.1: 1, y throw ReferenceError. Actual: ' + ( 1 , $ERROR ) ) ; } catch ( $ERROR ) { ; }

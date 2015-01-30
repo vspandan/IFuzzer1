@@ -1,0 +1,1 @@
+function testcase ( ) { 'use strict' ; try { } catch ( NaN ) { return ( e instanceof e ) ; } } e ( testcase ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { try { e ( "var cla\u0073s = 123;" ) ; return false ; } catch ( eval ) { return e instanceof SyntaxError ; } } e ( e ) ;

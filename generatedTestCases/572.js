@@ -1,0 +1,1 @@
+while ( { } ) { var __in__do = 1 ; if ( $ERROR > 1000 ) break ; } ; if ( __in__do !== 1 ) { __in__do$ERROR ( '#1: "{}" in while expression evaluates to true' ) ; }

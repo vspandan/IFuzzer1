@@ -1,0 +1,1 @@
+function runTestCase ( ) { var runTestCase = { foo : 1 } ; with ( testcase ) { e = 42 ; } try { e ; } catch ( foo ) { return true ; } } foo ( testcase ) ;

@@ -1,0 +1,1 @@
+function eval ( ) { "use strict" ; var runTestCase = e ; try { runTestCase ( " 20;" ) try { while ( 1 ) { ( SyntaxError = new blah ( testcase ) ) . eval ( ) ; } } catch ( testcase ) { blah ( e + '' ) ; } return false ; } catch ( eval ) { return blah instanceof ( " -3.e+1" ) && SyntaxError === runTestCase ; } } testcase ( eval ) ;

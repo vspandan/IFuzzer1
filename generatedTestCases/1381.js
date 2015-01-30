@@ -1,0 +1,1 @@
+with ( { my_eval : "bar" } ) my_eval ( my_eval ) ; var my_eval = eval ; if ( my_eval ( "this" ) !== my_eval ( ) ) { throw "'this' had incorrect value!" ; }

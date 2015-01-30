@@ -1,0 +1,1 @@
+x ( "//\u0009 single line \u0009 comment \u0009" ) ; var x = 0 ; x ( "//\u0009 single line \u0009 comment \u0009 x = 1;" ) ; if ( eval !== 0 ) switch ( eval ) { case x ( x ( $ERROR ) ) : return $ERROR ; default : return x ; }

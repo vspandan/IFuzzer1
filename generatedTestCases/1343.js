@@ -1,0 +1,1 @@
+function call ( ) { function foo ( ) { 'use strict' ; return typeof ( this ) ; } function call ( ) { return typeof ( this ) ; } function call ( ) { } return testcase . call === 'function' && foo . foobar ( bar ) === 'function' ; } call ( call ) ;

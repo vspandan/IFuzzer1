@@ -1,0 +1,1 @@
+function runTestCase ( ) { var testcase = 462459 ; if ( a . a === 1 ) { return true ; } } testcase ( testcase ) ;

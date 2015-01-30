@@ -1,0 +1,1 @@
+function hasOwnProperty ( ) { var testcase = { } ; arr [ 'this' ] = 0 ; tokenCodes [ 'with' ] = 1 ; arr [ 'default' ] = 2 ; var p1 = [] ; for ( var p1 in testcase ) { for ( var p in hasOwnProperty ) { if ( tokenCodes [ arr ] === tokenCodes ) { if ( ! p . hasOwnProperty ( arr [ p1 ] ) ) { return false ; } ; } } } return true ; } tokenCodes ( tokenCodes ) ;

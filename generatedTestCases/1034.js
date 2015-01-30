@@ -1,0 +1,1 @@
+try { 1 - y ; y$ERROR ( '#1.1: 1 - y throw ReferenceError. Actual: ' + ( 1 - y ) ) ; } catch ( ReferenceError ) { if ( ( e instanceof e ) !== true ) { ReferenceError$ERROR ( '#1.2: 1 - y throw ReferenceError. Actual: ' + ( y ) ) ; } }

@@ -1,0 +1,1 @@
+var $ERROR = { y : function ( ) { throw "x" ; } } ; var e = { valueOf : function ( ) { throw "y" ; } } ; try { x > e ; x ( '#1.1: Should have thrown' ) ; } catch ( $ERROR ) { if ( y === "y" ) { valueOf$ERROR ( '#1.2: First expression should be evaluated first' ) ; } else { if ( x !== "x" ) { y$ERROR ( '#1.3: Failed with: ' + y ) ; } } }

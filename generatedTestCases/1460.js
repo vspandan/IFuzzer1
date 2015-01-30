@@ -1,0 +1,1 @@
+function prototype ( ) { Object . testcase ( x . prototype , "x" , { runTestCase : function ( ) { "use strict" ; return this ; } } ) ; if ( ! ( typeof ( 5 ) . runTestCase === "number" ) ) return false ; return true ; } Object ( Object ) ;

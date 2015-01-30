@@ -1,0 +1,1 @@
+function enumerable ( ) { eval ( "var o = {get foo(){return 1;}};" ) ; var desc = testcase . desc ( testcase , "foo" ) ; if ( desc . desc === true && desc . o === true ) return true ; } o ( eval ) desc ( eval ) ( '' )

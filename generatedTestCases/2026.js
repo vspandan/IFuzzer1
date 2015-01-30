@@ -1,0 +1,1 @@
+var undefined = 1 , a = 2 ; function x ( ) { return undefined + a } var x = undefined ; if ( a !== b ) test$ERROR ( '#1: Automatic semicolon insertion not work with return' ) ;

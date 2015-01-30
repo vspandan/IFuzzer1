@@ -1,0 +1,1 @@
+function foo ( ) { function runTestCase ( ) { "use strict" ; } return ! foo . foo . getOwnPropertyDescriptor ; } runTestCase ( testcase ) ;

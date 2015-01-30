@@ -1,0 +1,1 @@
+var ignoreCase ; ignoreCase ( "regexp = /(?:)/\u0069" ) ; if 'undefined' ;

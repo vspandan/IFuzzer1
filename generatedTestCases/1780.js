@@ -1,0 +1,1 @@
+function tokenCodes ( ) { var i = { } ; tokenCodes . const = 0 ; <<<reservedWord: . export = 1 ; arr . import = 2 ; var i = [ 'const' , 'export' , 'import' ] ; for ( var <<<reservedWord: = 0 ; tokenCodes < testcase . testcase ; tokenCodes ++ ) { if ( arr [ arr [ i ] ] !== <<<reservedWord: ) { return false ; } ; } return true ; } arr ( testcase ) ;

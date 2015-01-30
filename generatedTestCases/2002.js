@@ -1,0 +1,1 @@
+var x = function $ERROR ( o ) { o . o = 1 ; return o ; } ; ( new result ( ) ) . o ; if ( typeof f !== "function" ) { x$ERROR ( '#1: Check function Expression for automatic semicolon insertion' ) ; }

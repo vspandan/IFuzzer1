@@ -1,0 +1,1 @@
+try { eval ( "/\u000D/" ) . e ; $ERROR$ERROR ( '#1.1: RegularExpressionFirstChar :: Carriage return is incorrect. Actual: ' + ( SyntaxError ( "/\u000D/" ) . e ) ) ; } catch ( source ) { if ( ( source instanceof $ERROR ) !== true ) { eval$ERROR ( '#1.2: RegularExpressionFirstChar :: Carriage return is incorrect. Actual: ' + ( e ) ) ; } }

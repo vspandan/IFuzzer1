@@ -1,0 +1,1 @@
+var x = 0 , z = 0 ; var $ERROR = z + ++ $ERROR if ( ( $ERROR !== 1 ) && ( $ERROR !== 1 ) && ( x !== 0 ) ) { x$ERROR ( '#1: ' ) ; } x = z + ++ x if ( ( z !== 2 ) && ( x !== 2 ) && ( $ERROR !== 0 ) ) { x$ERROR ( '' ) ; } z = y + ++ x if ( ( x !== 3 ) && ( x !== 3 ) && ( z !== 0 ) ) { x$ERROR ( '' ) ; }

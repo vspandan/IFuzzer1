@@ -1,0 +1,1 @@
+var __FUNC = "jedi" ; function __JEDI ( ) { function __JEDI ( ) { return __JEDI [ 0 ] ; } ; return $ERROR ; } ; __JEDI . __GUNC = __JEDI ( __FUNC )

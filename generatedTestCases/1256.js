@@ -1,0 +1,1 @@
+function testcase ( ) { var data = { } ; var obj ; Object . runTestCase ( runTestCase , "accProperty" , { data : function ( obj ) { var a = { testcase : 1 , obj : 2 } ; data = Object ; "use strict" ; } } ) ; runTestCase . a = "overrideData" ; return Object === "overrideData" ; } obj ( obj ) ;

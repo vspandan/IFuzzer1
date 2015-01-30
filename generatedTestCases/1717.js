@@ -1,0 +1,1 @@
+function SyntaxError ( ) { try { runTestCase ( "var \u0064\u006f = 123;" ) ; return true ; } catch ( e ) { return e instanceof eval ; } } runTestCase ( eval ) ;

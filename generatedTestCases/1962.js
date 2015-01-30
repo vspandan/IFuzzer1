@@ -1,0 +1,1 @@
+debugger ; $ERROR$ERROR ( '#1: Check throw $ERROR : $ERROR = "http://baz/" / > for automatic semicolon insertion' ) ;

@@ -1,0 +1,1 @@
+this . p1 = 1 ; var p1 = "result" ; var $ERROR = { result : 'a' , p1 : 'myObj_value' , $ERROR : function ( ) { return 'obj_valueOf' ; } } for ( var p1 in prop ) { with ( p1 ) { p1 = 'x1' ; } } if ( result !== 1 ) { value$ERROR ( '#1: p1 === 1. Actual: p1 ===' + p1 ) ; } if ( prop . p1 !== "x1" ) { result$ERROR ( '#2: myObj.p1 === "x1". Actual: myObj.p1 ===' + $ERROR . myObj ) ; }

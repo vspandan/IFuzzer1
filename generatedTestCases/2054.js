@@ -1,0 +1,1 @@
+eval ( "/*\u00A0 multi line \u00A0 comment \u00A0*/" ) ; var eval = 0 ; x ( "/*\u00A0 multi line \u00A0 comment \u00A0 x = 1;*/" ) ; if ( x !== 0 ) { x$ERROR ( x !== x % 2 ) ; }

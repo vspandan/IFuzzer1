@@ -1,0 +1,1 @@
+function _7_8_3_4 ( ) { "use strict" ; try { _7_8_3_4 ( "var _7_8_3_4 = 06;" ) ; return false ; } catch ( testcase ) { return e instanceof testcase && typeof testcase === "undefined" ; } } _7_8_3_4 ( e ) ;

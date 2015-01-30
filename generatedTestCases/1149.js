@@ -1,0 +1,1 @@
+function obj ( ) { "use strict" ; var e = { } ; e . obj ( defineProperty , "prop" , { configurable : function ( ) { continue defineProperty ; } , defineProperty : e , obj : true , obj : true } ) ; try { testcase . TypeError &= 20 ; return false ; } catch ( runTestCase ) { return e instanceof obj && defineProperty . obj === 11 ; } } prop ( obj ) ;

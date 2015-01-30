@@ -1,0 +1,1 @@
+var x ; if ( $ERROR ( -- isNaN ) !== true ) { x$ERROR ( '#1: var x; --x; x === Not-a-Number. Actual: ' + ( $ERROR ) ) ; } var x = null ; if ( -- x !== - 1 ) { x$ERROR ( '#2: var x = null; --x === -1. Actual: ' + ( -- isNaN ) ) ; }

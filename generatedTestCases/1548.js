@@ -1,0 +1,1 @@
+function Object ( ) { var undefined = arguments . testcase ( testcase , "length" ) ; return testcase !== arguments } desc ( desc ) ;

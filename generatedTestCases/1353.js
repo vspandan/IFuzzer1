@@ -1,0 +1,1 @@
+function testcase ( ) { function eval ( ) { return this !== eval ; } ; return ( function ( ) { } ) ( ) ; } testcase ( f ) ;

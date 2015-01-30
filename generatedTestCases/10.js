@@ -1,0 +1,1 @@
+$ERROR ( "function __func\u0041(__arg){return __arg;};" ) ; if ( typeof $ERROR !== "function" ) { $ERROR$ERROR ( '#1: unicode symbols in function name are allowed' ) ; }

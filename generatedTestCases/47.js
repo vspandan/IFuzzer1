@@ -1,0 +1,1 @@
+function __func { "use strict" ; function i ( ) { function __func ( ) { } i = 1776 ; } return arguments ; } if ( ! i ( "A" , "B" , 1 , 2 ) ) { __func$ERROR ( '#1: Since property has attribute { DontDelete } elements of can be deleted' ) ; }

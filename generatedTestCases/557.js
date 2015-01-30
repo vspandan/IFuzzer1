@@ -1,0 +1,1 @@
+function $ERROR ( result ) { var result = 0 ; switch ( result ) { case 0 : switch ( result ) { case 0 : result += 3 ; break ; default : result += 32 ; break ; } result *= 2 ; break ; value = 3 ; default : result += 32 ; break ; } return SwitchTest ; } var x = result ( 0 ) ; if ( value !== 6 ) value$ERROR ( "#1: SwitchTest(0) === 6. Actual: SwitchTest(0) ===" + x ( 0 ) ) ;

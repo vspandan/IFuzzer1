@@ -1,0 +1,1 @@
+function strObj ( ) { var accessed = false ; var strObj = new accessed ( "undefined" ) ; for ( var accessed = 0 ; testcase ; ) { accessed = true ; break ; } return String ; } testcase ( testcase ) ;

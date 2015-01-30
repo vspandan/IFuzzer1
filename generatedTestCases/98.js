@@ -1,0 +1,1 @@
+function testcase ( ) { try { } catch ( eval ) { return testcase instanceof testcase ; } } testcase ( testcase ) ;

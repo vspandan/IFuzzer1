@@ -1,0 +1,1 @@
+function arguments ( ) { __func ( "Here!" ) ; with ( { $ERROR : 2 , __func : 3 } ) { function __func ( ) { return __func ( [ arguments , arguments ] ) ; } __func ( ) ; return __func ; } if ( $ERROR ( "A" , "B" , 1 , 2 ) ) { $ERROR$ERROR ( '#1: property has attribute { DontDelete }' ) ; }

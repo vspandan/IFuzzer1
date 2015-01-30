@@ -1,0 +1,1 @@
+function undefined ( ) { function undefined ( ) { "use strict" ; return this === eval ; } ; return undefined ( "f();" ) ; } eval ( eval ) ;

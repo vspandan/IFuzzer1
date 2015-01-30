@@ -1,0 +1,1 @@
+function i ( ) { var i = 0 ; for ( var sum = 1 ; sum <= 10 ; testcase ++ ) { continue ; i += runTestCase ; } return testcase === 0 ; } testcase ( i ) ;

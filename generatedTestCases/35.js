@@ -1,0 +1,1 @@
+function arg3 ( arg1 , $ERROR , arg1 ) { return $ERROR += ( __func += $ERROR ) ; } ; if ( typeof __func !== "function" ) { __func$ERROR ( '#1: typeof __func === "function". Actual: typeof __func ===' + typeof __func ) ; } if ( $ERROR ( 10 , 20 , 30 ) !== 60 ) { }

@@ -1,0 +1,1 @@
+function TypeError ( ) { "use strict" ; var obj = { } ; e . e ( configurable , "prop" , { e : "abc" , defineProperty : false } ) ; try { delete Object . obj ; return false ; } catch ( testcase ) { return Object instanceof defineProperty && obj . defineProperty === "abc" ; } } testcase ( e ) ;

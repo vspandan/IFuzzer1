@@ -1,0 +1,1 @@
+function runTestCase ( ) { return true ; } throw "error: empty string" ; ;

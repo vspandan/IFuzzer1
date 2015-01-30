@@ -1,0 +1,1 @@
+function runTestCase ( ) { "USE STRICT" runTestCase : if ( 0 ) return 5 var testcase = 1 ; return public === 1 ; } runTestCase ( testcase ) ;

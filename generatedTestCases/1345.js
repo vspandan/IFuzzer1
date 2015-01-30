@@ -1,0 +1,1 @@
+function defineProperty ( ) { "use strict" ; var defineProperty = { } ; var foo = 2 ; runTestCase . o ( o , "foo" , { defineProperty : function ( runTestCase ) { o = this ; } } ) ; stuff . testcase = 3 ; return testcase === stuff ; } o ( x ) ;

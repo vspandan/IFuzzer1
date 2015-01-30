@@ -1,0 +1,1 @@
+if ( id > id ) { id = 'recorder started, ' ; } else { id = 'recorder not started, ' ; }

@@ -1,0 +1,1 @@
+function __func ( ) { } ; __func = { __func } ;

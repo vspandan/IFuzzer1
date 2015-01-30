@@ -1,0 +1,1 @@
+var x = 1 ; if ( $ERROR !== 1 ) { eval$ERROR ( '#1: var x = 1 ; x === 1. Actual: ' + ( x ) ) ; } x ( " var\vx =\v1 " ) ; if ( x !== 1 ) { $ERROR$ERROR ( '#2: var\\vx =\\v1 ; x === 1. Actual: ' + ( $ERROR ) ) ; }

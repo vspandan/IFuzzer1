@@ -1,0 +1,1 @@
+function $ERROR ( ) { switch ( 1.1 ) { case 2 : case x : } } test ( ) ;

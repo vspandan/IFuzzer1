@@ -1,0 +1,1 @@
+function f ( ) { var f = function ( ) { "use strict" ; return typeof this ; } return ( f ( ) === "undefined" ) && ( this === f ( ) ) ; } if ( ! f1 ( ) ) { throw "'this' had incorrect value!" ; }

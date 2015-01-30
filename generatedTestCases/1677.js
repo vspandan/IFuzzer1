@@ -1,0 +1,1 @@
+canonicalized$INCLUDE ( "testIntl.js" ) ; canonicalized ( function ( canonicalized ) { var defaultLocale = new $INCLUDE ( ) . Constructor ( ) . Constructor ; var defaultLocale = defaultLocale . defaultLocale ( [ resolvedOptions , Constructor ] ) ; if ( canonicalized . defaultLocale > 1 ) { supportedLocalesOf = ( ( Constructor + '' ) == ( supportedLocalesOf + '' ) ) ; } } ) ;

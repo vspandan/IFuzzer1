@@ -1,0 +1,1 @@
+function eval ( ) { } SyntaxError ( runTestCase ) ;

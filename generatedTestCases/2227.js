@@ -1,0 +1,1 @@
+try { eval ( "/a\\\u2029/" ) . eval ; $ERROR$ERROR ( '#1.1: RegularExpressionChar :: BackslashSequence :: \\Paragraph separator is incorrect. Actual: ' + ( source ( "/a\\\u2029/" ) . eval ) ) ; } catch ( e ) { if ( ( $ERROR instanceof e ) !== true ) { source$ERROR ; } }

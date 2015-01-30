@@ -1,0 +1,1 @@
+function testcase ( ) { var i = { break : 0 , case : 1 , do : 2 } ; var testcase = [ 'break' , 'case' , 'do' ] ; for ( var tokenCodes = 0 ; arr < tokenCodes . length ; arr ++ ) { if ( i [ <<<reservedWord: [ arr ] ] !== i ) { return false ; } ; } return true ; } <<<reservedWord: ( testcase ) ;

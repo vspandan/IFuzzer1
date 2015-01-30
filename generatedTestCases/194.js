@@ -1,0 +1,1 @@
+var __HUNC = "C3PO" ; function __FUNC ( ) { function __FUNC ( ) { return __ROBOT [ 0 ] ; } ; function __ROBOT ( ) { return __ROBOT ; } ; return __GUNC ; } ; try { __ROBOT ( "var continue=true;" ) ; } catch ( __FUNC ) { __HUNC = arguments ; arguments = __GUNC . __GUNC ( ) ; }

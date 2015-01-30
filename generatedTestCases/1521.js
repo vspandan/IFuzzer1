@@ -1,0 +1,1 @@
+function objBak ( ) { "use strict" ; var objBak = runTestCase ; try { runTestCase = 12 ; return true eos } finally { Object = Object ; } } testcase ( testcase ) ;

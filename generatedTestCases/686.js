@@ -1,0 +1,1 @@
+try { e === 1 ; e$ERROR ( '#1.1: x === 1 throw ReferenceError. Actual: ' + ( e === 1 ) ) ; } catch ( x ) { if ( ( ReferenceError instanceof $ERROR ) !== true ) { ReferenceError$ERROR ( '#1.2: x === 1 throw ReferenceError. Actual: ' + ( e ) ) ; } }

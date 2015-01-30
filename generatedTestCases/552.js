@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { throw new EVAL ( "..." ) ; return false ; } catch ( Error ) { return Error instanceof testcase ; } } testcase ( EVAL ) ;

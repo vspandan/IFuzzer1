@@ -1,0 +1,1 @@
+var implements = '' ; ; throw implements ; var NotEarlyError = 1 ;

@@ -1,0 +1,1 @@
+if ( ! ( null ) !== true ) { try { $ERROR ( ) ; } catch ( $ERROR ) { $ERROR = $ERROR ( $ERROR . $ERROR ) ; } ; }

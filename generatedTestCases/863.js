@@ -1,0 +1,1 @@
+if ( + "1" !== 1 ) { isNaN$ERROR ( '#1: +"1" === 1. Actual: ' + ( + "1" ) ) ; } if ( $ERROR ( + "x" ) !== true ) { $ERROR$ERROR ( '#2: +"x" === Not-a-Number. Actual: ' + ( + "x" ) ) ; } if ( + new Number ( "-1" ) !== - 1 ) { return $ERROR ; }

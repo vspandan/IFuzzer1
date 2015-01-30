@@ -1,0 +1,1 @@
+if ( NaN === null ) { $ERROR$ERROR ( "#1: NaN === null" ) ; } if ( $ERROR === null ) { $ERROR$ERROR ( "#2: Infinity === null" ) ; } if ( $ERROR === null ) { undefined$ERROR ( "#3: undefined === null" ) ; }

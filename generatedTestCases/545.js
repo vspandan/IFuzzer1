@@ -1,0 +1,1 @@
+try { id = 5 ; } catch ( id ) { }

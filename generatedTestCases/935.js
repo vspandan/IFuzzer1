@@ -1,0 +1,1 @@
+function desc ( ) { testcase ( "var o = {set foo(arg){}};" ) ; var eval = testcase . undefined ( getOwnPropertyDescriptor , "foo" ) ; return desc . get === undefined } eval ( desc ) ;

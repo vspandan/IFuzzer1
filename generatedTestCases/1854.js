@@ -1,0 +1,1 @@
+function i ( ) { var tokenCodes = { package : 0 , protected : 1 , set length arr { "use strict" ; } } ; var <<<let: = [ 'package' , 'protected' , 'static' ] ; for ( var testcase = 0 ; arr < i . arr ; i ++ ) { if ( i [ i [ i ] ] !== i ) { return false ; } ; } return true ; } i ( i ) ;

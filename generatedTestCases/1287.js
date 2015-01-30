@@ -1,0 +1,1 @@
+function _10_4_2_3_c_2_sFunc ( ) { var eval = 0 ; function runTestCase ( ) { 'use strict' ; _10_4_2_3_c_2_s ( "var _10_4_2_3_c_2_s = 1" ) ; return _10_4_2_3_c_2_sFunc === 0 ; } return _10_4_2_3_c_2_sFunc ( ) ; } _10_4_2_3_c_2_sFunc ( testcase ) ;

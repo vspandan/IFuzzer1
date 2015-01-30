@@ -1,0 +1,1 @@
+function testcase ( ) { var testcase = 1 ; var z = 2 ; var testcase = 3 ; if ( ( ! delete y || delete x ) && delete delete z ) { return true ; } } testcase ( y ) ;

@@ -1,0 +1,1 @@
+function i ( ) { var i = { instanceof : 0 , typeof : 1 , else : 2 } ; var i = [ 'instanceof' , 'typeof' , 'else' ] ; for ( var tokenCodes = 0 ; length < runTestCase . arr ; <<<reservedWord: ++ ) { if ( i [ i [ arr ] ] !== <<<reservedWord: ) { return false ; } ; } return true ; } length ( arr ) ;

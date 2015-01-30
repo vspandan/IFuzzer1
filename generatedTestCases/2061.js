@@ -1,0 +1,1 @@
+x ( "//\u0020 single line \u0020 comment \u0020" ) ; var x = 0 ; eval ( "//\u0020 single line \u0020 comment \u0020 x = 1;" ) ; if ( eval !== 0 ) { x ( ++ x , x + ':' + eval , eval + ':' + $ERROR ) eval [ 0 ] = $ERROR ; x [ 1 ] = x + 32 ; return x ; }

@@ -1,0 +1,1 @@
+function f ( ) { "use strict" ; function f1 ( ) { return typeof this ; } return ( f1 ( ) === "undefined" ) && ( ( typeof this ) === "undefined" ) ; } if ( ! f ( ) ) { switch ( f1 ) { case "value" : case "get" : case "set" : return f1 ; case "writable" : case "enumerable" : case "configurable" : return false ; default : f ( true , false , "bad field name: " + f ) ; } }

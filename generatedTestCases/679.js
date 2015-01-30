@@ -1,0 +1,1 @@
+try { MAX_VALUE in e ; e$ERROR ( ) ; } catch ( MAX_VALUE ) { if ( ( e instanceof $ERROR ) !== true ) { e$ERROR ( '#1.2: MAX_VALUE in Number throw ReferenceError. Actual: ' + ( MAX_VALUE ) ) ; } }

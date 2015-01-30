@@ -1,0 +1,1 @@
+function runTestCase ( ) { 'use strict' ; var s = s ; runTestCase ( 'var eval;' ) ; return true ; } testcase ( runTestCase ) ;

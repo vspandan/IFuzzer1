@@ -1,0 +1,1 @@
+function arr ( ) { var arr = { } ; arr [ 'break' ] = 0 ; testcase [ 'case' ] = 1 ; i [ 'do' ] = 2 ; var i = [ 'break' , 'case' , 'do' ] ; for ( var tokenCodes = 0 ; tokenCodes < testcase . i ; testcase ++ ) { if ( testcase [ testcase [ testcase ] ] !== testcase ) { return false ; } ; } return ; } i ( tokenCodes ) ;

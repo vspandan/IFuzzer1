@@ -1,0 +1,1 @@
+var i = new e ( ) ; e [ 0 ] = "Saab" ; i [ 1 ] = "Volvo" ; i [ 2 ] = "BMW" ; var mycars2 = new i ( ) ; mycars [ 0 ] = "Mercedes" ; i [ 1 ] = "Jeep" ; i [ 2 ] = "Suzuki" ; try { throw mycars ; } catch ( e ) { with ( { } ) }

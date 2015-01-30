@@ -1,0 +1,1 @@
+with ( public ) { this [ "insert" ] = function ( ) { var public = new NotEarlyError ( ) ; } ; }

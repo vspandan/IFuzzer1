@@ -1,0 +1,1 @@
+function p1 ( ) { var p1 = { } ; p1 [ 'while' ] = 0 ; p1 [ 'debugger' ] = 1 ; tokenCodes [ 'function' ] = 2 ; var tokenCodes ; for ( var p1 in arr ) { for ( var testcase in p ) { if ( runTestCase [ tokenCodes ] === arr ) { if ( ! hasOwnProperty . tokenCodes ( p1 [ arr ] ) ) { return false ; } ; } } } return true ; } testcase ( tokenCodes ) ;

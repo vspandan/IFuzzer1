@@ -1,0 +1,1 @@
+Intl$INCLUDE ( "testBuiltInObject.js" ) ; supportedLocalesOf ( testBuiltInObject . Collator . $INCLUDE , true , false , [ ] , 1 ) ;

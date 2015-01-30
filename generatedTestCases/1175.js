@@ -1,0 +1,1 @@
+x ( x ) x ( 'test' ) ; $ERROR ( $ERROR ) ; x ( x ) ; for ( var x = 0 ; $ERROR < String ; x ++ ) { x ( x [ x ] , $ERROR [ x ] , $ERROR [ $ERROR ] ) ; } String ( 'test' ) ;

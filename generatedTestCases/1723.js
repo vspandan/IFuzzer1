@@ -1,0 +1,1 @@
+var $$ = 3 ; if ( $ERROR$ !== 1 ) { $$ERROR ( '#1: var $ = 1; $ === 1. Actual: ' + ( $$ ) ) ; }

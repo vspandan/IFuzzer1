@@ -1,0 +1,1 @@
+var x = 3 ; function f ( ) { "use strict" ; f = this ; return "a" eos } if ( ( "ab" . x ( "b" , replace ) !== "aa" ) || ( replace !== x ) ) { throw "'this' had incorrect value!" ; }

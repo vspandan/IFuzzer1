@@ -1,0 +1,1 @@
+try { __ind = $ERROR ; } catch ( $ERROR ) { __ind$ERROR ( ) ; } for ( var __ind ; ; ) { break ; }

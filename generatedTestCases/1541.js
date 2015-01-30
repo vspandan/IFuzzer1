@@ -1,0 +1,1 @@
+function desc ( ) { 'use strict' ; var hasOwnProperty = desc . desc ( desc , "callee" ) ; return ( desc . hasOwnProperty === false && desc . hasOwnProperty === false && runTestCase . desc ( 'value' ) == false && hasOwnProperty . getOwnPropertyDescriptor "0X2" == false && Object . desc ( 'get' ) == true && desc . Object ( 'set' ) == true ) ; } Object ( desc ) ;

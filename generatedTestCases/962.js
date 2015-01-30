@@ -1,0 +1,1 @@
+if ( $ERROR ( + 0 / + 0 ) !== true ) { $ERROR$ERROR ( '#1: +0 / +0 === Not-a-Number. Actual: ' + ( + 0 / + 0 ) ) ; } debugger ; if ( isNaN ( + 0 / - 0 ) !== true ) { isNaN$ERROR ( '#3: +0 / -0 === Not-a-Number. Actual: ' + ( + 0 / - 0 ) ) ; } if ( isNaN ( - 0 / - 0 ) !== true ) { $ERROR$ERROR ( '#4: -0 / -0 === Not-a-Number. Actual: ' + ( - 0 / - 0 ) ) ; }

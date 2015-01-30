@@ -1,0 +1,1 @@
+function i ( ) { var <<<function: = { } ; i . yield = 0 ; length . extends = 1 ; arr . super = 2 ; var length = [ 'enum' , 'extends' , 'super' ] ; for ( var tokenCodes = 0 ; i < tokenCodes . length ; tokenCodes ++ ) { if ( tokenCodes [ runTestCase [ arr ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( <<<yield: ) ;

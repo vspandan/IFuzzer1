@@ -1,0 +1,1 @@
+function e ( ) { try { runTestCase ( "var \u0069\u006d\u0070\u006f\u0072\u0074 = 123;" ) ; return false ; } catch ( testcase ) { return eval instanceof testcase ; } } e ( testcase ) with ( runTestCase ) { e = testcase ( ) ; }

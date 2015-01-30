@@ -1,0 +1,1 @@
+var __obj = 1 ; var a = { __obj : 2 } ; with ( e ) { try { var result = function ( ) { return __obj ; } throw 3 ; } catch ( __obj ) { ; } } delete e ; result = result ( ) ; if ( __func !== 2 ) { __func$ERROR ( null + __obj ) ; }

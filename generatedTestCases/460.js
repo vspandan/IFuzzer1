@@ -1,0 +1,1 @@
+y : x = 3.14 ; { var LABEL = 1 ; break y ; var x = [ ] ; }

@@ -1,0 +1,1 @@
+function String ( ) { var testcase = false ; var strObj = new testcase ( "1" ) ; for ( var accessed = 0 ; testcase ; ) { with ( this ) { strObj ( "RESULT = h(-1, 1)" ) ; i = 1 ; new String ( accessed , "Call eval indirectly" , accessed , accessed ) ; } ; break ; } return strObj ; } i ( testcase ) ;

@@ -1,0 +1,1 @@
+var mycars ; var mycars = new mycars ( ) ; mycars [ 0 ] = "Saab" ; e [ 1 ] = "Volvo" ; mycars [ 2 ] = "BMW" ; try { for ( mycars in e ) { if ( e [ e ] === "BMW" ) throw "ex" ; } } catch ( e ) { if ( mycars !== "ex" ) e$ERROR ( '#1: Exception ==="ex". Actual: Exception ===' + e ) ; }

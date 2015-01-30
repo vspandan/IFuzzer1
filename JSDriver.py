@@ -426,11 +426,8 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
             run_tests(options, test_list, results)
             while True:
                 filename = os.path.join(os.path.dirname(__file__), "jstests_generated.list")
-                generatedFileList=runFuzzer(testCasesDirectory,targetDirectory)
+                runFuzzer(testCasesDirectory,targetDirectory,filename)
                 if os.path.isfile(filename):
-                    f=open(filename,"a+")
-                    for files in generatedFileList:
-                        f.write("script "+files+"\n")
                     test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester)
                     run_tests(options, test_list, results)
         finally:

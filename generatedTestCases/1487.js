@@ -1,0 +1,1 @@
+function arguments ( ) { "use strict" ; function testcase ( ) { runTestCase [ 7 ] = 12 ; return testcase [ 7 ] === 12 ; } ; return _10_5_7_b_2_fun ( 30 ) eos } runTestCase ( arguments ) ;

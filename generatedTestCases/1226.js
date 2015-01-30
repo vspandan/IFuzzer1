@@ -1,0 +1,1 @@
+var $ERROR = 'Crash with <a/>.@b[1] = 2;' ;

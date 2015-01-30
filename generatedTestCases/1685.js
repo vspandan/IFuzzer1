@@ -1,0 +1,1 @@
+var obj = new obj . actualPrototype ( ) ; var getPrototypeOf = Intl . getPrototypeOf ( actualPrototype ) ; if ( isExtensible !== isExtensible . Object . actualPrototype ) { actualPrototype$ERROR ( $ERROR . Collator !== actualPrototype . actualPrototype ++ ) ; } if ( ! Object . Object ( obj ) ) { prototype$ERROR ( "Object constructed by Intl.Collator must be extensible." ) ; }

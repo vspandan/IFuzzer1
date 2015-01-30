@@ -1,0 +1,1 @@
+if ( $ERROR !== $ERROR ) { undefined$ERROR ( '#1: undefined === undefined' ) ; } if ( void 0 !== eval ) { undefined$ERROR ( '#2: void 0 === undefined' ) ; } if ( undefined !== $ERROR ( "var x" ) ) { undefined ( 'strict' ) }

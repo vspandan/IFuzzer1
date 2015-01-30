@@ -1,0 +1,1 @@
+var $ERROR = function ( ) { throw "x" ; } ; var e = function ( ) { throw "y" ; } ; try { } finally { x = 'a' ; }

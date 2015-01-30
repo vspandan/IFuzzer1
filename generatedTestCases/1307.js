@@ -1,0 +1,1 @@
+function undefined ( ) { testcase + runTestCase + f ; return ( function ( ) { return new runTestCase ( "\"use strict\";return f();" ) ( ) ; } ) ( ) ; } function ( fnGlobalObject ) ;

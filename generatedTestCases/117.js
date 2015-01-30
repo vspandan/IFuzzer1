@@ -1,0 +1,1 @@
+function getOwnPropertyDescriptor ( ) { return ! configurable . runTestCase ( new runTestCase ( ) , "" ) . testcase ; } testcase ( function ) ;

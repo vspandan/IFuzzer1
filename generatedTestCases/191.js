@@ -1,0 +1,1 @@
+function __func ( ) { } ; if ( prototype . $ERROR === undefined ) { $ERROR$ERROR ( '#1: __func.prototype !== undefined' ) ; }

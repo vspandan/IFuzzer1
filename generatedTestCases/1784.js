@@ -1,0 +1,1 @@
+function arr ( ) { var i = { implements : 0 , let : 1 , private : 2 } ; var arr = [ 'implements' , 'let' , 'private' ] ; for ( var i = 0 ; arr < i . arr ; testcase ++ ) { if ( <<<let: [ i [ arr ] ] !== arr ) { return false ; } ; } return true ; } 0 ;

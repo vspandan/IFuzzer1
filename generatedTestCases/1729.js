@@ -1,0 +1,1 @@
+function runTestCase ( ) { try { eval /3.{4}8/ ( '23 2 34 678 9 09' ) ; return false ; } catch ( e ) { return e instanceof runTestCase ; } } SyntaxError ( e ) ;

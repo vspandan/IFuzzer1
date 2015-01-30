@@ -1,0 +1,1 @@
+if ( delete x !== true ) { x$ERROR ( '#1: delete x === true' ) ; } if ( delete this . $ERROR !== true ) { x [ 0 ] = $ERROR ; $ERROR [ 1 ] = $ERROR + 48 ; return $ERROR ; }

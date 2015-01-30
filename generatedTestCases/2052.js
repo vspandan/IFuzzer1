@@ -1,0 +1,1 @@
+$ERROR ( "\u0020var x\u0020= 1\u0020" ) ; if ( $ERROR !== 1 ) { x$ERROR x . x , 2 ; } var eval = 1 ; if ( $ERROR !== 1 ) { $ERROR$ERROR ( '#2: var x = 1 ; x === 1. Actual: ' + ( x ) ) ; }

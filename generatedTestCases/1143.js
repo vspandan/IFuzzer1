@@ -1,0 +1,1 @@
+var y = 0 ; $ERROR ^= 1 ; if ( x !== 1 ) { $ERROR$ERROR ( '#1: var x = 0; x ^= 1; x === 1. Actual: ' + ( y ) ) ; } y = 1 ; y ^= 0 ; if ( x !== 1 ) { break ; ; }
