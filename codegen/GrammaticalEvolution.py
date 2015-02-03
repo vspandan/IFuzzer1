@@ -457,7 +457,7 @@ class GrammaticalEvolution(object):
         return self.fitness_list.best_member()
 
     #Modified Author : Spandan Veggalam 
-    def create_genotypes(self,file,interpreter_Shell):
+    def create_genotypes(self,file,interpreter_Shell,crashListFile):
         self._extractProductions()
         self._prepareInitial_Population(file)
         if len(self.initial_Population)<=0:
@@ -469,7 +469,7 @@ class GrammaticalEvolution(object):
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
                         self._max_gene_length,
-                        member_no,interpreter_Shell)
+                        member_no,interpreter_Shell,crashListFile)
             #   a local copy is made because variables
             #   can be saved within the local_bnf
             gene.local_bnf = deepcopy(self._bnf)

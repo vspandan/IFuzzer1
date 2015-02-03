@@ -9,13 +9,16 @@ from string import lower
 import subprocess
 import traceback
 from pickle import load
-from os import path,remove
+from os import path,remove,kill,rename
+from threading import Thread
 
 from codegen.Utilities import base10tobase2, base2tobase10
 import collections
 from random import randint
 from os.path import abspath
-from time import time
+from time import time,sleep
+
+import sys
 
 
 VARIABLE_FORMAT = '(\W+)'
@@ -44,7 +47,7 @@ class Genotype(object):
     # Modified Author : Spandan Veggalam 
     def __init__(self, start_gene_length,
                         max_gene_length,
-                        member_no,interpreter_Shell):
+                        member_no,interpreter_Shell,crashListFile):
         self._keys = []        
         self.member_no = member_no
         self.local_bnf = {}
@@ -68,6 +71,7 @@ class Genotype(object):
         self._identifiers=[]
         self.errors = []
         self.interpreter_Shell=interpreter_Shell
+        self.crashListFile=crashListFile
     
     # Author : Spandan Veggalam    
     def set_keys(self, keys):
@@ -288,19 +292,34 @@ class Genotype(object):
         logging.debug("finished mapping variables to program...")
         self.local_bnf[BNF_PROGRAM] = program
         logging.debug(program)
-        status = self._execute_code(program)
+        self.execStatus=0
+        t=Thread(target=self._execute_code,kwargs={'program':program})
+        t.start()
+        t.join(30)
+        if t.isAlive():
+            if self.p is not None:
+                print "killing"
+                try:
+                    import signal
+                    if sys.platform != 'win32':
+                        kill(self.p.pid, signal.SIGKILL)
+                    sleep(.1)
+                except OSError:
+                    pass
+        #self._execute_code(program)
         logging.debug("==================================================")
-        if status == 1:
+        if self.execStatus == 1:
             elapsedTime = datetime.now() - self.starttime
             elapsed = elapsedTime.total_seconds()
-        if status == 0:
+        elif self.execStatus == 0:
             logging.debug("program failed")
             program = self.local_bnf[BNF_PROGRAM]
             logging.debug("errors: %s", (self.errors))
             logging.debug(program)
             logging.debug("end of failure report")
             elapsed = self._fitness_fail
-
+        elif self.execStatus == 2:
+            elapsed=self._fitness_fail*-1
         self._fitness = elapsed
 		
     # Modified Author : Spandan Veggalam 
@@ -313,18 +332,29 @@ class Genotype(object):
             return 0
         else:                
             print "executing \t" + program
-            fi="/tmp/"+str(int(time()*1000))
-            f=open(fi,"a+")
+
+            fi=str(int(time()*1000))
+            f=open("/tmp/"+fi,"a+")
             f.write(program)
             f.close()
-            p = subprocess.Popen([self.interpreter_Shell+" -f ../shell.js " + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            out, err = p.communicate()
-            remove(fi)
-            
+            self.p = subprocess.Popen([self.interpreter_Shell+" -f ../shell.js " + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            out, err = self.p.communicate()
+            print self.p.returncode
             if 'SyntaxError' in err or 'Syntax error' in err:
                 print "err:"+err
-                return 0    
-            return 1    
+                self.local_bnf[BNF_PROGRAM]=""
+                self.execStatus = 0 
+                remove("/tmp/"+fi)
+            elif self.p.returncode == 9:
+                f=open(self.crashListFile,"a+")
+                print abspath("../CrashedFiles_Auto/"+fi)
+                rename("/tmp/"+fi,"../CrashedFiles_Auto/"+fi)
+                self.execStatus=2
+                f.write("crash: "+str("../CrashedFiles_Auto/"+fi)+"\n")
+                f.close()
+            else:
+                self.execStatus=1
+                remove("/tmp/"+fi)
 
     def get_binary_gene_length(self):
        return self._gene_length * 8

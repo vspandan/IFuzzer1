@@ -39,7 +39,7 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
 
 TestCaseSubDirs=[]
 #Author: Spandan Veggalam
-def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter):
+def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter,crashListFile):
     listAllTestCasesDir(testCasesDir)   
     def selectGrammarFIle():
         Tk().withdraw()        
@@ -98,7 +98,7 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter):
                        
                     try:  
                         print "Processing ::" + fil
-                        if ges.create_genotypes(fil,interpreter):
+                        if ges.create_genotypes(fil,interpreter,crashListFile):
                             ges.run()
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]

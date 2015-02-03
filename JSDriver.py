@@ -89,7 +89,7 @@ class TestTask:
 class ResultsSink:
     output_file = None
 
-    def __init__(self,typeErrorFlist,crashListFile):
+    def __init__(self,crashListFile,typeErrorFlist):
         self.groups = {}
         self.counts = [ 0, 0, 0 ]
         self.n = 0
@@ -426,10 +426,10 @@ def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shel
             os.chdir(os.path.dirname(options.manifest))
         try:
             results = ResultsSink(crashListFile,typeErrorFlist)
-            run_tests(options, test_list, results)
+            #run_tests(options, test_list, results)
             while True:
                 filename = os.path.join(os.path.dirname(__file__), "jstests_generated.list")
-                runFuzzer(testCasesDirectory,targetDirectory,filename,js_shell_path)
+                runFuzzer(testCasesDirectory,targetDirectory,filename,js_shell_path,crashListFile)
                 if os.path.isfile(filename):
                     test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester)
                     run_tests(options, test_list, results)
