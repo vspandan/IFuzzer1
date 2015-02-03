@@ -40,8 +40,7 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
 TestCaseSubDirs=[]
 #Author: Spandan Veggalam
 def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter):
-    listAllTestCasesDir(testCasesDir)
-    FILECOUNT = len(os.listdir(targetDirectory))    
+    listAllTestCasesDir(testCasesDir)   
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
@@ -50,7 +49,6 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter):
     
     #Author: Spandan Veggalam
     def initialize():
-        FILECOUNT = len(os.listdir(targetDirectory))
         def process(fil,filName):
             try:
                 bnf=""

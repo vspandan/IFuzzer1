@@ -43,7 +43,7 @@ class AntlrParser(object):
                         self.selected=randint(0,len(nT)-1)
                         selectedNt=nT[self.selected-1]
                         if INCLUDE_NT_LIST is not None:
-                            if selectedNT in INCLUDE_NT_LIST:
+                            if selectedNt in INCLUDE_NT_LIST:
                                 break
                         else:
                             break

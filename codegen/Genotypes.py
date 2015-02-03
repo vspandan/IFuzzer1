@@ -9,12 +9,13 @@ from string import lower
 import subprocess
 import traceback
 from pickle import load
-from os import path
+from os import path,remove
 
 from codegen.Utilities import base10tobase2, base2tobase10
 import collections
 from random import randint
 from os.path import abspath
+from time import time
 
 
 VARIABLE_FORMAT = '(\W+)'
@@ -43,7 +44,7 @@ class Genotype(object):
     # Modified Author : Spandan Veggalam 
     def __init__(self, start_gene_length,
                         max_gene_length,
-                        member_no):
+                        member_no,interpreter_Shell):
         self._keys = []        
         self.member_no = member_no
         self.local_bnf = {}
@@ -66,6 +67,7 @@ class Genotype(object):
         self.keywords = None
         self._identifiers=[]
         self.errors = []
+        self.interpreter_Shell=interpreter_Shell
     
     # Author : Spandan Veggalam    
     def set_keys(self, keys):
@@ -311,8 +313,13 @@ class Genotype(object):
             return 0
         else:                
             print "executing \t" + program
-            p = subprocess.Popen(["js24 -e \'" + program + "\'"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            fi="/tmp/"+str(int(time()*1000))
+            f=open(fi,"a+")
+            f.write(program)
+            f.close()
+            p = subprocess.Popen([self.interpreter_Shell+" -f ../shell.js " + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             out, err = p.communicate()
+            remove(fi)
             
             if 'SyntaxError' in err or 'Syntax error' in err:
                 print "err:"+err
