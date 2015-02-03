@@ -170,7 +170,7 @@ class Genotype(object):
                     position += 1
                     continue
         
-                if item == "identifier" or "__id__" in item:
+                elif item == "identifier" :
                     l=len(self._identifiers)
                     if l>0:
                         ident=str(self._identifiers[randint(0,l-1)])
@@ -179,24 +179,39 @@ class Genotype(object):
                         prg_list[position]="id"
                     position += 1
                     continue
-
-                if item in ['StringLiteral','RegularExpressionLiteral']:
+                elif "__id__" in item:
+                    prg_list[position]= item.replace("__id__","")
+                    position += 1
+                    continue
+                elif item in ['StringLiteral','RegularExpressionLiteral']:
                     prg_list[position] = self._converge('literal')
                     position += 1
                     continue
                 
-                if item in ['HexIntegerLiteral' , 'DecimalLiteral' , 'OctalIntegerLiteral']:
+                elif item in ['HexIntegerLiteral' , 'DecimalLiteral' , 'OctalIntegerLiteral']:
                     prg_list[position] = self._converge('numericLiteral')
                     position += 1
                     continue
         
-                if item in self._keys:
+                elif item in self._keys:
                     if check_stoplist and position >= 0:
                         #print item
                         if initialMapping == 0:
+
                             prg_list[position] = self.resolve_variable(item)
                         else:
-                            prg_list[position] = self._converge(item)
+                            temp=""
+                            temp_list = re.split(VARIABLE_FORMAT, self._converge(item))
+                            for t in temp_list:
+                                if t == "identifier" or "__id__" in t:
+                                    l=len(self._identifiers)
+                                    if l>0:
+                                        ident=str(self._identifiers[randint(0,l-1)])
+                                        t= ident.replace("__id__","")
+                                    else:
+                                        t="id"
+                                temp=temp+" "+t
+                            prg_list[position] = temp
                         continue_map = True
                         #print prg_list[position]
                 position += 1
