@@ -1,1 +1,0 @@
-function testcase ( ) { try { testcase ( "'use strict'; var _13_1_31_fun = function (param1, param2, param1) { };" ) ; return false ; } catch ( eval ) { return runTestCase instanceof e ; } } e ( eval ) ;

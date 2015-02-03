@@ -1,1 +1,0 @@
-try { $ERROR [ 0 ] = $ERROR ; $ERROR [ 1 ] = e + 32 ; return $ERROR ; } finally { }

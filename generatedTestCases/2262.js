@@ -1,1 +1,0 @@
-function prop ( ) { var runTestCase = "a\uFFFFa" ; return prop . length === 3 && prop !== "aa" && prop [ 1 ] === "\uFFFF" ; } prop ( runTestCase ) ;

@@ -1,1 +1,0 @@
-function runTestCase ( ) { try { runTestCase ( "var _13_1_22_fun = function ( ) { 'use strict'; }" ) ; return false ; } catch ( testcase ) { return e instanceof e ; } } testcase ( testcase ) ;

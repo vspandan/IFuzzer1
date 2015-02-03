@@ -1,1 +1,0 @@
-Date$INCLUDE ( "testIntl.js" ) ; toLocaleTimeString ( Date , "DateTimeFormat" ) ; new Date ( ) . toLocaleTimeString ( ) ; new toLocaleString . toLocaleTimeString ( ) ; new toLocaleDateString ( ) . $INCLUDE ( ) ;

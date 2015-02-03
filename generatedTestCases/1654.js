@@ -1,1 +1,0 @@
-Intl$INCLUDE ( "testIntl.js" ) ; currency ( $INCLUDE . Intl , "style" , "string" , [ "decimal" , "percent" , "currency" ] , "decimal" , { testOption : { "currency" : { Intl : "CNY" } } } ) ;

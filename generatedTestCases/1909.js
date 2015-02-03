@@ -1,1 +1,0 @@
-var static<missing Ident> <EOF>

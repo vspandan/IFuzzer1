@@ -1,1 +1,0 @@
-try { $ERROR ( "/\u2028/" ) . source ; e$ERROR ( '#1.1: RegularExpressionFirstChar :: Line separator is incorrect. Actual: ' + ( source ( "/\u2028/" ) . SyntaxError ) ) ; } catch ( e ) { if ( ( eval instanceof SyntaxError ) !== true ) { e$ERROR ( '#1.2: RegularExpressionFirstChar :: Line separator is incorrect. Actual: ' + ( eval ) ) ; } }

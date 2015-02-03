@@ -1,1 +1,0 @@
-if ( ( function ( ) { "use strict" ; return typeof this ; } ) ( ) !== null ) { throw "'this' had incorrect value!" ; }

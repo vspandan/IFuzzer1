@@ -1,1 +1,0 @@
-function eval ( ) { function testcase ( ) { break testcase ; ; return public === 1 ; "use strict" ; } return testcase ( ) ; } fun ( testcase ) ;

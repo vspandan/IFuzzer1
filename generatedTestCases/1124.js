@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; var blah = blah ; try { blah ( " "Number.NaN=0; Number.NaN" >>= 20;" ) ; return false ; } catch ( testcase ) { return e instanceof SyntaxError && SyntaxError === ( ) ; } } switch ( 1.1 ) { case arguments : case 2 : } ;

@@ -1,1 +1,0 @@
-function call ( ) { return this === f ( ) eos } ; if ( ! ( ( function ( ) { "use strict" ; return f . call ( ) ; } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

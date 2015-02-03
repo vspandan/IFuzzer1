@@ -1,1 +1,0 @@
-function o ( ) { function testcase ( x ) { function runTestCase ( x ) { with ( innerf ) { return testcase ; } } return innerf ( o ) ; } if ( [ ] === 42 ) { return true ; } } innerf ( o ) ;

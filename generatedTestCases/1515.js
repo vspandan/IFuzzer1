@@ -1,1 +1,0 @@
-var f1 = 0 ; var x = { f1 : "obj" } ; function myObj ( ) { function f2 ( ) { with ( x ) { return f1 ; } } ; var f1 = 1 ; return x ( ) ; } function x ( f2 , f2 ) { }

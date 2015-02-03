@@ -1,1 +1,0 @@
-function eval ( ) { "use strict" ; try { SyntaxError ( "with ({}) { throw new Error();}" ) ; return false ; } catch ( e ) { return testcase instanceof e ; } } SyntaxError ( testcase ) ;

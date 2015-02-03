@@ -1,1 +1,0 @@
-function testcase ( ) { var d = [ 1 , 2 , 3 ] a . d = 10 ; var a = delete Array if ( x === false && runTestCase . testcase ( d ) === true ) return true ; } function d ( ) { runTestCase [ Array ] = runTestCase ; a [ a ] = runTestCase ; d [ runTestCase ] = x ; testcase [ runTestCase ] = testcase ; testcase [ d ] = testcase ; testcase ++ ; } ;

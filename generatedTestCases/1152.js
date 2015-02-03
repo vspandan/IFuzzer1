@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var testcase = 5 _11_13_2_20 &= 3 ; return _11_13_2_20 === 1 ; } for ( _11_13_2_20 = 0 ; testcase < 16 ; testcase ++ ) testcase += _11_13_2_20 ;

@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; var _11_13_2_22 = 5 testcase |= 2 ; return _11_13_2_22 === 7 ; } testcase ( testcase ) ;

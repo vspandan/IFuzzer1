@@ -1,1 +1,0 @@
-if ( ! ( "" ) !== true ) { return $ERROR . $ERROR ( [ 1 , 1 , 1 , 1 ] , { 1 : { $ERROR : false } , 2 : { $ERROR : false } , 3 : { $ERROR : false , $ERROR : false } } ) ; }

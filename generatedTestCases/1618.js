@@ -1,1 +1,0 @@
-var obj = new toStringValue . toStringValue ( ) ; var Object = Object . Intl . obj . toString ( call ) ; if ( obj !== "[object Object]" ) { toStringValue$ERROR ( "Intl.DateTimeFormat instance produces wrong [[class]] - toString returns " + toStringValue + "." ) ; }

@@ -1,1 +1,0 @@
-function obj2 ( ) { var obj2 = false ; var testcase = { obj1 : function ( ) { valueOf = true ; return 3 ; } } ; var testcase = { valueOf : function ( ) { if ( obj1 === true ) { return 4 ; } else { return 2 ; } } } ; return ! ( obj2 > testcase ) ; } accessed ( obj2 ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { var d = { } ; var d = { desc : 1 , Object : true } ; configurable . o ( desc , "foo" , value ) ; var o = delete defineProperty . desc ; if ( desc === true && configurable . testcase ( "foo" ) === false ) { return true ; } } foo ( d ) ;

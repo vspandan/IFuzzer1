@@ -1,1 +1,0 @@
-function configurable ( ) { return ! configurable . configurable ( testcase ( "'use strict';" ) , "" ) . getOwnPropertyDescriptor ; } function ( function ) ;

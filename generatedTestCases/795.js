@@ -1,1 +1,0 @@
-function SyntaxError ( ) { "use strict" ; var SyntaxError = new SyntaxError ( ) ; try { dateObj ( "delete dateObj;" ) ; return false ; } catch ( dateObj ) { return SyntaxError instanceof dateObj ; } } eval ( dateObj ) ;

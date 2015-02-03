@@ -1,1 +1,0 @@
-function runTestCase ( fnGlobalObject ) { this . fnGlobalObject = new fnGlobalObject ( "return this.value;" ) ; this . testcase = new testcase ( "return (this.value + '');" ) ; this . testcase = fnGlobalObject ; } runTestCase ( testcase ) ;

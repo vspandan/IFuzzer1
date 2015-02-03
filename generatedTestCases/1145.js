@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; var runTestCase = e ; try { runTestCase ( "eval /= 20;" ) ; return false ; } catch ( blah ) { return eval instanceof runTestCase && blah === eval ; } } e ( eval ) ;

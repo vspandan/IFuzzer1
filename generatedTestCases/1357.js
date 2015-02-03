@@ -1,1 +1,0 @@
-var f = function ( ) { function fnGlobalObject ( ) { "use strict" ; return typeof this ; } return ( fnGlobalObject ( ) === "undefined" ) && ( this === fnGlobalObject ( ) ) ; } if ( ! f1 ( ) ) { throw "'this' had incorrect value!" ; }

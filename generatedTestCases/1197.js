@@ -1,1 +1,0 @@
-"use strict" ; throw Math eos Math . Math = 20 ;

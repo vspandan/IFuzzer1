@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "var obj = {set _11_1_5_4_fun( ) {\"use strict\";}};" ) ; return false eos } catch ( testcase ) { return ( testcase instanceof eval ) ; } } e ( eval ) ;

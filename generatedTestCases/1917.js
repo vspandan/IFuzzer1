@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; try { eval ( "var protected = 1;" ) ; return false ; } catch ( SyntaxError ) { return runTestCase instanceof eval eos } } testcase ( SyntaxError ) ;

@@ -1,1 +1,0 @@
-this . x = 0 x = $ERROR

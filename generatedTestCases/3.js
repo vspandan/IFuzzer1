@@ -1,1 +1,0 @@
-function e ( ) { try { e ( "'use strict'; function _13_0_15_fun() {eval = 42;};" ) ; eval ( ) ; return false ; } catch ( SyntaxError ) { return e instanceof e ; } } e ( _13_0_15_fun ) ;

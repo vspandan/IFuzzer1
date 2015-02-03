@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "var _13_1_18_fun = function (eval) { 'use strict'; }" ) ; return false ; } catch ( testcase ) { return e instanceof e ; } } testcase ( testcase ) ;

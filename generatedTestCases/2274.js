@@ -1,1 +1,0 @@
-function prop ( ) { var testcase = "66\u2029123" ; return prop === "66\u2029123" && testcase [ 2 ] === "\u2029" && testcase . prop === 6 ; } testcase ( prop ) ;

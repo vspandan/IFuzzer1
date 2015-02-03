@@ -1,1 +1,0 @@
-if ( typeof null !== "object" ) { exec$ERROR ( '#1: typeof null === "object". Actual: ' + ( typeof null ) ) ; } if ( typeof RegExp ( "0" ) . exec ( "1" ) !== "object" ) { exec$ERROR ( "use strict" ) ; }

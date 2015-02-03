@@ -1,1 +1,0 @@
-function eval ( ) { try { e ( "var fina\u006cly = 123;" ) ; return false ; } catch ( e ) { return testcase instanceof testcase eos } } eval ( testcase ) ;

@@ -1,1 +1,0 @@
-try { e % 1 ; e$ERROR ( '#1.1: x % 1 throw ReferenceError. Actual: ' + ( e % 1 ) ) ; } catch ( $ERROR ) { if ( ( e instanceof e ) !== true ) { e . $ERROR ( /[\n ]+/mg , ' ' ) ; } }

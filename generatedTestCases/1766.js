@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { while : 0 , debugger : 1 , function : 2 } ; var testcase = [ 'while' , 'debugger' , 'function' ] ; for ( var testcase = 0 ; tokenCodes < <<<reservedWord: . i ; tokenCodes ++ ) { if ( testcase [ tokenCodes [ arr ] ] !== i ) { return false ; } ; } return true ; } testcase ( i ) ;

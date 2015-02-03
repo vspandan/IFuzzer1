@@ -1,1 +1,0 @@
-$ERROR = "" for ( var index = 0 ; index < 10 ; index += 1 ) { if ( $ERROR > 5 ) break ; index += index ; } if ( index !== "012345" ) { __str$ERROR ( '#1: __str === "012345". Actual: __str ===' + index ) ; }

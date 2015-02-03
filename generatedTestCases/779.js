@@ -1,1 +1,0 @@
-try { ! x ; e$ERROR ( '#1.1: !x throw ReferenceError. Actual: ' + ( ! $ERROR ) ) ; } catch ( e ) { if ( ( e instanceof $ERROR ) !== true ) { ReferenceError ( '#1.2: !x throw ReferenceError. Actual: ' + ( e ) ) ; } }

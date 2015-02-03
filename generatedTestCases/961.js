@@ -1,1 +1,0 @@
-try { } finally { try { x += 'finally,' ; throw 42 ; } catch ( $ERROR ) { $ERROR += e ; x ( e ) ; if ( ++ ReferenceError > 10 ) { throw 'Infinite loop...' ; } } }

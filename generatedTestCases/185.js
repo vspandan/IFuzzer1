@@ -1,1 +1,0 @@
-function e ( ) { function testcase ( ) { "use strict" ; } try { var runTestCase = foo . foo ; return false ; } catch ( testcase ) { return temp instanceof e ; } } temp ( foo ) ;

@@ -1,1 +1,0 @@
-var $ERROR = 1 + ( function ( x ) { return { a : $ERROR } } ) ( 2 + 3 ) . t if ( a !== 6 ) { }

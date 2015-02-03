@@ -1,1 +1,0 @@
-function testcase ( ) { function testcase ( undefined , arguments ) { var undefined = delete foo [ 0 ] ; return ( undefined === true && d [ 0 ] === runTestCase ) ; } if ( d ( 1 , 2 ) === true ) return true ; } undefined ( d ) ;

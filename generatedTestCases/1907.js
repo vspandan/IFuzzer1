@@ -1,1 +1,0 @@
-function SyntaxError ( ) { "use strict" ; try { SyntaxError ( "var package = 1;" ) ; return false ; } catch ( eval ) { return testcase instanceof e ; } } e ( e ) ;

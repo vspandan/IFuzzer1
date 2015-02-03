@@ -1,1 +1,0 @@
-"use strict" ; var f = function ( ) { return this ; } if ( ( ( new fnGlobalObject ( ) ) === f ( ) ) || ( typeof ( new fnGlobalObject ( ) ) === "undefined" ) ) { throw "'this' had incorrect value!" ; }

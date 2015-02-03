@@ -1,1 +1,0 @@
-function d ( ) { var testcase = delete null ; if ( d === true ) { return true ; } } d ( testcase ) continue ;

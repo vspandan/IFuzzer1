@@ -1,1 +1,0 @@
-function call ( ) { function testcase ( ) { 'use strict' ; return typeof ( this ) ; } function bar ( ) { return typeof ( this ) ; } return testcase . runTestCase ( true ) === 'boolean' && testcase . testcase ( true ) === 'object' ; } bar ( runTestCase ) ;

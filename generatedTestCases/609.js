@@ -1,1 +1,0 @@
-e = 5 ; if ( __evaluated . $ERROR ( ) != 1 ) throw "wanted key=1" ;

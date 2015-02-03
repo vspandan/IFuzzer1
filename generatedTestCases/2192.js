@@ -1,1 +1,0 @@
-function SyntaxError ( ) { } eval ( e ) ;

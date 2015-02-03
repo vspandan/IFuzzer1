@@ -1,1 +1,0 @@
-function bind ( ) { return this === f ( ) ; } ; if ( ! ( ( function ( ) { "use strict" ; return fnGlobalObject . f ( bind ( ) ) ( ) eos } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

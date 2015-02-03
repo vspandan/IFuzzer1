@@ -1,1 +1,0 @@
-function arguments ( ) { "use strict" ; arguments [ 1 ] = 7 ; arguments [ 1 ] ++ ; return testcase [ 1 ] === 8 ; } testcase ( arguments ) ;

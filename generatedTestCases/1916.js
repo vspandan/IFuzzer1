@@ -1,1 +1,0 @@
-function eval ( ) { "use strict" ; try { e ( "var private = 1;" ) ; return false ; } catch ( eval ) { return e instanceof SyntaxError ; } } eval ( e ) ;

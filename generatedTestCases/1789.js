@@ -1,1 +1,0 @@
-function testcase ( ) { var arr = { if : 0 , throw : 1 , delete : 2 } ; var arr = [ 'if' , 'throw' , 'delete' ] ; for ( var runTestCase = 0 ; testcase < i . testcase ; this ++ ) { if ( testcase [ arr [ i ] ] !== <<<throw: ) { return false ; } ; } return true ; } i ( i ) ;

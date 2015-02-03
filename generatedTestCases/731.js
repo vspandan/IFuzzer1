@@ -1,1 +1,0 @@
-function o ( ) { var e = false ; function bar ( ) { runTestCase = true ; } var fooCalled = { } ; try { e . foo ( o ( ) ) ; throw new o ( "o.bar does not exist!" ) ; } catch ( o ) { return ( testcase instanceof testcase ) && ( foo === true ) ; } } o ( fooCalled ) ;

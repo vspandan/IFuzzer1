@@ -1,1 +1,0 @@
-var __obj = 1 ; var a = { __obj : 2 } ; with ( a ) { do { var __obj = function ( ) { return a ; } } while ( 0 ) ; } delete result ; var __func = { __obj : 3 } ; with ( __obj ) { $ERROR = __obj ( ) ; } if ( __obj !== 2 ) { __obj$ERROR ( '#1: result === 2. Actual: result ===' + $ERROR ) ; }

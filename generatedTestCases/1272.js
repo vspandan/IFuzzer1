@@ -1,1 +1,0 @@
-var f eos function y ( f ) { var a ; if ( y === 1 ) return y ; else { if ( undefined === undefined ) { a = 0 ; } else { f = 1 ; } return f ( 1 ) ; } } y = x ( 0 ) ; if ( ! ( a === x ) ) { f$ERROR ( "#1: Recursive function calls shares execution context" ) ; }

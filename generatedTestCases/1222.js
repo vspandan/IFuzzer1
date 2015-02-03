@@ -1,1 +1,0 @@
-if ( false + { expected } !== "false" ) { $ERROR$ERROR ( '#1: false + "" === "false". Actual: ' + ( false + "" ) ) ; } if ( true + "" !== "true" ) { $ERROR$ERROR ( '#2: true + "" === "true". Actual: ' + ( true + "" ) ) ; }

@@ -1,1 +1,0 @@
-function length ( ) { var i = { new : 0 , var : 1 , catch : 2 } ; var arr = [ 'new' , 'var' , 'catch' ] ; for ( var i = 0 ; i < tokenCodes . testcase ; testcase ++ ) { if ( tokenCodes [ i [ i ] ] !== tokenCodes ) { return false ; } ; } return true ; } arr ( i ) ;

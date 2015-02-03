@@ -1,1 +1,0 @@
-; __func = __func ( __func ) ; var $ERROR = arguments . __func ( 0 , 1 ) ; __func = THE_ANSWER . __func ( 1 , __func . __func ) ; for ( var $ERROR = 0 ; THE_ANSWER < __func ; __func ++ ) { __func = arguments + __func ; } $ERROR = THE_ANSWER . arguments ( 0 , __func . THE_ANSWER - __func ) ; __func = arguments + __func ; return __func ( $ERROR ( __func ) ) ;

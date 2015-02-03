@@ -1,1 +1,0 @@
-function SyntaxError ( ) { 'use strict' ; try { runTestCase ( "var f = function () {\ var o = {}; \ with (o) {}; \ }\ " ) ; return false ; } catch ( e ) { return ( runTestCase instanceof testcase ) ; } } eval ( e ) ;

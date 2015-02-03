@@ -1,1 +1,0 @@
-var LABEL2 = 0 , LABEL2 = 0 ; try { y : do { y ++ ; throw "gonna leave it" ; throw 1 ; } while ( 0 ) ; e$ERROR ( '#1: throw "gonna leave it" lead to throwing exception' ) ; } catch ( LABEL1 ) { continue LABEL1 ; x : do { e ++ ; $ERROR ++ ; } while ( 0 ) ; } ;

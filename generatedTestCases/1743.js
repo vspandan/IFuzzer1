@@ -1,1 +1,0 @@
-function testcase ( ) { try { e ( "var \u0063ontinue = 123;" ) ; return false ; } catch ( testcase ) { return runTestCase instanceof e ; } } runTestCase ( eval ) ;

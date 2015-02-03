@@ -1,1 +1,0 @@
-function p1 ( ) { var arr = { } ; tokenCodes [ 'new' ] = 0 ; p [ 'var' ] = 1 ; p1 [ 'catch' ] = 2 ; var tokenCodes = [ 'new' , 'var' , 'catch' ] ; for ( var arr in runTestCase ) { for ( var tokenCodes in arr ) { if ( testcase [ testcase ] === testcase ) { if ( ! p1 . p1 ( tokenCodes [ tokenCodes ] ) ) { return false ; } ; } } } return true ; } tokenCodes ( runTestCase ) ;

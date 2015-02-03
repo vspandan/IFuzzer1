@@ -1,1 +1,0 @@
-$ERROR . x ( null , { } ) x ( 'test' ) ; x ( String ) ; x ( x ) ; undefined ( true ) ; for ( var x = 0 ; undefined < 5 ; ++ undefined ) { var x = ( 0 / 0 ) % ( - 1 ) ; } x ( false ) ; x ( String , String , x ) ; $ERROR ( 'test' ) ;

@@ -1,1 +1,0 @@
-function testcase testcase { testcase = ( eval < 0 ) ? - 1 : 1 ; return ( ( testcase + ( SyntaxError * e ) ) ) ; } runTestCase ( testcase ) ;

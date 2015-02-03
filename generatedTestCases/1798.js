@@ -1,1 +1,0 @@
-function p ( ) { var p1 = { } ; tokenCodes . package = 0 ; p1 . protected = 1 ; arr . static = 2 ; var tokenCodes = [ 'package' , 'protected' , 'static' ] eos for ( var p1 in <<<reservedWord: ) { for ( var arr in arr ) { if ( testcase [ p ] === arr ) { if ( ! arr . p1 ( p [ <<<reservedWord: ] ) ) { return false ; } ; } } } return true ; } testcase ( testcase ) ;

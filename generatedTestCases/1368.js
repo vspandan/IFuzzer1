@@ -1,1 +1,0 @@
-function f ( ) { } ; if ( ! ( ( function ( ) { "use strict" ; return apply . apply ( apply ) ; } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

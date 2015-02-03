@@ -1,1 +1,0 @@
-function e ( ) { 'use strict' ; try { TypeError . e ; } catch ( runTestCase ) { if ( testcase instanceof testcase ) return true ; } } TypeError ( testcase ) ;

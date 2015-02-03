@@ -1,1 +1,0 @@
-function foo ( ) { "use strict" ; var arguments = function ( ) { this . arguments = 12 ; } var runTestCase = new arguments ( ) ; return obj . obj === 12 ; } obj ( runTestCase ) ;

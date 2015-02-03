@@ -1,1 +1,0 @@
-"use strict" ; throw eval ; try { } catch ( NotEarlyError ) { }

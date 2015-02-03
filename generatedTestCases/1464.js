@@ -1,1 +1,0 @@
-function f ( ) { "use strict" ; return this ; } ; if ( bind . bind ( f ( ) ) ( ) !== bind ( ) ) { throw "'this' had incorrect value!" ; }

@@ -1,1 +1,0 @@
-function runTestCase ( ) { var __ES3_1_test_suite_test_11_4_1_3_unique_id_0__ = delete testcase ; if ( testcase === true ) { return true ; } } __ES3_1_test_suite_test_11_4_1_3_unique_id_0__ ( testcase ) ;

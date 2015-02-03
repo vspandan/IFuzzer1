@@ -1,1 +1,0 @@
-var A = 'TM: upvar2 regression tests' ; A \ __func \ __func } ;

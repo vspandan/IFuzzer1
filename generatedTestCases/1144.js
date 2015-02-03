@@ -1,1 +1,0 @@
-function eval ( ) { "use strict" ; var testcase = SyntaxError ; try { eval ( "eval >>= 20;" ) ; return false ; } catch testcase { blah = testcase + '' ; } } blah ( blah ) ;

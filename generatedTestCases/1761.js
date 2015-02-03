@@ -1,1 +1,0 @@
-function p1 ( ) { var hasOwnProperty = { break : 0 , case : 1 , do : 2 } ; var p1 = [ 'break' , 'case' , 'do' ] ; for ( var testcase in tokenCodes ) { for ( var p in <<<yield: ) { if ( p [ p1 ] === arr ) { if ( ! arr . testcase ( tokenCodes [ tokenCodes ] ) ) { return false ; } ; } } } return true ; } p1 ( runTestCase ) ;

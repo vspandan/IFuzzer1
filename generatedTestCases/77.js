@@ -1,1 +1,0 @@
-function eval ( ) { true ; try { eval ( "var _13_1_4_fun = function ( ) { };" ) ; return false ; } catch ( testcase ) { return testcase instanceof e ; } } testcase ( testcase ) ;

@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; try { testcase ( "delete RegExp;" ) ; return true ; } catch ( testcase ) { return e instanceof SyntaxError ; } } testcase ( eval ) ;

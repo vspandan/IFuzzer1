@@ -1,1 +1,0 @@
-function blah ( ) { "use strict" ; var runTestCase = testcase ; try { testcase ( " |= 20;" ) ; return false ; } catch ( e ) { if ( arguments . runTestCase ) break runTestCase ; } } blah ( e ) ;

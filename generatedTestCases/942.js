@@ -1,1 +1,0 @@
-if ( this . Object !== y ) { y$ERROR ( '#1: this.x === undefined. Actual: ' + ( this . isNaN ) ) ; } var $ERROR = new undefined ( ) ; if ( $ERROR . object !== object ) { Object$ERROR ( 0 + ( prop . x ) ) ; } this . prop ++ ; if ( $ERROR ( object ) !== true ) { $ERROR$ERROR ( '#3: this.y++; y === Not-a-Number. Actual: ' + ( isNaN ) ) ; }

@@ -1,1 +1,0 @@
-function Object ( ) { var runTestCase = function ( ) { "use strict" ; } ; return ! runTestCase . testcase ( Object , "caller" ) . funcExpr ; } runTestCase ( Object ) ;

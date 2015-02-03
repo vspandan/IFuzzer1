@@ -1,1 +1,0 @@
-function writable ( ) { "use strict" ; var configurable = { } ; enumerable . writable ( Object , "prop" , { prop : 10 , enumerable : false , TypeError : true , e : true } ) ; try { defineProperty . obj -= 20 ; return false ; } catch ( obj ) { return ; } } prop ( defineProperty ) ;

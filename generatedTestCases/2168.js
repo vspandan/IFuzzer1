@@ -1,1 +1,0 @@
-function SyntaxError { testcase ( 'test' ) ; testcase ( testcase ) ; testcase ( e ) ; for ( var e = 0 ; runTestCase < runTestCase ; testcase ++ ) { e ( e [ testcase ] , testcase [ eval ] , testcase [ e ] ) ; } testcase ( 'test' ) ; } eval ( testcase ) ;

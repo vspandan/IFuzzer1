@@ -1,1 +1,0 @@
-"use strict" ; var o = { } ; var o = 2 ; x . x ( o , "foo" , { o : function ( foo ) { foo = this ; } } ) ; x . defineProperty = 3 ; if ( o !== o ) { throw "'this' had incorrect value!" ; }

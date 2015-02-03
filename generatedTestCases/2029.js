@@ -1,1 +1,0 @@
-x ( "//\u000B single line \u000B comment \u000B" ) ; var x = 0 ; x ( "//\u000B single line \u000B comment \u000B x = 1;" ) ; if ( x !== 0 ) { $ERROR$ERROR ( x = x ++ ) ; }

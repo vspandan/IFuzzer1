@@ -1,1 +1,0 @@
-var x = 0 , FOR = 0 ; ( function ( ) { $ERROR : for ( ; ; ) { try { $ERROR ++ ; if ( x === 10 ) return ; throw 1 ; } catch ( x ) { break ; } } } ) ( ) ; if ( x !== 1 ) { x$ERROR ( '#1: break inside of try-catch nested in loop is allowed' ) ; }

@@ -1,1 +1,0 @@
-function e ( ) { try { var d = delete testcase . __ES3_1_test_suite_test_11_4_1_3_unique_id_2__ ; } catch ( e ) { if ( __ES3_1_test_suite_test_11_4_1_3_unique_id_2__ instanceof e ) return true ; } } __ES3_1_test_suite_test_11_4_1_3_unique_id_2__ ( __ES3_1_test_suite_test_11_4_1_3_unique_id_2__ ) ;

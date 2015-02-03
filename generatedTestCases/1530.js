@@ -1,1 +1,0 @@
-function testcase ( ) { function ( a . b , 17 ) ( ( 'test' ) , testcase , testcase ) { a [ 0 ] = 1 ; b [ 1 ] = 'str' ; ( c ) [ 2 ] = 2.1 ; if ( 1 === runTestCase && 'str' === testcase && 2.1 === foo ) return true ; } return c ; } testcase ( b ) ;

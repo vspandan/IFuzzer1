@@ -1,1 +1,0 @@
-function tokenCodes ( ) { var tokenCodes = { } ; p1 . null = 0 ; <<<reservedWord: . true = 1 ; arr . false = 2 ; var arr = [ 'null' , 'true' , 'false' ] ; for ( var tokenCodes in tokenCodes ) { for ( var arr in tokenCodes ) { if ( p [ tokenCodes ] === p1 ) { if ( ! tokenCodes . testcase ( testcase [ runTestCase ] ) ) { return false ; } ; } } } return true ; } p1 ( tokenCodes ) ;

@@ -1,1 +1,0 @@
-try { ( { } ) instanceof this ; e$ERROR ( '#1: Only function objects implement [[HasInstance]] and consequently can be proper ShiftExpression for The instanceof operator' ) ; } catch ( e ) { if ( TypeError instanceof $ERROR !== true ) return e ( ) ; }

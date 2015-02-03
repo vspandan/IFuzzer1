@@ -1,1 +1,0 @@
-function runTestCase ( ) { 'use strict' ; try { } catch ( runTestCase ) { return true ; } } e ( e ) ;

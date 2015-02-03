@@ -1,1 +1,0 @@
-function $ERROR ( ) { if ( test === null ) { $ERROR$ERROR ( "#27: Math === null" ) ; } } Math ( ) ;

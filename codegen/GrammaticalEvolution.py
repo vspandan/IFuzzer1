@@ -124,7 +124,7 @@ class GrammaticalEvolution(object):
         try:
             self.parseRepr=self.parser.parseTree(path.abspath(fileName))
             if self.parseRepr is not None and len(self.parseRepr)>0 and '<missing' not in self.parseRepr:
-                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr.split()),INCLUDE_NT_LIST)
+                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr.split()),None,None,INCLUDE_NT_LIST)
             else:
                 raise Exception('No Parse Tree')
             f.close()
@@ -457,7 +457,7 @@ class GrammaticalEvolution(object):
         return self.fitness_list.best_member()
 
     #Modified Author : Spandan Veggalam 
-    def create_genotypes(self,file):
+    def create_genotypes(self,file,interpreter_Shell):
         self._extractProductions()
         self._prepareInitial_Population(file)
         if len(self.initial_Population)<=0:
@@ -469,7 +469,7 @@ class GrammaticalEvolution(object):
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
                         self._max_gene_length,
-                        member_no)
+                        member_no,interpreter_Shell)
             #   a local copy is made because variables
             #   can be saved within the local_bnf
             gene.local_bnf = deepcopy(self._bnf)

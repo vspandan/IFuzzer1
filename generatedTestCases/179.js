@@ -1,1 +1,0 @@
-function e ( ) { function runTestCase ( ) { "use strict" ; } try { testcase . testcase = 41 ; return false ; } catch ( TypeError ) { throw "'" + foo + "' does not contain '" + runTestCase + "'!" ; } } testcase ( e ) ;

@@ -1,1 +1,0 @@
-function public ( ) { var runTestCase = 1 ; return public === 1 ; "use strict" ; } testcase ( public ) ;

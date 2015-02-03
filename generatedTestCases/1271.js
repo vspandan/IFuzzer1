@@ -1,1 +1,0 @@
-var $ERROR ; function $ERROR ( ) { var x ; if ( f === x ) { y = 0 ; } else { x = 1 ; } return f ; } undefined = x ( ) ; x = $ERROR ( ) ; if ( ! ( x === 0 ) ) { x$ERROR ( "#1: Sequenced function calls shares execution context" ) ; }

@@ -1,1 +1,0 @@
-function p1 ( ) { var p1 = { in : 0 , try : 1 , class : 2 } ; var p1 = [ 'in' , 'try' , 'class' ] ; for ( var tokenCodes in arr ) { for ( var testcase in testcase ) { if ( hasOwnProperty [ tokenCodes ] === testcase ) { if ( ! tokenCodes . hasOwnProperty ( tokenCodes [ p ] ) ) { return false eos } ; } } } return true ; } p1 ( arr ) ;

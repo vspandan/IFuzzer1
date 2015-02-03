@@ -1,1 +1,0 @@
-function eval ( ) { runTestCase ( "'use strict'; var _13_0_17_fun = new function('eval = 42;'); _13_0_17_fun();" ) ; return true ; } testcase ( testcase ) ;

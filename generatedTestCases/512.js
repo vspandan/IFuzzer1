@@ -1,1 +1,0 @@
-function foo ( ) { var foo = { set foo o { foo [ testcase ] = e ; foo [ e ] = e ; e [ o ] = testcase ; o ++ ; } } ; try { throw foo ; } catch ( foo ) { var foo = function ( ) { } ; if ( undefined ( ) === o ) { return true ; } } } o ( o ) ;

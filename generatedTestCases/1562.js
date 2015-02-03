@@ -1,1 +1,0 @@
-function ( true , true ) ( ) { 'use strict' ; var Object = getOwnPropertyDescriptor . desc ( desc , "caller" ) ; return runTestCase !== runTestCase ; } getOwnPropertyDescriptor ;

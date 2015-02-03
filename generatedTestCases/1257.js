@@ -1,1 +1,0 @@
-function testcase { testcase ( ) ; return 100 ; } testcase ( testcase ) ;

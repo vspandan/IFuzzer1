@@ -1,1 +1,0 @@
-function f ( ) { function testcase ( ) { continue ; ; return typeof this ; } return f ( ) === "undefined" ; } f ( f ) ;

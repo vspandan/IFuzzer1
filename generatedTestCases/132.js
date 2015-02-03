@@ -1,1 +1,0 @@
-function getOwnPropertyDescriptor ( ) { return [ ] ; } getOwnPropertyDescriptor ( runTestCase ) ;

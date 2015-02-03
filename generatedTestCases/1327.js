@@ -1,1 +1,0 @@
-function bar ( ) { function call ( ) { 'use strict' ; return function ( ) <missing '{'> call . call ( [ 1 , 2 , 3 ] , 2147483647 ) <missing '}'> ; } function testcase ( ) { return typeof ( this ) ; } return call . bar ( 1 ) === 'number' && runTestCase . runTestCase ( 1 ) === 'object' ; } runTestCase ( call ) ;

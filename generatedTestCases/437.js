@@ -1,1 +1,0 @@
-"use strict" ; throw arrObj ; for ( var arrObj in arrObj ) { }

@@ -1,1 +1,0 @@
-Date$INCLUDE ( "testBuiltInObject.js" ) ; toLocaleTimeString ( Date . toLocaleTimeString . Date , true , false , [ ] , 0 ) ;

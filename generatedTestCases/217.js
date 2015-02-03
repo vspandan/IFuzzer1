@@ -1,1 +1,0 @@
-try { { if ( $ERROR == 500 ) break e ; $PRINT ++ ; } ; message$ERROR ( '#1: "x()" lead to throwing exception' ) ; } catch ( $PRINT ) { x$PRINT ( $ERROR . e ) ; } try { throw "catchme" ; e$ERROR ( '#2: throw "catchme" lead to throwing exception' ) ; } catch ( e ) { if ( x !== "catchme" ) { e$ERROR ( '#2.1: Exception === "catchme". Actual: Exception ===' + $ERROR ) ; } }

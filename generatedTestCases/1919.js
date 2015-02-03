@@ -1,1 +1,0 @@
-var public = 1 ;

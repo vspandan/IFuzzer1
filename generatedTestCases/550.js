@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; try { SyntaxError ( "\ try {} catch () { }\ " ) ; return false ; } catch ( SyntaxError ) { return runTestCase instanceof SyntaxError ; } } eval ( e ) ;

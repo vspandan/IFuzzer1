@@ -1,1 +1,0 @@
-function SyntaxError ( ) { "use strict" ; "use strict" ; try { eval ( "var public = 1;" ) ; return false ; } catch ( testcase ) { return ; } } runTestCase ( runTestCase ) ;

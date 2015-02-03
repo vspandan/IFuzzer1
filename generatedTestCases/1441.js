@@ -1,1 +1,0 @@
-function fnGlobalObject ( ) { "use strict" ; var runTestCase = eval ; return fnGlobalObject ( "this" ) === fnGlobalObject ( ) ; } eval ;

@@ -1,1 +1,0 @@
-function testcase ( ) { try { return "ohai" ; ; return false ; } catch ( SyntaxError ) { return ( testcase instanceof SyntaxError ) ; } } SyntaxError ( e ) ;

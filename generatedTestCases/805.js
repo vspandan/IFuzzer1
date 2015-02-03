@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; var testcase = new testcase ( ) ; try { Error ( "delete errObj;" ) ; return "pass" ; } catch ( errObj ) { return testcase instanceof e ; } } Error ( e ) ;

@@ -1,1 +1,0 @@
-function eval ( ) { "use strict" ; var eval = blah ; try { testcase ( "eval -= 20;" ) ; return false ; } catch ( runTestCase ) { eval = 'recorder not started, ' ; } } eval ( eval ) ;

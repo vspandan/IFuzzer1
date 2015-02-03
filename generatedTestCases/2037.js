@@ -1,1 +1,0 @@
-var x = 0 ; if ( $ERROR !== 0 ) break x

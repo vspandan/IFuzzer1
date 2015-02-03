@@ -1,1 +1,0 @@
-try { SyntaxError ( "/\u2029/" ) . source ; e$ERROR ( '#1.1: RegularExpressionFirstChar :: Paragraph separator is incorrect. Actual: ' + ( SyntaxError ( "/\u2029/" ) . e ) ) ; } catch ( e ) { if ( ( e instanceof e ) !== true ) { e$ERROR ( '#1.2: RegularExpressionFirstChar :: Paragraph separator is incorrect. Actual: ' + ( e ) ) ; } }

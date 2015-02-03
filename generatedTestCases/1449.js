@@ -1,1 +1,0 @@
-function runTestCase ( ) { function bar ( ) { 'use strict' ; return typeof ( this ) ; } function call ( ) { return typeof ( this ) ; } return foo . bar ( '1' ) === 'string' && runTestCase . bar ( '1' ) === 'object' ; } runTestCase ( bar ) ;

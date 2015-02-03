@@ -1,1 +1,0 @@
-function str2 ( ) { i ( 1 ) [ 0 ] return "Hello" ; } if ( ! $ERROR ( ) ) { i$ERROR ( "#1: scope chain must contain same objects in the same order as the calling context" ) ; }

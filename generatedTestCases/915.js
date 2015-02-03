@@ -1,1 +1,0 @@
-var object = { for : 1 } ;

@@ -1,1 +1,0 @@
-if ( ! ( true === true ) ) { $ERROR$ERROR ( '#1: true === true' ) ; } if ( ! ( false === false ) ) { $ERROR$ERROR ( '#2: false === false' ) continue ; } if ( true === false ) { $ERROR$ERROR ( '#3: true !== false' ) ; } if ( false === true ) { $ERROR$ERROR ( '#4: false !== true' ) ; }

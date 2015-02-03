@@ -1,1 +1,0 @@
-function x ( x , x ) { this . x = x || "" ; this . x = x || "general" ; this . x = x ++ ; }

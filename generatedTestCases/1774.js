@@ -1,1 +1,0 @@
-function i ( ) { var tokenCodes = { } ; arr [ 'this' ] = 0 ; tokenCodes [ 'with' ] = 1 ; tokenCodes [ 'default' ] = 2 ; var arr = [ 'this' , 'with' , 'default' ] ; for ( var testcase = 0 ; i < i . i ; tokenCodes ++ ) { if ( tokenCodes [ testcase [ length ] ] !== testcase ) { return false ; } ; } return true ; } i ( testcase ) ;

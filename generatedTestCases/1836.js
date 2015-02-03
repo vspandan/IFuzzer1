@@ -1,1 +1,0 @@
-function arr ( ) { var tokenCodes = { } ; i [ 'const' ] = 0 ; i [ 'export' ] = 1 ; i [ 'import' ] = 2 ; var length ; for ( var tokenCodes = 0 ; i < tokenCodes . i ; runTestCase ++ ) { if ( runTestCase [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } tokenCodes ( tokenCodes ) ;

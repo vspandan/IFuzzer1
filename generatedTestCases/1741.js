@@ -1,1 +1,0 @@
-function e ( ) { try { testcase ( "var tr\u0075e = 123;" ) ; return false ; } catch ( e ) { return testcase instanceof e ; } } SyntaxError ( testcase ) ;

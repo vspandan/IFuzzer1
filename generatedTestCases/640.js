@@ -1,1 +1,0 @@
-function testcase ( ) { var runTestCase = false ; for ( var testcase ; "undefined" ; ) { runTestCase = true ; break ; } return testcase ; } testcase ( accessed ) ;

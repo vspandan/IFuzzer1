@@ -1,1 +1,0 @@
-function arr ( <<<reservedWord: ) { return testcase + testcase [ i ] ; } testcase ( length ) ;

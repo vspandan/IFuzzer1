@@ -1,1 +1,0 @@
-function testcase ( ) { anotherVariableNotReserveWord ( "var public = 1; 'use strict'; var anotherVariableNotReserveWord = 2;" ) ; return public === 1 && testcase === 2 ; } testcase ( anotherVariableNotReserveWord ) ;

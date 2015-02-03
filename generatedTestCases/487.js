@@ -1,1 +1,0 @@
-$ERROR = "5+1|0===0" ; __evaluated = $ERROR ( __evaluated ) ; if ( eval !== 7 ) { $ERROR$ERROR ( '#1: __evaluated === 7. Actual: __evaluated ===' + __evaluated ) ; } x = $ERROR ( "2*" + $ERROR + ">-1" ) ; if ( __evaluated !== 11 ) { eval$ERROR ; }

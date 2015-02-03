@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { } catch ( testcase ) { return runTestCase instanceof e && typeof SyntaxError === "undefined" ; } } testcase ( testcase ) ;

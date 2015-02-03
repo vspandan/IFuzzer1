@@ -1,1 +1,0 @@
-function foo ( ) { function c ( runTestCase , c , b ) { 'use strict' ; a [ 0 ] = 1 ; c [ 1 ] = 'str' ; arguments [ 2 ] = 2.1 ; return 10 === runTestCase && 'sss' === b && 1 === c ; } return a ( 10 , 'sss' , 1 ) ; } c ( arguments ) ;

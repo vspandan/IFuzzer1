@@ -1,1 +1,0 @@
-__in__do__after__break : while ( 1 === 1 ) if ( $ERROR < 0 ) throw "yield not found in str: " + __in__do__IN__after__break ; ; if ( ! ( $ERROR && __in__do__IN__before__break && ! __in__do__before__break && do_out ) ) { __in__do__after__break$ERROR ( '#1: break inside do-while is allowed as its described at standard' ) ; }

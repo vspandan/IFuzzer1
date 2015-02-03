@@ -1,1 +1,0 @@
-function eval ( ) { try { } catch ( testcase ) { return eval instanceof e ; } } runTestCase ( eval ) ;

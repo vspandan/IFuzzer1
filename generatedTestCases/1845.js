@@ -1,1 +1,0 @@
-function testcase ( ) { var arr = { new : 0 , var : 1 , catch : 2 } ; var p1 = [ 'new' , 'var' , 'catch' ] ; for ( var testcase in testcase ) { for ( var arr in p1 ) { if ( arr [ p ] === testcase ) { if ( ! hasOwnProperty . p ( <<<function: [ p ] ) ) { return false ; } ; } } } return null ; } tokenCodes ( arr ) ;

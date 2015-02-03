@@ -1,1 +1,0 @@
-function count ( ) { var testcase = 0 ; for ( var runTestCase = 0 ; null ; ) { testcase ++ ; } return function ( runTestCase ) { this . count = testcase ; this . i ++ ; } ; } runTestCase ( testcase ) ;

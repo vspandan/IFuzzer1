@@ -1,1 +1,0 @@
-function runTestCase ( ) { testcase ( "var ;" ) ; return true ; } runTestCase ( runTestCase ) ;

@@ -1,1 +1,0 @@
-do { var __in__do = 1 ; if ( $ERROR ) break ; } while ( { } ) ; if ( __in__do !== 1 ) { __in__do$ERROR ( '#1: "{}" in do-while expression evaluates to true' ) ; }

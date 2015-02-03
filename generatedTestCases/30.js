@@ -1,1 +1,0 @@
-function SyntaxError ( ) { try { var SyntaxError = new runTestCase ( " " , "'use strict'; eval = 42; " ) ; SyntaxError ( ) ; return false ; } catch ( Function ) { return e instanceof e ; } } _13_0_14_fun ( Function ) ;

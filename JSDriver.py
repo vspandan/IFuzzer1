@@ -89,10 +89,12 @@ class TestTask:
 class ResultsSink:
     output_file = None
 
-    def __init__(self):
+    def __init__(self,typeErrorFlist,crashListFile):
         self.groups = {}
         self.counts = [ 0, 0, 0 ]
         self.n = 0
+        self.typeErrorFlist=typeErrorFlist
+        self.crashListFile=crashListFile
 
         self.finished = False
         self.pb = None
@@ -112,7 +114,7 @@ class ResultsSink:
                 self.output_file.write(output.out)
                 self.output_file.write(output.err)
 
-            result = TestResult.from_output(output)
+            result = TestResult.from_output(output,self.typeErrorFlist, self.crashListFile)
             tup = (result.result, result.test.expect, result.test.random)
             dev_label = self.LABELS[tup][1]
             self.groups.setdefault(dev_label, []).append(result.test.path)
@@ -206,7 +208,7 @@ def run_tests(options, tests, results):
     if not options.tinderbox:
         results.list(options)
 
-def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=False):        
+def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shell_path=None, createFragPool=False):        
     from optparse import OptionParser
     op = OptionParser(usage='%prog JS_SHELL [TEST-SPECS]')
     op.add_option('-s', '--show-cmd', dest='show_cmd', action='store_true',
@@ -306,6 +308,7 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
         xul_tester = mozillaJSTestSuite.manifest.NullXULInfoTester()
     else:
         if options.xul_info_src is None:
+            print JS
             xul_info = mozillaJSTestSuite.manifest.XULInfo.create(JS)
         else:
             xul_abi, xul_os, xul_debug = options.xul_info_src.split(r':')
@@ -422,14 +425,15 @@ def main(testCasesDirectory,targetDirectory,js_shell_path=None, createFragPool=F
         if manifest_dir not in ('', '.'):
             os.chdir(os.path.dirname(options.manifest))
         try:
-            results = ResultsSink()
+            results = ResultsSink(crashListFile,typeErrorFlist)
             run_tests(options, test_list, results)
             while True:
                 filename = os.path.join(os.path.dirname(__file__), "jstests_generated.list")
-                runFuzzer(testCasesDirectory,targetDirectory,filename)
+                runFuzzer(testCasesDirectory,targetDirectory,filename,js_shell_path)
                 if os.path.isfile(filename):
                     test_list=mozillaJSTestSuite.manifest.parse(filename, xul_tester)
                     run_tests(options, test_list, results)
+                    break
         finally:
             os.chdir(curdir)
 

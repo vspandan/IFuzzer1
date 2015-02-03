@@ -1,1 +1,0 @@
-function eval ( ) { try { e ( "\ 'use strict'; \ var o = {}; \ with (o) {}\ " ) ; return false ; } catch ( runTestCase ) { return ( testcase instanceof testcase ) ; } } runTestCase ( e ) ;

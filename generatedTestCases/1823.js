@@ -1,1 +1,0 @@
-function tokenCodes ( ) { var tokenCodes = { } ; testcase [ 'enum' ] = 0 ; testcase [ 'extends' ] = 1 ; i [ 'super' ] = 2 ; var i = [ 'enum' , 'extends' , 'super' ] ; for ( var testcase = 0 ; arr < tokenCodes . arr ; testcase ++ ) { if ( tokenCodes [ i [ tokenCodes ] ] !== i ) { return false ; } ; } return true ; } i ( tokenCodes ) ;

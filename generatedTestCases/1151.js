@@ -1,1 +1,0 @@
-function enumerable ( ) { "use strict" ; var testcase = { } ; prop . obj ( defineProperty , "prop" , { Object : function ( ) { return 11 ; } , testcase : TypeError , TypeError : true , obj : true } ) ; try { undefined . obj %= 20 ; return false ; } catch ( configurable ) { return undefined instanceof prop && get . set === 11 ; } } get ( obj ) ;

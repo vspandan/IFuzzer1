@@ -1,1 +1,0 @@
-var thisValues = [ true , 42 , "国際化" ] ; call = 'Section 3 of test' ;

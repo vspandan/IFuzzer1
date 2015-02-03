@@ -1,1 +1,0 @@
-if ( ! ( "" === "" ) ) { $ERROR$ERROR ( '#1: "" === ""' ) ; } if ( ! ( " " === " " ) ) { $ERROR$ERROR ( '#2: " " === " "' ) ; } if ( ! ( "string" === "string" ) ) { $ERROR$ERROR ( '#3: "string" === "string"' ) ; } $ERROR : $ERROR = "http://mycompany.com/stocks" > < $ERROR : if ( "1.0" === "1" ) { $ERROR$ERROR ( '#5: "1.0" !== "1"' ) ; }

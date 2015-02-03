@@ -1,1 +1,0 @@
-function runTestCase ( ) { try { testcase ( "var \u0073uper = 123;" ) ; return false ; } catch ( testcase ) { return e instanceof testcase ; } } testcase ( e ) ;

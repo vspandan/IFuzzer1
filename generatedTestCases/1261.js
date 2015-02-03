@@ -1,1 +1,0 @@
-try ; throw NotEarlyError ; var public = 1 ;

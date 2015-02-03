@@ -1,1 +1,0 @@
-function Function ( ) { 'use strict' ; testcase ( 'var eval;' ) ; return true ; } Function ( testcase ) ;

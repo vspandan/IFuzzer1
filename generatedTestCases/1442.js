@@ -1,1 +1,0 @@
-function f ( ) { "use strict" ; return this === f ; } ; if ( ! f . apply ( ) ) { }

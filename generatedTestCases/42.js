@@ -1,1 +1,0 @@
-function runTestCase ( ) { function eval ( ) { function _13_0_10_fun ( ) { "use strict" ; eval ( "eval = 42;" ) ; } eval ( ) ; } ; try { _13_0_10_fun ( ) ; return false ; } catch ( _13_0_10_fun ) { return e instanceof testcase ; } } e ( testcase ) ;

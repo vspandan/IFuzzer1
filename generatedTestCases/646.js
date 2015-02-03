@@ -1,1 +1,0 @@
-try { $ERROR instanceof e ; Object$ERROR ( '#1.1: object instanceof Object throw ReferenceError. Actual: ' + ( e instanceof Object ) ) ; } catch ( Object ) { if ( ( e instanceof ReferenceError ) !== true ) { e$ERROR ( null + ( ReferenceError ) ) ; } }

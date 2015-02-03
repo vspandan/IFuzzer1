@@ -1,1 +1,0 @@
-function length ( ) { var runTestCase = [ 1 , 2 , 3 ] length . a = 10 ; var x = delete a . testcase if ( a === false && d . length === 3 ) return true ; } testcase ( a ) ;

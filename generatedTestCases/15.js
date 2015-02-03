@@ -1,1 +1,0 @@
-function w ( ) { } ; y ( ) ; function x ( ) { } ; eval ( ) ; function y ( ) { } ; z ( ) ; w ( "function\u0009\u2029w(\u000C)\u00A0{\u000D};" ) ; x ( ) ;

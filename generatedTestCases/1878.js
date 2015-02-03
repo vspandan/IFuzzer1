@@ -1,1 +1,0 @@
-function final ( final ) { this . final = final ; this . final = "A" ; this . final = new final ( "return \"(instance of Gen\"+this.generation+\")\"" ) ; }

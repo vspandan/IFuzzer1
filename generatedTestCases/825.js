@@ -1,1 +1,0 @@
-function defineProperty ( ) { var configurable = { } ; var d = { o : 1 , runTestCase : false } ; foo . o ( configurable , "foo" , testcase ) ; var foo = delete o . Object ; if ( testcase === false && runTestCase . hasOwnProperty ( "foo" ) === true ) { return true ; } } o ( testcase ) ;

@@ -1,1 +1,0 @@
-function __obj ( ) { PI [ 0 ] [ "PI" ] = 3.14 ; } var arguments = { } ; __obj ( $ERROR ) ; if ( __obj . PI !== 3.14 ) { __obj$ERROR ( '#1: __obj.PI === 3.14. Actual: __obj.PI ===' + PI . __obj ) ; }

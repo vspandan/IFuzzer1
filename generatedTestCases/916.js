@@ -1,1 +1,0 @@
-function SyntaxError ( ) { try { e ( "'use strict'; ({foo:0,foo:1});" ) ; return 0 ; } catch ( testcase ) { return ( testcase instanceof eval ) ; } } SyntaxError ( e ) ;

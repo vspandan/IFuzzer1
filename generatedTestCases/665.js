@@ -1,1 +1,0 @@
-if ( null <= undefined !== false ) { $ERROR$ERROR ( '#1: null <= undefined === false' ) ; } if ( undefined <= null !== false ) { undefined$ERROR ( '#2: undefined <= null === false' ) ; } if ( $ERROR <= $ERROR !== false ) { undefined$ERROR ( '#3: undefined <= undefined === false' ) ; } if ( null <= null !== true ) { $ERROR$ERROR ( '#4: null <= null === true' ) ; }

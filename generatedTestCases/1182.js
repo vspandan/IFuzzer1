@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; try { ReferenceError ( "_11_13_2_5 -= 1;" ) ; return false ; } catch ( e ) { return testcase instanceof ReferenceError ; } } e ( ) ;

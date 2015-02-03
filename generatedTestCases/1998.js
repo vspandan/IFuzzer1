@@ -1,1 +1,0 @@
-var x = 0 ; if ( false ) { x = 1 } ; else x = - 1 if ( x !== - 1 ) { x$ERROR ( '#1: Check if Statement for automatic semicolon insertion' ) ; }

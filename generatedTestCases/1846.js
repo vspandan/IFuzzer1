@@ -1,1 +1,0 @@
-function tokenCodes ( ) { var tokenCodes = { } ; tokenCodes . instanceof = 0 ; p . typeof = 1 ; arr . else = 2 ; var p = [ 'instanceof' , 'typeof' , 'else' ] ; for ( var tokenCodes in arr ) { for ( var p1 in p ) { } } return true ; } runTestCase ( testcase ) ;

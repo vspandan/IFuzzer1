@@ -1,1 +1,0 @@
-var fnGlobalObject if ( ! fnGlobalObject ( ) ) { throw "'this' had incorrect value!" ; }

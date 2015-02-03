@@ -1,1 +1,0 @@
-x = 1 ; if ( this . x !== 1 ) { $ERROR$ERROR true , true ; } if ( delete this . x !== true ) { $ERROR$ERROR ( "#2: variable x has property attribute DontDelete" ) ; }

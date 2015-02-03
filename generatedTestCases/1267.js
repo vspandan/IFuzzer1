@@ -1,1 +1,0 @@
-function e ( ) { function runTestCase ( ) { "use strict" ; try { testcase ( "var public = 1;" ) ; return false ; } catch ( fun ) { return fun instanceof fun ; } } return e ( ) ; } SyntaxError ( testcase ) ;

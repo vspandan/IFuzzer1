@@ -1,1 +1,0 @@
-function __obj ( ) { __obj [ 0 ] [ "E" ] = 2.74 ; } var E = { } ; __func ( __func ) ; if ( __obj . E !== 2.74 ) { $ERROR$ERROR ( '#1: __obj.E === 2.74. Actual: __obj.E ===' + __obj . __obj ) ; }

@@ -1,1 +1,0 @@
-function getOwnPropertyDescriptor ( ) { 'use strict' ; var testcase = desc . undefined ( runTestCase , "callee" ) ; return runTestCase !== undefined ; } desc ( runTestCase ) ;

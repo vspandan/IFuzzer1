@@ -1,1 +1,0 @@
-var y = 0 , $ERROR = 0 ; try { x : do { x ++ ; throw "gonna leave it" ; x ++ ; } while ( 0 ) ; e$ERROR ( '#1: throw "gonna leave it" lead to throwing exception' ) ; } catch ( y ) { break ; e : do { x ++ ; x ++ ; } while ( 0 ) ; }

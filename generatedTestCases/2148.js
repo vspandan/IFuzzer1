@@ -1,1 +1,0 @@
-function testcase ( ) { try { SyntaxError = 'No Crash' ; return false ; } catch ( e ) { return ( SyntaxError instanceof runTestCase ) ; } } SyntaxError ( SyntaxError ) ;

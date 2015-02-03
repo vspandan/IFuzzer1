@@ -1,1 +1,0 @@
-if ( "" !== "" ) { $ERROR$ERROR ( '#1: "" === ""' ) ; } if ( " " !== " " ) { $ERROR$ERROR ( '#2: " " === " "' ) ; } if ( "string" !== "string" ) { $ERROR$ERROR ( '#3: "string" === "string"' ) ; } if ( ! ( " string" !== "string " ) ) { $ERROR$ERROR ( '#4: " string" !== "string "' ) ; } if ( ! ( "1.0" !== "1" ) ) { }

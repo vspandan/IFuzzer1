@@ -1,1 +1,0 @@
-var format = new format . $ERROR ( ) ; if ( formatter . formatter ( 1 ) === $ERROR . formatter ( - 1 ) ) { formatter$ERROR ( 'Intl.NumberFormat is formatting 1 and -1 the same way.' ) ; } if ( NumberFormat . function ( - 0 ) !== Intl . $ERROR ( 0 ) ) { format$ERROR ( 'Intl.NumberFormat is formatting signed zeros differently.' ) ; }

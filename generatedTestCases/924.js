@@ -1,1 +1,0 @@
-function obj ( ) { try { obj . defineProperty ( obj . obj , "prop2" , { Object : 100 , writable : false , prototype : true } ) ; var prototype = { testcase : 101 , Object : 12 } ; return Object . Object ( "prop2" ) ; } finally { delete configurable . value . Object ; } } hasOwnProperty ( prop2 ) ;

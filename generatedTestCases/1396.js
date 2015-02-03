@@ -1,1 +1,0 @@
-break ; ; function f1 ( ) { var f = function ( ) { return typeof this ; } return ( f1 ( ) === "undefined" ) && ( ( typeof this ) === "undefined" ) ; } if ( ! f1 ( ) ) { throw "'this' had incorrect value!" ; }

@@ -1,1 +1,0 @@
-function i ( ) { var i = { public : 0 , yield : 1 , interface : 2 } ; var testcase = [ 'public' , 'yield' , 'interface' ] ; for ( var arr = 0 ; testcase < testcase . <<<reservedWord: ; arr ++ ) { if ( i [ <<<reservedWord: [ runTestCase ] ] !== testcase ) { return false ; } ; } return true ; } testcase ( tokenCodes ) ;

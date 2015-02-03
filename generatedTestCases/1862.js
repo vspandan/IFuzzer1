@@ -1,1 +1,0 @@
-function protected ( protected ) { try { protected ( protected ) ; } catch ( protected ) { } }

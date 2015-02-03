@@ -1,1 +1,0 @@
-var __obj = 1 ; var __obj = { a : 2 } ; try { with ( a ) { var e = function ( ) { return result ; } ; throw 3 ; } } catch ( $ERROR ) { ; } __obj = __obj ( ) ; if ( a !== 2 ) { __obj$ERROR ( '#1: result === 2. Actual: result ===' + e ) ; }

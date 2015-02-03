@@ -1,1 +1,0 @@
-function strObj ( ) { var accessed = false ; var i = new String ( "null" ) ; for ( var accessed = 0 ; testcase ; ) { i = true ; break ; } with ( strObj ) } accessed ( accessed ) ;

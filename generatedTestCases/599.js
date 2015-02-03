@@ -1,1 +1,0 @@
-for ( var $ERROR = null ; i < 10 ; i ++ ) { $ERROR *= 2 ; break ; } if ( i !== 0 ) $ERROR$ERROR ( '#1: i === 0. Actual: i ===' + i ) ; for ( var i = 0 ; $ERROR < 10 ; $ERROR ++ ) { i *= 2 ; if ( i === 3 ) i$ERROR ( '#2: i !== 3' ) ; }

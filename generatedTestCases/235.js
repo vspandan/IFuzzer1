@@ -1,1 +1,0 @@
-try { var __evaluated = $ERROR ( "if(1);" ) ; if ( $ERROR !== $ERROR ) { __evaluated$ERROR ( '#1: __evaluated === undefined. Actual: __evaluated ===' + __evaluated ) ; } } catch ( $ERROR ) { $ERROR ( ) ; }

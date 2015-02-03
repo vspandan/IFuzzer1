@@ -1,1 +1,0 @@
-function runTestCase ( ) { try { e ( '"use strict"; var x = "\\07 ";' ) ; return false ; } catch ( e ) { return ( testcase instanceof e ) ; } } e ( testcase ) ;

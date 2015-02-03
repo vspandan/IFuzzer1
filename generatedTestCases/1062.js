@@ -1,1 +1,0 @@
-if ( ( false && $ERROR ) !== false ) { ( 6 , "one" , x . * . $ERROR ( ) ) }

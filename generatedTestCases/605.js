@@ -1,1 +1,0 @@
-index_n = "" ; index : for ( index_n = 0 ; index_n < 4 ; __str += 1 ) { index : for ( nonexist = 0 ; index <= nested ; nested ++ ) { if ( index_n * index_n == 6 ) continue nested ; index += "" + index_n + index ; } }

@@ -1,1 +1,0 @@
-{ $ERROR = $ERROR = 'Test skipped - Test requires Script object..' ; $ERROR ( $ERROR , $ERROR , $ERROR ) ; }

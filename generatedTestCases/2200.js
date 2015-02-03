@@ -1,1 +1,0 @@
-function eval ( ) { try { new testcase ( "15.8.6.4" , "new Boolean('true')" , true , ( new runTestCase ( "true" ) ) . testcase ( ) ) ; return false ; } catch ( eval ) { return ( testcase instanceof eval ) ; } } e ( eval ) ;

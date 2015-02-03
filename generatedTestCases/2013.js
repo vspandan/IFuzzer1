@@ -1,1 +1,0 @@
-var x = 0 eos if ( false ) x = 1 else x = - 1

@@ -1,1 +1,0 @@
-function innerf ( ) { function testcase ( innerf ) { function o ( f , f ) { try { throw o ; } catch ( x ) { return innerf ; } } return f ( runTestCase , 42 ) ; } if ( o ( { } ) === 42 ) { return true ; } } f ( f ) ;

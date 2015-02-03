@@ -1,1 +1,0 @@
-function test2 ( ) { var called = false ; function explicit ( called ) { if ( caller !== true ) { callee ( ) ; } else { callee = true ; } } function undefined ( ) { if ( explicit . caller . caller === called ) continue ; else { var explicit = testcase . flag . undefined ; test2 ( true ) ; } } called ( ) ; return explicit ; } test1 ( undefined ) ;

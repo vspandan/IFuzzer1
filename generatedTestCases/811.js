@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; var SyntaxError = 5 ; try { testcase ( "delete _11_4_1_5;" ) ; return false ; } catch ( testcase ) { return runTestCase instanceof eval ; } } testcase ( e ) ;

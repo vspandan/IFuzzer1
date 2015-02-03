@@ -1,1 +1,0 @@
-var Number = 0.1 ; -- x ; if ( $ERROR !== 0.1 - 1 ) { x$ERROR ( '#1: var x = 0.1; --x; x === 0.1 - 1. Actual: ' + ( x ) ) ; } var x = new x ( - 1.1 ) ; -- x ; if ( x !== - 1.1 - 1 ) { }

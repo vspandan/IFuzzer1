@@ -1,1 +1,0 @@
-function eval ( SyntaxError , blah , testcase ) { return new runTestCase ( SyntaxError + '/' + blah + '/' + e ) ; } e ( e ) ;

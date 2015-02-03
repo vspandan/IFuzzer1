@@ -1,1 +1,0 @@
-function runTestCase ( ) { try { runTestCase . caller ; return true ; } catch ( runTestCase ) { } } caller ( arguments ) ;

@@ -1,1 +1,0 @@
-if ( "" instanceof String ) { $ERROR$ERROR ( '#1: "" is not instanceof String' ) ; } if ( $ERROR ( "" ) instanceof String ) if ( ! String ( ) . $ERROR ( /strict/ ) ) { String ( 'strict' ) ; } if ( new $ERROR instanceof String !== true ) { String$ERROR ( '#3: new String instanceof String' ) ; }

@@ -1,1 +1,0 @@
-function foo ( ) { "use strict" ; return this eos } ; function foo ( ) { return foo ( ) ; } if ( foo ( ) !== foo ) { throw "'this' had incorrect value!" ; }

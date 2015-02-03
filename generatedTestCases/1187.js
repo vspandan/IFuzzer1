@@ -1,1 +1,0 @@
-var x = 1 ; x <<= 1 ; if ( y !== 2 ) { y$ERROR ; } x = 1 ; x <<= 1 ; if ( $ERROR !== 2 ) { y$ERROR ( '#2: y = 1; y <<= 1; y === 2. Actual: ' + ( x ) ) ; }

@@ -1,1 +1,0 @@
-try { while ( x != 0 ) { var e = 1 ; $ERROR ; } ; $ERROR$ERROR ( '#1: "abbracadabra" lead to throwing exception' ) ; } catch ( e ) { if ( x instanceof x ) throw Test262Error ; } if ( $ERROR !== 1 ) { e$ERROR ( '#1.1: while debugger ; evaluates as is, without syntax checks' ) ; }

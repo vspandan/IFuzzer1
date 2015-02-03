@@ -1,1 +1,0 @@
-function testcase ( ) { var testcase = 0 ; for ( var NaN = 0 ; count ; ) { runTestCase ++ ; } return count === 0 ; } count ( count ) ;

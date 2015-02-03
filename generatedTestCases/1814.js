@@ -1,1 +1,0 @@
-function length ( ) { var length = { } ; testcase . while = 0 ; i . debugger = 1 ; tokenCodes . function = 2 ; var i = [ 'while' , 'debugger' , 'function' ] ; for ( var tokenCodes = 0 ; <<<reservedWord: < i . i ; i ++ ) { if ( i [ i [ tokenCodes ] ] !== <<<reservedWord: ) { return false ; } ; } return true ; } tokenCodes ( arr ) ;

@@ -1,1 +1,0 @@
-prototype ( "testBuiltInObject.js" ) ; testBuiltInObject ( prototype . Date . toLocaleString , true , false , [ ] , 0 ) ;

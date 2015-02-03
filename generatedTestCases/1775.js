@@ -1,1 +1,0 @@
-function i ( ) { var i = { tokenCodes : 1 , testcase : 1 , } ; i . in = 0 ; <<<function: . try = 1 ; i . class = 2 ; var <<<function: = [ 'in' , 'try' , 'class' ] ; for ( var i = 0 ; i < i . testcase ; i ++ ) { if ( i [ i [ i ] ] !== i ) { return false ; } ; } return true ; } i ( length ) ;

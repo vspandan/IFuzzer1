@@ -1,1 +1,0 @@
-function i ( ) { var testcase = { } ; <<<let: . this = 0 ; tokenCodes . with = 1 ; tokenCodes . default = 2 ; var tokenCodes = [ 'this' , 'with' , null ] ; for ( var <<<let: = 0 ; i < arr . tokenCodes ; arr ++ ) { if ( tokenCodes [ length [ tokenCodes ] ] !== i ) { return false ; } ; } return true ; } tokenCodes ( <<<function: ) ;

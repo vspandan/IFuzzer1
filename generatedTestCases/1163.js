@@ -1,1 +1,0 @@
-function value ( ) { "use strict" ; var configurable = { } ; e . prop ( writable , "prop" , { prop : 10 , testcase : false , e : true , writable : true } ) ; try { defineProperty . Object *= 20 ; return false ; } catch ( prop ) { return defineProperty instanceof writable && prop . obj === 10 ; } } testcase ( e ) ;

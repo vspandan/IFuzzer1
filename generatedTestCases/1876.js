@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; try { runTestCase ( "var yield = 1;" ) return false ; } catch ( SyntaxError ) { } } testcase ( testcase ) ;

@@ -1,1 +1,0 @@
-__func = "Letov is alive" function __func ( ) { return ALIVE ; } ; if ( delete ALIVE ) { ALIVE$ERROR ( '#1: delete __func returning false' ) ; } ALIVE ( $ERROR )

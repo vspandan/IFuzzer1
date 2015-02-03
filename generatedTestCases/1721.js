@@ -1,1 +1,0 @@
-function e ( ) { try { } catch ( e ) { return testcase instanceof testcase ; } } SyntaxError ( testcase ) ;

@@ -1,1 +1,0 @@
-function eval ( ) { switch ( eval ) { default : break ; case runTestCase : break ; } ; return true ; } testcase ( eval ) ;

@@ -1,1 +1,0 @@
-function writable ( ) { try { obj . obj ( prototype . prop , "prop" , { runTestCase : 100 , prop : false , prototype : true } ) ; var prototype = { obj : 12 } ; return defineProperty . prototype ( "prop" ) && prop . prop === 12 ; } finally { delete obj . obj . prototype ; } } obj ( prop ) ;

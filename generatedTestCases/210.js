@@ -1,1 +1,0 @@
-function e ( ) { e ( 'test' ) ; e ( e ) ; e ( e ) ; e ( true ) ; function e ( ) { [ ] ; } try { e . e . e ; } catch ( e ) { void ( function ( ) { } ) ; } for ( var e in [ 1 , 2 , 3 ] ) { e ( ) ; } e ( false ) ; e ( e , e , e ) ; e ( 'test' ) ; }

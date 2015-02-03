@@ -1,1 +1,0 @@
-"use strict" ; throw y eos var y = 0 10 ;

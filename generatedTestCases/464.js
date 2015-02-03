@@ -1,1 +1,0 @@
-( function ( ) { x : var y = 0 , LABEL_DO_LOOP = 0 ; y : do { y : x ++ ; if ( LABEL_IN === 10 ) return ; break LABEL_ANOTHER_LOOP ; LABEL_IN : x ++ ; function x ( ) { } } while ( 0 ) ; y : do { ; } while ( 0 ) ; function LABEL_IN ( ) { } } ) ( ) ;

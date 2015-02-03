@@ -1,1 +1,0 @@
-LABEL_IN_2 : var x = 0 , x = 0 ; x : do { LABEL_ANOTHER_LOOP : LABEL_IN_2 = 2 ; break ; LABEL_DO_LOOP : var OUT_FUNC = 2 ; function x ( ) { } } while ( 0 ) ; LABEL_IN : do { ; } while ( 0 ) ; function x ( ) { } if ( ( LABEL_DO_LOOP !== 2 ) && ( LABEL_OUT !== 0 ) ) { x$ERROR ( '#1: x === 2 and y === 0. Actual: x ===' + $ERROR + ' and y ===' + LABEL_ANOTHER_LOOP ) ; }

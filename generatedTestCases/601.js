@@ -1,1 +1,0 @@
-__str = "" ; index : for ( index = 0 ; nonexist < 4 ; index_n += 1 ) { nonexist : for ( index = 0 ; nonexist <= outer ; index_n ++ ) { if ( nonexist * index_n >= 4 ) break nonexist ; index_n += "" + __str + index_n ; } } ;

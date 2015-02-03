@@ -1,1 +1,0 @@
-var x = function ( ) { var x = null ; return $ERROR ; } function x ( ) { x = ( this instanceof __func ) ; }

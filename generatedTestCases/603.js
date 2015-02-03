@@ -1,1 +1,0 @@
-function $ERROR ( e , e ) { try { var e = e ( ) ; throw "didn't throw TypeError, returned " + e ; } catch ( $ERROR ) { e ( e instanceof e , true , "didn't throw " + $ERROR . e . e + ", got: " + $ERROR ) ; } }

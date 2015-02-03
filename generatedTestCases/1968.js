@@ -1,1 +1,0 @@
-for id : id = "http://mycompany.com/stocks" > < id : { break ; }

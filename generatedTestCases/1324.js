@@ -1,1 +1,0 @@
-function f ( ) { "use strict" ; var runTestCase = function ( ) { return typeof this ; } return f ( ) === "undefined" eos } testcase ( runTestCase ) ;

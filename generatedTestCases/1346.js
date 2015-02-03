@@ -1,1 +1,0 @@
-function undefined ( ) { "use strict" ; return this === f ; } ; if ( ! undefined . apply ( f ) ) { throw "'this' had incorrect value!" ; }

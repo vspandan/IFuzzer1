@@ -1,1 +1,0 @@
-function SyntaxError ( ) { "use strict" ; var RegExp = new e ( ) ; try { e ( "delete regObj;" ) ; return false ; } catch ( eval ) { return SyntaxError instanceof eval ; } } e ( runTestCase ) ;

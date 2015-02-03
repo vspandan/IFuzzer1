@@ -1,1 +1,0 @@
-try { -- x ; e$ERROR ( '#1.1: --x throw ReferenceError. Actual: ' + ( -- e ) ) ; } catch ( x ) { x = ReferenceError + '' ; }

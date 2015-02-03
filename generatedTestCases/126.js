@@ -1,1 +1,0 @@
-function testcase ( ) { function testcase ( ) { "use strict" ; } return ! Object . testcase ( foo , "caller" ) . foo ; } runTestCase ( Object ) ;

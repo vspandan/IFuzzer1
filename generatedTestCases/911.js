@@ -1,1 +1,0 @@
-function desc ( ) { testcase ( "var o = {set foo(arg){return 1;}};" ) ; var desc = desc . o ( testcase , "foo" ) ; if ( getOwnPropertyDescriptor . enumerable === true && o . testcase === true ) return true ; } runTestCase ( eval ) ;

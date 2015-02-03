@@ -1,1 +1,0 @@
-function undefined ( ) { "use strict" ; return this === undefined ; } ; var Function = "function and Anonymous Code" ;

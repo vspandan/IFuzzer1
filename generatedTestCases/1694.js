@@ -1,1 +1,0 @@
-testOption$INCLUDE ( "testIntl.js" ) ; Collator ( Collator . $INCLUDE , "usage" , "string" , [ "sort" , "search" ] , "sort" ) ;

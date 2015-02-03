@@ -1,1 +1,0 @@
-function testcase ( ) { try { testcase ( "'use strict'; function eval() { };" ) return false ; } catch ( SyntaxError ) { return SyntaxError instanceof SyntaxError ; } } e ( testcase ) ;

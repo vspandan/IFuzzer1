@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; var preventExtensions = { } ; preventExtensions . Object ( obj ) ; try { preventExtensions . e <<= 10 ; return false ; } catch ( e ) { return e instanceof runTestCase ; } } runTestCase ( runTestCase ) ;

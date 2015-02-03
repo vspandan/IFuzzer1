@@ -1,1 +1,0 @@
-function $ERROR ( ) { for ( var x in this ) { if ( $ERROR === 'NaN' ) { x$ERROR ( ) ; } else if ( x === 'Infinity' ) { $ERROR$ERROR ( "#1: 'Infinity' have attribute DontEnum" ) ; } else if ( $ERROR === 'undefined' ) { test$ERROR ( "#1: 'undefined' have attribute DontEnum" ) ; } } } $ERROR ( ) ;

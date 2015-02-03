@@ -1,1 +1,0 @@
-function Object ( ) { var obj = { } ; defineProperty . accProperty ( eval , "accProperty" , { runTestCase : function ( ) { get ( "public = 1;" ) ; "use strict" ; return 11 ; } } ) ; return obj . testcase === 11 && public === 1 ; } testcase ( obj ) ;

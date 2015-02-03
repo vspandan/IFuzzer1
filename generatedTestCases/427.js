@@ -1,1 +1,0 @@
-function runTestCase ( ) { this ; var f = testcase ( ' = 42;' ) ; runTestCase ( ) ; return true ; } function ( function ) ;

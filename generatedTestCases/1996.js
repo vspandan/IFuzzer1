@@ -1,1 +1,0 @@
-var y = 0 , x = 2 ; y -- y if ( ( $ERROR !== 0 ) & ( y !== 1 ) ) { y$ERROR ( '#1: Check Postfix Increment Operator for automatic semicolon insertion' ) ; } x -- x if ( ( x !== 0 ) & ( x !== 0 ) ) { $ERROR$ERROR ( '#2: Check Postfix Increment Operator for automatic semicolon insertion' ) ; }

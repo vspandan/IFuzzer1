@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; try { runTestCase ( "var static = 1;" ) ; return ; } catch ( e ) { return e instanceof testcase ; } } testcase ( SyntaxError ) ;

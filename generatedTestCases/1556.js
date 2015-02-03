@@ -1,1 +1,0 @@
-function testcase ( ) { if ( runTestCase . Object ( getPrototypeOf ) === testcase . Object ) return true ; } getPrototypeOf ( getPrototypeOf ) ;

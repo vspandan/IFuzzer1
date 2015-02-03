@@ -1,1 +1,0 @@
-if ( null !== null ) { $ERROR$ERROR ( '#1: null === null' ) ; }

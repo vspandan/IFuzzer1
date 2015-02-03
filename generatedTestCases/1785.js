@@ -1,1 +1,0 @@
-function arr ( ) { var tokenCodes = { } ; tokenCodes [ 'public' ] = 0 ; tokenCodes [ 'yield' ] = 1 ; i [ 'interface' ] = 2 ; var i = [ 'public' , 'yield' , 'interface' ] ; for ( var arr = 0 ; arr < tokenCodes . tokenCodes ; length ++ ) { if ( i [ tokenCodes [ arr ] ] !== tokenCodes ) { return false ; } ; } return true ; } tokenCodes ( testcase ) ;

@@ -1,1 +1,0 @@
-function eval ( ) { try { runTestCase ( "var va\u0072 = 123;" ) ; return false eos } catch ( SyntaxError ) { return runTestCase instanceof e ; } } testcase ( testcase ) ;

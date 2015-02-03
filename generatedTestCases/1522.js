@@ -1,1 +1,0 @@
-function Number ( ) { "use strict" ; var Number = Number ; try { runTestCase = 12 ; return false ; } finally { testcase = runTestCase ; } } numBak ( testcase ) ;

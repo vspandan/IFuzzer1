@@ -1,1 +1,0 @@
-function implementss ( ) { "use strict" ; var implementss = 1 ; return testcase === 1 ; } testcase ( ) ;

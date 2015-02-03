@@ -1,1 +1,0 @@
-try { $ERROR | 1 ; x$ERROR ( '#1.1: x | 1 throw ReferenceError. Actual: ' + ( x | 1 ) ) ; } catch ( $ERROR ) { if ( ( $ERROR instanceof x ) !== true ) { try { $ERROR = 'SyntaxError' ; e = 'No Error' ; e = new e ( "alert(6); } alert(5);" ) ; } catch ( x ) { ReferenceError = x . e ; } ; } }

@@ -1,1 +1,0 @@
-var a = 1 ; var result = { __obj : 2 } ; with ( result ) { a = ( function ( ) { return __obj ; } ) ( ) ; } for

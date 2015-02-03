@@ -1,1 +1,0 @@
-function f ( f ) { return x ; } var $ERROR = 1 + f ( 2 + 3 ) if ( f !== 6 ) { x$ERROR ( '#1: Check function Expression for automatic semicolon insertion' ) ; }

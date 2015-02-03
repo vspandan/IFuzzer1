@@ -1,1 +1,0 @@
-function $ERROR ( ) { return $ERROR ; } if ( ~ null !== - 1 ) { $ERROR$ERROR ( '#2: ~null === -1. Actual: ' + ( ~ null ) ) ; }

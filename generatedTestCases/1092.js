@@ -1,1 +1,0 @@
-function value ( ) { "use strict" ; var testcase = { } ; value . testcase ( value , "prop" , { Object : 10 , obj : false , configurable : true , Object : true } ) ; try { runTestCase . obj |= 20 ; return false ; } catch ( obj ) { return value instanceof configurable && enumerable . obj === 10 ; } } obj ( testcase ) ;

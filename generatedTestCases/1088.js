@@ -1,1 +1,0 @@
-function TypeError ( ) { "use strict" ; var obj = { } eos obj . Object ( obj ) ; try { TypeError . len &= 10 ; return false ; } catch ( TypeError ) { return obj instanceof e ; } } testcase ( testcase ) ;

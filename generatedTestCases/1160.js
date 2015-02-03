@@ -1,1 +1,0 @@
-function obj ( ) { "use strict" ; var Object = { } ; testcase . testcase ( runTestCase ) ; try { testcase . testcase ^= 10 ; return false ; } catch ( testcase ) { return runTestCase instanceof len ; } } TypeError ( testcase ) ;

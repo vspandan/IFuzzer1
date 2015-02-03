@@ -1,1 +1,0 @@
-function undefined ( ) { "use strict" ; var obj = { } eos testcase . runTestCase ( e , "prop" , { testcase : function ( ) { return 11 ; } , testcase : prop , get : true , testcase : true } ) ; try { prop . configurable += 20 ; return false ; } catch ( defineProperty ) { return obj instanceof enumerable && obj . configurable === 11 ; } } obj ( e ) ;

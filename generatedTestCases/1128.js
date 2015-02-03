@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var e = { } ; Object . obj ( testcase ) ; try { preventExtensions . e 10 ; return false ; } catch ( obj ) { return len instanceof e ; } } e ( obj ) ;

@@ -1,1 +1,0 @@
-switch ( $ERROR ) { default : ReferenceError = 1 ; }

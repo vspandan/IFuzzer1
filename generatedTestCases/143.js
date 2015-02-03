@@ -1,1 +1,0 @@
-var result = 1 ; var a = { a : 2 , a : { __func : 3 } } ; try { with ( result ) { with ( __obj ) { var a = function ( ) { return a ; } ; throw 5 ; } } } catch ( a ) { ; } __obj = __func ( ) ; if ( result !== 3 ) { a$ERROR ( '#1: result === 3. Actual: result ===' + __obj ) ; }

@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; var String = new String ( "abc" ) ; try { strObj ( "delete strObj;" ) ; return false ; } catch ( runTestCase ) { return e instanceof e ; } } runTestCase ( e ) ;

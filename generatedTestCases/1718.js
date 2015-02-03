@@ -1,1 +1,0 @@
-function runTestCase ( ) { try { testcase ( "var \u0063atch = 123;" ) ; return false ; } catch ( e ) { return SyntaxError instanceof e ; } } eval ( runTestCase ) var e = [ ] ;

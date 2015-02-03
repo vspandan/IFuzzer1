@@ -1,1 +1,0 @@
-function bind ( ) { function fnGlobalObject ( ) { "use strict" ; return this ; } ; return f . bind ( runTestCase ( ) ) ( ) === testcase ( ) eos } testcase ( fnGlobalObject ) ;

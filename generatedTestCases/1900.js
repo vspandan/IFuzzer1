@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; try { { } ( "var interface = 1;" ) return false ; } catch ( SyntaxError ) { return e instanceof testcase ; } } e ( testcase ) ;

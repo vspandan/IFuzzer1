@@ -1,1 +1,0 @@
-try { $ERROR . source ; e$ERROR ( '#1.1: RegularExpressionFirstChar :: BackslashSequence :: \\Carriage return is incorrect. Actual: ' + ( e ( "/\\\u000D/" ) . e ) ) ; } catch ( source ) { if ( ( e instanceof SyntaxError ) !== true ) { $ERROR$ERROR ( '#1.2: RegularExpressionFirstChar :: BackslashSequence :: \\Carriage return is incorrect. Actual: ' + ( $ERROR ) ) ; } }

@@ -1,1 +1,0 @@
-"use strict" ; var fnGlobalObject = new ( function { for ( ( "p" in obj ) ; 0 ; ) { } } ) ; if ( ( obj === obj ( ) ) || ( typeof fnGlobalObject === "undefined" ) ) { throw "'this' had incorrect value!" ; }

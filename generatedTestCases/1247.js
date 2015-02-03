@@ -1,1 +1,0 @@
-function runTestCase ( ) { var testcase = 2 ; "use strict" ; var interface = 1 ; return public === 1 && interface === 2 ; } interface ( runTestCase ) return this ;

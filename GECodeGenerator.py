@@ -35,11 +35,11 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'test262-browser.js', 'test262-shell.js',
                     'test402-browser.js', 'test402-shell.js',
                     'testBuiltInObject.js', 'testIntl.js',
-                    'js-test-driver-begin.js', 'js-test-driver-end.js'))
+                    'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
 TestCaseSubDirs=[]
 #Author: Spandan Veggalam
-def runFuzzer(testCasesDir,targetDirectory,genfilesList):
+def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter):
     listAllTestCasesDir(testCasesDir)
     FILECOUNT = len(os.listdir(targetDirectory))    
     def selectGrammarFIle():
@@ -51,7 +51,7 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList):
     #Author: Spandan Veggalam
     def initialize():
         FILECOUNT = len(os.listdir(targetDirectory))
-        def process(file,filName):
+        def process(fil,filName):
             try:
                 bnf=""
                 fileName=inputFile.get()
@@ -99,8 +99,8 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList):
                     
                        
                     try:  
-                        print "Processing ::" + file
-                        if ges.create_genotypes(file):
+                        print "Processing ::" + fil
+                        if ges.create_genotypes(fil,interpreter):
                             ges.run()
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]
@@ -113,10 +113,13 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList):
                                 f=open(genfilesList,"a+")
                                 f.write("script "+newFile+"\n")
                                 f.close()
+                                #frame.quit()
+                                #sys.exit()
+
 
                             
                     except Exception as e:
-                        print "Skipping "+file+" due to exception while processing"
+                        print "Skipping "+fil+" due to exception while processing"
                         print e
     
             except AttributeError as e:
@@ -130,12 +133,6 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList):
                     FILECOUNT = len(os.listdir(targetDirectory))    
                     FILECOUNT+=1
                     process(fi,FILECOUNT)
-                    #p=multiprocessing.Process(target=process,args=(fi, f))
-                    #p=threading.Thread(target=process,args=(fi, f))
-                    #PROCESSLIST.append(p)
-                    #frame.quit()
-                    #return      
-
         frame.quit()
         
     root = Tk()

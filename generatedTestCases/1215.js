@@ -1,1 +1,0 @@
-function TypeError ( ) { 'use strict' ; try { length . TypeError = 42 ; return false ; } catch ( length ) { return ( testcase instanceof runTestCase ) ; } } { } ;

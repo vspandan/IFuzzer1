@@ -1,1 +1,0 @@
-function o ( ) { function innerf innerf { f ( 'test' ) ; o ( testcase ) ; o ( f ) ; function f ( ) { switch ( 1 ) { case - 1 : } } function o ( ) { switch ( 1 ) { case ( - 1 ) : } } var x = function ( ) { switch ( 1 ) { case - 1 : } } testcase ( ) ; f ( ) ; o ( ) ; x ( 'No Crash' , 'No Crash' , '' ) ; f ( 'test' ) ; } if ( testcase ( { } ) === 42 ) { return true ; } } f ( o ) ;

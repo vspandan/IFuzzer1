@@ -1,1 +1,0 @@
-localeMatcher$INCLUDE ( "testIntl.js" ) ; locale ( [ "localeMatcher" , "kn" , "kf" ] ) ; var Collator = new $INCLUDE . locale ( $INCLUDE , { locale : "lookup" } ) . taintProperties ( ) . locale ; if ( ! locale ( resolvedOptions ) ) { resolvedOptions$ERROR ( "Collator returns invalid locale " + Collator + "." ) ; }

@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; function testcase ( ) { try { SyntaxError ( "var public = 1;" ) ; return false ; } catch ( fun ) { return e instanceof eval ; } } return testcase ( ) ; } fun ( fun ) ;

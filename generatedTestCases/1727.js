@@ -1,1 +1,0 @@
-function e ( ) { try { testcase ( "var typeo\u0066 = 123;" ) ; return false ; } catch ( testcase ) { return testcase instanceof e ; } } eval ( e ) ;

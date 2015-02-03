@@ -1,1 +1,0 @@
-function p ( ) { var p1 = { arr : 0 , p : 1 , NaN : 2 } ; var Infinity = [ 'undefined' , 'NaN' , 'Infinity' ] ; for ( var p1 in NaN ) { for ( var undefined in runTestCase ) { if ( p1 [ p1 ] === arr ) { if ( ! arr . undefined ( tokenCodes [ testcase ] ) ) { return false ; } ; } } } return true ; } NaN ( tokenCodes ) ;

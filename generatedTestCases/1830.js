@@ -1,1 +1,0 @@
-function p1 ( ) { var tokenCodes = { } ; arr [ 'null' ] = 0 ; arr [ 'true' ] = 1 ; testcase [ 'false' ] = 2 ; var tokenCodes = [ 'null' , 'true' , 'false' ] ; for ( var p in tokenCodes ) { for ( var tokenCodes in tokenCodes ) { if ( p1 [ p1 ] === p1 ) { if ( ! arr . arr ( tokenCodes [ tokenCodes ] ) ) { return false ; } ; } } } return true ; } tokenCodes ( arr ) ;

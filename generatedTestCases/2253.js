@@ -1,1 +1,0 @@
-var x = 0 , $ERROR = new x ( ) ; if ( x !== 1 ) { x$ERROR ( '#1: var\\nx\\n=\\n1\\n; x === 1. Actual: ' + ( x ) ) ; }

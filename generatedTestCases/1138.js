@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; try { e ( "_11_13_2_4 += 1;" ) ; return false ; } catch ( eval ) { return testcase instanceof e ; } } e ( testcase ) ;

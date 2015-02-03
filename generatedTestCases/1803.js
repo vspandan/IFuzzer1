@@ -1,1 +1,0 @@
-function testcase ( ) { var i = { } ; tokenCodes . package = 0 ; i . protected = 1 ; i . static = 2 ; var tokenCodes = [ 'package' , 'protected' , 'static' ] ; for ( var tokenCodes = 0 ; testcase < i . tokenCodes ; i ++ ) { if ( i [ arr [ testcase ] ] !== arr ) { return false ; } ; } return true ; } i ( length ) ;

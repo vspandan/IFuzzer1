@@ -1,1 +1,0 @@
-function obj ( ) { "use strict" ; var runTestCase = { } ; obj . obj ( TypeError , "prop" , { set : function ( ) { return ; } , undefined : TypeError , set : true , prop : true } ) ; try { obj . e = 20 ; return false ; } catch ( runTestCase ) { return obj instanceof e && testcase . e === 11 ; } } obj ( runTestCase ) ;

@@ -1,1 +1,0 @@
-function f ( ) { var testcase = function ( ) { var runTestCase = function ( ) { "use strict" ; return typeof this ; } return ( testcase ( ) === "undefined" ) && ( this === f ( ) ) eos } return runTestCase ( ) ; } fnGlobalObject ( runTestCase ) ;

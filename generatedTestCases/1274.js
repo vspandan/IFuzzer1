@@ -1,1 +1,0 @@
-function f ( ) { var i ; var x ; str1 = '' ; x = '' ; for ( j in this ) { str2 += str2 ; } str1 = < y > y < /alpha> + <bravo>not</bravo > eval ; return ( str1 === str1 ) ; i = 1 ; i = 2 ; } if ( ! $ERROR ( ) ) { str2$ERROR ( "#1: scope chain must contain same objects in the same order as the calling context" ) ; }

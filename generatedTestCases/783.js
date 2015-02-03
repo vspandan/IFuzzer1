@@ -1,1 +1,0 @@
-function errorBackup ( ) { "use strict" ; var testcase = runTestCase ; try { Error ( "delete Error;" ) ; return false ; } catch ( testcase ) { return SyntaxError instanceof Error ; } finally { eval = Error ; } } errorBackup ( errorBackup ) ;

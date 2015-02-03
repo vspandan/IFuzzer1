@@ -1,1 +1,0 @@
-var $ERROR eos if ( x ( void x ) !== true ) { x$ERROR ( '#1: var x; void x === undefined. Actual: ' + ( void $ERROR ) ) ; } var undefined = null ; if ( void $ERROR !== $ERROR ) { x$ERROR ( '#2: var x = null; void x === undefined. Actual: ' + ( void x ) ) ; }

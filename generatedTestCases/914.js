@@ -1,1 +1,0 @@
-var object = { null : true } ;

@@ -1,1 +1,0 @@
-function runTestCase ( ) { try { var get = { } ; temp . testcase ( defineProperty , "accProperty" , { testcase : function ( ) { "use strict" ; obj ( "var public = 1;" ) ; return 11 ; } } ) ; var defineProperty = testcase . obj === 11 ; return false ; } catch ( runTestCase ) { return e instanceof obj ; } } obj ( temp ) ;

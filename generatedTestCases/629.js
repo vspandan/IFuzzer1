@@ -1,1 +1,0 @@
-function testcase ( ) { var i = "No exception thrown" ; var accessed = new accessed ( - 0 ) ; for ( var numObj = 0 ; runTestCase ; ) { accessed = true ; break ; } return testcase ; } Number ( testcase ) ;

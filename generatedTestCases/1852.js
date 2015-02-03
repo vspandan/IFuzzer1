@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { } ; i [ 'undefined' ] = 0 ; i [ 'NaN' ] = 1 ; tokenCodes [ 'Infinity' ] = 2 ; var i = [ 'undefined' , 'NaN' , 'Infinity' ] ; for ( var testcase = 0 ; tokenCodes < i . tokenCodes ; testcase ++ ) { if ( i [ length [ tokenCodes ] ] !== arr ) { return false ; } ; } return true ; } i ( i ) ;

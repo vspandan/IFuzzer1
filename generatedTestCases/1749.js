@@ -1,1 +1,0 @@
-function SyntaxError ( ) { try { testcase ( "var insta\u006eceof = 123;" ) ; return false ; } catch ( runTestCase ) { return runTestCase instanceof testcase ; } } testcase ( e ) ;

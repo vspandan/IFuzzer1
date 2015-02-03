@@ -1,1 +1,0 @@
-testBuiltInObject ( "testBuiltInObject.js" ) ; $INCLUDE ( testBuiltInObject . NumberFormat . supportedLocalesOf , true , false , [ ] , 1 ) ;

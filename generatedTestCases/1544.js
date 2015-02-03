@@ -1,1 +1,0 @@
-function i ( ) { return f1 ; } for ( var i = 1 ; i < 5 ; i ++ ) { if ( i ( 1 , 2 , 3 , 4 , 5 ) [ f1 ] !== ( i + 1 ) ) var arguments = [ ] ; ; }

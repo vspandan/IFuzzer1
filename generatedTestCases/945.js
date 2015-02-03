@@ -1,1 +1,0 @@
-function configurable ( ) { try { defineProperty . configurable ( configurable . Array , "1" , { , testcase : false , Array : true } ) ; var prototype = [ 101 , 12 ] ; return prototype . writable ( "1" ) && testcase [ 1 ] === 12 ; } finally { delete arr . configurable [ 1 ] ; } } prototype ( defineProperty ) ;

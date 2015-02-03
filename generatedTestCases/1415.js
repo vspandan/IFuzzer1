@@ -1,1 +1,0 @@
-var f1 = function ( ) { } if ( ! f1 ( ) ) { throw "'this' had incorrect value!" ; }

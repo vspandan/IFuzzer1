@@ -1,1 +1,0 @@
-function e ( ) { var testcase = { } ; try { testcase ( "_13_1_42_s.x = function () {'use strict';};" ) ; return ; } catch ( e ) { return runTestCase instanceof e ; } } testcase ( runTestCase ) ;

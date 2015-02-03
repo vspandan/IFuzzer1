@@ -1,1 +1,0 @@
-var y = - 1 ; $ERROR %= 2 ; throw new x ( "serializing " + $ERROR ( $ERROR ) + " should have failed with an exception" ) ; x = - 1 ; x %= 2 ; if ( y !== - 1 ) { y$ERROR ( '#2: y = -1; y %= 2; y === -1. Actual: ' + ( x ) ) ; }

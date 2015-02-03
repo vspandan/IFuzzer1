@@ -1,1 +1,0 @@
-function eval ( ) { try { testcase ( "var expor\u0074 = 123;" ) ; return false ; } catch ( testcase ) { return ; } } testcase ( runTestCase ) ;

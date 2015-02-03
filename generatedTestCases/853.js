@@ -1,1 +1,0 @@
-function testcase ( ) { var o = new d ( ) ; x . o = 1 ; var o ; with ( d ) { o = delete o ; } if ( o === false && typeof ( o ) === 'object' && testcase . d === 1 ) { return true ; } return false ; } o ( o ) ;

@@ -1,1 +1,0 @@
-function e ( ) { try { e [ 0 ] = SyntaxError - 1 ; testcase [ 1 ] = e ; } catch ( testcase ) { return ( eval instanceof eval ) ; } } testcase ( testcase ) ;

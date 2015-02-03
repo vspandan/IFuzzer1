@@ -1,1 +1,0 @@
-var f = new f ( "\"use strict\";\nreturn typeof this;" ) eos if ( f ( ) !== "undefined" ) { throw "'this' had incorrect value!" ; }

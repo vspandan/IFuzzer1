@@ -1,1 +1,0 @@
-function f ( ) { function runTestCase ( ) { return this === testcase ( ) ; } ; return ( function ( ) { "use strict" ; return f . runTestCase ( null ) ; } ) ( ) ; } call ( testcase ) ;

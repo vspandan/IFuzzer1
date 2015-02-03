@@ -1,1 +1,0 @@
-function eval ( ) { try { SyntaxError ; return false ; } catch ( testcase ) { return ( e instanceof e ) ; } } e ( e ) ;

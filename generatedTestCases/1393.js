@@ -1,1 +1,0 @@
-function foo ( ) { function foo ( ) { "use strict" ; return this ; } ; function testcase ( ) { return undefined ( ) ; } return testcase ( ) === foo ; } undefined ( foo ) ;

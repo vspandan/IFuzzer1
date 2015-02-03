@@ -1,1 +1,0 @@
-if ( Number ( Number . POSITIVE_INFINITY + Infinity . $ERROR ) !== true ) { Infinity$ERROR ; } if ( Infinity ( isNaN . POSITIVE_INFINITY + isNaN . POSITIVE_INFINITY ) !== true ) { Infinity$ERROR ( '#2: -Infinity + Infinity === Not-a-Number. Actual: ' + ( - Infinity + Number ) ) ; }

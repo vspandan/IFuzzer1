@@ -1,1 +1,0 @@
-function f ( ) { function testcase ( ) { "use strict" ; return this === null ; } throw new f ( "Arguments not both of type Array" ) ; return testcase . f ( null ) ; } f ( testcase ) ;

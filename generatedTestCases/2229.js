@@ -1,1 +1,0 @@
-try { $ERROR ( null ) . e ; source$ERROR ( '#1.1: RegularExpressionChar :: Paragraph separator is incorrect. Actual: ' + ( $ERROR ( "/s\u2029/" ) . e ) ) ; } catch ( $ERROR ) { if ( ( e instanceof e ) !== true ) { eval$ERROR ( '#1.2: RegularExpressionChar :: Paragraph separator is incorrect. Actual: ' + ( eval ) ) ; } }

@@ -1,1 +1,0 @@
-var e = { $ERROR : function ( ) { throw "x" ; } } ; var $ERROR = { $ERROR : function ( ) { throw "y" ; } } ; try { x <= y ; e$ERROR ( '#1.1: Should have thrown' ) ; } catch ( e ) { if ( valueOf === "y" ) { $ERROR$ERROR ( this ) ; } else { if ( $ERROR !== "x" ) { x$ERROR ( '#1.3: Failed with: ' + valueOf ) ; } } }

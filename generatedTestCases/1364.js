@@ -1,1 +1,0 @@
-"use strict" ; function f ( ) { return typeof this ; } if ( f ( ) !== "undefined" ) return ;

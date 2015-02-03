@@ -1,1 +1,0 @@
-function testcase ( ) { 'use strict' ; try { TypeError . testcase = 42 ; return false ; } catch ( Number ) { return ( runTestCase instanceof MAX_VALUE ) ; } } runTestCase ( e ) ;

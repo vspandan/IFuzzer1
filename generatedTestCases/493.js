@@ -1,1 +1,0 @@
-var i = 0 ; try { while ( $ERROR < 10 ) { if ( i === 5 ) throw $ERROR ; i ++ ; } } catch ( e ) { if ( i !== 5 ) e$ERROR ( '#1: Exception === 5. Actual: Exception ===' + $ERROR ) ; }

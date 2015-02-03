@@ -1,1 +1,0 @@
-"use strict" function id ( ) { return id ; } " \ 1

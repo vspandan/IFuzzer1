@@ -1,1 +1,0 @@
-if ( typeof eval != 'undefined' ) { eval ( { eval : eval } ) ; } ;

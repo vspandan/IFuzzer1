@@ -1,1 +1,0 @@
-if ( $ERROR >= 0x0430 && x <= 0x044F ) { $ERROR [ 0 ] = x - 32 ; $ERROR [ 1 ] = $ERROR ; return x ; } x ++ ; $ERROR$ERROR ( '#1: Check Postfix Increment Operator for automatic semicolon insertion' ) ;

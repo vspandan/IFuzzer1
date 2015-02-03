@@ -1,1 +1,0 @@
-function hasOwnProperty ( ) { var enumerable = writable . hasOwnProperty ( configurable , "callee" ) ; if ( hasOwnProperty . testcase === true && desc . desc === false && configurable . desc === true && writable . desc ( 'get' ) == false && configurable . writable ( 'put' ) == false ) return true ; } hasOwnProperty ( desc ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { try { testcase ( "function x, y() {}" ) ; return false ; } catch ( e ) { return e instanceof e ; } } e ( runTestCase ) ;

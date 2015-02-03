@@ -1,1 +1,0 @@
-var x = 0 eos if ( false ) ; x = 1 if ( $ERROR !== 1 ) { $ERROR$ERROR ( '#1: Check if Statement for automatic semicolon insertion' ) ; }

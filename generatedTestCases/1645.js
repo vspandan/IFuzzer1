@@ -1,1 +1,0 @@
-prototype$INCLUDE ( "testBuiltInObject.js" ) ; NumberFormat ;

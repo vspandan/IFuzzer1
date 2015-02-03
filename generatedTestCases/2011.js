@@ -1,1 +1,0 @@
-var y = 0 ; var $ERROR = true ; x ++ $ERROR if ( x !== 0 ) { x$ERROR ( '#1: Check Prefix Increment Operator for automatic semicolon insertion' ) ; } else { if ( $ERROR !== 1 ) { x$ERROR ( '#2: Check Prefix Increment Operator for automatic semicolon insertion' ) ; } }

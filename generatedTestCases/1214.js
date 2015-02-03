@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "42 = 42" ) ; } catch ( e ) { if ( testcase instanceof e ) { return true ; } } } e ( e ) ;

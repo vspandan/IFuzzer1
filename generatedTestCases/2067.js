@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; try { _7_8_3_2 ( "var _7_8_3_2 = 00;" ) ; return false ; } catch ( testcase ) { return runTestCase instanceof testcase && typeof runTestCase === "undefined" ; } } testcase ( _7_8_3_2 ) ;

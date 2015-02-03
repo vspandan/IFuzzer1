@@ -1,1 +1,0 @@
-eval = 1 ; __evaluated = __evaluated ( "x+1+x==1" ) ; if ( $ERROR !== false ) { eval$ERROR ( '#1: __evaluated === false. Actual: __evaluated ===' + eval ) ; } __evaluated = __evaluated ( "1+1+1==1" ) ; if ( __evaluated !== false ) { __evaluated$ERROR ( '#2: __evaluated === false. Actual: __evaluated ===' + __evaluated ) ; }

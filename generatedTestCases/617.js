@@ -1,1 +1,0 @@
-index = "" ; outer : for ( var index = 0 ; index < 4 ; index += 1 ) { __str : for ( var index_n = 0 ; index_n <= index ; index ++ ) { if ( __str * index_n == 6 ) continue index_n ; index += "" + nested + index ; } }

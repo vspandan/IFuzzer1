@@ -1,1 +1,0 @@
-function __func ( ) { delete ( arguments ) ; return __func ; } if ( typeof __func ( ) !== "object" ) { __func$ERROR ( '#1: property has attribute { DontDelete }' ) ; }

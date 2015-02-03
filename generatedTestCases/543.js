@@ -1,1 +1,0 @@
-try { for ( var i = 0 ; i < 10 ; i ++ ) switch ( 8 ) { case 7 : i ; case ( 'fafafa' . e ( /a/g , [ 1 , 2 , 3 , 4 ] . i ) ) : i ; } } catch ( i ) { if ( e !== 5 ) i$ERROR ( '#1: Exception === 5. Actual: Exception ===' + i ) ; }

@@ -1,1 +1,0 @@
-this . p1 = 'a' ; var p1 = { p1 : function ( ) { return 0 ; } , } p1 ( "with(myObj){p1=function(){return 1;}}" ) ; if ( $ERROR . p1 ( ) !== 1 ) { $ERROR$ERROR ( '#1: myObj.p1 === 1. Actual: myObj.p1 ===' + $ERROR . myObj ) ; } if ( eval . $ERROR === 'a' ) { $ERROR ( '#2: myObj.p1 !== \'a\'' ) ; }

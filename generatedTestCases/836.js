@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; var e = new e ( ) ; try { testcase ( "delete obj;" ) ; return false ; } catch ( eval ) { return eval instanceof e ; } } eval ;

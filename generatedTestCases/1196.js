@@ -1,1 +1,0 @@
-function testcase ( ) { } testcase ( SyntaxError ) ;

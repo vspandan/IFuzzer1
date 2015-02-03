@@ -1,1 +1,0 @@
-function testcase ( ) { var foo = { testcase : 42 } ; try { throw foo ; } catch ( runTestCase ) { var e ; if ( testcase === testcase ) { return true ; } } } foo ( foo ) ;

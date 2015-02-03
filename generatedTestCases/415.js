@@ -1,1 +1,0 @@
-for ( __prop in this ) { if ( __prop === "__declared__var" ) __prop = true ; } if ( ! ( $ERROR ) ) { enumed$ERROR ( '#1: When using property attributes, {DontEnum} not used' ) ; } var __prop ;

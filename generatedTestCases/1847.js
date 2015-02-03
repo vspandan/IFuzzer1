@@ -1,1 +1,0 @@
-function i ( ) { var i = { null : 0 , true : 1 , false : 2 } ; var i = [ 'null' , 'true' , 'false' ] ; for ( var tokenCodes = 0 ; i < tokenCodes . <<<let: ; i ++ ) { if ( i [ <<<yield: [ <<<function: ] ] !== i ) { return false ; } ; } return true ; } arr ( tokenCodes ) ;

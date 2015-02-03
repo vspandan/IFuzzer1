@@ -1,1 +1,0 @@
-x ( "/*\u2028 multi line \u2028 comment \u2028*/" ) ; var x = 0 ; x ( "/*\u2028 multi line \u2028 comment \u2028 x = 1;*/" ) ; if ( eval !== 0 ) { eval / > ) ; }

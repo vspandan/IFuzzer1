@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; runTestCase ( "function _10_4_2_1_2_fun(){}" ) ; return typeof runTestCase === "undefined" eos } _10_4_2_1_2_fun ( eval ) ;

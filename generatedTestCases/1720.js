@@ -1,1 +1,0 @@
-function e ( ) { try { eval ( "var \u006eull = 123;" ) ; return ; } catch ( eval ) { return runTestCase instanceof e ; } } e ( e ) ;

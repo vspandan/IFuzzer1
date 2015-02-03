@@ -1,1 +1,0 @@
-function testcase ( ) { try { SyntaxError ( "var func\u0074ion = 123;" ) ; return false ; } catch ( e ) { return eval instanceof e ; } } e ( testcase ) ;

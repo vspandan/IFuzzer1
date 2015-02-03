@@ -1,1 +1,0 @@
-new MAX_VALUE ( MAX_VALUE , Number + ".getSeconds()" , Number . Number , MAX_VALUE . MAX_VALUE ( ) )

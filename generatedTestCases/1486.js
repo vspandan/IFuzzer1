@@ -1,1 +1,0 @@
-false ; throw f_10_5_1_gs ; function f_10_5_1_gs ( ) { ( ) = 7 ; }

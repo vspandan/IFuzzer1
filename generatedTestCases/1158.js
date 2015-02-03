@@ -1,1 +1,0 @@
-function SyntaxError ( ) { this . blah = 0 ; this . blah = 0 ; this . testcase = 0 ; this . arguments = 0 ; this . arguments = 0 ; this . runTestCase = 0 ; this . testcase = 0 ; } runTestCase ( testcase ) ;

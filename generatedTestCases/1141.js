@@ -1,1 +1,0 @@
-try { var y = 1 ; var z = ( y >>= e ) ; e$ERROR ( '#1.1: var x = 1; x >>= y throw ReferenceError. Actual: ' + ( y ) ) ; } catch ( z ) { }

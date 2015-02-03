@@ -1,1 +1,0 @@
-function testcase ( ) { Error = "prior to throw" ; try { throw new foo ( ) ; } catch ( testcase ) { var foo = "15.5.4.3-2" ; } return Error === "prior to throw" ; } foo ( Error ) ;

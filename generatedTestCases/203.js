@@ -1,1 +1,0 @@
-function foo ( ) { function tempIndex ( ) { "use strict" ; } for ( var tempIndex in testcase ) { if ( tempIndex === "caller" ) { return false ; } } return true ; } foo ( tempIndex ) ;

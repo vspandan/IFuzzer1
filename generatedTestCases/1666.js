@@ -1,1 +1,0 @@
-$INCLUDE$INCLUDE ( "testIntl.js" ) ; $INCLUDE ( NumberFormat . testOption , "useGrouping" , "boolean" , $INCLUDE , true ) ;

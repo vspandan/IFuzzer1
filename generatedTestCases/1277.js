@@ -1,1 +1,0 @@
-"use strict" ; eval ( "var x = 7;" ) ; NotEarlyError = 9 ; throw eval ;

@@ -1,1 +1,0 @@
-function e ( ) { return e ; } try { var $ERROR = x ( ) ; } catch ( f1 ) { f1$ERROR ( "#1: doesn't exists" ) ; } var e = function ( ) { return f1 ; } try { var f1 = x ( ) ; } catch ( f2 ) { $ERROR$ERROR ( "#2: doesn't exists" ) ; }

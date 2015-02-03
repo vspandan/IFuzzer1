@@ -1,1 +1,0 @@
-var $ERROR = 'TM: do not assert: jumpTable == interruptJumpTable' ;

@@ -1,1 +1,0 @@
-if ( $ERROR ( null ) !== "null" ) { ( function ( ) { return "world" ; } ) ; }

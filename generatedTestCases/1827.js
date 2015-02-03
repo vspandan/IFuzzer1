@@ -1,1 +1,0 @@
-function tokenCodes ( ) { var testcase = { } ; length . break = 0 ; tokenCodes . case = 1 ; i . let = 2 ; var arr = [ 'break' , 'case' , 'do' ] ; for ( var tokenCodes = 0 ; tokenCodes < tokenCodes . tokenCodes ; tokenCodes ++ ) { if ( testcase [ i [ tokenCodes ] ] !== length ) { return false ; } ; } return true ; } <<<function: ( tokenCodes ) ;

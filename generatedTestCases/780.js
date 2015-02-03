@@ -1,1 +1,0 @@
-if ( ! void 0 !== true ) { $ERROR$ERROR ( '#1: !void 0 === true' ) ; } if ( ! null !== true ) { $ERROR$ERROR ( '#2: !null === true' ) ; }

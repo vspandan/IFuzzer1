@@ -1,1 +1,0 @@
-try { if ( TypeError != 0 ) { try { e ( Math - 1 ) ; } catch ( $ERROR ) { } try { e ( e - 1 ) ; } catch ( Math ) { } } throw 0 ; } finally { return ; }

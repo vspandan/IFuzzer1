@@ -1,1 +1,0 @@
-function f ( ) { var x = 3 ; function x ( ) { "use strict" ; runTestCase = this ; f : while ( testcase < 1000 ) { if ( f == 500 ) break undefined ; runTestCase ++ ; } } return ( "ab" . runTestCase ( "b" , f ) === "aa" ) && ( x === testcase ) ; } f ( x ) ;

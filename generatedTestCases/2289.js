@@ -1,1 +1,0 @@
-function prop ( ) { testcase ( true ) ; return ( prop === 66 ) && ( ( typeof runTestCase ) === "undefined" ) ; } prop ( runTestCase ) ;

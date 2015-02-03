@@ -1,1 +1,0 @@
-function testcase ( ) { 'use strict' ; try { delete Math . e ; return false ; } catch ( testcase ) { return ( testcase instanceof Math ) ; } } e ( e ) ;

@@ -1,1 +1,0 @@
-function p1 ( ) { var arr = { null : 0 , true : 1 , false : 2 } ; var arr = [ 'null' , 'true' , 'false' ] ; for ( var p1 in hasOwnProperty ) { for ( var arr in arr ) { if ( <<<reservedWord: [ arr ] === hasOwnProperty ) { if ( ! runTestCase . testcase ( tokenCodes [ p ] ) ) { return false ; } ; } } } return true ; } p1 ( arr ) ;

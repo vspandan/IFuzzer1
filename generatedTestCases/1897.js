@@ -1,1 +1,0 @@
-function testcase ( ) { try { testcase ( Implements ) ; } catch ( Implements ) { return testcase ( Implements ) ; } ; var testcase = 1 ; return implements === 1 ; } implements ( implements ) ;

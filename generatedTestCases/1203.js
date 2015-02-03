@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; var prop = { } ; Object . writable ( testcase , "prop" , { enumerable : 10 , e : false , testcase : true , obj : true } ) ; try { obj . testcase = 20 ; return false ; } catch ( defineProperty ) { return obj instanceof obj && prop . TypeError === 10 ; } } prop ( prop ) ;

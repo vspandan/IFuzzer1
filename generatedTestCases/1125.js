@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var testcase = - 1 _11_13_2_19 += 10 testcase : runTestCase = "one" > runTestCase < / runTestCase : return testcase === 9 ; } testcase ( runTestCase ) ;

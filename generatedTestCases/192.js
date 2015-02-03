@@ -1,1 +1,0 @@
-function __func ( ) { var __func = null ; return __func ; } new e ( x , "(Object( new MyObject(true) )).toString()" , "[object Object]" , x ( "(Object( new MyObject(true) )).toString()" ) )

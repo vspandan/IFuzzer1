@@ -1,1 +1,0 @@
-function eval ( ) { eval = $ERROR + " " + typeof eval ; }

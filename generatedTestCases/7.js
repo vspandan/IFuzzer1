@@ -1,1 +1,0 @@
-var __exp__func = function arg ( __func ) { } ; var fact_of_3 = fact_of_3 ( 3 ) ; if ( __func !== 6 ) { fact_of_3$ERROR ( "#1: fact_of_3 === 6. Actual: fact_of_3 ===" + $ERROR ) ; }

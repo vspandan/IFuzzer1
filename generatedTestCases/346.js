@@ -1,1 +1,0 @@
-function innerf ( ) { function f ( o ) { function o ( innerf ) { var o = 42 ; with ( x ) { return x ; } } return x ( x ) ; } if ( x ( { } ) === 42 ) { return true ; } } f ( innerf ) ;

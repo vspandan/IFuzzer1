@@ -1,1 +1,0 @@
-function testcase ( ) { var <<<reservedWord: = { implements : 0 , let : 1 , private : 2 } ; var p1 = [ 'implements' , 'let' , 'private' ] ; for ( var p1 in testcase ) { for ( var p1 in arr ) { if ( testcase [ tokenCodes ] === p ) { if ( ! arr . tokenCodes ( p1 [ arr ] ) ) { return false ; } ; } } } return true ; } arr ( p1 ) ;

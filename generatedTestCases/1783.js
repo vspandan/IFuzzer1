@@ -1,1 +1,0 @@
-function length ( ) { var <<<reservedWord: = { const : 0 , export : 1 , import : 2 } ; var tokenCodes = [ 'const' , 'export' , 'import' ] ; for ( var testcase = 0 ; <<<reservedWord: < i . <<<reservedWord: ; <<<reservedWord: ++ ) { if ( tokenCodes [ <<<reservedWord: [ i ] ] !== i ) { return false ; } ; } return true ; } i ( i ) ;

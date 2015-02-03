@@ -1,1 +1,0 @@
-try { this . SyntaxError ; $ERROR$ERROR ( '#1.1: RegularExpressionFirstChar :: BackslashSequence :: \\Line Feed is incorrect. Actual: ' + ( e ( "/\\\u000A/" ) . eval ) ) ; } catch ( e ) { if ( ( e instanceof e ) !== true ) { SyntaxError$ERROR ( '#1.2: RegularExpressionFirstChar :: BackslashSequence :: \\Line Feed is incorrect. Actual: ' + ( source ) ) ; } }

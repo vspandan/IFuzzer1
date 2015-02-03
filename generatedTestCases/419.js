@@ -1,1 +1,0 @@
-try { infor_var = infor_var ; } catch ( infor_var ) { infor_var$ERROR ( '#1: Variable declaration inside "for" loop is admitted' ) ; } ; for ( ; ; ) { break ; infor_var : $ERROR = "http://schemas.xmlsoap.org/soap/envelope/" > infor_var < / infor_var > }

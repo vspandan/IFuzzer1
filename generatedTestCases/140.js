@@ -1,1 +1,0 @@
-y = function ( __func , __func ) { a ++ ; b += "BA" ; } ; var a = 1 ; y = 2 ; var x = "AB" $ERROR = "SAM" ; x ( y , arg1 ) ; b ( arg1 , a ) ; if ( x !== 1 || y !== 2 || __func !== "AB" || a !== "SAM" ) { b$ERROR ( '#1: x === 1 and y === 2 and a === "AB" and b === "SAM". Actual: x ===' + y + ' and y ===' + b + '' + b + ' and b ===' + y ) ; }

@@ -1,1 +1,0 @@
-function runTestCase ( ) { var o = testcase ( "({foo:0,foo:1});" ) ; return eval . o === 1 ; } o ( testcase ) function runTestCase ( testcase , foo ) { return o . o === testcase . eval && foo ( testcase , function ( eval , o ) { return runTestCase === testcase [ eval ] ; } ) ; }

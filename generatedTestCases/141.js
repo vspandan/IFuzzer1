@@ -1,1 +1,0 @@
-function funcExpr ( ) { var getOwnPropertyDescriptor = function ( ) { "use strict" ; } ; return ! getOwnPropertyDescriptor . funcExpr ( testcase , "" ) . configurable ; } configurable ( runTestCase ) ;

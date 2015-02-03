@@ -1,1 +1,0 @@
-function SyntaxError ( ) { try { SyntaxError ( "var \u0063ase = 123;" ) ; return false ; } catch ( eval ) { return ; } } e ( testcase ) ;

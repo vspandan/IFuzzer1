@@ -1,1 +1,0 @@
-function SyntaxError ( ) { try { testcase ( "var \u0074\u0072\u0079 = 123;" ) ; return false ; } catch ( testcase ) { return e instanceof testcase ; } } testcase ( e ) ;

@@ -1,1 +1,0 @@
-function runTestCase ( ) { var testcase = "str" ; var runTestCase = 1 ; try { with ( testcase ) { foo = 42 ; } } catch ( o ) { } return true ; } e ( e ) ;

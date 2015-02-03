@@ -1,1 +1,0 @@
-"use strict" ; if ( fnGlobalObject ( "this" ) !== eval ( ) ) { throw "'this' had incorrect value!" ; }

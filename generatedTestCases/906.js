@@ -1,1 +1,0 @@
-function eval ( ) { try { SyntaxError ( "({get foo(){}, get foo(){}});" ) ; return false ; } catch ( eval ) { } } e ( e ) ;

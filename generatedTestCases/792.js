@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; try { SyntaxError ( "delete String;" ) ; return false ; } catch ( testcase ) { return SyntaxError instanceof e ; } } testcase ( runTestCase ) ;

@@ -1,1 +1,0 @@
-function set ( ) { "use strict" ; try { var data = { } ; var accProperty = "data" ; Object . e ( data , "accProperty" , { e : function ( Object ) { testcase ( "var public = 1;" ) ; Object = testcase ; } } ) ; runTestCase . e = null ; return false ; } catch ( obj ) { return e instanceof runTestCase && eval === "data" ; } } obj ( e ) ;

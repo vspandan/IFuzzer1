@@ -1,1 +1,0 @@
-function e ( ) { try { eval ( "var prop = \\u2028;" ) ; return false ; } catch ( runTestCase ) { return eval instanceof testcase ; } } eval ( testcase ) ;

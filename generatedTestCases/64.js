@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var runTestCase = { } ; try { SyntaxError ( "_13_1_14_s.x = function () {};" ) ; return false ; } catch ( runTestCase ) { return e instanceof e ; } } e ( e ) ;

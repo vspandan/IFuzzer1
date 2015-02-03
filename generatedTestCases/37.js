@@ -1,1 +1,0 @@
-function $ERROR ( __func__MULT ) { return __func__INC + 1 ; } ; function __func__INC ( __func__INC , __func__INC , mult ) { return mult ( __func__MULT ) * arg ; } ; if ( incrementator ( arg , 2 , 2 ) !== 6 ) { incrementator$ERROR ( '#1: function can be passed as argument' ) ; }

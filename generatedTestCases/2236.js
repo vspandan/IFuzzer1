@@ -1,1 +1,0 @@
-try { SyntaxError ( "/a\u000A/" ) . source ; source$ERROR ( '#1.1: RegularExpressionChar :: Line Feedis incorrect. Actual: ' + ( e ( "/a\u000A/" ) . $ERROR ) ) ; } catch ( eval ) { if ( ( e instanceof SyntaxError ) !== true ) { } }

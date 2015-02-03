@@ -1,1 +1,0 @@
-var $ERROR = 1 ; if ( this . x !== 1 ) { x$ERROR ( "#1: variable x is a property of global object" ) ; } if ( delete this . x !== false ) { x$ERROR $ERROR , "inner:x " , 2222 , x ; }

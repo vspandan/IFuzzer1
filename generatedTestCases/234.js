@@ -1,1 +1,0 @@
-if ( $FAIL ( ) ) $FAIL$FAIL ( '#1: in the "if" Statement eval as Expression is admitted' ) ;

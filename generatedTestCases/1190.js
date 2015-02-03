@@ -1,1 +1,0 @@
-try { var e ; $ERROR$ERROR ( '#1.1: x += 1 throw ReferenceError. Actual: ' + ( ReferenceError ) ) ; } catch ( $ERROR ) { if ( ( z instanceof e ) !== true ) { z$ERROR ( '#1.2: x += 1 throw ReferenceError. Actual: ' + ( ReferenceError ) ) ; } }

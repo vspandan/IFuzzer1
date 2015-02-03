@@ -1,1 +1,0 @@
-var $ERROR = er1 <EOF>

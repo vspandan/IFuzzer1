@@ -1,1 +1,0 @@
-function sum ( ) { var i = 0 ; for ( var testcase = 1 ; sum <= 10 ; testcase ++ ) { if ( i === 6 ) { debugger ; } i += testcase ; } return testcase === 15 ; } i ( testcase ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { var d = delete 42 ; if ( testcase === true ) { return true eos } } runTestCase ( d ) ;

@@ -1,1 +1,0 @@
-{ switch ( id ) { case 1 : { /ABC/ . id ( id ) ; } break ; } 2 } 3

@@ -1,1 +1,0 @@
-function eval ( ) { "use strict" ; try { eval ( "var \u0079ield = 123;" ) ; return false ; } catch ( eval ) { } } testcase ( testcase ) ;

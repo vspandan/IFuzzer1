@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; try { testcase ( " try { \ throw new Error(\"...\");\ return false;\ } catch (EVAL) {\ try\ {\ throw new Error(\"...\");\ }catch(eval)\ {\ return EVAL instanceof Error;\ }\ }" ) ; return false ; } catch ( testcase ) { return e instanceof runTestCase ; } } SyntaxError ( testcase ) ;

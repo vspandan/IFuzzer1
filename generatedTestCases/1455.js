@@ -1,1 +1,0 @@
-function o ( ) { } runTestCase ( o ) ;

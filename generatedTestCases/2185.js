@@ -1,1 +1,0 @@
-function e { var e = new e . testcase . e ( ) ; this . runTestCase = e . testcase ; } SyntaxError ( e ) ;

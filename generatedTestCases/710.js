@@ -1,1 +1,0 @@
-try { throw 1 ; } catch ( e ) { if ( ! ( $ERROR !== "1" ) ) { e$ERROR ( '#1: throw 1 !== "1"' ) ; } } try { throw "1" ; } catch ( e ) { if ( ! ( 1 !== $ERROR ) ) { throw "Error thrown during testing: " + e + " at line " + e . $ERROR + "\n" + ( e . e ? "Stack: " + e . $ERROR . $ERROR ( "\n" ) . e ( 2 ) . $ERROR ( "\n" ) + "\n" : "" ) ; } }

@@ -1,1 +1,0 @@
-function i ( ) { var tokenCodes = { } ; arr . implements = 0 ; tokenCodes . let = 1 ; i . implements = 2 ; var i = [ 'implements' , 'let' , 'private' ] ; for ( var arr = 0 ; i < testcase . tokenCodes ; <<<let: ++ ) { if ( arr [ i [ runTestCase ] ] !== length ) { return false ; } ; } return true ; } runTestCase ( tokenCodes ) ;

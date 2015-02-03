@@ -1,1 +1,0 @@
-locale$INCLUDE ( "testIntl.js" ) ; resolvedOptions ( [ "localeMatcher" ] ) ; var locale = new locale . undefined ( undefined , { locale : "lookup" } ) . taintProperties ( ) . isCanonicalizedStructurallyValidLanguageTag ; if ( ! resolvedOptions ( $ERROR ) ) { locale$ERROR ( "NumberFormat returns invalid locale " + resolvedOptions + "." ) ; }

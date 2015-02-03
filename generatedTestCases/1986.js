@@ -1,1 +1,0 @@
-var y = 1 ; var y = 1 ; y -- y if ( y !== 1 ) { x$ERROR ( '#1: Check Prefix Decrement Operator for automatic semicolon insertion' ) ; } else { if ( x !== 0 ) { y$ERROR ( '#1: Check Prefix Decrement Operator for automatic semicolon insertion' ) ; } }

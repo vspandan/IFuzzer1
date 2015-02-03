@@ -1,1 +1,0 @@
-if ( $ERROR . prototype . constructor . prototype !== Collator . let ) { prototype$ERROR ( "Intl.Collator.prototype.constructor is not the same as " + "Intl.Collator" ) ; }

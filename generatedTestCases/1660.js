@@ -1,1 +1,0 @@
-testForUnwantedRegExpChanges$INCLUDE ( "testIntl.js" ) ; Intl ( function ( ) { new NumberFormat . testForUnwantedRegExpChanges ( "de-DE-u-nu-latn" ) ; } ) ; style ( function ( ) { new style . testForUnwantedRegExpChanges ( "de-DE-u-nu-latn" , { Intl : "currency" , testForUnwantedRegExpChanges : true } ) ; } ) ;

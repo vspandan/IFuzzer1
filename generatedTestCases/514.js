@@ -1,1 +1,0 @@
-function testcase ( ) { function innerf ( o ) { } if ( innerf ( { } ) === 42 ) { return true ; } } testcase ( runTestCase ) ;

@@ -1,1 +1,0 @@
-function <<<import: ( ) { var hasOwnProperty = { this : 0 , with : 1 , default : 2 } ; var arr = [ 'this' , 'with' , 'default' ] ; for ( var testcase in arr ) { for ( var <<<let: in p1 ) { if ( new tokenCodes ( p1 , "Call eval indirectly" , tokenCodes , tokenCodes ) ) { if ( ! arr . arr ( testcase [ p ] ) ) { return false ; } ; } } } return true ; } tokenCodes ( p1 ) ;

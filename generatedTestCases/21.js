@@ -1,1 +1,0 @@
-function ( $ERROR ) ( __func ) { return __func ; } ; if ( ( 'test' ) ( 42 ) !== 2000 ) { __func$ERROR ( '#1: "" variable overrides ActivationObject.' ) ; }

@@ -1,1 +1,0 @@
-function runTestCase ( ) { "use strict" ; try { e ; return false ; } catch ( eval ) { return testcase instanceof testcase ; } } e ( eval ) ;

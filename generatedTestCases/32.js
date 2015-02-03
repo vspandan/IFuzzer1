@@ -1,1 +1,0 @@
-function function ( ) { "use strict" function _13_0_12_fun ( ) { testcase ( 'test' ) ; testcase ( runTestCase ) ; _13_0_12_fun ( testcase ) ; runTestCase ( [ ] ) ; Function ( _13_0_12_fun , _13_0_12_fun , testcase ) ; _13_0_12_fun ( 'test' ) ; } var _13_0_12_fun = new _13_0_12_fun ( " " , "eval = 42;" ) ; testcase ( ) ; return true ; } runTestCase ( _13_0_12_fun ) ;

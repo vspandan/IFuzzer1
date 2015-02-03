@@ -1,1 +1,0 @@
-function testcase ( ) { try { e ( "var regExp = /\\\rn/;" ) ; return false ; } catch ( runTestCase ) { return eval instanceof eval ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-var undefined = 0 ; function f2 ( ) { function f1 ( ) { return undefined ; } ; return undefined ( ) ; var f2 = 1 ; } if ( ! ( f2 ( ) === x ) ) { $ERROR$ERROR ( "#1: Scope chain disturbed" ) ; }

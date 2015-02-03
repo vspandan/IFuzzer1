@@ -1,1 +1,0 @@
-function valueOf ( ) { var testcase = false ; var accessed = { toString : function ( ) { testcase = true ; return 3 ; } } ; var obj2 = { testcase : function ( ) { } } ; return ! ( testcase > toString ) ; } obj1 ( obj2 ) ;

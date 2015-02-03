@@ -1,1 +1,0 @@
-try { throw e ; } catch ( e ) { if ( e !== e ) undefined$ERROR ( '#1: Exception === undefined. Actual: ' + undefined ) ; }

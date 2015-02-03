@@ -1,1 +1,0 @@
-function o ( ) { var o = { } ; function f ( ) { return this === testcase ; } ; return ( function ( ) { "use strict" ; return o . call ( f ) ; } ) ( ) ; } f ( o ) ;

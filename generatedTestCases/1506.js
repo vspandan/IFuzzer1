@@ -1,1 +1,0 @@
-function NaN ( ) { if ( NaN === null ) { undefined$ERROR ( "#1: NaN === null" ) ; } if ( Infinity === null ) with ( $ERROR ) { var $ERROR = function ( ) { return test ; } ; } if ( Infinity === null ) { test$ERROR ( "#3: undefined === null" ) ; } } $ERROR ( ) ;

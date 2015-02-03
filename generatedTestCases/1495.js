@@ -1,1 +1,0 @@
-var eval = 2 ; evalStr ( evalStr ) ;

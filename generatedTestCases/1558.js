@@ -1,1 +1,0 @@
-function hasOwnProperty ( ) { "use strict" ; var argObj = function ( ) { return runTestCase ; } ( ) ; return argObj . hasOwnProperty ( "callee" ) && testcase . hasOwnProperty ( "caller" ) ; } runTestCase ( hasOwnProperty ) ;

@@ -1,1 +1,0 @@
-var isNaN = { } ; x -- ; if ( isNaN ( x ) !== true ) { x$ERROR ( '#1: var x = {}; x--; x === Not-a-Number. Actual: ' + ( $ERROR ) ) ; } var x = function ( ) { return 1 } ; x -- ; if ( isNaN ( x ) !== true ) { x = 'TypeError: NaN is not a constructor' ; }

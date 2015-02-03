@@ -1,1 +1,0 @@
-Intl$INCLUDE ( "testIntl.js" ) ; testOption ( testOption . testOption , "sensitivity" , "string" , [ "base" , "accent" , "case" , "variant" ] , "variant" ) ;

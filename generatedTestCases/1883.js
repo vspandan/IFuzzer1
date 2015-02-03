@@ -1,1 +1,0 @@
-function e ( ) { "use strict" ; try { SyntaxError ( "var \u0069mplements = 123;" ) ; return false ; } catch ( testcase ) { return testcase instanceof testcase ; } } e ( eval ) ;
