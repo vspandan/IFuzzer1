@@ -1,5 +1,5 @@
 from fileinput import input
-from os import remove, system, makedirs, removedirs, pathsep, path, stat,getcwd, kill
+from os import remove, system, makedirs, removedirs, pathsep, path, stat,getcwd, kill,chdir
 
 from random import choice, randint
 from collections import defaultdict
@@ -114,7 +114,7 @@ class AntlrParser(object):
         return nT
 
     def parseTree_(self,program):
-        cmd="sh parser.sh null "+program 
+        cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser null "+program
         t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
         t.start()
         t.join(60)
@@ -131,11 +131,13 @@ class AntlrParser(object):
         return self.out
 
     def run_cmd(self,cmd):
+        curdir1 = getcwd()
+        chdir("../langparser")
         self.p = subprocess.Popen([cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         self.out, self.err = self.p.communicate()
-        
+        chdir(curdir1)
     def parseTree(self,fileName):
-        cmd="sh parser.sh "+fileName 
+        cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fileName 
         t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
         t.start()
         t.join(60)
