@@ -284,7 +284,6 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
     if createFragPool:
     	fileList = manifest.fileList
     	print("Considering " + str(len(fileList)) + " files for learning code fragments")
-    	raw_input()
         if not os.path.exists("database"):
             makedirs("database")
         codeFragPool=[]

@@ -133,7 +133,6 @@ class AntlrParser(object):
     def run_cmd(self,cmd):
         curdir1 = getcwd()
         chdir("langparser")
-        print getcwd()
         self.p = subprocess.Popen([cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         self.out, self.err = self.p.communicate()
         chdir(curdir1)
@@ -152,7 +151,6 @@ class AntlrParser(object):
                     time.sleep(.1)
                 except OSError:
                     pass
-        print self.out
         return self.out
                 
     def extractCodeFrag(self, fileName):
