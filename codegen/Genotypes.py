@@ -310,7 +310,7 @@ class Genotype(object):
         self.execStatus=0
         t=Thread(target=self._execute_code,kwargs={'program':program})
         t.start()
-        t.join(30)
+        t.join(5)
         if t.isAlive():
             if self.p is not None:
                 print "killing"

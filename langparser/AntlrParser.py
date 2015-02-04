@@ -117,7 +117,7 @@ class AntlrParser(object):
         cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser null "+program
         t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
         t.start()
-        t.join(60)
+        t.join(30)
         if t.isAlive():
             if self.p is not None:
                 print "killing process handling file ("+str(self.p.pid)+"): "+fileName
@@ -140,7 +140,7 @@ class AntlrParser(object):
         cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fileName 
         t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
         t.start()
-        t.join(60)
+        t.join(30)
         if t.isAlive():
             if self.p is not None:
                 print "killing process handling file ("+str(self.p.pid)+"): "+fileName
