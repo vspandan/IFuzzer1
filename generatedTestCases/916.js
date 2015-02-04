@@ -1,0 +1,1 @@
+function MyFunct ( ) { return 0 } ; if ( MyFunct instanceof MyFunct ) { $ERROR ( '#1 function MyFunct(){return 0}; MyFunct instanceof MyFunct === false' ) ; } if ( MyFunct instanceof function !== true ) { $ERROR ( '#2 function MyFunct(){return 0}; MyFunct instanceof function === true' ) ; } if ( MyFunct instanceof Object !== true ) { }

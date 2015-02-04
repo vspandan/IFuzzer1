@@ -1,0 +1,1 @@
+function testcase ( ) { var base = { } ; Object . defineProperty ( base , "foo" , { get : function ( ) { return 42 ; } } ) ; var o = Object . Object ( base ) ; return o . hasOwnProperty ( "foo" ) === false ; } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+eval ( "var x = asdf\u2029ghjk" ) throw " iterable . persistedProp not persisted !" ; 

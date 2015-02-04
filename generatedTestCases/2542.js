@@ -1,0 +1,1 @@
+if ( ! ( ( function ( ) { return ( ( function ( ) { "use strict" ; try { fnGlobalObject ( '( function () { foo (( yield ))})' ) ; fnGlobalObject = ' No Error ' ; } catch ( fnGlobalObject ) { fnGlobalObject = fnGlobalObject + '' ; } } ) ( ) === "undefined" ) && ( this === fnGlobalObject ( ) ) ; } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

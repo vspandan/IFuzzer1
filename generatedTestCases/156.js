@@ -1,0 +1,1 @@
+var n = 1 ; var m = n ; function m first { addFirst2Second = true ; n ( this , addFirst2Second ) ; addFirst2Second ( second , n ) ; m ( m . first , 0 ) ; return n ; } addFirst2Second ( n , m ) ; if ( m !== 1 ) { $ERROR ( '#1: var n = 1; var m = n; function addFirst2Second(first, second){first += second;} addFirst2Second(n, m); m === 1. Actual: ' + ( m ) ) ; }

@@ -1,0 +1,1 @@
+function testcase ( ) { return typeof test1 === " object " && test1 . flag === 3 && testcase . test1 === test1 && callee ( test1 ) === " x , y " ; } runTestCase ( testcase ) ;

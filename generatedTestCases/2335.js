@@ -1,0 +1,1 @@
+function f1 ( ) { if ( delete $ERROR ) { $ERROR ( "#1: function parameters have attribute {DontDelete}" + arguments ) ; } return arguments ; } f1 ( ) ;

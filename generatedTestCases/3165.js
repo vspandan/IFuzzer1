@@ -1,0 +1,1 @@
+var $ERROR = ' do not assert : caller -> fun && ! JSFUN_HEAVYWEIGHT_TEST ( caller -> fun -> flags )' ; x ++ ; $ERROR ( '#1: Check Postfix Increment Operator for automatic semicolon insertion' ) ;

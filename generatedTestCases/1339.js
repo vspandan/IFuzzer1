@@ -1,0 +1,1 @@
+function testcase ( ) { switch ( 1 . 1 ) { case 2 : case foo : } var d = delete foo ; if ( d === false && fnExists ( foo ) ) return true ; } runTestCase ( testcase ) ;

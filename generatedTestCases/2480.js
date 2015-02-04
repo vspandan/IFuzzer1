@@ -1,0 +1,1 @@
+function testcase { f1 . f1 ( testcase . fnGlobalObject ) ; f1 ( 0 , 0 , " worker - simple " ) ; fnGlobalObject . fnGlobalObject ( ) ; } runTestCase ( testcase ) ;

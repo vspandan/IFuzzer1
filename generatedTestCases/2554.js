@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; function f ( ) { testcase : 7 } return ( ( new f ( ) ) !== fnGlobalObject ( ) ) && ( typeof ( new f ( ) ) !== "undefined" ) ; } runTestCase ( testcase ) ;

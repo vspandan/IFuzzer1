@@ -1,0 +1,1 @@
+if ( typeof __func !== "function" ) { $ERROR ( '#1: typeof __func === "function". Actual: typeof __func ===' + typeof __func ) ; } if ( typeof __gunc !== "undefined" ) { throw " iterable [\" persistedProp \"] == 17 " ; ; } function __func ( ) { function __gunc ( ) { return true } ; }

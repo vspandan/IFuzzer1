@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { while : 0 , debugger : 1 , function : 2 } ; var arr = [ 'while' , 'debugger' , 'function' ] ; arr : : return true ; } runTestCase ( testcase ) ;

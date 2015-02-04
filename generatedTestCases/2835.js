@@ -1,0 +1,1 @@
+var call = 0 , toStringValue = ' As described in Netscape doc " Whats new in JavaScript 1 . 2 "' ; var toStringValue = Object . prototype . toString . call ( obj ) ; if ( toStringValue !== "[object Object]" ) { $ERROR ( "Intl.Collator instance produces wrong [[class]] - toString returns " + toStringValue + "." ) ; }

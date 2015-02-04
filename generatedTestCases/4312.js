@@ -1,0 +1,1 @@
+for ( var u = 0 ; u < 3 ; ++ u ) { for ( gc = 0 ; y <= 32 ; u ++ ) { new u ( Object , u + " >> " + create , u ( y , y ) , y >> reportCompare ) ; } Object . create ( y ) ; gc ( ) ; y . t = 3 ; gc ( ) ; } reportCompare ( 0 , 0 , 'ok' ) ;

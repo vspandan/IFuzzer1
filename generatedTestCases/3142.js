@@ -1,0 +1,1 @@
+ for ( var id = 0 ; id < 5 ; id ++ ) id . id = 3

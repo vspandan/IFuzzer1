@@ -1,0 +1,1 @@
+function __func ( ) { return delete ( " Math . cos " , "- 1 . 570796326795 " , 0 ) ; } if ( __func ( "A" , "B" , 1 , 2 ) ) { $ERROR = true ; __func = __func . __func ( __func ) ; }

@@ -1,0 +1,1 @@
+var BUGNUMBER = 433279 ; var summary = 'do not assert: pn != tc->parseContext->nodeList' ; var actual = 'No Crash' ; var expect = 'No Crash' ; expect ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; var {sin , PI } = Math ; sin ( PI / 2 ) ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

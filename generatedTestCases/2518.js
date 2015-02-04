@@ -1,0 +1,1 @@
+"use strict" ; function f1 ( ) { var f = function ( ) { return typeof this ; } try { var f = ' foo ' ; f1 = f1 ; } catch ( f ) { f = f + '' ; } } if ( ! f1 ( ) ) { throw "'this' had incorrect value!" ; }

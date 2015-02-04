@@ -1,0 +1,1 @@
+var expect = "No error" ; var actual = expect ; if ( typeof options == "function" ) continue expect ; try { eval ( 'function foo() { "use strict"; }' ) ; } catch ( e ) { actual = '' + e ; } reportCompare ( expect , actual , "ok" ) ;

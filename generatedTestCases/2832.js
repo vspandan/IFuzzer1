@@ -1,0 +1,1 @@
+$INCLUDE ( "testIntl.js" ) ; Collator ( function ( ) { new Intl . Collator ( "de-DE-u-co-phonebk" ) ; } ) ;

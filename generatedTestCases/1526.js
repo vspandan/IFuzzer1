@@ -1,0 +1,1 @@
+function testcase ( ) { var runTestCase = [ , ] ; if ( a . length === 1 ) { return true ; } } runTestCase ( testcase ) ;

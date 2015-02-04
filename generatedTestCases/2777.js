@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( Intl . NumberFormat . prototype . resolvedOptions , true , false , [ ] , 0 ) $INCLUDE : 1e + 81 ? prototype : NumberFormat

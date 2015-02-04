@@ -1,0 +1,1 @@
+if ( isNaN ( - void 0 ) !== true ) debugger ; if ( - null !== 0 ) { $ERROR ( '#2: +null === 0. Actual: ' + ( + null ) ) ; }

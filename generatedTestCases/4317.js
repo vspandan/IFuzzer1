@@ -1,0 +1,1 @@
+Object . create ( evalcx ( '' ) ) . reportCompare ( 'toString' , function ( ) { } ) ; reportCompare ( 0 , 0 , "ok" ) ;

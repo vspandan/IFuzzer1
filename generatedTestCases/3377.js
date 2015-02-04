@@ -1,0 +1,1 @@
+if ( /a\1/ . source !== "a\\1" ) { $ERROR ( 0 . 97 ) ; } if ( /a\a/ . source !== "a\\a" ) { $ERROR ( '#2: /a\\a/' ) ; } if ( /,\;/ . source !== ",\\;" ) { $ERROR ( '#3: /,\\;/' ) ; } if ( / \ / . source !== " \\ " ) { $ERROR ( '#4: / \\ /' ) ; }

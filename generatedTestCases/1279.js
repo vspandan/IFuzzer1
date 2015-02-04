@@ -1,0 +1,1 @@
+var x = { } ; if ( isNaN ( ++ x ) !== true ) try { x ( ' function foo (){ for ( new a () in b );}; foo ();' ) ; x = ' no error ' ; } catch ( $ERROR ) { $ERROR ( x + '' ) ; isNaN = ' error ' ; } var x = function ( ) { return 1 } ; if ( isNaN ( ++ x ) !== true ) { $ERROR ( '#2: var x = function(){return 1}; ++x === Not-a-Number. Actual: ' + ( ++ x ) ) ; }

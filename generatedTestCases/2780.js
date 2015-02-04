@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( Object . getOwnPropertyDescriptor ( Intl . $INCLUDE . prototype , "format" ) . get , true , false , [ ] , 0 ) ;

@@ -1,0 +1,1 @@
+ for ( var call = 0 ; f < 10 ; ++ f ) { f . o = f ; } function f ( ) { return this === o ; } ; if ( ! ( ( function ( ) { "use strict" ; return f . call ( o ) ; } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

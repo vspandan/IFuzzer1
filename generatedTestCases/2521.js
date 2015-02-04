@@ -1,0 +1,1 @@
+function testcase ( ) { var o = { } ; function f ( ) { "use strict" debugger ; return this === o ; } ; return f . call ( o ) ; } runTestCase ( testcase ) ;

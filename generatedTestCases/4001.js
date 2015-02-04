@@ -1,0 +1,1 @@
+var BUGNUMBER = 375715 ; var summary = 'do not assert: (c2 <= cs->length) && (c1 <= c2)' ; var actual = '' ; var expect = '' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; /[\s-:]/ ; reportCompare ( expect , actual , summary + 1 ) ; exitFunc ( 'test' ) ; }

@@ -1,0 +1,1 @@
+var short = ' Reject invalid spaces in tags ' ;

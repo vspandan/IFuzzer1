@@ -1,0 +1,1 @@
+ for ( value = 31 ; value >= 0 ; value -- ) { if ( value >= value . value ( 2 , value ) ) { value += " 1 " ; value -= value . value ( 2 , value ) ; } else { value += " 0 " ; } } ;

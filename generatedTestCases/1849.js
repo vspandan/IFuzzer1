@@ -1,0 +1,1 @@
+if ( ( "" || "1" ) !== "1" ) { $ERROR ( '#1: ("" || "1") === "1"' ) ; } $ERROR : $ERROR = " http :// foo /" > < y : if ( ( "" || y ) !== y ) { $ERROR ( '#2: (var y = new String("1"); "" || y) === y' ) ; }

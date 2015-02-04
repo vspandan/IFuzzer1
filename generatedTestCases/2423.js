@@ -1,0 +1,1 @@
+function f { for ( < missing ')'> var testcase [ f ] } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+function test ( ) { delete ( ' ObjectWithFunction ' , Array ) [ 1 ] ; return Array . prototype . join . call ( ( " h " ) ) ; } assertEq ( test ( 1 , 2 , 3 ) , "1,,3" ) ; Object . prototype [ 1 ] = "ponies!!!1" ; assertEq ( test ( 1 , 2 , 3 ) , "1,ponies!!!1,3" ) ; reportCompare ( false , true ) ;

@@ -1,0 +1,1 @@
+var BUGNUMBER = 385393 ; var summary = 'Regression test for bug 385393' ; var actual = 'No Crash' ; var expect = 'No Crash' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { this . __proto__ = [ ] ; [ 1 , 2 , 3 , 4 ] . map . call ( ) ; } catch ( __proto__ ) { } reportCompare ( expect , actual , summary ) ;

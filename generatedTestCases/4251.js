@@ -1,0 +1,1 @@
+var x ; try { eval ( "var {if} = {'if': 1};" ) ; } catch ( exc ) { x = exc ; } assertEq ( x instanceof SyntaxError , true ) ; assertEq ( "if" in this , false ) ; x = undefined ; try { function ( { yield < missing ':'> 0 ; } ) ; } catch ( exc ) { x = exc ; } assertEq ( x instanceof SyntaxError , true ) ; reportCompare ( 0 , 0 , 'ok' ) ;

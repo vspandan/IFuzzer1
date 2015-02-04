@@ -1,0 +1,1 @@
+if ( "" instanceof String ) { $ERROR ( '#1: "" is not instanceof String' ) ; } if ( String ( "" ) instanceof String ) { $ERROR ( '#2: String("") is not instanceof String' ) ; } switch ( true ) { case ( String === null ) : $ERROR = true ; break ; default : String = false ; } 

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; ( runTestCase in ( ' test ' ) ) [ 1 ] = 7 ; -- ( testcase ) [ 1 ] ; return ( runTestCase ) [ 1 ] === 8640000000000000 ; } runTestCase ( testcase ) ;

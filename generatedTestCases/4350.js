@@ -1,0 +1,1 @@
+var BUGNUMBER = 452498 ; var summary = 'TM: upvar2 regression tests' ; var exitFunc = '' ; var expect = '' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; if ( delete ( 5 ? [ ] : ( function ( ) { } ) ( ) ) ) [ ] ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

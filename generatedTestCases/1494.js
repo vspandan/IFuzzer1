@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { runTestCase = testcase = ' Test can only run in a Gecko 1 . 9 browser or later .' ; testcase ( e ) ; runTestCase ( testcase , runTestCase , runTestCase ) ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

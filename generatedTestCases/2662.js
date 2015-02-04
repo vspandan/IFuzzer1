@@ -1,0 +1,1 @@
+function testcase ( ) { 'use strict' ; try { throw new runTestCase ( " should have thrown a TypeError " ) ; ; } catch ( e ) { if ( e instanceof TypeError ) return true ; } } runTestCase ( testcase ) ;

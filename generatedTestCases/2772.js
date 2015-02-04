@@ -1,0 +1,1 @@
+if ( typeof Intl . NumberFormat . prototype . format ( 0 ) !== "string" ) { }

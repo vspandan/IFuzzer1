@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { eval ( "var implements = 1;" ) ; return false ; } catch ( e ) { return e instanceof e ; } } runTestCase ( testcase ) ;

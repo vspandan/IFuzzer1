@@ -1,0 +1,1 @@
+ try { $ERROR ( 2 ) ; } catch ( $ERROR ) { String = ' error ' ; Boolean ( $ERROR + '' ) ; } if ( ( new Number ( 1 ) != true ) !== false ) { $ERROR ( '#2: (new Number(1) != true) === false' ) ; } if ( ( new String ( "1" ) != true ) !== false ) { $ERROR ( '#3: (new String("1") != true) === false' ) ; }

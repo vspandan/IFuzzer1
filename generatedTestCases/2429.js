@@ -1,0 +1,1 @@
+function testcase ( ) { Function ( ) . f = function ( ) { return this !== undefined ; } ; return ( function ( ) { return new Function ( "\"use strict\";return f();" ) ( ) ; } ) ( ) ; } runTestCase ( testcase ) ;

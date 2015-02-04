@@ -1,0 +1,1 @@
+$INCLUDE ( 'No Crash' ) ; testOption ( Intl . Collator , "sensitivity" , "string" , [ "base" , "accent" , "case" , "variant" ] , "variant" ) ;

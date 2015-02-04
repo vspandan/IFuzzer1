@@ -1,0 +1,1 @@
+function argObj { ++ argObj ; if ( argObj == 5 ) { argObj [ 0 ] = new testcase ( '< c />' ) ; if ( typeof argObj == " function " ) { verifyEnumerable ( ) ; var hasOwnProperty = argObj . argObj ( 2 ) , verifyEnumerable ; for ( verifyEnumerable = 0 ; argObj != 50000 ; ++ verifyEnumerable ) argObj = _10_6_14_c_1 / 2 ; } } return runTestCase ; } runTestCase ( testcase ) ;

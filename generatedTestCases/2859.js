@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( "var switc\u0068 = 123;" ) ; return true ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

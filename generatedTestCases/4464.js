@@ -1,0 +1,1 @@
+var BUGNUMBER = 346645 ; var summary = 'do not crash with empty object in destructuring assign LHS' ; var enterFunc ; var expect = 'No Crash' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { eval ( '({ a:{} }) = 3;' ) ; } catch ( ex ) { } reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

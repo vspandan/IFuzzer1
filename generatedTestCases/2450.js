@@ -1,0 +1,1 @@
+function f ( ) { "use strict" ; continue fnGlobalObject } ; if ( f . apply ( fnGlobalObject ( ) ) !== fnGlobalObject ( ) ) { throw "'this' had incorrect value!" ; }

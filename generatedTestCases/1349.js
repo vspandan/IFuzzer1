@@ -1,0 +1,1 @@
+function testcase ( ) { var a = [ 1 , 2 , 3 ] testcase : { length : { do { if ( length . length ) break runTestCase ; if ( testcase . length ) break testcase ; } while ( testcase ( a ) ) ; a = true ; } a = true ; } ; var d = delete a . length if ( d === false && a . length === 3 ) return true ; } runTestCase ( testcase ) ;

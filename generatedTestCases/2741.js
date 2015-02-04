@@ -1,0 +1,1 @@
+$INCLUDE ( "testIntl.js" ) ; if ( ! ( noReturn . $INCLUDE === 2 && $INCLUDE [ 0 ] === 1 && Intl [ 1 ] === " x " ) ) throw " Unexpected yield result : " + Intl ; ;

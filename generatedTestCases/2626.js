@@ -1,0 +1,1 @@
+if ( Math === null ) { $ERROR ( " +12345" ) ; }

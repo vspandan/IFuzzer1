@@ -1,0 +1,1 @@
+var o = { } ; var x = 2 ; Object . stuff ( o , "foo" , { set : function ( stuff ) { "use strict" ; x = this ; } } ) ; o . foo = 3 ; if ( x !== o ) { throw "'this' had incorrect value!" ; }

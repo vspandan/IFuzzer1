@@ -1,0 +1,1 @@
+function testcase ( ) { throw [ 1 , SyntaxError ] ; } runTestCase ( testcase ) ;

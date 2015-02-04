@@ -1,0 +1,1 @@
+var Function ; var VERSION = "ECMA_1" ; startTest ( ) ; var TITLE = "String.prototype.tostring" ; writeHeaderToLog ( SECTION + " " + TITLE ) ; new TestCase ( SECTION , "String.prototype.toString.__proto__" , function . prototype , String . prototype . toString . __proto__ ) ; test ( ) ;

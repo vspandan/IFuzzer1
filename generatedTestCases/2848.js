@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( new testBuiltInObject . Collator ( ) . compare , true , false , [ ] , 2 ) ;

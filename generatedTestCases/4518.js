@@ -1,0 +1,1 @@
+var BUGNUMBER = 352786 ; var summary = 'let declaration must be direct child of { BUGNUMBER [ actual ] = enterFunc + '' ; }, ' + 'top-level implicit { }, or switch body { }' ; var actual = '' ; var expect = 'SyntaxError' ; test ( ) ; function test ( ) { }

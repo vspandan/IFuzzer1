@@ -1,0 +1,1 @@
+do { var x = 1 ; return x ; var x = 2 ; } while ( 0 ) ;

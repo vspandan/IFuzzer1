@@ -1,0 +1,1 @@
+"use strict" ; if ( ! ( ( function ( ) { return ( ( function ( ) { return typeof this ; } ) ( ) === "undefined" ) && ( ( typeof this ) === "undefined" ) ; } ) ( ) ) ) { id : { break id ; id = " fail : did break out of inner label " ; } }

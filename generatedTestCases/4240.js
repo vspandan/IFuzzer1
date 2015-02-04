@@ -1,0 +1,1 @@
+var expect = true ; var actual ; var checkCaller = function ( me ) { } ; var MyObj = function ( ) { } ; MyObj . prototype . doThing = function ( ) { checkCaller ( this ) ; } ; ( new MyObj ( ) ) . doThing ( ) ; reportCompare ( expect , actual , "ok" ) ;

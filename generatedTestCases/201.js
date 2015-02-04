@@ -1,0 +1,1 @@
+THE_ANSWER = "Answer to Life, the Universe, and Everything" ; var ( __func + 2 ) = THE_ANSWER ; function __func ( ) { ++ THE_ANSWER ( 4 ) ; } ; if ( __func ( ) === THE_ANSWER ) { $ERROR ( '#1: __func() !== THE_ANSWER' ) ; } if ( __func ( "The Ultimate Question" ) === "The Ultimate Question" ) { $ERROR ( '#2: __func("The Ultimate Question") !== "The Ultimate Question"' ) ; }

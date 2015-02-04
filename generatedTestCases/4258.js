@@ -1,0 +1,1 @@
+function f ( ) { function g ( ) { function g ( ) { g ; x ; } var [x ] = [ ] ; } } reportCompare ( true , true ) ;

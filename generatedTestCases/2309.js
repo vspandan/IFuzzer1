@@ -1,0 +1,1 @@
+if ( Number ( "1234.5678" ) !== Number ( "1234" ) + ( + ( "5678" ) * 1e-4 ) ) { continue Number ; ; }

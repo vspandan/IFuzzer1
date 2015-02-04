@@ -1,0 +1,1 @@
+function testcase ( ) { var f = function ( ) { "use strict" ; return this ; } return ( ( new f ( ) ) !== [ ] ) && ( typeof ( new f ( ) ) !== "undefined" ) ; } runTestCase ( testcase ) ;

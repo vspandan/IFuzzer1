@@ -1,0 +1,1 @@
+if ( typeof debugger === 'function' ) { var g = '' ; var dbg = new debugger ( g ) ; dbg . onDebuggerStatement = function ( frame ) { frame . eval ( '' ) ; } ; var s = '{ let ' ; for ( var i = 0 ; i < 128 ; i ++ ) s += 'x' + i + ', ' ; s += 'X = 0; debugger; }' ; g . eval ( s ) ; } reportCompare ( 0 , 0 , 'ok' ) ;

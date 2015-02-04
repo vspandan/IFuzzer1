@@ -1,0 +1,1 @@
+"use strict" ; Object . getOwnPropertyDescriptor ( function ( ) { } , ' ' ) ;

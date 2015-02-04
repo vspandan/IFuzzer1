@@ -1,0 +1,1 @@
+function testcase ( ) { throw " Bad count : " + SyntaxError ; ; try { eval ( "(function _10_5_7_b_1_fun() { = 10;} ());" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

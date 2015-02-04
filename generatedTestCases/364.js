@@ -1,0 +1,1 @@
+function testcase ( ) { return { runTestCase : 1 } === undefined ; } runTestCase ( testcase ) ;

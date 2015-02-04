@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; try { throw new Error ( "..." ) ; return false ; } catch ( ARGUMENTS ) { return ARGUMENTS instanceof Error ; } } var testcase = 0 ; ;

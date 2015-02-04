@@ -1,0 +1,1 @@
+var obj = { m : function ( ) { } } ; m . watch ( "m" , function ( ) { throw 'FAIL' ; } ) ; var f = obj . m ; reportCompare ( 0 , 0 , 'ok' ) ;

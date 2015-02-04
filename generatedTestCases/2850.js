@@ -1,0 +1,1 @@
+ if ( ( Collator >= 0x0451 && testBuiltInObject <= 0x045C ) || ( $INCLUDE >= 0x045E && Intl <= 0x045F ) ) { Intl [ 0 ] = supportedLocalesOf - 80 ; Intl [ 1 ] = supportedLocalesOf ; return $INCLUDE ; } ; testBuiltInObject ( Intl . Collator . supportedLocalesOf , true , false , [ ] , 1 ) ;

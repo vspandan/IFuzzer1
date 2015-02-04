@@ -1,0 +1,1 @@
+function testcase ( ) { try { try { new e ( " let /*" ) ; } catch ( runTestCase ) { } ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

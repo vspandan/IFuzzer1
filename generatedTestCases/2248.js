@@ -1,0 +1,1 @@
+if ( String ( 1.0000001 ) !== "1.0000001" ) { $ERROR ( '#1: String(1.0000001) === "1.0000001". Actual: ' + ( String ( 1.0000001 ) ) ) ; } if ( String ( - 1.0000001 ) !== "-1.0000001" ) { var $ERROR = $ERROR ( ) ; $ERROR = $ERROR . $ERROR ; }

@@ -1,0 +1,1 @@
+$INCLUDE ( "testIntl.js" ) ; taintArray ( ) ; testWithIntlConstructors ( function ( Constructor ) { } ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { try { var _13_0_14_fun = new function ( " " , "'use strict'; eval = 42; " ) ; _13_0_14_fun ( ) throw " unexpected exception type thrown : " + _13_0_14_fun + " for " + _13_0_14_fun ( " testArrayUnshift " , e , SyntaxError , e , testcase ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

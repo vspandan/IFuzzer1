@@ -1,0 +1,1 @@
+try { 1 / y ; $ERROR ( '#1.1: 1 / y throw ReferenceError. Actual: ' + ( 1 / y ) ) ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { try { var $ERROR = ReferenceError ( '( function () { let ( a = 3 ) < x />; })' ) ; e = ReferenceError + '' ; } catch ( ReferenceError ) { $ERROR = $ERROR + '' ; } ; } }

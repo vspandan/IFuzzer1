@@ -1,0 +1,1 @@
+function testcase ( ) { try { if ( Array == value ) { configurable = Object ( Object ) ; } else { arr += arr + '-' + Object + ' ' + prototype + arr ; arr = arr ; arr = arr = prototype ( testcase ) ; } } finally { delete Array . prototype [ 1 ] ; } } runTestCase ( testcase ) ;

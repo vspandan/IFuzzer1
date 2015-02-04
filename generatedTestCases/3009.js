@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; debugger ; return _implements === 1 ; } runTestCase ( testcase ) ;

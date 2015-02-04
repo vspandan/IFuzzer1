@@ -1,0 +1,1 @@
+var BUGNUMBER = 355834 ; var summary = 'new function("yield")' ; var actual = '' ; var expect = '' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; with ( { } ) { } ; var g = ( new function ( 'yield' ) ) ( 1 ) ; actual = g + '' ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

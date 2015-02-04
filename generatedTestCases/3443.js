@@ -1,0 +1,1 @@
+var x = 1 ; if ( x !== 1 ) switch ( 1 ) { case - 1 : } 

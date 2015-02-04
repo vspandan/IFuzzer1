@@ -1,0 +1,1 @@
+function runTestCase _10_5_7_b_4_fun { for ( var _10_5_7_b_4_1 = 0 ; _10_5_7_b_4_fun <= _10_5_7_b_4_fun ; ++ _10_5_7_b_4_2 ) { _10_5_7_b_4_1 . ( testcase , _10_5_7_b_4_1 . _10_5_7_b_4_2 , " lineNumber property returned unexpected value ." ) ( _10_5_7_b_4_2 ( _10_5_7_b_4_2 + 1 ) . _10_5_7_b_4_1 ( ) ) ; } } runTestCase ( testcase ) ;

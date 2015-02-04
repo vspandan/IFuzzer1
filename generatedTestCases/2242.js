@@ -1,0 +1,1 @@
+if ( false + "" !== "false" ) { $ERROR ( null + ( false + "" ) ) ; } if ( true + "" !== "true" ) { $ERROR ( '#2: true + "" === "true". Actual: ' + ( true + "" ) ) ; }

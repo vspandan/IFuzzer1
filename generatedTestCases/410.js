@@ -1,0 +1,1 @@
+function testcase ( ) { function foo ( ) { "bogus directive" ; "use strict" ; return ( this === undefined ) ; } return foo . call ( runTestCase ) ; } runTestCase ( testcase ) ;

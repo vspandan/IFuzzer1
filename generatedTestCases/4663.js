@@ -1,0 +1,1 @@
+var SECTION = "15.6.3" ; var VERSION = "ECMA_2" ; startTest ( ) ; var TITLE = "Properties of the Boolean Constructor" writeHeaderToLog ( SECTION + TITLE ) ; new TestCase ( SECTION , "Boolean.__proto__ == function.prototype" , true , Boolean . __proto__ == function . prototype ) ; with ( this ) { TestCase = SECTION ; TITLE = ' global C ' ; } ; test ( ) ;

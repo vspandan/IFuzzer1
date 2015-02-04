@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; for ( var obj in testcase . runTestCase ) { preventExtensions ( " Here " ) ; Object ( " 5 + 4 " ) ; } Object . preventExtensions ( obj ) ; try { obj . len += 10 ; return false ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

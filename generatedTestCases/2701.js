@@ -1,0 +1,1 @@
+var validTimeZoneNames = [ "UTC" , "utc" ] ; validTimeZoneNames . forEach ( function ( name ) { var resolvedOptions = [ ] ; if ( format . resolvedOptions ( ) . timeZone !== name . toUpperCase ( ) ) { $ERROR ( "Time zone name " + name + " was not correctly accepted; turned into " + format . resolvedOptions ( ) . timeZone + "." ) ; } } ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { throw new regObj ( " no TypeError thrown calling map with undefined this " ) ; ; var regObj = new RegExp ( ) ; try { eval ( "delete regObj;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

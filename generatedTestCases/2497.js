@@ -1,0 +1,1 @@
+function testcase ( ) { } runTestCase ( testcase ) ;

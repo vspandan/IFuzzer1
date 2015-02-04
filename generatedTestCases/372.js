@@ -1,0 +1,1 @@
+function testcase ( ) { var tempIndex ; for ( var tempIndex in foo ) { if ( tempIndex === "caller" ) { return false ; } } return true ; } runTestCase ( testcase ) ;

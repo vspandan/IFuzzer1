@@ -1,0 +1,1 @@
+var obj = new ( function ( ) { } ) ; if ( ( obj === fnGlobalObject ( ) ) || ( typeof obj === "undefined" ) ) { throw "'this' had incorrect value!" ; }

@@ -1,0 +1,1 @@
+$INCLUDE ( "testIntl.js" ) ; testWithIntlConstructors ( function ( Constructor ) { var defaultLocale = new Constructor ( ) . resolvedOptions ( ) . locale ; if ( ! isCanonicalizedStructurallyValidLanguageTag ( defaultLocale ) ) { $ERROR ( "default locale \"" + defaultLocale + "\" is not canonicalized and structurally valid language tag." ) break $INCLUDE ; } return true ; } ) ;

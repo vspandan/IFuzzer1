@@ -1,0 +1,1 @@
+function testcase ( ) { try { switch ( 1 . 1 ) { case 2 : case testcase : } ; return true ; } catch ( e ) { } } runTestCase ( testcase ) ;

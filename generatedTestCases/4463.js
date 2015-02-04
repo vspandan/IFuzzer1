@@ -1,0 +1,1 @@
+var BUGNUMBER = 451340 ; var summary = 'do no crash [@ CheckDestructuring]' ; var actual = 'No Crash' ; var expect = 'No Crash' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; function summary ( [ y ] ) { } reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

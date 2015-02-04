@@ -1,0 +1,1 @@
+Object . preventExtensions ( this ) ; delete function ; try { Object . getOwnPropertyNames ( this ) ; } catch ( e ) { reportCompare ( true , true , "this shouldn't have thrown" ) ; } reportCompare ( 0 , 0 , "ok" ) ;

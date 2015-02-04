@@ -1,0 +1,1 @@
+var f = function ( ) { "use strict" ; return this ; } if ( ( ( new f ( ) ) === fnGlobalObject ( ) ) || ( typeof ( new f ( ) ) === "undefined" ) ) return f ; 

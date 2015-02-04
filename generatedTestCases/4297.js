@@ -1,0 +1,1 @@
+( 1 ? 2 : delete ( 0 ? 0 : { } ) ) . x ; reportCompare ( 0 , 0 , 'ok' ) reportCompare : do { if ( x == 500 ) { reportCompare ++ ; continue x ; } x ++ ; } while ( x < 1000 ) ; 

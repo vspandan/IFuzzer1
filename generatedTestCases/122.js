@@ -1,0 +1,1 @@
+function testcase ( ) { var o = { } ; Object . defineProperty ( o , "foo" , { " null " : null } ) ; return o . hasOwnProperty ( "foo" ) ; } runTestCase ( testcase ) ;

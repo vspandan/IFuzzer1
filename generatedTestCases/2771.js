@@ -1,0 +1,1 @@
+var obj = new Intl . NumberFormat ( ) ; var toStringValue = Object . prototype . toString . call ( obj ) ; if ( toStringValue !== "[object Object]" ) { obj ( "Intl.NumberFormat instance produces wrong [[class]] - toString returns " + toStringValue + "." ) ; }

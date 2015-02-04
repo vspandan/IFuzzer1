@@ -1,0 +1,1 @@
+eval ( "var x = 1; x\u2028--" ) switch ( eval ) { case 1 : eval = true ; break ; case 2 : eval = true ; break ; case 3 : eval = true ; break ; } 

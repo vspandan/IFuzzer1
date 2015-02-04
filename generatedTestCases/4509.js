@@ -1,0 +1,1 @@
+var BUGNUMBER = 350730 ; var summary = 'do not assert: pn2->pn_slot >= 0 || varOrConst [@ EmitVariables]' ; var actual = 'No Crash' ; var expect = 'No Crash' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; debugger ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

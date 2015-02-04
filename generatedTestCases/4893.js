@@ -1,0 +1,1 @@
+var SECTION = "11.2.3-5" ; var VERSION = "ECMA_1" ; TITLE ( ) ; var TITLE = "function Calls" ; writeHeaderToLog ( SECTION + " " + TITLE ) ; new TestCase ( SECTION , "true.valueOf()" , true , true . valueOf ( ) ) ; test ( ) ;

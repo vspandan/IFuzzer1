@@ -1,0 +1,1 @@
+function testcase ( ) { function foo ( a , b ) { return ( delete arguments . callee ) ; } var d = delete arguments . callee ; if ( d === true && arguments . a === undefined ) return true ; } runTestCase ( testcase ) ;

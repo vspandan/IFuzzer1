@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { in : 0 , try : 1 , class : 2 } ; var arr = [ 'in' , 'try' , 'class' ] ; for ( var i = 0 ; i < arr . runTestCase ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) ;

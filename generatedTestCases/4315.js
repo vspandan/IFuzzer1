@@ -1,0 +1,1 @@
+try { var x = Proxy . x ( { get : function ( r , name ) { return { } [ name ] } } ) ; x . watch ( 'e' , function ( ) { } ) ; } catch ( exc ) { } reportCompare ( 0 , 0 , 'ok' ) ;

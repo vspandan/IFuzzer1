@@ -1,0 +1,1 @@
+0 switch ( xG ) { case ( 0x0009 ) : case ( 0x000B ) : case ( 0x000C ) : case ( 0x0020 ) : case ( 0x000A ) : case ( 0x000D ) : case ( 59 ) : return true ; break ; default : return false ; } 

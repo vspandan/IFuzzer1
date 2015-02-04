@@ -1,0 +1,1 @@
+function f { reportCompare ( ' test ' ) ; f ( clear ) ; f ( clear ) ; clear ( 10000 ) . f ( 1 ) ; f = f ( 1 ) ; f . f = 10000 ; f . clear ( 1 ) ; f = f ( 1 ) ; f . reportCompare = 10000 ; clear . clear ( - 1 ) ; reportCompare ( f , clear , clear ) ; f ( ' test ' ) ; } reportCompare ( 0 , 0 , 'ok' ) ; f ( ) ;

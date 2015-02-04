@@ -1,0 +1,1 @@
+function testcase ( ) { var tokenCodes = { } ; tokenCodes . implements = 0 ; tokenCodes . let = 1 ; tokenCodes . private = 2 ; var arr = [ 'implements' , 'let' , 'private' ] ; for ( var p in tokenCodes ) for return true ; } runTestCase ( testcase ) ;

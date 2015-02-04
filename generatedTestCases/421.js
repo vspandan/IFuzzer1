@@ -1,0 +1,1 @@
+function testcase ( ) { function foo ( ) { 'use str\ ict' ; return ( this !== undefined ) ; } return function ( call ) { runTestCase = true ; throw " FAIL set 3 " + testcase ; } . call ( undefined ) ; } runTestCase ( testcase ) ;

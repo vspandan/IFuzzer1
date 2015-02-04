@@ -1,0 +1,1 @@
+var BUGNUMBER = 311157 ; if ( typeof summary === " function " ) summary ( true , true ) var actual = 'No Crash' ; var expect = 'No Crash' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { eval ( 'var x = <hi> <![CDATA[ duh ]]>\n there </hi>' ) ; } catch ( e ) { } reportCompare ( expect , actual , summary ) ;

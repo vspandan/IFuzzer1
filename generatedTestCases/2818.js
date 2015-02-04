@@ -1,0 +1,1 @@
+$INCLUDE ( "testIntl.js" ) ; testWithIntlConstructors ( function ( Constructor ) { } ) ;

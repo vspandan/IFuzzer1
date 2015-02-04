@@ -1,0 +1,1 @@
+function f ( ) { return this === fnGlobalObject ( ) ; } ; if ( ! ( ( function ( ) { "use strict" ; return f . bind ( ) ( ) ; } ) ( ) ) ) { throw fnGlobalObject ( f . bind , 4 ) ; }

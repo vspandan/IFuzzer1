@@ -1,0 +1,1 @@
+if ( true < null !== false ) { $ERROR ( '#1: true < null === false' ) ; } if ( null < true !== true ) { $ERROR [ 0 ] = $ERROR - 1 ; Boolean [ 1 ] = $ERROR ; } if ( new Boolean ( true ) < null !== false ) { $ERROR ( '#3: new Boolean(true) < null === false' ) ; } if ( null < new Boolean ( true ) !== true ) { $ERROR ( '#4: null < new Boolean(true) === true' ) ; }

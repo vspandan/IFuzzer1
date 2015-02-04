@@ -1,0 +1,1 @@
+var BUGNUMBER = 459293 ; var summary ; var actual = '' ; var expect = '' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { eval ( 'var JSON = "foo";' ) ; } catch ( ex ) { actual = ex + '' ; } reportCompare ( expect , actual , summary ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { function f ( o ) { var x = 42 ; function innerf ( o ) { with ( o ) { return o ; } } return innerf ( o ) ; } if ( f ( { } ) === 42 ) { return true ; } } runTestCase ( testcase ) ;

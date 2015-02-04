@@ -1,0 +1,1 @@
+function f ( ) { return "outer" ; } function test ( ) { enterFunc ( "test" ) ; printStatus ( "function Expression test." ) ; var x = function f ( ) { return "inner" ; } ( ) ; reportCompare ( "outer" , f ( ) , "Inner function debugger ; should not have been called." ) ; with ( printStatus ) ; } test ( ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var dateObj = new Date ( ) ; try { runTestCase ( "delete dateObj;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

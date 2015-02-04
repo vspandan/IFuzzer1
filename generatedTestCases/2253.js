@@ -1,0 +1,1 @@
+if ( String ( - 1234567890 ) !== "-1234567890" ) { $ERROR ( '#1: String(-1234567890) === "-1234567890". Actual: ' + ( String ( - 1234567890 ) ) ) ; } if ( "-" + String ( - ( - 1234567890 ) ) !== "-1234567890" ) throw " bad exception thrown : " + String ; 

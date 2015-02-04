@@ -1,0 +1,1 @@
+function testcase ( ) { var o = "str" ; var foo = 1 ; debugger ; return true ; } runTestCase ( testcase ) ;

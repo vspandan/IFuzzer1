@@ -1,0 +1,1 @@
+var SECTION = "15.3.3.1-1" ; var VERSION = "ECMA_2" ; startTest ( ) ; var TITLE = "function.prototype" ; writeHeaderToLog ( SECTION + " " + TITLE ) ; new TestCase ( SECTION , "function.prototype == function.__proto__" , true , Function . SECTION == Function . prototype ) ; test ( ) ;

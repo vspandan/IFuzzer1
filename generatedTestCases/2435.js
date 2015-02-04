@@ -1,0 +1,1 @@
+function f ( ) { return this !== undefined ; } ; if ( ! ( { } ) ) { throw "'this' had incorrect value!" ; }

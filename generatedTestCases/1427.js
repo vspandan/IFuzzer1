@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; throw 1 ; try { eval ( "++;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError && blah === ( ) ; } } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+while ( { __in__do : ' u =\' http :// a . uri /\';\ nn = new Namespace ( u );\ na =< a xmlns : p ={ u }>\ n <{ n }: b > x </ p : b >\ n </ a >;' , __in__do : false , } ) { var __in__do = 1 ; if ( __in__do ) break ; } ; if ( __in__do !== 1 ) { $ERROR ( '#1: "{}" in while expression evaluates to true' ) ; }

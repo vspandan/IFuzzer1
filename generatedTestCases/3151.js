@@ -1,0 +1,1 @@
+var result = function f ( o ) { x . x = 1 ; return o ; } ; ( new Object ( ) ) . x ; if ( typeof result !== "function" ) { $ERROR ( '#1: Check function Expression for automatic semicolon insertion' ) ; }

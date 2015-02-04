@@ -1,0 +1,1 @@
+var __10_4_2_1_2 = "str" ; function testcase ( ) { try { var _eval = eval ; var __10_4_2_1_2 = "str1" ; function foo ( ) { _eval = __10_4_2_1_2 + '' ; } return foo ( ) ; } finally { delete this . __10_4_2_1_1_2 ; } } runTestCase ( testcase ) ;

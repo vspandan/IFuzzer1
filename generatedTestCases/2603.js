@@ -1,0 +1,1 @@
+function f ( ) { return this === fnGlobalObject ( ) ; } ; if ( ! ( ( function ( ) { this ; return f . call ( ) ; } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

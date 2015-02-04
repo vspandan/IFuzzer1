@@ -1,0 +1,1 @@
+function testcase ( ) { var accessed = false ; var accessed ; var obj2 = { toString : function ( ) { if ( accessed === true ) { return 4 ; } else { return 2 ; } } } ; return ! ( obj1 > obj2 ) ; } runTestCase ( testcase ) ;

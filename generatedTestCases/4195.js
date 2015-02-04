@@ -1,0 +1,1 @@
+if ( typeof findReferences == "function" ) { switch ( 8 ) { case 1 : o ; case ( ' fafafa ' . reportCompare ( / a / g , [ 1 , 2 , 3 , 4 ] . findReferences ) ) : reportCompare ; } var o = ( { } ) ; global . o = o ; findReferences ( o ) ; reportCompare ( true , true ) ; } else { reportCompare ( true , true , "test skipped: findReferences is not a function" ) ; }

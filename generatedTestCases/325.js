@@ -1,0 +1,1 @@
+function testcase ( ) { var foo = foo ( "'use strict';" ) ; for ( var tempIndex in foo ) { if ( tempIndex === "" ) { return false ; } } return true ; } runTestCase ( testcase ) ;

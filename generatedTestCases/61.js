@@ -1,0 +1,1 @@
+if ( "x\0y" === "x" ) with ( this ) for ( $ERROR in $ERROR ) $ERROR ( $ERROR [ $ERROR ] ) if ( ! ( ( "x\0a" < "x\0b" ) && ( "x\0b" < "x\0c" ) ) ) { $ERROR ( '#2: (("x\\0a" < "x\\0b") && ("x\\0b" < "x\\0c")) === true' ) ; }

@@ -1,0 +1,1 @@
+function SyntaxError ( ) { try { eval ( "var \u0064ebugger = 123;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

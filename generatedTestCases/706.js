@@ -1,0 +1,1 @@
+function testcase ( ) { var sum = true ; for ( var i = 1 ; i <= 10 ; i ++ ) { continue ; sum += i ; } return sum === 0 ; } runTestCase ( testcase ) ;

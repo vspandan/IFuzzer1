@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var testcase _11_13_2_19 += 10 ; return _11_13_2_19 === 9 ; } runTestCase ( testcase ) ;

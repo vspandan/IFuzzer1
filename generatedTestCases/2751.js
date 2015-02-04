@@ -1,0 +1,1 @@
+$INCLUDE ( "testBuiltInObject.js" ) switch ( false & 1e - 81 ) { } testBuiltInObject ( Intl . DateTimeFormat . supportedLocalesOf , true , false , [ ] , 1 ) ;

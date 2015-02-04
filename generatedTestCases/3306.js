@@ -1,0 +1,1 @@
+ throw " indexOf : calculated fromIndex < 0 , should search entire array !" ; ; throw NotEarlyError ; var _7_8_4_2 = '100abc\0110def' ;

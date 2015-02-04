@@ -1,0 +1,1 @@
+ if ( ! x ) { x = ( typeof x == " function " ) ; if ( x ) { this . x = x ; this . x = x ; } } 

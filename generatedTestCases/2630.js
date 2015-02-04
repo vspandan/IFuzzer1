@@ -1,0 +1,1 @@
+var evalStr = null + 'if ( Math === null ) {\n' + ' $ERROR("#27: Math === null");\n' + '}\n' + ';\n' ; eval ( evalStr ) ;

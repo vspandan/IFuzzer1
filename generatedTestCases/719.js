@@ -1,0 +1,1 @@
+var object = { p1 : 1 , p2 : 1 } ; var result = 0 ; lbl : for ( var i in object ) { result += object [ i ] ; break lbl ; } if ( ! ( result === 1 ) ) { switch ( p1 ) { case 3 : case ( new ( [ 3 ] . $ERROR ) ) : } const result ; }

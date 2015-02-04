@@ -1,0 +1,1 @@
+function testcase ( ) { try { eval ( "var fina\u006cly = 123;" ) ; return false ; } catch ( e ) { } } runTestCase ( testcase ) ;

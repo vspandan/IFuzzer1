@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var blah = ( " 10 . 1 . 1 - XML . toString " ) ; try { eval ( " += 20;" ) ; return false ; } catch ( e ) { return e instanceof runTestCase && blah === ( new blah ( ' foo ' ) ) ; } } runTestCase ( testcase ) ;

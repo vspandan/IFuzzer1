@@ -1,0 +1,1 @@
+try { evalcx ( 'var p;' , [ ] ) ; } catch ( exc ) { } try { evalcx ( '' ) ; exc : exc = " 1 " ; } catch ( exc ) { } try { evalcx ( 'var p;' ) ; } catch ( exc ) { } reportCompare ( 0 , 0 , "ok" ) ;

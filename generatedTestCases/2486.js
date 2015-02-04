@@ -1,0 +1,1 @@
+"use strict" ; function f ( ) { return typeof this ; } if ( f ( ) !== "undefined" ) { throw { f : ' b =\' b \';\ na =< a >\ n <{ b } b > x </ bb >\ n </ a >;' , f : true } ; }

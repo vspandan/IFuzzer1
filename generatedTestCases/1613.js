@@ -1,0 +1,1 @@
+var x = 0 ; if ( ( x = 1 ) % x !== 0 ) break $ERROR ; var x = 1 ; if ( x % ( x = 2 ) !== 1 ) { $ERROR ( '#2: var x = 1; x % (x = 2) === 1. Actual: ' + ( x % ( x = 2 ) ) ) ; }

@@ -1,0 +1,1 @@
+( function ( e ) { this } ) ( ) ; reportCompare ( 0 , 0 , "" ) ;

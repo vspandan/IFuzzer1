@@ -1,0 +1,1 @@
+function testcase ( ) { 'use strict' ; try s ( 'var ;' ) ; return true ; } runTestCase ( testcase ) ;

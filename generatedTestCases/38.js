@@ -1,0 +1,1 @@
+var __e = Math . E ; Math . E = 1 ; switch ( E ) { default : break ; case E : break ; } 

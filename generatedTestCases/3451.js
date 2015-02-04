@@ -1,0 +1,1 @@
+function testcase ( ) { { prop ( ' const pv ' + prop + ';' ) ; } return prop === "66\u2029123" && prop [ 2 ] === "\u2029" && prop . length === 6 ; } runTestCase ( testcase ) ;

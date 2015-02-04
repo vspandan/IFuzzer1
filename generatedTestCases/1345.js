@@ -1,0 +1,1 @@
+function testcase ( ) { var testcase = d ( ) ; if ( d === true ) { return true ; } } runTestCase ( testcase ) ;

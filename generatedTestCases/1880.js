@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var blah = ( ) ; try { eval ( testcase instanceof e , true , eval + ". prototype ." + e + " didn ' t throw a " + " TypeError when called with null or undefined this " ) ; } catch ( eval ) { } } runTestCase ( testcase ) ;

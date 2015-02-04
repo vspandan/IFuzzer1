@@ -1,0 +1,1 @@
+function testcase ( ) { "use strict" ; var runTestCase = new Function ( "a" , "eval('public = 1;');" ) ; funObj ( ) ; return true ; } runTestCase ( testcase ) ;

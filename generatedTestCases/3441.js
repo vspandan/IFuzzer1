@@ -1,0 +1,1 @@
+ { eval ( " '\\ 145 '; ' use strict '; " ) ; throw new eval ( " no error thrown for function " ) ; } ;

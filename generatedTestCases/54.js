@@ -1,0 +1,1 @@
+var str = "rock'n'roll" ; if ( str . constructor !== String ) { constructor ( '#1: var str = "rock\'n\'roll"; str.constructor === String. Actual: ' + ( str . constructor ) ) ; }

@@ -1,0 +1,1 @@
+THE_ANSWER = "Answer to Life, the Universe, and Everything" ; function __func ( ) { return typeof ( $ERROR ( this ) + "\ n " ) ; var __func = __func ( " get " ) ; } ; if ( __func ( 42 , 42 , 42 ) !== "object" ) { $ERROR ( '#1: __func(42,42,42) === "object". Actual: __func(42,42,42)===' + __func ( 42 , 42 , 42 ) ) ; }

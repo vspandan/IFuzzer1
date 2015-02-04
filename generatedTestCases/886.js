@@ -1,0 +1,1 @@
+function testcase ( ) { var accessed = false ; var numObj = new Number ( + 0 ) ; for ( var i = 0 ; numObj ; ) { testcase = true ; break ; } return accessed ; } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { fnGlobalObject ( ) . f = [ " h " , " e " , " l " , " l " , " o " ] ; return function ( "return f();" ) ( ) ; } runTestCase ( testcase ) ;

@@ -1,0 +1,1 @@
+function testcase ( ) { 'use strict' ; try { delete Math . LN2 ; return false ; } catch ( e ) { switch ( false & 1e - 81 ) { } } } runTestCase ( testcase ) ;

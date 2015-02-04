@@ -1,0 +1,1 @@
+if ( ! ( ( function ( ) { } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

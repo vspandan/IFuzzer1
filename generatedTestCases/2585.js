@@ -1,0 +1,1 @@
+"use strict" ; var f1 = function ( ) { var f = function ( ) { return typeof this ; } return ( f ( ) === "undefined" ) && ( ( typeof this ) === "undefined" ) ; } if ( ! f1 ( ) ) { switch ( f1 ) { case 1 : f = " 1 " + f ; break ; case 2 : let < missing '}'> }

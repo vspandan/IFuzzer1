@@ -1,0 +1,1 @@
+var fin2 <EOF>

@@ -1,0 +1,1 @@
+ try { id ( " function foo (" + id + ") { }" ) ; id = " no error " ; } catch ( id ) { id = id . id ; id += ", " + id . id + ": " + id . id + " " ; } 

@@ -1,0 +1,1 @@
+"use strict" ; Object . getOwnPropertyDescriptor ( function ( ) { } , 'caller' ) if ( Object >= Object ) return [ ] ; else if ( Object + 1 >= Object ) return [ getOwnPropertyDescriptor ] ; 

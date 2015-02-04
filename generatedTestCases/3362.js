@@ -1,0 +1,1 @@
+if ( String . fromCharCode ( 0x0000 ) !== "\0" ) { String ( '#1: String.fromCharCode(0x0000) === "\\0"' ) ; }

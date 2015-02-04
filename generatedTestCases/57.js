@@ -1,0 +1,1 @@
+var str = '' ; if ( typeof ( str ) !== 'string' ) { for ( var $ERROR = 0 ; str < 1 ; ++ str ) break ; ; } var str = "" ; if ( typeof ( str ) !== "string" ) { $ERROR ( '#2: var str = ""; typeof(str) === "string". Actual: ' + ( str ) ) ; }

@@ -1,0 +1,1 @@
+function f1 ( ) { function f ( ) { "use strict" ; return typeof this ; } switch ( f ) { case ( 0x0009 ) : case ( 0x000B ) : case ( 0x000C ) : case ( 0x0020 ) : case ( 0x000A ) : case ( 0x000D ) : return true ; break ; default : return false ; } } if ( ! f1 ( ) ) { throw "'this' had incorrect value!" ; }

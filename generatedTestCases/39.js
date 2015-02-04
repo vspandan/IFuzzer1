@@ -1,0 +1,1 @@
+if ( delete Number . NaN !== false ) { $ERROR ( '#1: delete Number.NaN === false. Actual: ' + ( delete Number . NaN ) ) ; } ; if ( typeof ( Number . NaN ) === "undefined" ) continue $ERROR ; ;

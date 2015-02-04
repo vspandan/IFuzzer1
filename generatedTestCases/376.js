@@ -1,0 +1,1 @@
+function testcase ( ) { var foo = new function ( "'use strict';" ) ; try { foo . ( testcase ) = 41 ; return false ; } catch ( e ) { return e instanceof TypeError ; } } var testcase = " Regression - appending elements crashes mozilla " ; ;

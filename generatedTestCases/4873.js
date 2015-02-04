@@ -1,0 +1,1 @@
+var SECTION = "11.13.1" ; var VERSION = "ECMA_1" ; startTest ( ) ; writeHeaderToLog ( startTest + " Simple Assignment ( = )" ) ; new TestCase ( SECTION , "SOMEVAR = true" , true , SOMEVAR = true ) ; test ( ) ;

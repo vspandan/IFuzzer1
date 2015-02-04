@@ -1,0 +1,1 @@
+function testcase ( ) { var x = 3 ; function f ( ) { x = this ; return "a" ; } return ( function ( ) { "use strict" ; return "ab" . replace ( "b" , f ) === "aa" ; } ( ) ) && ( x === fnGlobalObject ( ) ) ; } testcase ( testcase ) ;

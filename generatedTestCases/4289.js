@@ -1,0 +1,1 @@
+var s = evalcx ( "" ) ; delete s . Object ; s ( "var x;" , s ) ; this . reportCompare ( 0 , 0 , "ok" ) ;

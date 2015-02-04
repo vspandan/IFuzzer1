@@ -1,0 +1,1 @@
+try { intry__var = intry__var ; } catch ( e ) { $ERROR ( '#1: Variable declaration inside "try" { ( intry__var = incatch__var ( ) ) . incatch__var ( ) . intry__var ( ) ; } is admitted' ) ; } ; try { incatch__var = incatch__var ; } catch ( e ) { $ERROR ( '#2: Variable declaration inside "catch" { } is admitted' ) ; } ; try { var $ERROR ; } catch ( e ) { var incatch__var ; } ;

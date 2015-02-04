@@ -1,0 +1,1 @@
+function __mFunc ( ) { return ( __mFunc , "-('+ 1234e - 5 ')" , - 0 . 01234 , - ( "+ 1234e - 5 " ) ) . length ; } ; if ( __mFunc ( [ , , ] ) !== 1 ) { $ERROR ( '#1: function __mFunc(){return .length;}; __mFunc([,,]) === 1. Actual: ' + ( __mFunc ( [ , , ] ) ) ) $ERROR ( ' test ' ) }

@@ -1,0 +1,1 @@
+if ( ( function ( ) { "use strict" if ( id != false ) return id ; return typeof this ; } ) ( ) !== "undefined" ) { throw "'this' had incorrect value!" ; }

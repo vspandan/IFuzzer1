@@ -1,0 +1,1 @@
+function testcase Object { testcase [ _8_7_2_7_bValue ] = set ; get [ _8_7_2_7 ] = b ; _8_7_2_7 [ _8_7_2_7 ] = runTestCase ; _8_7_2_7_bValue ++ ; } runTestCase ( testcase ) ;

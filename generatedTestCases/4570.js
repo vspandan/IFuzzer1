@@ -1,0 +1,1 @@
+if ( typeof Symbol === "function" ) { var m = new WeakMap ; var sym = Symbol ( ) ; assertThrowsInstanceOf ( ( ) = > m . set ( sym , 0 ) , TypeError ) ; } if ( typeof Symbol === "function" ) reportCompare ( 0 , 0 ) ;
