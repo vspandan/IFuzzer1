@@ -39,7 +39,7 @@ EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
 
 TestCaseSubDirs=[]
 #Author: Spandan Veggalam
-def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter,crashListFile):
+def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
     listAllTestCasesDir(testCasesDir)   
     def selectGrammarFIle():
         Tk().withdraw()        
@@ -108,9 +108,6 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter,crashListFil
                                 f=open(newFile,'w')
                                 f.write(generatedPrg)
                                 f.close
-                                f=open(genfilesList,"a+")
-                                f.write("script "+newFile+"\n")
-                                f.close()
                                 #frame.quit()
                                 #sys.exit()
 
@@ -142,7 +139,7 @@ def runFuzzer(testCasesDir,targetDirectory,genfilesList,interpreter,crashListFil
     label1= Label(frame,text="Grammar File", width=20).grid(row = 0,column=0)
     e = StringVar()
     inputFile = Entry(frame, textvariable=e,width=30)
-    inputFile.insert(0, abspath("../grammarFiles/JavaScript.g4"))
+    inputFile.insert(0, abspath("grammarFiles/JavaScript.g4"))
     inputFile.config(state=DISABLED)
     inputFile.grid(row=0, column=1)
     browseBtn=Button(frame, text='Browse', command=selectGrammarFIle,width=10,state=DISABLED).grid(row=0, column=3)
