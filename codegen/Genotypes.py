@@ -352,9 +352,8 @@ class Genotype(object):
             f=open("/tmp/"+fi,"a+")
             f.write(program)
             f.close()
-            self.p = subprocess.Popen([self.interpreter_Shell+" -f ../shell.js " + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            self.p = subprocess.Popen([self.interpreter_Shell+" -f  "+abspath("shell.js")+ " /tmp/" + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             out, err = self.p.communicate()
-            #print self.p.returncode
             if 'SyntaxError' in err or 'Syntax error' in err:
                 print "err:"+err
                 self.local_bnf[BNF_PROGRAM]=""
