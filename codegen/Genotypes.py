@@ -310,7 +310,7 @@ class Genotype(object):
         self.execStatus=0
         t=Thread(target=self._execute_code,kwargs={'program':program})
         t.start()
-        t.join(5)
+        t.join(1)
         if t.isAlive():
             if self.p is not None:
                 print "killing"
@@ -376,41 +376,6 @@ class Genotype(object):
     def get_binary_gene_length(self):
        return self._gene_length * 8
     
-    # Author: Spandan Veggalam
-    def _single_mutate(self, position1=None, position2=None):
-        if position1 is None or position2 is None:
-            position = random.randint(0, self._gene_length * 8 - 1)
-            gene = self.binary_gene
-            self.binary_gene = self._mutate(gene, position1)
-        
-        else:
-            program1 = self.local_bnf[BNF_PROGRAM]
-            self.local_bnf[BNF_PROGRAM] = sub(r'\s+', ' ', self._map_variables(self.local_bnf['CodeFrag'], True))
-            subCode = self.local_bnf['CodeFrag'][position2:]
-            position2 = self.local_bnf[BNF_PROGRAM].find(subCode)
-            gene = self.binary_gene
-            self.binary_gene = self._mutate(gene, position1, position2)
-            
-        self.generate_decimal_gene()
-
-    # Author: Spandan Veggalam
-    @staticmethod
-    def _mutate(gene, position1, position2=None):
-        newRandBGene = ""
-        
-        count = 0
-        if position2 is not None:
-            length = position2 - position1
-        else:
-            length = 1
-        if length > 0:
-            while count < length * 8 :
-                newRandBGene = newRandBGene + str(random.randint(0, 1))
-                count += 1        
-            gene = ''.join([gene[:position1 * 8], newRandBGene , gene[(position1 + length) * 8:]])
-        
-        return gene
-
     @staticmethod
     def _select_choice(codon, selection):
         if isinstance(selection, list):

@@ -113,46 +113,38 @@ class AntlrParser(object):
                     nT.append(v.replace("<<<","").replace(":","").strip())
         return nT
 
-    def parseTree_(self,program):
-        cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser null "+program
-        t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
-        t.start()
-        t.join(30)
-        if t.isAlive():
-            if self.p is not None:
-                print "killing process handling file ("+str(self.p.pid)+"): "+fileName
-                try:
-                    import signal
-                    if sys.platform != 'win32':
-                        kill(self.p.pid, signal.SIGKILL)
-                    time.sleep(.1)
-                except OSError:
-                    pass
-        return self.out
-
     def run_cmd(self,cmd):
         self.p = subprocess.Popen([cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         self.out, self.err = self.p.communicate()
         
-    def parseTree(self,fileName):
-        curdir1 = getcwd()
-        chdir("langparser")
-        cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fileName 
-        t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
-        t.start()
-        t.join(30)
-        if t.isAlive():
-            if self.p is not None:
-                print "killing process handling file ("+str(self.p.pid)+"): "+fileName
-                try:
-                    import signal
-                    if sys.platform != 'win32':
-                        kill(self.p.pid, signal.SIGKILL)
-                    time.sleep(.1)
-                except OSError:
-                    pass
-        chdir(curdir1)
-        return self.out
+    def parseTree(self,input,ind=False):
+        if len(input):
+            curdir1 = getcwd()
+            chdir("langparser")
+            if ind:
+                fi="/tmp/"+str(int(time.time()*1000))
+                f=open(fi,"a+")
+                f.write(input)
+                f.close()
+                cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fi
+            else:
+                cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+input 
+            t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
+            t.start()
+            t.join(20)
+            if t.isAlive():
+                if self.p is not None:
+                    print "killing process ("+str(self.p.pid)+")"
+                    try:
+                        import signal
+                        if sys.platform != 'win32':
+                            kill(self.p.pid, signal.SIGKILL)
+                        time.sleep(.1)
+                    except OSError:
+                        pass
+            chdir(curdir1)
+            return self.out
+        return ""
 
                 
     def extractCodeFrag(self, fileName):

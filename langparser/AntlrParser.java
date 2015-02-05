@@ -34,11 +34,10 @@ class AntlrParser {
 		identifiers = new ArrayList<String>();
 	}
 
-	public String parseTree(String program, String fileName, boolean extractCF) {
+	public String parseTree(String fileName, boolean extractCF) {
+
 		try {
-			if (program != null)
-				lexer = new ECMAScriptLexer(new ANTLRInputStream(program));
-			else if (fileName != null)
+			if (fileName != null)
 				lexer = new ECMAScriptLexer(new ANTLRInputStream(
 						new FileInputStream(fileName)));
 			else
@@ -56,7 +55,7 @@ class AntlrParser {
 		} catch (Exception e) {
 
 		}
-		return null;
+		return "";
 	}
 
 	private void selectSubtrees(String nonT, ParseTree s, boolean extractCF,
@@ -129,14 +128,11 @@ class AntlrParser {
 		return subcode.trim();
 	}
 
-	public HashMap<String, String> extractCodeFrag(String program,
-			String fileName, boolean extractCF) {
-		if (program != null)
-			parseTr = parseTree(program, null, extractCF);
-		else if (fileName == null)
+	public HashMap<String, String> extractCodeFrag(String fileName, boolean extractCF) {
+		if (fileName == null)
 			System.exit(0);
 		else
-			parseTr = parseTree(null, fileName, extractCF);
+			parseTr = parseTree(fileName, extractCF);
 
 		HashMap<String, String> d = new HashMap<String, String>();
 
@@ -161,11 +157,6 @@ class AntlrParser {
 
 	public static void main(String[] args) {
 		AntlrParser a = new AntlrParser();
-		if (!args[0].equals("null")){
-			System.out.println(a.parseTree(null, args[0], true));
-		}
-		else {
-			System.out.println(a.parseTree(args[1], args[0], true));
-		}
+			System.out.println(a.parseTree(args[0],true));	
 	}
 }
