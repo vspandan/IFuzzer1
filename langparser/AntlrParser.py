@@ -131,12 +131,12 @@ class AntlrParser(object):
         return self.out
 
     def run_cmd(self,cmd):
-        curdir1 = getcwd()
-        chdir("langparser")
         self.p = subprocess.Popen([cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         self.out, self.err = self.p.communicate()
-        chdir(curdir1)
+        
     def parseTree(self,fileName):
+        curdir1 = getcwd()
+        chdir("langparser")
         cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fileName 
         t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
         t.start()
@@ -151,7 +151,9 @@ class AntlrParser(object):
                     time.sleep(.1)
                 except OSError:
                     pass
+        chdir(curdir1)
         return self.out
+
                 
     def extractCodeFrag(self, fileName):
         parseTr=self.parseTree(fileName)

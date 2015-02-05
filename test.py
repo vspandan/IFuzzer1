@@ -8,4 +8,7 @@ if __name__=='__main__':
         f = open(st+"/"+fil, 'r')
         dictOfDict1 = load(f)
         print fil+":"+str(len(dictOfDict1))
+        raw_input("Press any key to continue")
+        print dictOfDict1
+
       

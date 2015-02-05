@@ -184,7 +184,6 @@ def run_all_tests(tests, results, options):
     # Copy and reverse for fast pop off end.
     tests = tests[:]
     tests.reverse()
-    print tests
     # The set of currently running tests.
     tasks = []
 
