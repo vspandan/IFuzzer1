@@ -116,8 +116,8 @@ class GrammaticalEvolution(object):
     
     #Author : Spandan Veggalam
     def parseCode(self,codeFragment):
-        codeFragment= codeFragment.replace('\n', '')
-        return self.parser.parseTree_(codeFragment)
+        codeFragment= codeFragment.replace('\n', ' ')
+        return self.parser.parseTree(codeFragment,True)
     
     #Author : Spandan Veggalam
     def _prepareInitial_Population (self,fileName):
@@ -495,6 +495,7 @@ class GrammaticalEvolution(object):
 
     def _perform_endcycle(self):
         choice=random.choice([0,1])
+        choice=0
         childList=[]
         while len(childList) < self._population_size:
             fitness_pool = self._evaluate_fitness()
@@ -512,7 +513,7 @@ class GrammaticalEvolution(object):
                 child_list = self._perform_crossovers(fitness_pool)
                 childList.extend(child_list)
                 #fitness_pool.extend(child_list)
-            break; #TODO remove break and make this working#re-implement mutation
+            #break; #TODO remove break and make this working#re-implement mutation
         self._perform_replacements(childList)
 
     def _evaluate_fitness(self):
@@ -606,13 +607,11 @@ class GrammaticalEvolution(object):
         child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
         
         incompl1=self.parseCode(child1Prg_)
-        child1.set_identifiers(self.identifiers)
         incompl2=self.parseCode(child2Prg_)
-        child2.set_identifiers(self.identifiers)
         
         child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,1,self.parser.extractNonTerminal(incompl1.split()))
         child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,1,self.parser.extractNonTerminal(incompl2.split()))
-        
+
         child1.set_binary_gene(child1_binary)
         child1.generate_decimal_gene()
         child2.set_binary_gene(child2_binary)
@@ -620,21 +619,39 @@ class GrammaticalEvolution(object):
         
         return (child1, child2) 
         
+    #Author: Spandan Veggalam
+    def _mutatebinarygene(self, gene, position1, position2):
+        newRandBGene = ""
+        
+        count = 0
+        length = position2 - position1
+        if length > 0:
+            while count < length * 8 :
+                newRandBGene = newRandBGene + str(random.randint(0, 1))
+                count += 1        
+            gene = ''.join([gene[:position1 * 8], newRandBGene , gene[(position1 + length) * 8:]])
+        
+        return gene
 
     #Author: Spandan Veggalam
     def _perform_mutations(self, mlist):
         mutatedList=[]
+        
         for gene in mlist:
             if random.random() < self._mutation_rate:
-                prg=gene.get_program()
-                incompl=self.parseCode(prg)
+                incompl=self.parseCode(gene.get_program())
                 gene.set_identifiers(self.identifiers)
                 if len(incompl.strip()) >0:
                     gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl.split()))
                     position1=gene.local_bnf['CodeFrag'].find(selectedNt)
-                    position2=position1+len(selectedNt)            
-                    gene._single_mutate(position1, position2)
-            mutatedList.append(gene)
+                    position2=position1+len(selectedNt)  
+                    if position1 is not None and position2 is not None:
+                        subCode = gene.local_bnf['CodeFrag'][position2:]
+                        replCode = gene._map_variables(selectedNt, True)
+                        gene.local_bnf['program']=(gene.local_bnf['CodeFrag'][0:position1]+" "+ replCode +" "+gene.local_bnf['CodeFrag'][position2:]).replace("__id__","")
+                        #gene.set_binary_gene(self._mutatebinarygene(gene.binary_gene, position1, position2))
+                        gene.generate_decimal_gene()
+                mutatedList.append(gene)
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
