@@ -7,6 +7,7 @@ import os
 from string import lower
 import sys
 
+JS_SHELL_PATH="/home/spandan/Desktop/js_03f3c7efaa5e/src/shell/js"
 JS_SHELL_PATH1="/home/spandan/js-1.7.0/js/src/Linux_All_DBG.OBJ/js"
 JS_SHELL_PATH2="/home/spandan/js-1.8.0/src/Linux_All_DBG.OBJ/js"
 JS_SHELL_PATH3="/home/spandan/js-1.8.5/js/src/dist/bin/js"
@@ -17,6 +18,8 @@ CREATE_FRAG_POOL=False
 TargetDirectory =  "generatedTestCases"
 TestCasesDirectory= "testsamples"
 FragPoolDirName="database"
+CrashListFile="CrashList"
+TypeErrorList="TypeErrorList"
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
 CrashListFile2="CrashList2"
@@ -73,9 +76,10 @@ if __name__ == "__main__":
         else:
              print "Answer must be 'Y' or 'N'"
     
-    main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_PATH1,CREATE_FRAG_POOL)
+    #main(TestCasesDirectory,TargetDirectory,CrashListFile,TypeErrorList,JS_SHELL_PATH,CREATE_FRAG_POOL)
+    #main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_PATH1,CREATE_FRAG_POOL)
     #main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_PATH2,CREATE_FRAG_POOL)
-    #main(TestCasesDirectory,TargetDirectory,CrashListFile3,TypeErrorList3,JS_SHELL_PATH3,CREATE_FRAG_POOL)
+    main(TestCasesDirectory,TargetDirectory,CrashListFile3,TypeErrorList3,JS_SHELL_PATH3,CREATE_FRAG_POOL)
     #main(TestCasesDirectory,TargetDirectory,CrashListFile4,TypeErrorList4,JS_SHELL_PATH4,CREATE_FRAG_POOL)
     #main(TestCasesDirectory,TargetDirectory,CrashListFile5,TypeErrorList5,JS_SHELL_PATH5,CREATE_FRAG_POOL)
     #main(TestCasesDirectory,TargetDirectory,CrashListFile6,TypeErrorList6,JS_SHELL_PATH6,CREATE_FRAG_POOL)

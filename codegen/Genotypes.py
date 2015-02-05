@@ -352,20 +352,23 @@ class Genotype(object):
             f=open("/tmp/"+fi,"a+")
             f.write(program)
             f.close()
-            self.p = subprocess.Popen([self.interpreter_Shell+" -f  "+abspath("shell.js")+ " /tmp/" + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            #self.p = subprocess.Popen([self.interpreter_Shell+" -f  "+abspath("shell.js")+ " /tmp/" + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+            self.p = subprocess.Popen([self.interpreter_Shell+" -f  /tmp/" + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             out, err = self.p.communicate()
             if 'SyntaxError' in err or 'Syntax error' in err:
                 print "err:"+err
                 self.local_bnf[BNF_PROGRAM]=""
                 self.execStatus = 0 
                 remove("/tmp/"+fi)
-            elif self.p.returncode == 9:
-                f=open(self.crashListFile,"a+")
-                print abspath("../CrashedFiles_Auto/"+fi)
-                rename("/tmp/"+fi,"../CrashedFiles_Auto/"+fi)
-                self.execStatus=2
-                f.write("crash: "+str("../CrashedFiles_Auto/"+fi)+"\n")
-                f.close()
+                """ Adjust indentation and use this with shell file. TODO this uncomment above popen statment
+                elif self.p.returncode == 9:
+                    f=open(self.crashListFile,"a+")
+                    print abspath("../CrashedFiles_Auto/"+fi)
+                    rename("/tmp/"+fi,"../CrashedFiles_Auto/"+fi)
+                    self.execStatus=2
+                    f.write("crash: "+str("../CrashedFiles_Auto/"+fi)+"\n")
+                    f.close()
+                """
             else:
                 self.execStatus=1
                 remove("/tmp/"+fi)

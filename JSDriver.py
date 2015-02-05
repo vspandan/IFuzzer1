@@ -419,21 +419,18 @@ def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shel
 
     results = None
     try:
-    	"""
-    	results = ResultsSink(options, len(skip_list) + len(test_list))
+        """
+    	results = ResultsSink(options, len(skip_list) + len(test_list), crashListFile, typeErrorFlist)
         for t in skip_list:
             results.push(NullTestOutput(t))
         run_tests(options, test_list, results)
         """
-        results = ResultsSink(options, len(skip_list) + len(test_list), crashListFile, typeErrorFlist)
-        for t in skip_list:
-            results.push(NullTestOutput(t))
-        #run_tests(options, test_list, results)
         while True:
             location = os.path.join(os.path.dirname(__file__), targetDirectory)
-            runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,crashListFile)
+            #runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,crashListFile)
             if os.path.exists(location):
                 test_list=manifest.load(location,  requested_paths, excluded_paths, xul_tester,'',True)
+                results = ResultsSink(options, len(test_list), crashListFile, typeErrorFlist)
                 run_tests(options, test_list, results)
             break
     finally:
