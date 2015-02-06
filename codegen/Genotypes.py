@@ -8,12 +8,11 @@ import re
 from string import lower
 import subprocess
 import traceback
-from pickle import load
+from marshal import load
 from os import path,remove,kill,rename
 from threading import Thread
 
 from codegen.Utilities import base10tobase2, base2tobase10
-import collections
 from random import randint
 from os.path import abspath
 from time import time,sleep
@@ -130,7 +129,6 @@ class Genotype(object):
     
     # Author : Spandan Veggalam 
     def _converge(self, item):
-        
         fileName = abspath(DEFAULT_DATABASE_PATH + "/" + item)
         if  path.isfile(fileName): 
             f = open(fileName, READ)
@@ -170,15 +168,6 @@ class Genotype(object):
                     position += 1
                     continue
         
-                elif item == "identifier" :
-                    l=len(self._identifiers)
-                    if l>0:
-                        ident=str(self._identifiers[randint(0,l-1)])
-                        prg_list[position]= ident.replace("__id__","")
-                    else:
-                        prg_list[position]="id"
-                    position += 1
-                    continue
                 elif "__id__" in item:
                     prg_list[position]= item.replace("__id__","")
                     position += 1
@@ -308,6 +297,7 @@ class Genotype(object):
         self.local_bnf[BNF_PROGRAM] = program
         logging.debug(program)
         self.execStatus=0
+        
         t=Thread(target=self._execute_code,kwargs={'program':program})
         t.start()
         t.join(1)
@@ -346,8 +336,7 @@ class Genotype(object):
         if len(program) == 0:
             return 0
         else:                
-            print "executing \t" + program
-
+            #print "executing \t" + program
             fi=str(int(time()*1000))
             f=open("/tmp/"+fi,"a+")
             f.write(program)
@@ -356,11 +345,12 @@ class Genotype(object):
             self.p = subprocess.Popen([self.interpreter_Shell+" -f  /tmp/" + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             out, err = self.p.communicate()
             if 'SyntaxError' in err or 'Syntax error' in err:
-                print "err:"+err
+                
                 self.local_bnf[BNF_PROGRAM]=""
                 self.execStatus = 0 
                 remove("/tmp/"+fi)
                 """ Adjust indentation and use this with shell file. TODO this uncomment above popen statment
+                print "err:"+err
                 elif self.p.returncode == 9:
                     f=open(self.crashListFile,"a+")
                     print abspath("../CrashedFiles_Auto/"+fi)

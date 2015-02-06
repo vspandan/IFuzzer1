@@ -95,7 +95,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
                     ges.dynamic_mutation_rate(dynM.get())
                     ges.dynamic_crossover_rate(dynM1.get())
                     
-                       
+                    
                     try:  
                         print "Processing ::" + fil
                         if ges.create_genotypes(fil,interpreter,crashListFile):
@@ -103,6 +103,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]
                             generatedPrg= gene.get_program()
+                            print generatedPrg
                             if gene.get_fitness() != gene.get_fitness_fail():
                                 newFile=targetDirectory+"/"+str(filName)+".js"
                                 f=open(newFile,'w')
@@ -119,9 +120,8 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
     
             except AttributeError as e:
                 print e
-                
+        
         for subDir in TestCaseSubDirs :
-            PROCESSLIST=[]
             for f in listdir(subDir) :
                 fi=join(subDir,f)
                 if isfile(fi) and f.endswith(".js") and f not in EXCLUDED :

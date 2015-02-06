@@ -90,12 +90,12 @@ class GrammaticalEvolution(object):
     #Author : Spandan Veggalam
     def dynamic_mutation_rate(self, ind ):
         self.dynamic_mutation = ind
-        self._mutation_rate=0.5
+        self._mutation_rate=0.02
     
     #Author : Spandan Veggalam
     def dynamic_crossover_rate(self, ind):
         self.dynamic_crossover = ind
-        self._crossover_rate=0.5
+        self._crossover_rate=0.4
     
     #Author : Spandan Veggalam	
     def set_ind(self, ind):
@@ -495,7 +495,6 @@ class GrammaticalEvolution(object):
 
     def _perform_endcycle(self):
         choice=random.choice([0,1])
-        choice=0
         childList=[]
         while len(childList) < self._population_size:
             fitness_pool = self._evaluate_fitness()

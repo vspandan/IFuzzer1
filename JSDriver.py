@@ -27,7 +27,7 @@ import multiprocessing
 import Queue
 from _collections import defaultdict
 from os import makedirs
-from pickle import dump, HIGHEST_PROTOCOL, load
+from marshal import dump, load
 
 import time
 
@@ -304,10 +304,10 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
                 t=que.get()
                 if t is not None:
                     codeFragPool.append(t)
+                
         print (datetime.datetime.now())
         print ("Finalizing: Grouping Common Frags")
         for codeFrags in codeFragPool:
-            
             keys=codeFrags2.keys()
             for key in codeFrags.keys():
                 if key in keys:
@@ -318,16 +318,16 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
         print ("Finalizing: Writing to file")
         for key in codeFrags2.keys():
             fileName = "database" + "/" + key
-            f = open(fileName, 'a+')
+            f1 = open(fileName, 'wb')
+            f2 = open(fileName, 'rb')
             if os.stat(fileName).st_size == 0:
-                dump(codeFrags2.get(key), f, HIGHEST_PROTOCOL)
+                temp=codeFrags2.get(key)
             else:
-                temp=load(f)
+                temp=load(f2)
+                f2.close()
                 temp = temp + codeFrags2.get(key)
-                f.close()
-                f = open(fileName, 'w')
-                dump(temp, f, HIGHEST_PROTOCOL)
-            f.close()
+            dump(temp, f1)
+            f1.close()
         print (datetime.datetime.now())
         print ("Finished; Code generation and testing begins")
     
@@ -427,7 +427,7 @@ def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shel
         """
         while True:
             location = os.path.join(os.path.dirname(__file__), targetDirectory)
-            #runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,crashListFile)
+            runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,crashListFile)
             if os.path.exists(location):
                 test_list=manifest.load(location,  requested_paths, excluded_paths, xul_tester,'',True)
                 results = ResultsSink(options, len(test_list), crashListFile, typeErrorFlist)
