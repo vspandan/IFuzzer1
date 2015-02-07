@@ -3,45 +3,21 @@ from Tkconstants import INSERT
 from Tkinter import Button, Frame, Tk, Text
 from copy import deepcopy
 from datetime import datetime
-import logging
 from os import path, system
-from random import choice, randint
+from random import choice, randint, random
 from re import sub
-import subprocess
 from tkFileDialog import askopenfilename
 from tkMessageBox import askyesno, showwarning, showinfo, showerror
-import tkMessageBox
 
 from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
-from codegen.Genotypes import Genotype, MUT_TYPE_M, MUT_TYPE_S
-import random
+from codegen.Genotypes import Genotype
 
 
 STOPPING_MAX_GEN = 'max_generations'
 STOPPING_FITNESS_LANDSCAPE = 'fitness_landscape'
 
-#   Default values
-DEFAULT_CROSSOVER_RATE = 0.2
-DEFAULT_CHILDEREN_PER_CROSSOVER = 2
-DEFAULT_MUTATION_TYPE = 's'
-DEFAULT_MUTATION_RATE = 0.02
-DEFAULT_MAX_FITNESS_RATE = .5
-DEFAULT_WRAP = True
-DEFAULT_EXTEND_GENOTYPE = True
-DEFAULT_START_GENE_LENGTH = None
-DEFAULT_MAX_GENE_LENGTH = None
-DEFAULT_MAX_PROGRAM_LENGTH = None
-DEFAULT_FITNESS_FAIL = -1000.0
-DEFAULT_MAINTAIN_HISTORY = True
-DEFAULT_TIMEOUTS = [20, 3600]
-
-DEFAULT_LOG_FILE = 'GECodeGen.log'
-
-logging.basicConfig(format='%(asctime)s %(message)s',
-                    filename=DEFAULT_LOG_FILE,
-                    level=logging.INFO)
 INCLUDE_NT_LIST=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
 
 class GrammaticalEvolution(object):
@@ -60,26 +36,23 @@ class GrammaticalEvolution(object):
         self.fitness_selections = []
         self.replacement_selections = []        
         
-        self._ind= None
-        self._crossover_rate = DEFAULT_CROSSOVER_RATE
-        self._children_per_crossover = DEFAULT_CHILDEREN_PER_CROSSOVER
-        self._mutation_type = DEFAULT_MUTATION_TYPE
-        self._mutation_rate = DEFAULT_MUTATION_RATE
-        self._max_fitness_rate = DEFAULT_MAX_FITNESS_RATE
+        self._crossover_rate = 0.2
+        self._children_per_crossover = 2
+        self._mutation_type = 's'
+        self._mutation_rate = 0.02
+        self._max_fitness_rate = 0.5
 
-        #   Parameters for phenotype creation
-        self._wrap = DEFAULT_WRAP
-        self._extend_genotype = DEFAULT_EXTEND_GENOTYPE
-        self._start_gene_length = DEFAULT_START_GENE_LENGTH
-        self._max_gene_length = DEFAULT_MAX_PROGRAM_LENGTH
-        self._max_program_length = DEFAULT_MAX_PROGRAM_LENGTH
+        self._wrap = True
+        self._extend_genotype = True
+        self._start_gene_length = None
+        self._max_gene_length = None
+        self._max_program_length = None
 
-        #   Parameters for overall process
         self.fitness_list = FitnessList(CENTER)
         self._generation = 0
-        self._fitness_fail = DEFAULT_FITNESS_FAIL
-        self._maintain_history = DEFAULT_MAINTAIN_HISTORY
-        self._timeouts = DEFAULT_TIMEOUTS
+        self._fitness_fail = -1000
+        self._maintain_history = True
+        self._timeouts = [20,3600]
 
         self._bnf = {}
         self._population_size = 0
@@ -87,25 +60,17 @@ class GrammaticalEvolution(object):
         self.dynamic_mutation = 0
         self.dynamic_crossover = 0
         
-    #Author : Spandan Veggalam
     def dynamic_mutation_rate(self, ind ):
         self.dynamic_mutation = ind
         self._mutation_rate=0.02
     
-    #Author : Spandan Veggalam
     def dynamic_crossover_rate(self, ind):
         self.dynamic_crossover = ind
         self._crossover_rate=0.4
     
-    #Author : Spandan Veggalam	
-    def set_ind(self, ind):
-        self._ind=ind
-    
-    #Author : Spandan Veggalam
     def setGrammarFile(self,fileName):
         self.grammarFile=fileName
     
-    #Author : Spandan Veggalam    
     def _extractProductions(self):
         bnf=""        
         f = open(self.grammarFile,'r')
@@ -114,26 +79,17 @@ class GrammaticalEvolution(object):
         f.close()        
         self.set_bnf(bnf)
     
-    #Author : Spandan Veggalam
     def parseCode(self,codeFragment):
         codeFragment= codeFragment.replace('\n', ' ')
         return self.parser.parseTree(codeFragment,True)
     
-    #Author : Spandan Veggalam
     def _prepareInitial_Population (self,fileName):
-        try:
             self.parseRepr=self.parser.parseTree(path.abspath(fileName))
             if self.parseRepr is not None and len(self.parseRepr)>0 and '<missing' not in self.parseRepr:
                 self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr.split()),None,None,INCLUDE_NT_LIST)
             else:
-                raise Exception('No Parse Tree')
-            f.close()
-        except:
-            """
-            if program is syntactically invalid. it is not considered; simply skipped
-            """
-            return
-        
+                return
+
     def set_population_size(self, size):
         size = long(size)
         if isinstance(size, long) and size > 0:
@@ -197,7 +153,6 @@ class GrammaticalEvolution(object):
     def get_wrap(self):
         return self._wrap
     
-    #Modified Author : Spandan Veggalam 
     def set_bnf(self, bnf):
         def strip_spaces(key, values):
             values = [value.strip()
@@ -207,23 +162,7 @@ class GrammaticalEvolution(object):
         non_Terminals=[]
 
         bnf_dict = {}
-        if self._ind == 1:
-            for item in bnf.split('\n'):
-                if item.find('::=') >= 0:
-                    key, values = item.split('::=')
-                    key = key.strip()
-                    bnf_dict[key] = strip_spaces(key, values)
-                    non_Terminals.append(key)
-                elif item:
-                    values = bnf_dict[key]
-                    values.extend(strip_spaces(key, item))
-                    
-                    bnf_dict[key] = values
-                else:
-                    #   blank line
-                    pass                
-        else:
-            for item in bnf.split('\n'):
+        for item in bnf.split('\n'):
                 if item.find(':') >= 0:
                     key, values = item.split(':',1)
                     key = key.strip()
@@ -233,9 +172,7 @@ class GrammaticalEvolution(object):
                     values = bnf_dict[key]
                     values.extend(strip_spaces(key, item))
                     bnf_dict[key] = values
-                  
                 else:
-                    #   blank line
                     pass
         self.non_Terminals = non_Terminals        
         self._bnf = bnf_dict
@@ -271,7 +208,6 @@ class GrammaticalEvolution(object):
     def set_fitness_fail(self, fitness_fail):
         errmsg = """The fitness_fail, %s must be a float value
                     """ % (fitness_fail)
-        #   coerce if possible
         fitness_fail = float(fitness_fail)
         if not isinstance(fitness_fail, float):
             raise ValueError(errmsg)
@@ -283,8 +219,8 @@ class GrammaticalEvolution(object):
 
     def set_mutation_type(self, mutation_type):
         errmsg = "The mutation type must be either '%s' or '%s'." % (
-                                                    MUT_TYPE_S, MUT_TYPE_M)
-        if mutation_type not in [MUT_TYPE_M, MUT_TYPE_S]:
+                                                    's', 'm')
+        if mutation_type not in ['m', 's']:
             raise ValueError(errmsg)
 
         self._mutation_type = mutation_type
@@ -400,78 +336,42 @@ class GrammaticalEvolution(object):
     def get_timeouts(self):
         return self._timeouts
 
-
-    #Modified Author : Spandan Veggalam  
     def _compute_fitness(self):
         for gene in self.population:
             starttime = datetime.now()
             gene._generation = self._generation
-            logging.debug("Starting member G %s: %s at %s" % (
-                self._generation, gene.member_no,
-                starttime.strftime('%m/%d/%y %H:%M')))
-
             gene.starttime = starttime
             gene.set_keys (self.non_Terminals)
             self.current_g = gene
             gene.compute_fitness()
             self.population[gene.member_no]=gene
-            logging.debug("fitness=%s" % (gene.get_fitness()))
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
 
     def run(self, starting_generation=0):
-        logging.info("started run")
         self._generation = starting_generation
         while True:
             self._compute_fitness()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
-
             if self._continue_processing():
                 self._perform_endcycle()
-
-                logging.info("Finished generation: %s Max generations: %s" % (
-                            self._generation,
-                            self.get_max_generations()))
-                logging.info(' '.join(
-                            ["best_value: %s" % (
-                                self.fitness_list.best_value()),
-                            "median: %s" % (self.fitness_list.median()),
-                            "mean: %s" % (self.fitness_list.mean())]))
-                #temp -- remove this
                 gene = self.population[self.fitness_list.best_member()]
                 program = gene.get_program()
-                #Update codefragementsbased upon their fitness
-                logging.info(program)
-
-                #logging.debug("stddev= %s" % self.fitness_list.stddev())
                 self._generation += 1
             else:
                 break
-
-        logging.info(
-            "completed run: generations: %s, best member:%s fitness: %s" % (
-                    self._generation,
-                    self.fitness_list.best_member(),
-                    self.fitness_list.best_value()))
-
         return self.fitness_list.best_member()
 
-    #Modified Author : Spandan Veggalam 
     def create_genotypes(self,file,interpreter_Shell,crashListFile):
         self._extractProductions()
         self._prepareInitial_Population(file)
         if len(self.initial_Population)<=0:
-            """
-            if program is syntactically invalid. it is not considered; simply skipped
-            """
             return
         member_no = 0
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
                         self._max_gene_length,
                         member_no,interpreter_Shell,crashListFile)
-            #   a local copy is made because variables
-            #   can be saved within the local_bnf
             gene.local_bnf = deepcopy(self._bnf)
             gene.local_bnf['<member_no>'] = [gene.member_no]
             gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
@@ -484,24 +384,17 @@ class GrammaticalEvolution(object):
             self.population.append(gene)
             member_no += 1
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
-            """
-            for id in self.identifiers[member_no-1]:
-                if id in self.parser.identifiers: 
-                    self.parser.identifiers.remove(id)
-            gene._identifiers=self.parser.identifiers
-            """
             gene._identifiers=self.identifiers
         return True;  
 
     def _perform_endcycle(self):
-        choice=random.choice([0,1])
+        ch=choice([0,1])
         childList=[]
         while len(childList) < self._population_size:
             fitness_pool = self._evaluate_fitness()
-            if choice == 1:
+            if ch == 1:
                 child_list = self._perform_crossovers(fitness_pool)
                 childList.extend(child_list)
-                #fitness_pool.extend(child_list)
                 child_list = self._perform_mutations(fitness_pool)
                 if child_list is not None:
                     childList.extend(child_list)
@@ -511,8 +404,6 @@ class GrammaticalEvolution(object):
                     childList.extend(child_list)
                 child_list = self._perform_crossovers(fitness_pool)
                 childList.extend(child_list)
-                #fitness_pool.extend(child_list)
-            #break; #TODO remove break and make this working#re-implement mutation
         self._perform_replacements(childList)
 
     def _evaluate_fitness(self):
@@ -526,13 +417,10 @@ class GrammaticalEvolution(object):
                 flist.append(i)
                 count += 1
                 if count == total:
-                    #   Done
                     break
-
         flist1 = []
         for member_no in flist:
             flist1.append(deepcopy(self.population[member_no]))
-
         return flist1
 
     def _perform_crossovers(self, flist):
@@ -554,7 +442,6 @@ class GrammaticalEvolution(object):
 
         return child_list
 
-    #Modified Author : Spandan Veggalam 
     def _crossover(self, parent1, parent2):
         if not isinstance(parent1, Genotype):
             raise ValueError("Parent1 is not a genotype")
@@ -618,7 +505,6 @@ class GrammaticalEvolution(object):
         
         return (child1, child2) 
         
-    #Author: Spandan Veggalam
     def _mutatebinarygene(self, gene, position1, position2):
         newRandBGene = ""
         
@@ -626,7 +512,7 @@ class GrammaticalEvolution(object):
         length = position2 - position1
         if length > 0:
             while count < length * 8 :
-                newRandBGene = newRandBGene + str(random.randint(0, 1))
+                newRandBGene = newRandBGene + str(randint(0, 1))
                 count += 1        
             gene = ''.join([gene[:position1 * 8], newRandBGene , gene[(position1 + length) * 8:]])
         
@@ -637,7 +523,7 @@ class GrammaticalEvolution(object):
         mutatedList=[]
         
         for gene in mlist:
-            if random.random() < self._mutation_rate:
+            if random() < self._mutation_rate:
                 incompl=self.parseCode(gene.get_program())
                 gene.set_identifiers(self.identifiers)
                 if len(incompl.strip()) >0:
@@ -664,10 +550,7 @@ class GrammaticalEvolution(object):
                     new_g = fitness_pool[position]
                     new_g.member_no = replaced_g.member_no
                     new_g._generation = self._generation + 1
-
-                    #   update local bnf
                     new_g.local_bnf['<member_no>'] = [new_g.member_no]
-
                     self.population[new_g.member_no] = new_g
                     position += 1
                 else:
@@ -677,42 +560,23 @@ class GrammaticalEvolution(object):
         status = True
         fitl = self.fitness_list
 
-        #   check max generations first
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:
-                logging.info("stopping processing due to max generation")
                 return False
 
-        #   check target value
         if fitl.get_target_value() is not None:
             if fitl.get_fitness_type() == MAX:
                 if fitl.best_value() >= fitl.get_target_value():
-                    logging.info(' '.join([
-                    "stopping processing due to",
-                    "best value, %s, better than target value, %s" % (
-                    fitl.best_value(), fitl.get_target_value())]))
                     return False
             elif fitl.get_fitness_type() == MIN:
                 if fitl.best_value() <= fitl.get_target_value():
-                    logging.info(' '.join([
-                    "stopping processing due to",
-                    "best value, %s, better than target value, %s" % (
-                    fitl.best_value(), fitl.get_target_value())]))
                     return False
             elif fitl.get_fitness_type() == CENTER:
                 if fitl.best_value() <= fitl.get_target_value():
-                    logging.info(' '.join([
-                    "stopping processing due to",
-                    "best value, %s, better than target value, %s" % (
-                    fitl.best_value(), fitl.get_target_value())]))
                     return False
 
-        #   Finally check if there is a stopping function
         if self.stopping_criteria[STOPPING_FITNESS_LANDSCAPE] is not None:
             status = self.stopping_criteria[STOPPING_FITNESS_LANDSCAPE](
                                                         self.fitness_list)
-            logging.info(' '.join([
-                                "stopping processing due to",
-                                "fitness landscape being reached."]))
 
         return status

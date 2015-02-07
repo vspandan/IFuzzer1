@@ -1,17 +1,12 @@
 #!/usr/bin/env python
 
 from datetime import datetime
-import logging
-import random
-from re import sub
-import re
+from re import sub,split
 from string import lower
-import subprocess
-import traceback
+from subprocess import Popen,PIPE
 from marshal import load
 from os import path,remove,kill,rename
 from threading import Thread
-
 from codegen.Utilities import base10tobase2, base2tobase10
 from random import randint
 from os.path import abspath
@@ -19,31 +14,14 @@ from time import time,sleep
 
 import sys
 
-
 VARIABLE_FORMAT = '(\W+)'
-MUT_TYPE_M = 'm'
-MUT_TYPE_S = 's'
 BNF_PROGRAM = 'program'
 
-#   Positions in _timeouts
 TIMEOUT_PROG_BUILD = 0
 TIMEOUT_PROG_EXECUTE = 1
 
-DEFAULT_LOG_FILE = 'GECodeGen.log'
-DEFAULT_LOG_LEVEL = logging.INFO
-
-DEFAULT_DATABASE_PATH = "database"
-APPEND = "a+"
-READ = "r"
-
-logging.basicConfig(format='%(asctime)s %(message)s',
-                    filename=DEFAULT_LOG_FILE,
-                    level=DEFAULT_LOG_LEVEL)
-
-
 class Genotype(object):
 
-    # Modified Author : Spandan Veggalam 
     def __init__(self, start_gene_length,
                         max_gene_length,
                         member_no,interpreter_Shell,crashListFile):
@@ -59,20 +37,18 @@ class Genotype(object):
         self._timeouts = (0, 0)
         self._gene_length = start_gene_length
         self._max_gene_length = max_gene_length
-
         self.binary_gene = None
         self.decimal_gene = None
         self._generate_binary_gene(self._gene_length)
         self.generate_decimal_gene()
-
         self._position = (0, 0)
         self.keywords = None
         self._identifiers=[]
         self.errors = []
         self.interpreter_Shell=interpreter_Shell
         self.crashListFile=crashListFile
+        self.pidList=[]
     
-    # Author : Spandan Veggalam    
     def set_keys(self, keys):
         self._keys = keys
     
@@ -80,7 +56,7 @@ class Genotype(object):
         geno = []
         count = 0
         while count < length * 8:
-            geno.append(str(random.randint(0, 1)))
+            geno.append(str(randint(0, 1)))
             count += 1
         self.binary_gene = ''.join(geno)
 
@@ -119,32 +95,24 @@ class Genotype(object):
         else:
             self.local_bnf[variable_name] = [str(value)]
 
-    # Modified Author : Spandan Veggalam 
     def resolve_variable(self, variable):
         values = self.local_bnf[variable]
         value = self._select_choice(self._get_codon(), values)
-        value = re.sub('[\'()]', '', value)
+        value = sub('[\'()]', '', value)
         return str(value)
     
-    
-    # Author : Spandan Veggalam 
     def _converge(self, item):
-        fileName = abspath(DEFAULT_DATABASE_PATH + "/" + item)
+        fileName = abspath("database" + "/" + item)
         if  path.isfile(fileName): 
-            f = open(fileName, READ)
-            # TODO apply strategy to select based on its score values
+            f = open(fileName,'r')
             d = load(f)
             f.close()
-            #keys = d.keys()
-            return d[random.randint(0, len(d) - 1)]
+            return d[randint(0, len(d) - 1)]
         else:
-            print "No related mapping found for "+item
             return self.resolve_variable(item)
             
     
-    # Modified Author : Spandan Veggalam 
     def _map_variables(self, program, check_stoplist):
-        #print program
         initialMapping = 0
         def on_stoplist(item):
             status = False
@@ -155,7 +123,7 @@ class Genotype(object):
             return status
 
         self.errors = []
-        prg_list = re.split(VARIABLE_FORMAT, str(program))
+        prg_list = split(VARIABLE_FORMAT, str(program))
         while True:
 
             position = 0
@@ -190,7 +158,7 @@ class Genotype(object):
                             prg_list[position] = self.resolve_variable(item)
                         else:
                             temp=""
-                            temp_list = re.split(VARIABLE_FORMAT, self._converge(item))
+                            temp_list = split(VARIABLE_FORMAT, self._converge(item))
                             for t in temp_list:
                                 if t == "identifier" or "__id__" in t:
                                     l=len(self._identifiers)
@@ -207,45 +175,33 @@ class Genotype(object):
                 
             initialMapping = 1
             program = ''.join(prg_list)
-            prg_list = re.split(VARIABLE_FORMAT, str(program))
+            prg_list = split(VARIABLE_FORMAT, str(program))
             elapsed = datetime.now() - self.starttime
 
-            #   Reasons to fail the process
+            #TIMEOUT PARAMETER
+            """
             if check_stoplist:
-                #   Program already running
                 if elapsed.seconds > self._timeouts[TIMEOUT_PROG_EXECUTE]:
                     msg = "elapsed time greater than program timeout"
-                    logging.debug(msg)
                     self.errors.append(msg)
                     raise StandardError(msg)
-                    # continue_map = False
             else:
-                #   Preprogram
                 if elapsed.seconds > self._timeouts[TIMEOUT_PROG_BUILD]:
                     msg = "elapsed time greater than preprogram timeout"
-                    logging.debug(msg)
                     self.errors.append(msg)
                     raise StandardError(msg)
-                    # continue_map = False
 
-            """if len(program) > self._max_program_length:
-                #   Runaway process
+            if len(program) > self._max_program_length:
                 msg = "program length, %s is beyond max program length: %s" % (
                             len(program), self._max_program_length)
-                logging.debug(msg)
-                logging.debug("program follows:")
-                # logging.debug(program)
                 self.errors.append(msg)
                 self._fitness = self._fitness_fail
                 continue_map = False;
-                # continue_map = False
             """
             if continue_map is False:
                 return program
 
     def _get_codon(self):
-        #   position is the location on the gene, sequence_no is the number of
-        #   codons used since the start
         position, sequence_no = self._position
         length = len(self.decimal_gene)
         wrap = self._wrap
@@ -258,7 +214,6 @@ class Genotype(object):
             codon = self.decimal_gene[position]
             if self._extend_genotype:
                 if sequence_no == length:
-                    #   modify var directly
                     self.decimal_gene.append(codon)
                     self._gene_length = len(self.decimal_gene)
 
@@ -281,21 +236,14 @@ class Genotype(object):
         self._reset_gene_position()
         self._map_gene()
         if self._extend_genotype:
-            logging.debug("updating genotype...")
             self._update_genotype()
-            logging.debug("Finished updating genotype...")
 
         return self._fitness
 
-    # Modified Author : Spandan Veggalam 
     def _map_gene(self):
         self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
-        logging.debug("==================================================")
-        logging.debug("mapping variables to program...")
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
-        logging.debug("finished mapping variables to program...")
         self.local_bnf[BNF_PROGRAM] = program
-        logging.debug(program)
         self.execStatus=0
         
         t=Thread(target=self._execute_code,kwargs={'program':program})
@@ -307,61 +255,61 @@ class Genotype(object):
                 try:
                     import signal
                     if sys.platform != 'win32':
-                        kill(self.p.pid, signal.SIGKILL)
+                        kill(self.p.pid, 9)
                     sleep(.1)
-                except OSError:
+                except:
                     pass
         #self._execute_code(program)
-        logging.debug("==================================================")
         if self.execStatus == 1:
             elapsedTime = datetime.now() - self.starttime
             elapsed = elapsedTime.total_seconds()
         elif self.execStatus == 0:
-            logging.debug("program failed")
             program = self.local_bnf[BNF_PROGRAM]
-            logging.debug("errors: %s", (self.errors))
-            logging.debug(program)
-            logging.debug("end of failure report")
             elapsed = self._fitness_fail
         elif self.execStatus == 2:
             elapsed=self._fitness_fail*-1
         self._fitness = elapsed
-		
-    # Modified Author : Spandan Veggalam 
-    def _execute_code(self, program):
+        for pid in self.pidList:
+            try:
+                if sys.platform != 'win32':
+                    kill(pid, 9)
+            except:
+                pass
 
+    def _execute_code(self, program):
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program    
         
         if len(program) == 0:
             return 0
         else:                
-            #print "executing \t" + program
-            fi=str(int(time()*1000))
-            f=open("/tmp/"+fi,"a+")
-            f.write(program)
-            f.close()
-            #self.p = subprocess.Popen([self.interpreter_Shell+" -f  "+abspath("shell.js")+ " /tmp/" + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            self.p = subprocess.Popen([self.interpreter_Shell+" -f  /tmp/" + fi], stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-            out, err = self.p.communicate()
-            if 'SyntaxError' in err or 'Syntax error' in err:
-                
-                self.local_bnf[BNF_PROGRAM]=""
-                self.execStatus = 0 
-                remove("/tmp/"+fi)
-                """ Adjust indentation and use this with shell file. TODO this uncomment above popen statment
-                print "err:"+err
-                elif self.p.returncode == 9:
-                    f=open(self.crashListFile,"a+")
-                    print abspath("../CrashedFiles_Auto/"+fi)
-                    rename("/tmp/"+fi,"../CrashedFiles_Auto/"+fi)
-                    self.execStatus=2
-                    f.write("crash: "+str("../CrashedFiles_Auto/"+fi)+"\n")
-                    f.close()
-                """
-            else:
-                self.execStatus=1
-                remove("/tmp/"+fi)
+            try:
+                fi=str(int(time()*1000))
+                f=open("/tmp/"+fi,"a+")
+                f.write(program)
+                f.close()
+                self.p = Popen([self.interpreter_Shell+" -f  /tmp/" + fi], stdout=PIPE, stderr=PIPE, shell=True)
+                self.pidList.append(self.p.pid)
+                out, err = self.p.communicate()
+                if 'SyntaxError' in err or 'Syntax error' in err:
+                    self.local_bnf[BNF_PROGRAM]=""
+                    self.execStatus = 0 
+                    remove("/tmp/"+fi)
+                    """ Adjust indentation and use this with shell file. TODO this uncomment above popen statment
+                    print "err:"+err
+                    elif self.p.returncode == 9:
+                        f=open(self.crashListFile,"a+")
+                        print abspath("../CrashedFiles_Auto/"+fi)
+                        rename("/tmp/"+fi,"../CrashedFiles_Auto/"+fi)
+                        self.execStatus=2
+                        f.write("crash: "+str("../CrashedFiles_Auto/"+fi)+"\n")
+                        f.close()
+                    """
+                else:
+                    self.execStatus=1
+                    remove("/tmp/"+fi)
+            except:
+                pass
 
     def get_binary_gene_length(self):
        return self._gene_length * 8

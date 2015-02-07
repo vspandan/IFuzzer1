@@ -1,34 +1,16 @@
 #!/usr/bin/env python
 
-from Tix import ROW
 from Tkconstants import DISABLED, NORMAL
-from Tkinter import BooleanVar, Checkbutton, IntVar
-from Tkinter import Button
-from Tkinter import Entry
-from Tkinter import Frame
-from Tkinter import Label
-from Tkinter import OptionMenu
-from Tkinter import Radiobutton
-from Tkinter import StringVar
-from Tkinter import Tk
-from Tkinter import W
-from os import listdir
-from os import system
+from Tkinter import BooleanVar, Checkbutton, IntVar, Button, Entry, Frame, Label, OptionMenu, Radiobutton, StringVar, Tk, W
+from os import listdir, system
 from os.path import isfile, join, abspath, sys
-from posix import mkdir
-from tkFileDialog import askdirectory
-from tkFileDialog import askopenfilename
+from tkFileDialog import askdirectory, askopenfilename
 from tkMessageBox import showerror
 
 from codegen.fitness import FitnessElites, FitnessTournament
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
-import threading
-from datetime import datetime
-import multiprocessing
-import os
 
-import sys
 FILECOUNT = 0
 EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'user.js', 'sta.js',
@@ -104,16 +86,11 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
                             gene = ges.population[ges.fitness_list.best_member()]
                             generatedPrg= gene.get_program()
                             print generatedPrg
-                            if gene.get_fitness() != gene.get_fitness_fail():
+                            if gene.get_fitness() != gene.get_fitness_fail() :
                                 newFile=targetDirectory+"/"+str(filName)+".js"
                                 f=open(newFile,'w')
                                 f.write(generatedPrg)
                                 f.close
-                                #frame.quit()
-                                #sys.exit()
-
-
-                            
                     except Exception as e:
                         print "Skipping "+fil+" due to exception while processing"
                         print e
@@ -125,7 +102,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
             for f in listdir(subDir) :
                 fi=join(subDir,f)
                 if isfile(fi) and f.endswith(".js") and f not in EXCLUDED :
-                    FILECOUNT = len(os.listdir(targetDirectory))    
+                    FILECOUNT = len(listdir(targetDirectory))    
                     FILECOUNT+=1
                     process(fi,FILECOUNT)
         frame.quit()
@@ -147,7 +124,6 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
     
     label= Label(frame,text="GENOTYPE PARAMETERS")
     label.grid(row = 3)       
-    
     
     label2= Label(frame,text="Start Gene Length",width=25).grid(row = 5)
     start_gene_length=Entry(frame,width=20)
@@ -320,6 +296,3 @@ def listAllTestCasesDir(testCasesDir):
             if not isfile(fi):
                 TestCaseSubDirs.append(fi)
                 listAllTestCasesDir(fi)
-        
-        
-        

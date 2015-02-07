@@ -23,6 +23,7 @@ class AntlrParser(object):
         self.out=""
         self.p=None
         self.err=None
+        self.pidList=[]
 
     def genCodeFrag(self, parsetree, population_size,nT,subTree = None,nonTerminal=None,INCLUDE_NT_LIST =None):
         population = []
@@ -119,33 +120,49 @@ class AntlrParser(object):
         
     def parseTree(self,input,ind=False):
         if len(input):
-            curdir1 = getcwd()
-            chdir("langparser")
-            if ind:
-                fi="/tmp/"+str(int(time.time()*1000))
-                f=open(fi,"a+")
-                f.write(input)
-                f.close()
-                cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fi
-            else:
-                cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+input 
-            t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
-            t.start()
-            t.join(20)
-            if t.isAlive():
-                if self.p is not None:
-                    print "killing process ("+str(self.p.pid)+")"
+            try:
+                curdir1 = getcwd()
+                chdir("langparser")
+                if ind:
+                    fi="/tmp/"+str(int(time.time()*1000))
+                    f=open(fi,"a+")
+                    f.write(input)
+                    f.close()
+                    cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fi
+                    #self.run_cmd(cmd)
+                    
+                else:
+                    cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+input 
+                    #self.run_cmd(cmd)
+                
+                t=threading.Thread(target=self.run_cmd,kwargs={'cmd':cmd })
+                t.start()
+                t.join(3)
+                if t.isAlive():
+                    if self.p is not None:
+                        self.pidList.append(self.p.pid)
+                        print "killing process ("+str(self.p.pid)+")"
+                        try:
+                            import signal
+                            if sys.platform != 'win32':
+                                kill(self.p.pid, signal.SIGTERM)
+                                #self.p.kill()
+                            time.sleep(.1)
+                        except :
+                            print
+                for pid in self.pidList:
                     try:
-                        import signal
                         if sys.platform != 'win32':
-                            kill(self.p.pid, signal.SIGKILL)
-                        time.sleep(.1)
-                    except OSError:
+                            kill(self.p.pid, 9)
+                    except:
                         pass
-            chdir(curdir1)
-            return self.out
-        return ""
-
+                chdir(curdir1)
+                if ind:
+                    remove(fi)
+                return self.out
+            except:
+                return ""
+        return ""        
                 
     def extractCodeFrag(self, fileName):
         parseTr=self.parseTree(fileName)
