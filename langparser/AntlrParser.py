@@ -1,3 +1,4 @@
+from py4j.java_gateway import JavaGateway  
 from os import remove, getcwd, kill, chdir
 
 from random import choice, randint
@@ -15,6 +16,7 @@ class AntlrParser(object):
         self.p=None
         self.err=None
         self.pidList=[]
+        self.input=""
 
     def genCodeFrag(self, parsetree, population_size,nT,subTree = None,nonTerminal=None,INCLUDE_NT_LIST =None):
         population = []
@@ -103,45 +105,14 @@ class AntlrParser(object):
                 if "<<<" in v:
                     nT.append(v.replace("<<<","").replace(":","").strip())
         return nT
-
-    def run_cmd(self,cmd):
-        self.p = Popen([cmd], stdout=PIPE, stderr=PIPE, shell=True)
-        self.out, self.err = self.p.communicate()
         
     def parseTree(self,input,ind=False):
-        if len(input):
-            curdir1 = getcwd()
-            chdir("langparser")
-            if ind:
-                fi="/tmp/"+str(int(time()*1000))
-                f=open(fi,"a+")
-                f.write(input)
-                f.close()
-                cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+fi
-                #self.run_cmd(cmd)
-            else:
-                cmd="java -cp \".:../lib/antlr-4.5-rc-2-complete.jar\" AntlrParser "+input 
-                #self.run_cmd(cmd)
-            t=Thread(target=self.run_cmd,kwargs={'cmd':cmd })
-            t.start()
-            t.join(2)
-            if t.isAlive():
-                if self.p is not None:
-                    self.pidList.append(self.p.pid)
-                    print "killing process ("+str(self.p.pid)+")"
-                    try:
-                        kill(self.p.pid, 9)
-                        sleep(.1)
-                    except:
-                        return ""
-            for pid in self.pidList:
-                try:
-                    kill(self.p.pid, 9)
-                except:
-                    return ""
-            chdir(curdir1)
-            if ind:
-                remove(fi)
+        if len(input)>0:
+            gateway = JavaGateway()
+            parser = gateway.entry_point.getParser()
+            output = parser.parseTree(input,ind) 
+            gateway.close()
+            return output
         return self.out
                 
     def extractCodeFrag(self, fileName):

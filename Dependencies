@@ -34,3 +34,7 @@ https://wiki.mozilla.org/JavaScript:New_to_SpiderMonkey
             self._errHandler.recover(self, re)
             if isinstance( re, NoViableAltException ):
                     raise NoViableAltException(self)
+
+
+javac -cp "../lib/*" *.java
+java -cp ".:../lib/*" AntlrParser
