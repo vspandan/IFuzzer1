@@ -12,16 +12,10 @@ from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 
 FILECOUNT = 0
-EXCLUDED = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
-                    'user.js', 'sta.js',
-                    'test262-browser.js', 'test262-shell.js',
-                    'test402-browser.js', 'test402-shell.js',
-                    'testBuiltInObject.js', 'testIntl.js',
-                    'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
 TestCaseSubDirs=[]
 #Author: Spandan Veggalam
-def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
+def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFiles,nTInvlvdGenProcess):
     listAllTestCasesDir(testCasesDir)   
     def selectGrammarFIle():
         Tk().withdraw()        
@@ -77,10 +71,9 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
                     ges.dynamic_mutation_rate(dynM.get())
                     ges.dynamic_crossover_rate(dynM1.get())
                     
-                    
                     try:  
                         print "Processing ::" + fil
-                        if ges.create_genotypes(fil,interpreter,crashListFile):
+                        if ges.create_genotypes(fil,interpreter,crashListFile,nTInvlvdGenProcess):
                             ges.run()
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]
@@ -101,7 +94,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
         for subDir in TestCaseSubDirs :
             for f in listdir(subDir) :
                 fi=join(subDir,f)
-                if isfile(fi) and f.endswith(".js") and f not in EXCLUDED :
+                if isfile(fi) and f.endswith(".js") and f not in excludeFiles :
                     FILECOUNT = len(listdir(targetDirectory))    
                     FILECOUNT+=1
                     process(fi,FILECOUNT)
@@ -224,7 +217,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile):
     
     label15_2= Label(frame,text="Crossover Rate",width=25).grid(row = 12,column=2)
     set_crossover_rate=Entry(frame,width=20)
-    set_crossover_rate.insert(0,"0.2")
+    set_crossover_rate.insert(0,"0.4")
     set_crossover_rate.grid(row=12,column=3)
     set_crossover_rate.config(state=DISABLED)
     

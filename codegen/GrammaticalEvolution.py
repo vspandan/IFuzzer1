@@ -18,8 +18,6 @@ from codegen.Genotypes import Genotype
 STOPPING_MAX_GEN = 'max_generations'
 STOPPING_FITNESS_LANDSCAPE = 'fitness_landscape'
 
-INCLUDE_NT_LIST=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
-
 class GrammaticalEvolution(object):
 
     def __init__(self):
@@ -36,7 +34,7 @@ class GrammaticalEvolution(object):
         self.fitness_selections = []
         self.replacement_selections = []        
         
-        self._crossover_rate = 0.2
+        self._crossover_rate = 0.4
         self._children_per_crossover = 2
         self._mutation_type = 's'
         self._mutation_rate = 0.02
@@ -85,8 +83,8 @@ class GrammaticalEvolution(object):
     
     def _prepareInitial_Population (self,fileName):
             self.parseRepr=self.parser.parseTree(path.abspath(fileName))
-            if self.parseRepr is not None and len(self.parseRepr)>0 and '<missing' not in self.parseRepr:
-                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr.split()),None,None,INCLUDE_NT_LIST)
+            if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
+                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr.split()),None,None,self.nT_Invld_Gen_Process)
             else:
                 return
 
@@ -362,12 +360,14 @@ class GrammaticalEvolution(object):
                 break
         return self.fitness_list.best_member()
 
-    def create_genotypes(self,file,interpreter_Shell,crashListFile):
+    def create_genotypes(self,file,interpreter_Shell,crashListFile,nTInvlvdGenProcess):
+        self.nT_Invld_Gen_Process=nTInvlvdGenProcess
         self._extractProductions()
         self._prepareInitial_Population(file)
         if len(self.initial_Population)<=0:
             return
         member_no = 0
+        
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
                         self._max_gene_length,
@@ -466,7 +466,7 @@ class GrammaticalEvolution(object):
         child2ParseTree=self.parseCode(child2Prg)
         non_term2=self.parser.extractNonTerminal(child1ParseTree.split())
 
-        commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in INCLUDE_NT_LIST)]
+        commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
         
         if len(commonNonTerm) > 0:
             selectedNt= choice(commonNonTerm)
