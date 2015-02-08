@@ -116,8 +116,8 @@ class AntlrParser(object):
         return self.out
                 
     def extractCodeFrag(self, fileName):
-        parseTr=self.parseTree(fileName)
         print fileName
+        parseTr=self.parseTree(fileName)
         d = defaultdict(list)
         if len(parseTr) >0:
             position = 1
@@ -169,3 +169,6 @@ class AntlrParser(object):
                 if temp == 0 and indicator:
                     indicator = False
             return subcode.strip()
+if __name__=='__main__':
+    a= AntlrParser()
+    print a.parseTree("/home/spandan/geinterpreterfuzz/mozillaJSTestSuite/ecma_3/RegExp/perlstress-001.js")

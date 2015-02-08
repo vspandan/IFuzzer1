@@ -288,7 +288,7 @@ class Genotype(object):
                 f=open("/tmp/"+fi,"a+")
                 f.write(program)
                 f.close()
-                self.p = Popen([self.interpreter_Shell+" -f  /tmp/" + fi], stdout=PIPE, stderr=PIPE, shell=True)
+                self.p = Popen([self.interpreter_Shell+" -c -w -f /tmp/" + fi], stdout=PIPE, stderr=PIPE, shell=True)
                 self.pidList.append(self.p.pid)
                 out, err = self.p.communicate()
                 if 'SyntaxError' in err or 'Syntax error' in err:

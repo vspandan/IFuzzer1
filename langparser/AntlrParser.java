@@ -9,16 +9,11 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import py4j.GatewayServer;
+import py4j.Py4JNetworkException;
 class AParser{
-	int DEFAULT_SCORE = 0;
-	int count = 0;
-	int pos = 0;
-
-	boolean pri = false;
+	boolean timeout ;
 
 	String parseTr = "";
-	String DEFAULT_FILE = "temp";
-	String DEFAULT_DATABASE_PATH = "database";
 	String[] rules = null;
 
 	HashMap<String, String> m = null;
@@ -33,6 +28,7 @@ class AParser{
 		non_Terminals = new ArrayList<String>();
 		m = new HashMap<String, String>();
 		identifiers = new ArrayList<String>();
+		timeout = false;
 	}
 
 	public String parseTree(String input, boolean extractCF) {
@@ -58,25 +54,28 @@ class AParser{
 			final ECMAScriptParser.ProgramContext pContext[]= new ECMAScriptParser.ProgramContext [1];
 
 
-			Thread t=new Thread(){
+			Thread t=new Thread(new Runnable(){
 				public void run(){
-					pContext[0] = parser.program();
+					ECMAScriptParser.ProgramContext pContext = parser.program();
+					if (pContext!=null){
+						if (pContext.children != null) 
+							selectSubtrees(null, pContext.getChild(0), true, false);
+					}	
 				}
-			};
+			});
 			t.start();
-			t.join(20000);
+			t.join(5000);//5seconds
+
 			if (t.isAlive()) {
-         		t.stop();
+				t.stop();
+				timeout=true;
         	}
-			if (pContext[0]!=null){
-				if (pContext[0].children != null) 
-					selectSubtrees(null, pContext[0].getChild(0), true, false);
-			}
-			
 		} catch (Exception e) {
 
 		}
 		finally{
+			if (timeout)
+				return "";
 			return parseTr;
 		}
 	}
@@ -84,6 +83,7 @@ class AParser{
 	private void selectSubtrees(String nonT, ParseTree s, boolean extractCF,
 			boolean isIdentifier) {
 		try {
+
 			int childCount = s.getChildCount();
 			if (childCount > 0) {
 				String nTerminal = rules[((ParserRuleContext) s).getRuleIndex()];
@@ -105,7 +105,6 @@ class AParser{
 				}
 			}
 		} catch (Exception e) {
-
 		}
 	}
 }
@@ -118,8 +117,15 @@ class AntlrParser {
 
 	public static void main(String[] args) {
 		AntlrParser a = new AntlrParser();
-    	GatewayServer gatewayServer = new GatewayServer(a); 
-    	gatewayServer.start();
-		//System.out.println(a.parseTree(args[0],true));	
+		try {
+    		GatewayServer gatewayServer = new GatewayServer(a); 
+    		gatewayServer.start();
+			//System.out.println(a.parseTree(args[0],true));	
+    	}
+    	catch(Py4JNetworkException e){
+    		System.out.println("\nJava Bridge Connection Failed, Another instance of java bridge is running. Continue\n");
+    	}
+    	catch(Exception e){
+    	}
 	}
 }
