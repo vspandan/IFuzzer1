@@ -419,19 +419,16 @@ def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shel
 
     results = None
     try:
-        """
-    	results = ResultsSink(options, len(skip_list) + len(test_list), crashListFile, typeErrorFlist)
-        for t in skip_list:
-            results.push(NullTestOutput(t))
-        run_tests(options, test_list, results)
-        """
         while True:
             location = os.path.join(os.path.dirname(__file__), targetDirectory)
             runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,crashListFile,excludeFiles,nTInvlvdGenProcess)
             if os.path.exists(location):
-                test_list=manifest.load(location,  requested_paths, excluded_paths, xul_tester,'',True)
-                results = ResultsSink(options, len(test_list), crashListFile, typeErrorFlist)
+                test_list1=manifest.load(location,  requested_paths, excluded_paths, xul_tester,'',True)
+                results = ResultsSink(options, len(skip_list) + len(test_list) + len(test_list1), crashListFile, typeErrorFlist)
+                for t in skip_list:
+                    results.push(NullTestOutput(t))
                 run_tests(options, test_list, results)
+                run_tests(options, test_list1, results)
             break
     finally:
         os.chdir(curdir) 
