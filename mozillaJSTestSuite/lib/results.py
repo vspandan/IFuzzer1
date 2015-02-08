@@ -64,11 +64,13 @@ class TestResult:
         expected_rcs = []
         if test.path.endswith('-n.js'):
             expected_rcs.append(3)
+        """
         if "TypeError" in output.err:
             f=open(typeErrorFlist,"a+")
             f.write("TypeError: "+str(test)+"\n")
             f.close()
             result = cls.CRASH
+        """
         if "segmentation" in output.err or 'sigsegv' in output.err or 'Segmentation' in output.err:
             f=open(crashListFile,"a+")
             f.write("sigsegv: "+str(test)+"\n")
