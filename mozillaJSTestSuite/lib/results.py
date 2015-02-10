@@ -52,7 +52,8 @@ class TestResult:
         self.results = results
 
     @classmethod
-    def from_output(cls, output, crashListFile, typeErrorFlist):
+    #def from_output(cls, output, crashListFile, typeErrorFlist):
+    def from_output(cls, output):
         test = output.test
         result = None          # str:      overall result, see class-level variables
         results = []           # (str,str) list: subtest results (pass/fail, message)
@@ -64,19 +65,6 @@ class TestResult:
         expected_rcs = []
         if test.path.endswith('-n.js'):
             expected_rcs.append(3)
-        """
-        if "TypeError" in output.err:
-            f=open(typeErrorFlist,"a+")
-            f.write("TypeError: "+str(test)+"\n")
-            f.close()
-            result = cls.CRASH
-        """
-        if "segmentation" in output.err or 'sigsegv' in output.err or 'Segmentation' in output.err:
-            f=open(crashListFile,"a+")
-            f.write("sigsegv: "+str(test)+"\n")
-            f.close()
-            result = cls.CRASH
-        
         for line in out.split('\n'):
             if line.startswith(' FAILED!'):
                 failures += 1
@@ -95,9 +83,6 @@ class TestResult:
             if rc == 3:
                 result = cls.FAIL
             else:
-                f=open(crashListFile,"a+")
-                f.write("crash: "+str(test)+"\n")
-                f.close()
                 result = cls.CRASH
         
         else:
@@ -105,8 +90,9 @@ class TestResult:
                 result = cls.PASS
             else:
                 result = cls.FAIL
-
-        return cls(test, result, results)
+        if result==cls.CRASH:
+            return cls(test, result, results),str(test)
+        return cls(test, result, results),None
 
 class ResultsSink:
     def __init__(self, options, testcount, crashListFile, typeErrorFlist):
@@ -140,9 +126,15 @@ class ResultsSink:
             self.counts['SKIP'] += 1
             self.n += 1
         else:
-            result = TestResult.from_output(output, self.crashListFile, self.typeErrorFlist)
+            #result = TestResult.from_output(output, self.crashListFile, self.typeErrorFlist)
+            result,crashFile = TestResult.from_output(output)
+            if crashFile is not None:
+                f=open(self.crashListFile,"a+")
+                f.write(crashFile+"\n")
+                f.close()
             tup = (result.result, result.test.expect, result.test.random)
             dev_label = self.LABELS[tup][1]
+            
             if output.timed_out:
                 dev_label = 'TIMEOUTS'
             self.groups.setdefault(dev_label, []).append(result.test.path)

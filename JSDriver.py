@@ -103,7 +103,7 @@ def parse_args(js_shell_path=None):
                           default=max(1, get_cpu_count()),
                           help='Number of tests to run in parallel'
                           ' (default %default)')
-    harness_og.add_option('-t', '--timeout', type=float, default=150.0,
+    harness_og.add_option('-t', '--timeout', type=float, default=30.0,
                           help='Set maximum time a test is allows to run'
                           ' (in seconds).')
     harness_og.add_option('-a', '--args', dest='shell_args', default='',
