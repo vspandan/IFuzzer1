@@ -318,14 +318,13 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
         print ("Finalizing: Writing to file")
         for key in codeFrags2.keys():
             fileName = "database" + "/" + key
-            f1 = open(fileName, 'wb')
-            f2 = open(fileName, 'rb')
-            if os.stat(fileName).st_size == 0:
-                temp=codeFrags2.get(key)
-            else:
+            temp=[]
+            if isfile(fileName):
+                f2 = open(fileName, 'rb')
                 temp=load(f2)
                 f2.close()
-                temp = temp + codeFrags2.get(key)
+            temp = temp + codeFrags2.get(key)
+            f1 = open(fileName, 'wb')
             dump(temp, f1)
             f1.close()
         print (datetime.datetime.now())

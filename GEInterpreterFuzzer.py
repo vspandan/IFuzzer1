@@ -11,7 +11,7 @@ JS_SHELL_PATH1="/home/spandan/js/js-1.7.0/js/src/Linux_All_DBG.OBJ/js"
 JS_SHELL_PATH2="/home/spandan/js/js-1.8.0/src/Linux_All_DBG.OBJ/js"
 JS_SHELL_PATH3="/home/spandan/js/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH4="/home/spandan/js/js-17.0.0/js/src/shell/js17"
-JS_SHELL_PATH5="/home/spandan/js/js-24.2.0/js/src/shell/js24"
+JS_SHELL_PATH5="/home/spandan/js/js-24.2.0/js/src/build_san/dist/bin/js24"
 JS_SHELL_PATH6="/home/spandan/js/js-31.2.0/js/src/js/src/shell/js"
 JS_SHELL_PATH7="/home/spandan/js/js_03f3c7efaa5e/src/shell/js"
 JS_SHELL_PATH8="/home/spandan/js/js_f3e58c264932/src/shell/js"
@@ -37,6 +37,7 @@ TypeErrorList8="TypeErrorList8"
 TargetDirectory =  "generatedTestCases"
 TestCasesDirectory= "testsamples"
 
+CREATE_FRAG_POOL=False
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'user.js', 'sta.js',
                     'test262-browser.js', 'test262-shell.js',
@@ -44,7 +45,8 @@ EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
-INCLUDE_NT=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
+INCLUDE_NT=None
+#INCLUDE_NT=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
 
 
 def options(choice):
@@ -90,14 +92,17 @@ if __name__ == "__main__":
         else:
              print "Answer must be 'Y' or 'N'"
     
-    main(TestCasesDirectory,TargetDirectory,CrashListFile,TypeErrorList,JS_SHELL_PATH,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    main(TestCasesDirectory,TargetDirectory,CrashListFile6,TypeErrorList6,JS_SHELL_PATH6,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    #main(TestCasesDirectory,TargetDirectory,CrashListFile4,TypeErrorList4,JS_SHELL_PATH4,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    """
     main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_PATH1,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_PATH2,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     main(TestCasesDirectory,TargetDirectory,CrashListFile3,TypeErrorList3,JS_SHELL_PATH3,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     main(TestCasesDirectory,TargetDirectory,CrashListFile4,TypeErrorList4,JS_SHELL_PATH4,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     main(TestCasesDirectory,TargetDirectory,CrashListFile5,TypeErrorList5,JS_SHELL_PATH5,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     main(TestCasesDirectory,TargetDirectory,CrashListFile6,TypeErrorList6,JS_SHELL_PATH6,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
-    main(TestCasesDirectory,TargetDirectory,CrashListFile3,TypeErrorList7,JS_SHELL_PATH7,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
-    main(TestCasesDirectory,TargetDirectory,CrashListFile3,TypeErrorList8,JS_SHELL_PATH8,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    main(TestCasesDirectory,TargetDirectory,CrashListFile7,TypeErrorList7,JS_SHELL_PATH7,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    main(TestCasesDirectory,TargetDirectory,CrashListFile8,TypeErrorList8,JS_SHELL_PATH8,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    """
     print datetime.now()
  

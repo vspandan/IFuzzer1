@@ -87,7 +87,7 @@ class AParser{
 			int childCount = s.getChildCount();
 			if (childCount > 0) {
 				String nTerminal = rules[((ParserRuleContext) s).getRuleIndex()];
-				parseTr = parseTr + "<<<" + nTerminal + ": ";
+				parseTr = parseTr + "<" + nTerminal + ">";
 				non_Terminals.add(nTerminal);
 				if (nTerminal.equals("identifier")) {
 					identifiers.add(s.getText());
@@ -95,7 +95,7 @@ class AParser{
 				}
 				for (int i = 0; i < childCount; i++)
 					selectSubtrees(nonT, s.getChild(i), extractCF, isIdentifier);
-				parseTr = parseTr + " >>> ";
+				parseTr = parseTr + "</" + nTerminal + ">";
 			} else {
 				if (isIdentifier && extractCF) {
 					parseTr = parseTr + "__id__"+s.getText();

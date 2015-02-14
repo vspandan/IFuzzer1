@@ -11,6 +11,8 @@ from codegen.fitness import FitnessElites, FitnessTournament
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 
+from langparser.AntlrParser import AntlrParser
+
 FILECOUNT = 0
 
 TestCaseSubDirs=[]
@@ -98,6 +100,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
                     FILECOUNT = len(listdir(targetDirectory))    
                     FILECOUNT+=1
                     process(fi,FILECOUNT)
+                    #print fi
         frame.quit()
         
     root = Tk()
@@ -279,9 +282,10 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
     wrapRB2.grid(row=0,column=2)
     wrapRB1.select()
     
-    startBtn=Button(frame, text='START', command=initialize).grid(row=18, column=1)
-    closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
-    frame.mainloop()    
+    #startBtn=Button(frame, text='START', command=initialize).grid(row=18, column=1)
+    #closeBtn=Button(frame, text='EXIT', command=frame.quit).grid(row=18, column=2)
+    initialize()
+    #frame.mainloop()    
 
 def listAllTestCasesDir(testCasesDir):
         for f in listdir(testCasesDir):

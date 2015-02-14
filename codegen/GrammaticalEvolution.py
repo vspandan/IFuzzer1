@@ -84,7 +84,7 @@ class GrammaticalEvolution(object):
     def _prepareInitial_Population (self,fileName):
             self.parseRepr=self.parser.parseTree(path.abspath(fileName))
             if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
-                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr.split()),None,None,self.nT_Invld_Gen_Process)
+                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process)
             else:
                 return
 
@@ -384,7 +384,7 @@ class GrammaticalEvolution(object):
             self.population.append(gene)
             member_no += 1
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
-            gene._identifiers=self.identifiers
+            gene._identifiers=self.identifiers[member_no-1]
         return True;  
 
     def _perform_endcycle(self):
@@ -462,11 +462,14 @@ class GrammaticalEvolution(object):
         child2Prg=child2.get_program()
         
         child1ParseTree=self.parseCode(child1Prg)
-        non_term1=self.parser.extractNonTerminal(child1ParseTree.split())
+        non_term1=self.parser.extractNonTerminal(child1ParseTree)
         child2ParseTree=self.parseCode(child2Prg)
-        non_term2=self.parser.extractNonTerminal(child1ParseTree.split())
+        non_term2=self.parser.extractNonTerminal(child1ParseTree)
 
-        commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
+        if self.nT_Invld_Gen_Process is not None:
+            commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
+        else:
+            commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
         
         if len(commonNonTerm) > 0:
             selectedNt= choice(commonNonTerm)
@@ -495,8 +498,8 @@ class GrammaticalEvolution(object):
         incompl1=self.parseCode(child1Prg_)
         incompl2=self.parseCode(child2Prg_)
         
-        child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,1,self.parser.extractNonTerminal(incompl1.split()))
-        child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,1,self.parser.extractNonTerminal(incompl2.split()))
+        child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,1,self.parser.extractNonTerminal(incompl1))
+        child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,1,self.parser.extractNonTerminal(incompl2))
 
         child1.set_binary_gene(child1_binary)
         child1.generate_decimal_gene()
@@ -527,7 +530,7 @@ class GrammaticalEvolution(object):
                 incompl=self.parseCode(gene.get_program())
                 gene.set_identifiers(self.identifiers)
                 if len(incompl.strip()) >0:
-                    gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl.split()))
+                    gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl))
                     position1=gene.local_bnf['CodeFrag'].find(selectedNt)
                     position2=position1+len(selectedNt)  
                     if position1 is not None and position2 is not None:
