@@ -74,13 +74,14 @@ class AntlrParser(object):
                         selectedNt=nonTerminal
                         indices = [i for i, x in enumerate(nT) if x == nonTerminal]
                         selected=choice(indices)+1
-                        
-                    root = ElementTree.fromstring(input)
-                    if root.text is None:
+                    try:   
+                        root = ElementTree.fromstring(input)
+                        if root.text is None:
+                            self.out=""
+                        else:
+                            self.out=root.text
+                    except:
                         self.out=""
-                    else:
-                        self.out=root.text
-                    
                     self.printChild(root,selectedNt,selected)
                     population.append(self.out)
                     identiferList.append(self.identifiers)
@@ -100,8 +101,11 @@ class AntlrParser(object):
     def extractNonTerminal(self,input):        
         if len(input)>0:
             self.nonTerminals=[]
-            root =ElementTree.fromstring(input)
-            self.extractNT(root)
+            try:
+                root =ElementTree.fromstring(input)
+                self.extractNT(root)
+            except:
+                pass
         return self.nonTerminals
 
     def extractIdent(self,root):
@@ -132,10 +136,10 @@ class AntlrParser(object):
                 
     def extractCodeFrag(self, fileName):
         print fileName
-        root = ElementTree.fromstring(self.parseTree(fileName))
-        self.extractNTandText(root)
-        d = defaultdict(list)
-        if root is not None:
+        try:
+            root = ElementTree.fromstring(self.parseTree(fileName))
+            self.extractNTandText(root)
+            d = defaultdict(list)
             for position in range(len(self.nonTerminals)):
                 nt=self.nonTerminals[position]
                 d1 = []
@@ -146,7 +150,7 @@ class AntlrParser(object):
                     else:
                         d1.append(code)
                         d[str(nt)] = d1
-        else:
+        except :
             d=None
         if self.que is not None:
             self.que.put(d)
