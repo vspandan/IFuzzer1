@@ -156,7 +156,26 @@ class AntlrParser(object):
             self.que.put(d)
         if self.que is None:
             return d
-                
+    
+    def extractCodeFrag_(self, fileName):
+            root = ElementTree.fromstring(self.parseTree(fileName,True))
+            self.extractNTandText(root)
+            d = defaultdict(list)
+            for position in range(len(self.nonTerminals)):
+                nt=self.nonTerminals[position]
+                d1 = []
+                code = self.values[position]
+                if len(code) > 0:
+                    if d.has_key(nt):
+                        d.get(nt).append(code)
+                    else:
+                        d1.append(code)
+                        d[str(nt)] = d1
+            if self.que is not None:
+                self.que.put(d)
+            if self.que is None:
+                return d
+                     
     
 if __name__=='__main__':
     a= AntlrParser()

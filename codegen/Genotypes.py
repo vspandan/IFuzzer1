@@ -137,7 +137,10 @@ class Genotype(object):
                     continue
         
                 elif "__id__" in item:
-                    prg_list[position]= item.replace("__id__","")
+                    t= item.replace("__id__","")
+                    if t=="arguments":
+                        t="id"
+                    prg_list[position]=t
                     position += 1
                     continue
                 elif item in ['StringLiteral','RegularExpressionLiteral']:
@@ -153,7 +156,7 @@ class Genotype(object):
                 elif item in self._keys:
                     if check_stoplist and position >= 0:
                         #print item
-                        if initialMapping == 0:
+                        if initialMapping < 2:
 
                             prg_list[position] = self.resolve_variable(item)
                         else:
@@ -165,6 +168,8 @@ class Genotype(object):
                                     if l>0:
                                         ident=str(self._identifiers[randint(0,l-1)])
                                         t= ident.replace("__id__","")
+                                        if t=="arguments":
+                                            t="id"
                                     else:
                                         t="id"
                                 temp=temp+" "+t
@@ -173,7 +178,7 @@ class Genotype(object):
                         #print prg_list[position]
                 position += 1
                 
-            initialMapping = 1
+            initialMapping += 1
             program = ''.join(prg_list)
             prg_list = split(VARIABLE_FORMAT, str(program))
             elapsed = datetime.now() - self.starttime

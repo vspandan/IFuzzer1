@@ -480,8 +480,8 @@ class GrammaticalEvolution(object):
         subString1=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
         subString2=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
         
-        subString1=sub(r'\s+', ' ',subString1)
-        subString2=sub(r'\s+', ' ',subString2)
+        #subString1=sub(r'\s+', ' ',subString1)
+        #subString2=sub(r'\s+', ' ',subString2)
         if child1Prg.find(subString2) <0 or child2Prg.find(subString1) <0:
             return (child1, child2) 
         

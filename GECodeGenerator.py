@@ -12,6 +12,7 @@ from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 
 from langparser.AntlrParser import AntlrParser
+from marshal import load,dump
 
 FILECOUNT = 0
 
@@ -86,6 +87,20 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
                                 f=open(newFile,'w')
                                 f.write(generatedPrg)
                                 f.close
+                                a=AntlrParser()
+                                codeFrags2 = a.extractCodeFrag_(generatedPrg)
+                                for key in codeFrags2.keys():
+                                	if key != 'arguments':
+	            						fileN = "database" + "/" + key
+	            						temp=[]
+	            						if isfile(fileN):
+		            						f2 = open(fileN, 'r')
+		            						temp=load(f2)
+		            						f2.close()
+	            						temp = temp + codeFrags2.get(key)
+	            						f1 = open(fileN, 'wb')
+	            						dump(temp, f1)
+	            						f1.close()
                     except Exception as e:
                         print "Skipping "+fil+" due to exception while processing"
                         print e
