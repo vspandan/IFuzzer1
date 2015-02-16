@@ -1,1 +1,0 @@
-function testcase ( ) { try { foo ( foo ) ; } catch ( function ) { foo = testcase ( testcase ) ; foo = ' Error ' ; } return foo ( ) ; } runTestCase ( testcase ) ;

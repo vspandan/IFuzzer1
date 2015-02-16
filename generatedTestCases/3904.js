@@ -1,1 +1,0 @@
-var BUGNUMBER = 404734 ; var summary = 'Object destructuring shorthand' ; var actual = '' ; var expect = '' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; var o = { } ; var {p , q } = o ; expect = '42,true' ; actual = p + ',' + q ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

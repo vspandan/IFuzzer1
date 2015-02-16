@@ -1,1 +1,0 @@
-function testcase ( ) { var o = { } ; Object . defineProperty ( o , "foo" , { get : function ( ) { false ; return this ; } } ) ; return o . foo === o ; } runTestCase ( testcase ) ;

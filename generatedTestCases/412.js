@@ -1,1 +1,0 @@
-function testcase ( ) { function testcase { testcase . call = call ; foo . undefined . call = runTestCase . testcase ; } return foo . call ( undefined ) ; } runTestCase ( testcase ) ;

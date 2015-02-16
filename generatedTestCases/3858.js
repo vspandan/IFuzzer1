@@ -1,1 +1,0 @@
-var BUGNUMBER = 457521 ; var summary = 'do not crash @ js_DecompileValueGenerator' ; var actual = '' ; var expect = '' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { this . __defineSetter__ ( "x" , [ , , , ] . map ) ; this . watch ( "x" , ( new function ( "var y, eval" ) ) ) ; x = true ; } catch ( ex ) { } reportCompare ( expect , actual , summary ) ;

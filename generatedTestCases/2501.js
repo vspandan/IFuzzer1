@@ -1,1 +1,0 @@
-"use strict" ; function f ( ) { return this ; } if ( ( ( new f ( ) ) === fnGlobalObject ( ) ) || ( this ) ) { throw "'this' had incorrect value!" ; }

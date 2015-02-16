@@ -1,1 +1,0 @@
-"use strict" ; ( function ( ) { } ) . hasOwnProperty ( 'caller' ) for ( ; hasOwnProperty > 0 && hasOwnProperty [ hasOwnProperty - 1 ] == 0 ; hasOwnProperty -- ) ; 

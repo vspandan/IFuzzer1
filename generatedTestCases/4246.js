@@ -1,1 +1,0 @@
-function f ( x ) { delete ( ) [ 0 ] continue ; for ( var i = 0 ; i < 20 ; i ++ ) { ( ) [ 0 ] !== undefined ; } } f ( 1 ) ; reportCompare ( 0 , 0 , "ok" ) ;

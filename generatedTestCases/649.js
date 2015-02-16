@@ -1,1 +1,0 @@
-function testcase ( ) { var indirectEval = eval ; try { indirectEval ( "'use strict'; var ;" ) ; return false ; } catch ( SyntaxError ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

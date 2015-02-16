@@ -1,1 +1,0 @@
-try { ! x ; $ERROR ( '#1.1: !x throw ReferenceError. Actual: ' + ( ! x ) ) ; } catch ( e ) { e += " E " ; }

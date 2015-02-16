@@ -1,1 +1,0 @@
-$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( fnGlobalObject ( ) . Intl , false , false , [ ] ) ; testBuiltInObject ( Intl , false , true , [ "Collator" , "NumberFormat" , "DateTimeFormat" ] ) ;

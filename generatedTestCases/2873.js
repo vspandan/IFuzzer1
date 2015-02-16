@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "var def\u0061ult = 123;" ) ; return false ; } catch ( e ) { return testcase instanceof SyntaxError ; } } runTestCase ( testcase ) ;

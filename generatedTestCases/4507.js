@@ -1,1 +1,0 @@
-var BUGNUMBER = 352092 ; var summary = 'do not assert on with() let' ; var actual = 'No Crash' ; var expect = 'No Crash' ; test ( ) ; function printStatus { return ex ( " with ({}) { for ( var x in {}); } ( function () { return delete x ; })" ) ; }

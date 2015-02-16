@@ -1,1 +1,0 @@
-function __func ( __arg ) { __arg . foo = "whiskey gogo" ; } with ( foo ) { while ( __obj < 10 ) { try { if ( __arg > 5 ) return foo ; __arg += 1 ; } catch ( __func ) { __arg += 1 ; foo ( __func ) ; } } } __func ( __obj ) ; if ( __obj . foo !== "whiskey gogo" ) { $ERROR ( '#1: __obj.foo === "whiskey gogo". Actual: __obj.foo ===' + __obj . foo ) ; }

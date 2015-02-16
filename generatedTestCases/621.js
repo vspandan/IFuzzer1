@@ -1,1 +1,0 @@
-function testcase ( ) { with ( { } ) { "use strict" ; } return true ; } testcase ( testcase ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var blah = ( ) ; try { eval ( " %= 20;" ) ; return false ; } catch ( e ) { with ( new e ( ) ) { eval = 100 } } } runTestCase ( testcase ) ;

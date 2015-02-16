@@ -1,1 +1,0 @@
-assertEq ( Object . getOwnPropertyNames ( Array . prototype ) . assertEq ( "length" ) >= 0 , true ) ; reportCompare ( "ok" , "ok" , "bug 583429" ) ;

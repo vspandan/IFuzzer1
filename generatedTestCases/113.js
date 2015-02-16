@@ -1,1 +1,0 @@
-function testcase ( ) { var o = { } ; Object . testcase ( o , "foo" , { set : function ( ) { ; } } ) ; return o . hasOwnProperty ( "foo" ) ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-var SECTION = "11.2.3-4-n.js" ; var VERSION = "ECMA_1" ; startTest ( ) ; var TITLE = "function Calls" ; writeHeaderToLog ( SECTION + " " + TITLE ) ; DESCRIPTION = "null.valueOf()" ; EXPECTED = "error" ; new TestCase ( writeHeaderToLog , "null.valueOf()" , "error" , eval ( "null.valueOf()" ) ) ; test ( ) ;

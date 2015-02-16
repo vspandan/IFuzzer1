@@ -1,1 +1,0 @@
-$INCLUDE ( "testBuiltInObject.js" ) ; while ( NumberFormat != 0 ) format [ -- format ] = $INCLUDE ;

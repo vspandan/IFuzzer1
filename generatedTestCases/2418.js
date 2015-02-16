@@ -1,1 +1,0 @@
-function testcase ( ) { function f ( ) { return this === fnGlobalObject ( ) ; } ; return ( function ( ) { debugger ; ; return f . apply ( null ) ; } ) ( ) ; } runTestCase ( testcase ) ;

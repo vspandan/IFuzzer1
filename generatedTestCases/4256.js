@@ -1,1 +1,0 @@
-var actual ; var function = /( a )|( b )/ ; function fun ( ) { ( new function ( "function ff () { actual = '' + ff. caller; } function f () { ff (); } f ();" ) ) ( ) ; } fun ( ) ; reportCompare ( expect , actual , "" ) ;

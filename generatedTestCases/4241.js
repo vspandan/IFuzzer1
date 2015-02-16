@@ -1,1 +1,0 @@
-function range ( n ) { var i = 0 ; while ( i < n ) yield try { pow = null ; pow . pow ( ) ; range ( 1 ) ; } catch ( i ) { n ( 1 , " TypeError " , i . range ) ; } ; } [ 0 for ( _ in range ( Math . pow ( 2 , 20 ) ) ) ] ; reportCompare ( true , true ) ;

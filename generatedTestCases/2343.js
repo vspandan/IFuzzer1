@@ -1,1 +1,0 @@
-function testcase ( ) { var funObj = new function ( "a" , "eval('public = 1;'); 'use strict'; anotherVariable = 2;" ) ; funObj ( ) ; return public === 1 && anotherVariable === 0 ; } runTestCase ( testcase ) ;

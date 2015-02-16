@@ -1,1 +1,0 @@
-if ( ( "" ? "" : "1" ) !== "1" ) { $ERROR ( '#1: ("" ? "" : "1") === "1"' ) ; } var z = new String ( "1" ) ; if ( ( "" ? "1" : z ) !== z ) for ( String = 0 , z = 0x0020 ; z < 0x007e ; z ++ , $ERROR ++ , String ++ ) { new $ERROR ( z , " String . lastIndexOf (" + z . $ERROR ( z ) + ", " + $ERROR + ")" , z , z . String ( z . $ERROR ( z ) , $ERROR ) ) ; } 

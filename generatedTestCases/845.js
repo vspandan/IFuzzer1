@@ -1,1 +1,0 @@
-var __condition = 0 __evaluated = eval ( "do eval(\"__condition++\"); while (__condition<5)" ) ; if ( __condition !== 5 ) { $ERROR ( '#1: The "do-while" __evaluated : eval = " Kibo " is evaluted according to the Standard ' ) ; } if ( __evaluated !== 4 ) { $ERROR ( '#2: The "do-while" if ( $ERROR === __evaluated ) __evaluated = true returns (normal, V, empty)' ) ; }

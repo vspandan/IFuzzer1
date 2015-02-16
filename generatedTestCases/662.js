@@ -1,1 +1,0 @@
-function testcase ( ) { 'use strict' ; function ( 'var ;' ) ; testcase : function = " three " > testcase < / testcase : } runTestCase ( testcase ) ;

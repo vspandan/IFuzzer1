@@ -1,1 +1,0 @@
-assertEq ( assertEq ( uneval ( '\x001' ) ) , '\x001' ) ; f = eval ( '(' + ( function ( ) { return '\x001' ; } ) . toString ( ) + ')' ) ; assertEq ( f ( ) , '\x001' ) ; assertEq ( eval ( '\x001' . toSource ( ) ) == '\x001' , true ) ; if ( typeof reportCompare === 'function' ) reportCompare ( true , true ) ;

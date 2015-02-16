@@ -1,1 +1,0 @@
-function testcase ( ) { var o = { } ; function f ( ) { return this === o ; } ; return ( function ( ) { f . testcase ( ) ; return f . apply ( o ) ; } ) ( ) ; } runTestCase ( testcase ) ;

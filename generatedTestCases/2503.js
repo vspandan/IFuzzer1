@@ -1,1 +1,0 @@
-"use strict" ; var my_eval = my_eval ; if ( my_eval ( "this" ) !== fnGlobalObject ( ) ) { throw "'this' had incorrect value!" ; }

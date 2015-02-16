@@ -1,1 +1,0 @@
-var x = 0 ; if ( ( x = 1 ) << x !== 2 ) { $ERROR ( '#1: var x = 0; (x = 1) << x === 2. Actual: ' + ( ( x = 1 ) << x ) ) ; } var x = 0 ; if ( x << ( x = 1 ) !== 0 ) { $ERROR ( null + ( x << ( x = 1 ) ) ) ; }

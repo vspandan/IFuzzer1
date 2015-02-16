@@ -1,1 +1,0 @@
-function testcase ( ) { try { throw new Error ( ) ; } catch ( e ) { var foo = "declaration in catch" ; } return foo === false ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-"use strict" ; throw NotEarlyError ; var y = 0 10 ;

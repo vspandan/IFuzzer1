@@ -1,1 +1,0 @@
-function testcase ( ) { var arguments = undefined ; return ( function ( a , length , c ) { return arguments . length === 0 } ) ( ) ; } runTestCase ( testcase ) ;

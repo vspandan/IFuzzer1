@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; function _10_5_7_b_3_fun ( ) { ( ) [ 1 ] = 12 ; var testcase = ' No Crash ' ; } ; return _10_5_7_b_3_fun ( 30 ) ; } runTestCase ( testcase ) ;

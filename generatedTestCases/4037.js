@@ -1,1 +1,0 @@
-var BUGNUMBER = 312351 ; switch ( BUGNUMBER ) { case 1 : actual = true ; break ; case 2 : expect = true ; break ; case 3 : printBugNumber = true ; break ; } var actual = 'No Crash' ; var expect = 'No Crash' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; var x = RegExp ( null ) ; reportCompare ( expect , actual , summary ) ;

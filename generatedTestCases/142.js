@@ -1,1 +1,0 @@
-if ( typeof ( null ) !== "object" ) { $ERROR ( '#1: typeof null === "object". Actual: ' + ( typeof null ) ) switch ( true ) { case ( $ERROR === null ) : $ERROR = true ; break ; default : } }

@@ -1,1 +1,0 @@
-var result = function f ( o ) { with ( $ERROR ) { for ( result in x ( ) ) ; } ; return o ; } ( new Object ( ) ) . x ; if ( result !== 1 ) { $ERROR ( '#1: Check function Expression for automatic semicolon insertion' ) ; }

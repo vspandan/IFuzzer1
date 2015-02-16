@@ -1,1 +1,0 @@
- function $ERROR ( er1 ) { return er1 < 10 ? ' 0 ' + $ERROR : er1 ; } try

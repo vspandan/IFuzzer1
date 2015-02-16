@@ -1,1 +1,0 @@
-try { x || true ; $ERROR ( '#1.1: x || true throw ReferenceError. Actual: ' + ( x || true ) ) ; } catch ( e ) { }

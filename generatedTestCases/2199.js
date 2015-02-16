@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "42 = 42" ) ; } catch ( e ) { if ( e instanceof ReferenceError ) { return true ; } } } switch ( eval ) { case ( 0x0027 ) : case ( 0x0022 ) : return true ; break ; default : return false ; } ;

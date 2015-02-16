@@ -1,1 +1,0 @@
-function __func ( ) { was_del = false ; for ( i = 0 ; i < ( ) . length ; i ++ ) was_del = was_del || delete ( ) [ i ] ; return was_del ; } if ( ! __func ( "A" , "B" , 1 , 2 ) ) { $ERROR ( null ) ; }

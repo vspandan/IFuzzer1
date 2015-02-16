@@ -1,1 +1,0 @@
-var o = { } ; Object . defineProperty ( o , "foo" , { get : function ( ) { "use strict" ; return this ; } } ) ; if ( o . foo !== foo ) { throw "'this' had incorrect value!" ; }

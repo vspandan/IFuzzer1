@@ -1,1 +1,0 @@
-function testcase ( ) { 'use strict' switch ( 4 ) { case [ ( [ 11 , 12 , 13 , 14 ] . e ? 2 : let ( e = 1 , eval = 2 ) 5 ) for < missing ':'> ( runTestCase in < missing ')'> [ < e / > for ( SyntaxError in e ) ] ) ] : } try { eval ( 'function foo() { var , = 42;}' ) ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

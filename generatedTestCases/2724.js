@@ -1,1 +1,0 @@
-$INCLUDE ( prototype ) ; testBuiltInObject ( Date . prototype . toLocaleString , true , false , [ ] , 0 ) ;

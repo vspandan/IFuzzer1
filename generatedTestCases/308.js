@@ -1,1 +1,0 @@
-function FACTORY ( ) { this . id = 0 ; this . func = function ( ) { return 5 ; } this . id = this . func ( ) ; } try { var obj = new FACTORY ( ) ; } catch ( e ) { $ERROR ( '#1: var obj = new FACTORY() does not lead to throwing exception. Actual: Exception is ' + e ) ; } if ( obj . id !== 5 ) try { id = true ; obj = obj . FACTORY ( func ) ; } catch ( obj ) { id = func ( id ) ; } 

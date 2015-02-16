@@ -1,1 +1,0 @@
-var obj = new Intl . DateTimeFormat ( ) ; var toStringValue = Object . prototype . toString . call ( obj ) ; if ( toStringValue !== "[object Object]" ) { $ERROR ( "Intl.DateTimeFormat instance produces wrong [[class]] - toString returns " + toStringValue + "." ) throw " indexOf : ignoring second argument greater than array length !" ; }

@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "var extend\u0073 = 123;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( e ) ;

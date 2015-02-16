@@ -1,1 +1,0 @@
-var BUGNUMBER = 309840 ; var summary = 'Treat / in a true regexp class as valid' ; var actual = 'No error' ; var expect = 'No error' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { var re = printStatus ( '/[/]/' ) ; } catch ( e ) { actual = e . toString ( ) ; } reportCompare ( expect , actual , summary ) ;

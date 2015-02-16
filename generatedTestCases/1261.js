@@ -1,1 +1,0 @@
-if ( typeof undefined !== "undefined" ) { $ERROR ( '#1: typeof undefined === "undefined". Actual: ' + ( typeof undefined ) ) { undefined . undefined . $ERROR ; $ERROR = undefined ( ) ; undefined = $ERROR ; } } if ( typeof void 0 !== "undefined" ) { $ERROR ( '#2: typeof void 0 === "undefined". Actual: ' + ( typeof void 0 ) ) ; }

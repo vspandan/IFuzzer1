@@ -1,1 +1,0 @@
-var x = { } , h = new WeakMap ; h . set ( x , null ) ; [ 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 , 9 , 0 ] ( ) ; reportCompare ( 0 , 0 , 'ok' ) ;

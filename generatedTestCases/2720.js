@@ -1,1 +1,0 @@
- return function ( ) { return taintDataProperty ; } ; ; taintDataProperty ( Intl , "Collator" ) ; "a" . localeCompare ( "b" ) ;

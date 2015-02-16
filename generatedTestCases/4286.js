@@ -1,1 +1,0 @@
-var ( 96 ) , ( ' test ' ) = " 11 . 6 . 2 - 1 " ; reportCompare ( delete ( " Math . atan2 " , "- 1 , Number . POSITIVE_INFINITY " , - 0 ) , false , " defined as global variable" ) ;

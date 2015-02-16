@@ -1,1 +1,0 @@
-function testcase ( ) { var s1 = "in getter" ; var s2 = "in setter" ; var s3 = "Modified by setter" ; eval ( "var o = {get foo(){ return s1;},set foo(arg){return s2 = s3}};" ) ; if ( o . foo !== s1 ) return false ; o . foo = 10 ; if ( s2 !== s3 ) return false ; return true ; } runTestCase ( testcase ) ;

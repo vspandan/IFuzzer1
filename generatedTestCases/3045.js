@@ -1,1 +1,0 @@
-function testcase ( ) { continue runTestCase ; ; try { eval ( "var interface = 1;" ) return false ; } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

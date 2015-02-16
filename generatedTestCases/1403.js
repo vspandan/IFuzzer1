@@ -1,1 +1,0 @@
-if ( isNaN ( + { } ) !== true ) { $ERROR ( '#1: +{} === Not-a-Number. Actual: ' + ( + { } ) ) ; } break ; 

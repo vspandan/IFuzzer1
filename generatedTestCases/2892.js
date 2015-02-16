@@ -1,1 +1,0 @@
-var $ERROR = String . fromCharCode ( 0x0024 ) ; eval ( "var " + $ERROR + "=1" ) ; if ( eval ( identifier + "===1" ) !== true ) { function ( fromCharCode ) { return String % 0 ; } ; } if ( "$" !== String . fromCharCode ( 0x0024 ) ) { $ERROR ( '#2: "$" === String.fromCharCode(0x0024)' ) ; }

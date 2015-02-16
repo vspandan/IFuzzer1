@@ -1,1 +1,0 @@
-"use strict" for var private = 1 ;

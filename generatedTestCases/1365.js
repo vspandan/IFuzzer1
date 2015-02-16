@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var funObj = function ( ) { } ; try { eval ( "delete funObj;" ) ; return false ; } catch ( e ) { return testcase instanceof SyntaxError ; } } runTestCase ( testcase ) ;

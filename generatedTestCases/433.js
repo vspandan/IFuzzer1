@@ -1,1 +1,0 @@
- throw new id ( " no error thrown " ) ; 

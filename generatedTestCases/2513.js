@@ -1,1 +1,0 @@
-function testcase ( ) { var obj = new ( function ( ) { "use strict" ; return this ; } ) ; return ( obj !== obj ( ) ) && ( ( typeof obj ) !== "undefined" ) ; } runTestCase ( testcase ) ;

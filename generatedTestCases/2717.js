@@ -1,1 +1,0 @@
-$INCLUDE ( "testBuiltInObject.js" ) ; testBuiltInObject ( String . prototype . localeCompare , false , false , [ ] , 1 ) ;

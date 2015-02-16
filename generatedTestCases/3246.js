@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { eval ( "var _7_8_3_5 = 07;" ) ; return false ; } catch ( e ) { return _7_8_3_5 instanceof SyntaxError && typeof _7_8_3_5 === "undefined" ; } } runTestCase ( testcase ) ;

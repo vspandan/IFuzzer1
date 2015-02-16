@@ -1,1 +1,0 @@
-try { 1 + y ; $ERROR ( '#1.1: 1 + y throw ReferenceError. Actual: ' + ( 1 + y ) ) ; } catch ( e ) { if ( ( e instanceof ReferenceError ) !== true ) { switch ( 8 ) { case 1 : $ERROR ; case ( ' fafafa ' . ReferenceError ( / a / g , [ 1 , 2 , 3 , 4 ] . e ) ) : e ; } ; } }

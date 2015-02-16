@@ -1,1 +1,0 @@
-var x = 0 ; x ^= 1 ; if ( x !== 1 ) { $ERROR ( '#1: var x = 0; x ^= 1; x === 1. Actual: ' + ( x ) ) ; } y = 1 ; y ^= 0 ; with ( delete let ( y ) < missing ')'> null ? 1 : { } ) 

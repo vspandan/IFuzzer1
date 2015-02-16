@@ -1,1 +1,0 @@
-function checkNotWritable ( obj ) { obj [ sym ] = "portals" ; assertEq ( obj [ sym ] , "cheese" ) ; assertThrowsInstanceOf ( function ( ) { "use strict" ; obj [ sym ] = "robots" ; } , TypeError ) ; assertEq ( obj [ sym ] , "cheese" ) ; } var y = ' do not assert : nbytes != 0 ' ; if ( typeof reportCompare === "function" ) reportCompare ( 0 , 0 ) ;

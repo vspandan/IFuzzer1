@@ -1,1 +1,0 @@
-"use strict" ; if ( this === undefined ) continue undefined ; 

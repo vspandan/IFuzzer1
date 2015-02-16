@@ -1,1 +1,0 @@
-function __func ( ) { return "zig-zig-sputnik" ; } ; if ( typeof __func !== "function" ) { } if ( __func ( ) !== "zig-zig-sputnik" ) { $ERROR ( '#2: __func() === "zig-zig-sputnik". Actual: __func() ===' + __func ( ) ) ; }

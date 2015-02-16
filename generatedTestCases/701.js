@@ -1,1 +1,0 @@
-LABEL_OUT : var x = 0 , y = 0 ; ( this ) ( ) ; if ( ( x !== 1 ) && ( y !== 0 ) ) { $ERROR ( '#1: x === 1 and y === 0. Actual: x === ' + x + ' and y ===' + y ) ; }

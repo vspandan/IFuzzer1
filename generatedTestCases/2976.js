@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { } ; tokenCodes . in = 0 ; tokenCodes . try = 1 ; tokenCodes . class = 2 ; var arr = [ 'in' , 'try' , 'class' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( arr [ p1 ] === p ) { if ( ! tokenCodes . hasOwnProperty ( runTestCase ) ) { return false ; } ; } } } return true ; } runTestCase ( testcase ) ;

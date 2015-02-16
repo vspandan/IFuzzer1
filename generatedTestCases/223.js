@@ -1,1 +1,0 @@
- continue _13_0_4_17_fun ; ; var _13_0_4_17_fun = new function ( 'eval = 42;' ) ; throw NotEarlyError ;

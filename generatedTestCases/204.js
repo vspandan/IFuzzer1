@@ -1,1 +1,0 @@
-function __func ( __arg ) { } if ( __func ( 1 ) !== 2 ) { $ERROR ( '#1.3: __func(1) === 2. Actual: __func(1) ===' + __func ( 1 ) ) ; }

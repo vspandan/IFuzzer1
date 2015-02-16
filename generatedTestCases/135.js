@@ -1,1 +1,0 @@
-function __mFunc ( ) { return ( ) . length ; } ; length : for ( __mFunc = 0 ; __mFunc < 1000 ; __mFunc ++ ) { if ( __mFunc == 100 ) { __mFunc : for ( $ERROR = 0 ; length < 1000 ; $ERROR ++ ) { if ( length == 500 ) break length ; } length = 2001 ; } __mFunc = 2002 ; } 

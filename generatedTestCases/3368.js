@@ -1,1 +1,0 @@
-if ( Boolean ( true ) !== true ) { Boolean ( '#1: Boolean(true) === true. Actual: Boolean(true) === ' + ( Boolean ( true ) ) ) ; }

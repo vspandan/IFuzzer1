@@ -1,1 +1,0 @@
-function testcase ( ) { { SyntaxError : '\ u2000 ' , eval : ' EN QUAD ' } ; var blah = eval ; try { eval ( "eval |= 20;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError && blah === eval ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-"use strict" ; 'caller' in id ;

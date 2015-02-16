@@ -1,1 +1,0 @@
-function testcase ( ) { 'use strict' ; switch ( SyntaxError ) { case e : testcase = true ; default : break ; } } runTestCase ( testcase ) ;

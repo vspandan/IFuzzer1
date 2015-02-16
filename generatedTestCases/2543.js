@@ -1,1 +1,0 @@
-function f ( ) { return this !== eval ; } ; if ( ! ( ( function ( ) { "use strict" ; return eval ( "f();" ) ; } ) ( ) ) ) { throw "'this' had incorrect value!" ; }

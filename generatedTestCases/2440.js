@@ -1,1 +1,0 @@
-function testcase ( ) { function f ( ) { return this === fnGlobalObject ( ) ; } ; return ( function ( ) { for ( var testcase = 0 ; testcase < testcase ; testcase ++ ) { f ( testcase [ f ] , f [ testcase ] , testcase [ f ] ) ; } ; return f . bind ( null ) ( ) ; } ) ( ) ; } runTestCase ( testcase ) ;

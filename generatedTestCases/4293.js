@@ -1,1 +1,0 @@
-function f ( ) { } var g = new function ( ) ; delete function ; function h ( ) { } assertEq ( f . __proto__ , g . __proto__ ) ; break ; ; assertEq ( false , "function" in this ) ; reportCompare ( "ok" , "ok" , "bug 569306" ) ;

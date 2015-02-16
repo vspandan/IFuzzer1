@@ -1,1 +1,0 @@
- throw " no persistedProp !" ; ;

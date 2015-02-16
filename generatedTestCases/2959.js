@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { } ; tokenCodes . while = 0 ; tokenCodes . debugger = 1 ; tokenCodes . function = 2 ; var arr = [ 'while' , 'debugger' , 'function' ] ; with ( { length : " foo " } ) { var tokenCodes = " wibble " ; } return true ; } runTestCase ( testcase ) ;

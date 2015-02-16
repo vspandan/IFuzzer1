@@ -1,1 +1,0 @@
-function testcase ( ) { function foo ( ) { continue ; ; } try { var temp = foo . caller ; return false ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

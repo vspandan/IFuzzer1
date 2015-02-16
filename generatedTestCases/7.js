@@ -1,1 +1,0 @@
-var x = Number . NaN ; for ( ; false ; ( 0 < missing ')'> if ( x === x_ ) { $ERROR ( '#1: NaN !== NaN ' ) ; }

@@ -1,1 +1,0 @@
-function testcase ( ) { return ( function f , testcase , testcase { for ( [ ] = [ runTestCase , f , f ] ; ; ) ; } ) ( ) ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
- if ( id == " now " ) { id = new id ( ) ; } else { id = new id ( id ) ; } 

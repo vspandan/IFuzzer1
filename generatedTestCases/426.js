@@ -1,1 +1,0 @@
-try { } catch ( e ) { return 1 ; }

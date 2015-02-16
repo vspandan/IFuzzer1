@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var SyntaxError = null ; try { eval ( "++ ;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError && blah === ( '.+: gr ( a | e ) y ' ) ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-var __obj = { } ; if ( ! ( __obj instanceof __obj ) ) { $ERROR ( '#1: if instanceof returns true then GetValue(RelationalExpression) was constructed with ShiftExpression' ) ; } if ( __obj . constructor !== Object ) { $ERROR ( '#2: if instanceof returns true then GetValue(RelationalExpression) was constructed with ShiftExpression' ) ; }

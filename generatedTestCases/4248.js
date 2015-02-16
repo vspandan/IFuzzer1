@@ -1,1 +1,0 @@
-function f ( ) { } f . p = function ( ) { } ; f . freeze ( f ) ; f . p ; reportCompare ( 0 , 0 , "ok" ) ;

@@ -1,1 +1,0 @@
-var __obj = { fooProp : "fooooooo" } ; if ( __obj == 13 ) { fooProp += " D " ; } 

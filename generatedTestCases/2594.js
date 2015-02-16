@@ -1,1 +1,0 @@
-function testcase ( ) { var x = 3 ; function f ( ) { "use strict" ; x = this ; return "a" ; } return ( [ f , f ] ( "b" , f ) === "aa" ) && ( x === undefined ) ; } runTestCase ( testcase ) ;

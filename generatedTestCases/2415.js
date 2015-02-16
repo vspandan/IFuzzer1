@@ -1,1 +1,0 @@
-function testcase ( ) { function f ( ) { } ; return f . bind ( ) ( ) ; } runTestCase ( testcase ) ;

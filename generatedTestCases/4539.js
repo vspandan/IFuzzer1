@@ -1,1 +1,0 @@
-var BUGNUMBER = 349851 ; var summary = 'decompilation of yield \\n, 3' ; var actual = '' ; var expect = 'SyntaxError' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { var actual ; } catch ( ex ) { actual = ex . name ; } reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

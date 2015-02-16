@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { new : 0 , var : 1 , catch : 2 } ; var arr = [ 'new' , 'var' , 'catch' ] ; for ( var i = 0 ; i < arr . <<<reservedWord: ; i ++ ) { if ( tokenCodes [ arr [ i ] ] !== i ) { return false ; } ; } return true ; } runTestCase ( testcase ) ;

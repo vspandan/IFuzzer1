@@ -1,1 +1,0 @@
-function eval runTestCase $ 0 , e $ 1 { eval ( ' test ' ) ; testcase ( testcase ) ; testcase ( testcase ) ; function testcase ( testcase ) { for SyntaxError ( let < missing ')'> e in e ) [ ( e > 5 ) ? ' A ' : ' B ' ] ; } e ( [ true , 8 ] ) ; testcase ( [ 2 ] ) ; e ( testcase , testcase , eval ) ; SyntaxError ( ' test ' ) ; } runTestCase ( testcase ) ;

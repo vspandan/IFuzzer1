@@ -1,1 +1,0 @@
-x = "5+1|0===0" ; __evaluated = eval ( x ) ; if ( __evaluated !== 7 ) with ( __evaluated ) { for ( var eval = 0 in __evaluated ) if ( __evaluated ( " TxtH " + __evaluated ) != __evaluated ) eval ( ' huh ' ) ; } __evaluated = eval ( "2*" + x + ">-1" ) ; if ( __evaluated !== 11 ) { $ERROR ( '#2: __evaluated === 11. Actual: __evaluated ===' + __evaluated ) ; }

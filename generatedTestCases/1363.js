@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { eval ( "delete obj" ) ; return false ; } catch ( testcase ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

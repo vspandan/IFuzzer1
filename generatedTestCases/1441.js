@@ -1,1 +1,0 @@
-var x = - 0.1 ; var y = x ++ ; if ( y !== - 0.1 ) { try { x ( " var function = true ;" ) ; } catch ( x ) { x = $ERROR ; y = x . y ( ) ; } ; } var x = new Number ( 1.1 ) ; var y = x ++ ; if ( y !== 1.1 ) { $ERROR ( '#2: var x = new Number(1.1); var y = x++; y === 1.1. Actual: ' + ( y ) ) ; }

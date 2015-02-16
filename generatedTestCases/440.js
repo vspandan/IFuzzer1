@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "try{};catch{};finally{}" ) ; return false ; } catch ( e ) { for ( var eval = 0 ; testcase < testcase . eval ; e ++ ) { if ( testcase [ testcase ] != e [ eval ] ) return false ; } } } runTestCase ( testcase ) ;

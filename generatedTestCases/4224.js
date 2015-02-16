@@ -1,1 +1,0 @@
- ( ) = 42 ; reportCompare ( delete ( ( ) , reportCompare , ( ' test ' ) ) , true , " defined as global" ) continue ; 

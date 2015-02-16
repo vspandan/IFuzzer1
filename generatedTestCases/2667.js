@@ -1,1 +1,0 @@
-function testcase ( ) { 'use strict' ; switch ( true ) { case ( desc === null ) : testcase = true ; break ; default : } return desc !== undefined ; } runTestCase ( testcase ) ;

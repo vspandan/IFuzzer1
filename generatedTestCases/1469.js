@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var blah = ( SyntaxError , runTestCase , SyntaxError ) ; try { eval ( " --;" ) ; return false ; } catch ( e ) { return e instanceof testcase && blah === ( runTestCase , " Math . atan (' 1 ')" , eval . testcase / 4 , SyntaxError . e ( ' 1 ' ) ) ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-function testcase { var e , runTestCase = "" , e = "" ; for ( eval = 0 ; testcase < e ; ++ runTestCase ) { testcase += " function testFoo () {" ; eval += "}" ; } return SyntaxError ( testcase + testcase ) ; } runTestCase ( testcase ) ;

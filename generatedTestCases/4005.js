@@ -1,1 +1,0 @@
-var BUGNUMBER = 375651 ; var summary = 'do not assert with regexp quantifiers' ; var actual = 'No Crash' ; var expect = 'No Crash' ; test ( ) ; function test ( ) { return this ; ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; /(.{2,3}){0,2}?t/ . exec ( "abt" ) ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

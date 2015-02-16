@@ -1,1 +1,0 @@
-function e { this . testcase = e ; } runTestCase ( testcase ) ;

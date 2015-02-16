@@ -1,1 +1,0 @@
-function FACTORY ( ) { try { eval = FACTORY . obj ( ) . obj ( eval ) [ 1 ] ; } catch ( e ) { return eval ; } ; eval ( "function func(){return \"id_string\";}" ) ; this . id = func ( ) ; } try { var obj = new FACTORY ( ) ; } catch ( e ) { $ERROR ( '#1: var obj = new FACTORY() does not lead to throwing exception' ) ; }

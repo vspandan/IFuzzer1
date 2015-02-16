@@ -1,1 +1,0 @@
-try { eval ( "/a\\\u2028/" ) . source ; $ERROR ( '#1.1: RegularExpressionChar :: BackslashSequence :: \\Line separator is incorrect. Actual: ' + ( eval ( "/a\\\u2028/" ) . source ) ) ; } catch ( e ) { e ( SyntaxError ) }

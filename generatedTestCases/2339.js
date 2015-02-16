@@ -1,1 +1,0 @@
-function f1 ( a ) { delete a debugger ; return a ; } if ( f1 ( 1 ) !== 1 ) $ERROR ( '#1: function parameter was deleted' ) ;

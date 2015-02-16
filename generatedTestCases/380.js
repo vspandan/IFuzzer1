@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var foo = function ( ) { } var obj = new foo ( ) ; return obj . caller === 12 ; } runTestCase ( testcase ) ;

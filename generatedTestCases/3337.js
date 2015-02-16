@@ -1,1 +1,0 @@
-function testcase ( ) { try { testcase ( '"use strict"; var x = "\\17";' ) ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

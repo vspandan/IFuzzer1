@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { } ; tokenCodes . continue = 0 ; tokenCodes . for = 1 ; tokenCodes . switch = 2 ; var arr = [ 'continue' , 'for' , 'switch' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( arr [ p1 ] === p ) { if ( ! tokenCodes . hasOwnProperty ( arr [ testcase ] ) ) { return false ; } ; } } } return true ; } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var numObj = new Number ( 0 ) ; try { eval ( "delete numObj;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError ; } } numObj : { for ( eval in e ) { e += e [ e ] ; break testcase } } ;

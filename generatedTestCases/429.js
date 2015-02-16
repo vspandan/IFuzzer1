@@ -1,1 +1,0 @@
-do x : do { if ( y == 500 ) break x ; x ++ ; } while ( x < 1000 ) ; while ( 0 ) ;

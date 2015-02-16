@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; ( ' test ' ) [ 1 ] = 7 ; ++ ( "+ 9 " ) [ ( ) == 14 ] ; return ( testcase ) [ 1 ] === 8 ; } runTestCase ( testcase ) ;

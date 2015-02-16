@@ -1,1 +1,0 @@
-function testcase ( ) { var obj = { } ; try { eval ( "function obj.tt() {};" ) ; return false ; } catch ( obj ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

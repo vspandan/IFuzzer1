@@ -1,1 +1,0 @@
-var BUGNUMBER = 462459 ; var summary = 'TM: trace Array(1)' ; var actual = '' ; var expect = '' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; jit ( true ) ; return reportCompare ; 

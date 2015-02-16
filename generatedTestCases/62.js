@@ -1,1 +1,0 @@
-var <missing Ident> <EOF>

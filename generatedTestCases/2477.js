@@ -1,1 +1,0 @@
-function undefined ( ) { function f ( ) { return this === fnGlobalObject ( ) } ; return ( function ( ) { "use strict" ; return f . apply ( undefined ) ; } ) ( ) ; } runTestCase ( testcase ) ;

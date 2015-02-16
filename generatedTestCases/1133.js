@@ -1,1 +1,0 @@
-try { 1 != y ; $ERROR ( '#1: 1 != y throw ReferenceError' ) ; } catch ( e ) { }

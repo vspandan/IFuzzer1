@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var testcase = " 15 . 6 . 3 . 1 - 4 " , blah = '' ; try { eval ( " >>= 20;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError && blah === ( e . blah , SyntaxError . testcase , SyntaxError . e ) ; } } runTestCase ( testcase ) ;

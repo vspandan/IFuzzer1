@@ -1,1 +1,0 @@
-var __condition = 0 __evaluated = __condition ( "while (__condition<5) eval(\"__condition++\");" ) ; if ( __condition !== 5 ) { $ERROR ( '#1: The "while" debugger ; is evaluated as described in the Standard' ) ; } if ( __evaluated !== 4 ) { $ERROR ( '#2: The "while" break ; returns (normal, V, empty)' ) ; }

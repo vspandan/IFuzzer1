@@ -1,1 +1,0 @@
-var x = { } ; ++ x ; if ( isNaN ( x ) !== true ) { debugger ; ; } var x = function ( ) { return 1 } ; ++ x ; if ( isNaN ( x ) !== true ) { $ERROR ( '#2: var x = function(){return 1}; ++x; x === Not-a-Number. Actual: ' + ( x ) ) ; }

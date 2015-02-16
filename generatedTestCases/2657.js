@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; try { undefined = 12 ; return true ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

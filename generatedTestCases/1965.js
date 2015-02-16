@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var SyntaxError = " ECMA_1 " ; try { eval ( " &= 20;" ) ; return false ; } catch ( e ) { return e instanceof SyntaxError && blah === ( eval ) ; } } runTestCase ( testcase ) ;

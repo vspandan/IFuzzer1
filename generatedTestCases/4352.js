@@ -1,1 +1,0 @@
-var it = ( x for ( x in [ function ( ) { } ] ) ) ; break ; ; reportCompare ( "no assertion failure" , "no assertion failure" , "See bug 515885." ) ;

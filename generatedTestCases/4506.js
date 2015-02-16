@@ -1,1 +1,0 @@
-var BUGNUMBER = 341939 ; var summary = 'let { } does not require semicolon' ; var printBugNumber = 378738 ; var expect = 'No Error' ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; try { eval ( 'let (a) {} print(42);' ) ; actual = 'No Error' ; } catch ( ex ) { actual = ex + '' ; } reportCompare ( expect , actual , summary ) ;

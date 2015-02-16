@@ -1,1 +1,0 @@
- id : do { if ( id == 500 ) break id ; id ++ ; } while ( id < 1000 ) ; ;

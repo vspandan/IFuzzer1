@@ -1,1 +1,0 @@
-function f { return this . f ; } ; if ( ! f . apply ( null ) ) { throw "'this' had incorrect value!" ; }

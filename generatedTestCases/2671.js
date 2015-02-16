@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var testcase = new caller ( ) ; try { argObj . caller = { } ; return false ; } catch ( e ) { return e instanceof TypeError ; } } runTestCase ( testcase ) ;

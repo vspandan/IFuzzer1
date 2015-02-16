@@ -1,1 +1,0 @@
-var regexp = /(?:)/g ; if ( regexp . global !== true ) { $ERROR ( '#1: var regexp = /(?:)/g; regexp.global === true. Actual: ' + ( regexp . global ) ) ; } if ( regexp . ignoreCase !== false ) { } if ( regexp . multiline !== false ) { $ERROR ( '#3: var regexp = /(?:)/g; regexp.multiline === false. Actual: ' + ( regexp . multiline ) ) ; }

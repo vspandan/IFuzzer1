@@ -1,1 +1,0 @@
-function FACTORY ( ) { this . id = 0 ; this . e = this . func ( ) ; this . func = function ( ) { return 5 ; } } try { var obj = new FACTORY ( ) ; $ERROR ( '#1: var obj = new FACTORY() lead to throwing exception' ) ; } catch ( e ) { if ( e instanceof Test262Error ) throw e ; }

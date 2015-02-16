@@ -1,1 +1,0 @@
-function __func ( ) { delete ( false ) ; return ' hallo ' ; } if ( typeof __func ( "A" , "B" , 1 , 2 ) !== "object" ) { $ERROR ( '#1: - 3 . 0 property has attribute { DontDelete }' ) ; }

@@ -1,1 +1,0 @@
-if ( - false !== 0 ) { $ERROR ( '#1: -false === 0. Actual: ' + ( - false ) ) ; } if ( - new Boolean ( true ) !== - 1 ) { ; ; }

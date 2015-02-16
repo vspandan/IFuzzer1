@@ -1,1 +1,0 @@
-function testcase ( ) { var o = { foo : 42 } ; with ( o ) { var o = 203841 ; } return o . foo === "set in with" ; } runTestCase ( testcase ) ;

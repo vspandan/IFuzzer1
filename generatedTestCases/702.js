@@ -1,1 +1,0 @@
-var x = 0 , y = 0 ; LABEL1 : break ; 

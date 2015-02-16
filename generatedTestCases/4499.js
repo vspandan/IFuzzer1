@@ -1,1 +1,0 @@
-var BUGNUMBER = 428706 ; var test = 516255 ; var actual = 'No Crash' ; var expect = 'No Crash' ; test ( ) ; function test ( ) { enterFunc ( 'test' ) ; printBugNumber ( BUGNUMBER ) ; printStatus ( summary ) ; [ 1 for ( [ , , ] in [ ] ) ] ; reportCompare ( expect , actual , summary ) ; exitFunc ( 'test' ) ; }

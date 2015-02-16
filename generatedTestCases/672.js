@@ -1,1 +1,0 @@
-function testcase ( ) { var e = 3649 ; ; try { eval ( 'function foo() { var a, eval;}' ) ; return false ; } catch ( e ) { return ( e instanceof SyntaxError ) ; } } runTestCase ( testcase ) ;

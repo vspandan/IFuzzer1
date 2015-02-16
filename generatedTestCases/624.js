@@ -1,1 +1,0 @@
-function testcase ( ) { Function ( "\'use strict\'; var f1 = function( \"var o = {}; with (o) {};\")" ) ; return true ; } testcase ( testcase ) ;

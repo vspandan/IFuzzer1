@@ -1,1 +1,0 @@
-function testcase ( ) { var accessed = false ; var strObj = new String ( "1" ) ; for ( var accessed ; strObj ; ) { accessed = true ; break ; } return accessed ; } runTestCase ( testcase ) ;

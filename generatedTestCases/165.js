@@ -1,1 +1,0 @@
-var y = 1 ; if ( delete y ) throw " Bad k , expected =" + $ERROR + ", actual =" + y ; ; if ( y !== 1 ) { $ERROR ( '#2: y = 1; delete y; y === 1. Actual: ' + ( y ) ) ; }

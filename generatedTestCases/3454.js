@@ -1,1 +1,0 @@
-function testcase ( ) { return true ; } switch ( testcase ) { case 0 : runTestCase ++ ; case 1 : testcase ++ ; break ; } ;

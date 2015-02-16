@@ -1,1 +1,0 @@
-LABEL_OUT : var x = 0 , y = 0 ; LABEL_DO_LOOP : do { } while ( 0 ) ; LABEL_ANOTHER_LOOP : do { ; } while ( 0 ) ; function OUT_FUNC ( ) { }

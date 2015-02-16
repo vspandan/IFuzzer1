@@ -1,1 +1,0 @@
-function testcase ( ) { function f ( ) { return this === fnGlobalObject ( ) ; } ; return ( function fnGlobalObject , fnGlobalObject { try { yield < missing ':'> 2 ; } finally { if ( runTestCase || ! testcase || ! f ) throw " bad oder of gen2 finally execution " testcase = true ; throw testcase ; } } ) ( ) ; } runTestCase ( testcase ) ;

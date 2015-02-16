@@ -1,1 +1,0 @@
-function testcase ( ) { this . f = fnGlobalObject ; this . f = 2 ; } runTestCase ( testcase ) ;

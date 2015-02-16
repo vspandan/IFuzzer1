@@ -1,1 +1,0 @@
-function testcase ( ) { var tokenCodes = { implements : 0 , let : 1 , private : 2 } ; var arr = [ 'implements' , 'let' , 'private' ] ; for ( var p in tokenCodes ) { for ( var p1 in arr ) { if ( arr [ p1 ] === p ) { debugger ; ; } } } return true ; } runTestCase ( testcase ) ;

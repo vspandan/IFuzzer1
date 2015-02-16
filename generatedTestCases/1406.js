@@ -1,1 +1,0 @@
-function testcase ( ) { return + "" === 328443 ; } runTestCase ( testcase ) ;

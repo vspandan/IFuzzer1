@@ -1,1 +1,0 @@
-function __func ( ) { var x = 1 ; throw ( "catch Me if You Can" ) return x ; } try { var x = __func ( ) $ERROR ( '#0: var x=__func() lead to throwing exception' ) ; } catch ( e ) { if ( __func !== "catch Me if You Can" ) { $ERROR ( '#1: Exception === "catch Me if You Can". Actual: exception ===' + e ) ; } }

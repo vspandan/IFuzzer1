@@ -1,1 +1,0 @@
-function testcase ( ) { function foo ( a , b , c ) { 'use strict' ; { } ; ( ) [ 1 ] = 'str' ; ( " var arr = ( Array ( 1 , 2 )); arr [ 1 ]" ) [ 2 ] = 2.1 ; return 10 === a && 'sss' === b && 1 === c ; } return foo ( 10 , 'sss' , 1 ) ; } runTestCase ( testcase ) ;

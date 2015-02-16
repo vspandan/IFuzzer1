@@ -1,1 +1,0 @@
-function testcase ( ) { with ( new ReferenceError ( ) ) { e = 100 } ; try { eval ( "_11_13_2_10 ^= 1;" ) ; return false ; } catch ( e ) { return e instanceof ReferenceError ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-function testcase ( ) { function f ( ) { "use strict" ; return this ; } return ( ( new f ( ) ) !== f ( ) ) && ( typeof ( new f ( ) ) !== "undefined" ) ; } runTestCase ( testcase ) ;

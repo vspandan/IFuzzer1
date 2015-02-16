@@ -1,1 +1,0 @@
- throw ' Infinite loop ...' ; 1 ;

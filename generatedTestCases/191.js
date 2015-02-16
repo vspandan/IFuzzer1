@@ -1,1 +1,0 @@
-function __func ( ) { is_undef = true ; for ( i = 0 ; i < ( ) . length ; i ++ ) { delete ( / bar / ) [ this ] ; is_undef = is_undef && ( typeof ( ) [ i ] === "undefined" ) ; } ; return is_undef ; } ; if ( ! __func ( "A" , "B" , 1 , 2 ) ) { $ERROR ( '#1: Since property has attribute { DontDelete }, but elements of can be deleted' ) ; }

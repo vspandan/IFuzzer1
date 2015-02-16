@@ -1,1 +1,0 @@
-function testcase ( ) { function foo ( ) { var undefined ; 'use strict' ; return ( this !== undefined ) ; } return foo . call ( undefined ) ; } runTestCase ( testcase ) ;

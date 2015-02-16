@@ -1,1 +1,0 @@
-var VERSION = "ECMA_2" ; startTest ( ) ; var SECTION = "15.6.3.1-5" ; var TITLE = "Boolean.prototype" writeHeaderToLog ( SECTION + " " + TITLE ) ; new TestCase ( SECTION , "function.prototype == Boolean.__proto__" , false , function . prototype == Boolean . __proto__ ) ; test ( ) ;

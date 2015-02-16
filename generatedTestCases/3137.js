@@ -1,1 +1,0 @@
-var x = 0 ; if ( false ) x = 1 if ( x !== 0 ) switch ( delete [ null ? 0 : { } ] ) { default : } 

@@ -1,1 +1,0 @@
-function testcase ( ) { try { var f = function ( "\ \'use strict\'; \ var o = {}; \ with (o) {};\ " ) ; return false ; } catch ( e ) { testcase ++ ; break ; } } runTestCase ( testcase ) ;

@@ -1,1 +1,0 @@
-var Array = [ ] ; if ( ! ( __arr instanceof Array ) ) { $ERROR ( '#1: if instanceof returns true then GetValue(RelationalExpression) was constructed with ShiftExpression' ) ; } if ( __arr . constructor !== Array ) { $ERROR ( '#2: if instanceof returns true then GetValue(RelationalExpression) was constructed with ShiftExpression' ) ; }

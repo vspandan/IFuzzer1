@@ -1,1 +1,0 @@
-function f ( x ) { return 1 + "" + ( x + 1 ) ; } reportCompare ( "12" , f ( 1 ) , "" ) ; var reportCompare = eval ( "(" + f + ")" ) ; reportCompare ( "12" , g ( 1 ) , "" ) ;

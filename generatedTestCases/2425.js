@@ -1,1 +1,0 @@
-function testcase ( ) { "use strict" ; var f = function ( ) { return this ; } return ( ( new f ( ) ) !== fnGlobalObject ( ) ) && ( typeof ( new f ( ) ) !== "undefined" ) ; } runTestCase ( testcase ) testcase : { testcase : { do { if ( runTestCase . runTestCase ) break fnGlobalObject ; if ( f . f ) break testcase ; } while ( f ( f ) ) ; f = true ; } fnGlobalObject = true ; } 

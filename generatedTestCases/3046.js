@@ -1,1 +1,0 @@
- switch ( float ) { default : case " a " : case " b " : return " ab *" case " c " : return " c " ; case " d " : return " d " ; } 

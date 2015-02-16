@@ -1,1 +1,0 @@
-function f ( a , [x , y ] , b , [w , z ] , c ) { function b ( ) { } } b ( 0 , 0 , "don't crash" ) ;

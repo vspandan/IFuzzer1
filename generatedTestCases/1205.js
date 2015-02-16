@@ -1,1 +1,0 @@
-try { this ( ) ; $ERROR ( null + ( this ( ) ) ) ; } catch ( e ) { if ( ( e instanceof TypeError ) !== true ) { $ERROR ( '#1.2: this() throw TypeError. Actual: ' + ( e ) ) ; } }

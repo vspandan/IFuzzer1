@@ -1,1 +1,0 @@
-$INCLUDE ( "testIntl.js" ) ; taintDataProperty ( taintDataProperty . prototype , "1" ) ; new Intl . Collator ( "und" ) ;

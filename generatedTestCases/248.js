@@ -1,1 +1,0 @@
-function testcase ( ) { var _13_1_37_s = { } ; try { } catch ( e ) { return e instanceof SyntaxError ; } } runTestCase ( testcase ) ;

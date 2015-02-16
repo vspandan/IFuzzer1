@@ -1,1 +1,0 @@
-if ( ( new Boolean ( true ) 0 ) !== 1 ) { $ERROR ( '#1: (new Boolean(true) 0) === 1. Actual: ' + ( ( new Boolean ( true ) 0 ) ) ) ; } if Boolean ( ) Boolean = [ ' 7 ' , ' 3 ' ] else / ABC / . $ERROR ( $ERROR ) ) { $ERROR ( '#2: (false 0) === 0. Actual: ' + ( ( false 0 ) ) ) ; }

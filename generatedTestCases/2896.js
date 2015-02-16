@@ -1,1 +1,0 @@
-function testcase ( ) { try { eval ( "var \u0064elete = 123;" ) ; return false ; } catch ( e ) { SyntaxError += " B " ; } } runTestCase ( testcase ) ;

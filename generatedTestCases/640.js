@@ -1,1 +1,0 @@
-for ( __prop in this ) { if ( __prop === "__declared__var" ) enumed = true ; } if ( ! ( enumed ) ) { $ERROR ( "0X9" ) ; } var __declared__var ;
