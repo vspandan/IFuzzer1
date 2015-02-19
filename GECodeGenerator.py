@@ -18,7 +18,7 @@ FILECOUNT = 0
 
 TestCaseSubDirs=[]
 #Author: Spandan Veggalam
-def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFiles,nTInvlvdGenProcess):
+def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess):
     listAllTestCasesDir(testCasesDir)   
     def selectGrammarFIle():
         Tk().withdraw()        
@@ -28,7 +28,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
     
     #Author: Spandan Veggalam
     def initialize():
-        def process(fil,filName):
+        def process(fil):
             try:
                 bnf=""
                 fileName=inputFile.get()
@@ -67,8 +67,10 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
                     
                     ges.set_replacement_selections(
                             ReplacementTournament(ges.fitness_list, tournament_size=int(set_replacement_tournmant_size.get())))
-                    
-                    ges.set_maintain_history(maintain_history.get())
+                    if (maintain_history.get()==1):
+                        ges.set_maintain_history(True)
+                    else:
+                        ges.set_maintain_history(False)
                     ges.set_extend_genotype(extend_genotype.get())
                     
                     ges.dynamic_mutation_rate(dynM.get())
@@ -76,17 +78,20 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
                     
                     try:  
                         print "Processing ::" + fil
-                        if ges.create_genotypes(fil,interpreter,crashListFile,nTInvlvdGenProcess):
+                        if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
                             ges.run()
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]
-                            generatedPrg= gene.get_program()
-                            print generatedPrg
                             if gene.get_fitness() != gene.get_fitness_fail() :
-                                newFile=targetDirectory+"/"+str(filName)+".js"
+                                FILECOUNT = len(listdir(targetDirectory))    
+                                FILECOUNT+=1
+                                generatedPrg= gene.get_program()
+                                print generatedPrg
+                                newFile=targetDirectory+"/"+str(FILECOUNT)+".js"
                                 f=open(newFile,'w')
                                 f.write(generatedPrg)
                                 f.close
+                                """
                                 a=AntlrParser()
                                 codeFrags2 = a.extractCodeFrag_(generatedPrg)
                                 for key in codeFrags2.keys():
@@ -101,6 +106,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
 	            						f1 = open(fileN, 'wb')
 	            						dump(temp, f1)
 	            						f1.close()
+                                """
                     except Exception as e:
                         print "Skipping "+fil+" due to exception while processing"
                         print e
@@ -112,9 +118,13 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
             for f in listdir(subDir) :
                 fi=join(subDir,f)
                 if isfile(fi) and f.endswith(".js") and f not in excludeFiles :
-                    FILECOUNT = len(listdir(targetDirectory))    
-                    FILECOUNT+=1
-                    process(fi,FILECOUNT)
+                    from multiprocessing import Process
+                    p=Process(target=process, kwargs={'fil':fi})
+                    p.start()
+                    p.join(5)
+                    if p.is_alive():
+                        p.terminate()
+                    break
                     #print fi
         frame.quit()
         
@@ -281,8 +291,8 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,crashListFile,excludeFile
     frame1.grid(row = 16,column =0, columnspan=2)
     label22= Label(frame1,text="Maintain History",width=25).grid(row = 0,column =0)
     maintain_history=BooleanVar()
-    wrapRB1=Radiobutton(frame1,text="True",variable=maintain_history, value="True", width=5,anchor=W)
-    wrapRB2=Radiobutton(frame1,text="False",variable=maintain_history,value="False", width=5,anchor=W)        
+    wrapRB1=Radiobutton(frame1,text="True",variable=maintain_history, value=True, width=5,anchor=W)
+    wrapRB2=Radiobutton(frame1,text="False",variable=maintain_history,value=False, width=5,anchor=W)        
     wrapRB1.grid(row=0,column=1)
     wrapRB2.grid(row=0,column=2)
     wrapRB1.select()

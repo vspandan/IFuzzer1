@@ -378,7 +378,7 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
 
     return skip_list, test_list
 
-def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shell_path=None, createFragPool=False,excludeFiles=[],nTInvlvdGenProcess=[]): 
+def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shell_options,js_shell_path, createFragPool=False,excludeFiles=[],nTInvlvdGenProcess=[]): 
     options, requested_paths, excluded_paths = parse_args(js_shell_path)
     if options.js_shell is not None and not isfile(options.js_shell):
         print('Could not find shell at given path.')
@@ -420,12 +420,13 @@ def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shel
     try:
         while True:
             location = os.path.join(os.path.dirname(__file__), targetDirectory)
-            runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,crashListFile,excludeFiles,nTInvlvdGenProcess)
+            runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,js_shell_options,excludeFiles,nTInvlvdGenProcess)
             if os.path.exists(location):
                 test_list1=manifest.load(location,  requested_paths, excluded_paths, xul_tester,'',True)
                 results = ResultsSink(options, len(skip_list) + len(test_list) + len(test_list1), crashListFile, typeErrorFlist)
                 for t in skip_list:
                     results.push(NullTestOutput(t))
+                results = ResultsSink(options, len(test_list1), crashListFile, typeErrorFlist)
                 run_tests(options, test_list, results)
                 run_tests(options, test_list1, results)
             break

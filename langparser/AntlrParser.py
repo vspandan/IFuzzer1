@@ -55,6 +55,7 @@ class AntlrParser(object):
     def genCodeFrag(self, input, population_size,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST =None):
         population = []
         identiferList=[]            
+        selectedNt=None
         if len(input) > 0:
             for pop_count in range(0, population_size):
                 selectedNt=None
