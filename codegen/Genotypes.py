@@ -24,7 +24,7 @@ class Genotype(object):
 
     def __init__(self, start_gene_length,
                         max_gene_length,
-                        member_no,interpreter_Shell,crashListFile):
+                        member_no,interpreter_Shell,interpreter_options):
         self._keys = []        
         self.member_no = member_no
         self.local_bnf = {}
@@ -46,8 +46,7 @@ class Genotype(object):
         self._identifiers=[]
         self.errors = []
         self.interpreter_Shell=interpreter_Shell
-        self.crashListFile=crashListFile
-        self.pidList=[]
+        self.interpreter_options=interpreter_options
     
     def set_keys(self, keys):
         self._keys = keys
@@ -138,8 +137,13 @@ class Genotype(object):
         
                 elif "__id__" in item:
                     t= item.replace("__id__","")
-                    if t=="arguments":
-                        t="id"
+                    if t in self._keys:
+                    	l=len(self._identifiers)
+                    	if l>0:
+                    		ident=str(self._identifiers[randint(0,l-1)])
+                    		t= ident.replace("__id__","")
+                    	else:
+                    		t="id"
                     prg_list[position]=t
                     position += 1
                     continue
@@ -168,7 +172,7 @@ class Genotype(object):
                                     if l>0:
                                         ident=str(self._identifiers[randint(0,l-1)])
                                         t= ident.replace("__id__","")
-                                        if t=="arguments":
+                                        if t in self._keys:
                                             t="id"
                                     else:
                                         t="id"
@@ -249,39 +253,56 @@ class Genotype(object):
         self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
         self.local_bnf[BNF_PROGRAM] = program
-        self.execStatus=0
-        
-        t=Thread(target=self._execute_code,kwargs={'program':program})
+        self._fitness = self._fitness_fail
+        timedout=False
+        l=[None,None]        
+        t=Thread(target=self._execute_code,kwargs={'program':program,'l':l})
         t.start()
-        t.join(1)
+        t.join(30)
         if t.isAlive():
-            if self.p is not None:
-                print "killing"
+            if l[0] is not None:
                 try:
-                    import signal
                     if sys.platform != 'win32':
-                        kill(self.p.pid, 9)
+                        kill(l[0].pid, 9)
+                        timedout=True
                     sleep(.1)
                 except:
                     pass
-        #self._execute_code(program)
-        if self.execStatus == 1:
-            elapsedTime = datetime.now() - self.starttime
-            elapsed = elapsedTime.total_seconds()
-        elif self.execStatus == 0:
-            program = self.local_bnf[BNF_PROGRAM]
-            elapsed = self._fitness_fail
-        elif self.execStatus == 2:
-            elapsed=self._fitness_fail*-1
-        self._fitness = elapsed
-        for pid in self.pidList:
-            try:
-                if sys.platform != 'win32':
-                    kill(pid, 9)
-            except:
-                pass
+        (out,err,rc)=l[1]
+        if rc == 9 and timedout:
+                    FILECOUNT = len(listdir(("generatedTestCases")))    
+                    FILECOUNT+=1
+                    newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                    f=open(newFile,'w')
+                    f.write(program)
+                    f.close
+                    self._fitness=self._fitness_fail*-1
+        if 'SyntaxError' in err or 'Syntax error' in err:
+                    self.local_bnf[BNF_PROGRAM]=""
+                    self._fitness = self._fitness_fail
+        else:
+                    elapsedTime = datetime.now() - self.starttime
+                    
+                    from langparser.AntlrParser import AntlrParser
+                    a=AntlrParser()
+                    (a,b,c,d)=a.CountNestedStructures(program)
+                    score=0
+                    for temp in a:
+                        if temp > 2:
+                            score += temp*15
+                    for temp in b:
+                        if temp > 2:
+                            score += temp*10
+                    for temp in c:
+                        if temp > 2:
+                            score += temp*10
+                    for temp in d:
+                        if temp > 2:
+                            score += temp*5
 
-    def _execute_code(self, program):
+                    self._fitness = score
+
+    def _execute_code(self, program,l):
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program    
         
@@ -293,26 +314,11 @@ class Genotype(object):
                 f=open("/tmp/"+fi,"a+")
                 f.write(program)
                 f.close()
-                self.p = Popen([self.interpreter_Shell+" -c -w -f /tmp/" + fi], stdout=PIPE, stderr=PIPE, shell=True)
-                self.pidList.append(self.p.pid)
-                out, err = self.p.communicate()
-                if 'SyntaxError' in err or 'Syntax error' in err:
-                    self.local_bnf[BNF_PROGRAM]=""
-                    self.execStatus = 0 
-                    remove("/tmp/"+fi)
-                    """ Adjust indentation and use this with shell file. TODO this uncomment above popen statment
-                    print "err:"+err
-                    elif self.p.returncode == 9:
-                        f=open(self.crashListFile,"a+")
-                        print abspath("../CrashedFiles_Auto/"+fi)
-                        rename("/tmp/"+fi,"../CrashedFiles_Auto/"+fi)
-                        self.execStatus=2
-                        f.write("crash: "+str("../CrashedFiles_Auto/"+fi)+"\n")
-                        f.close()
-                    """
-                else:
-                    self.execStatus=1
-                    remove("/tmp/"+fi)
+                p = Popen([self.interpreter_Shell+" "+self.interpreter_options+" /tmp/" + fi], stdout=PIPE, stderr=PIPE, shell=True)
+                l[0]=p
+                out, err = p.communicate()
+                remove("/tmp/"+fi)
+                l[1]=(out,err,p.returncode)
             except:
                 pass
 

@@ -360,7 +360,7 @@ class GrammaticalEvolution(object):
                 break
         return self.fitness_list.best_member()
 
-    def create_genotypes(self,file,interpreter_Shell,crashListFile,nTInvlvdGenProcess):
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess):
         self.nT_Invld_Gen_Process=nTInvlvdGenProcess
         self._extractProductions()
         self._prepareInitial_Population(file)
@@ -371,7 +371,7 @@ class GrammaticalEvolution(object):
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
                         self._max_gene_length,
-                        member_no,interpreter_Shell,crashListFile)
+                        member_no,interpreter_Shell,interpreter_Options)
             gene.local_bnf = deepcopy(self._bnf)
             gene.local_bnf['<member_no>'] = [gene.member_no]
             gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
