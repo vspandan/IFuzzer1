@@ -253,7 +253,6 @@ class Genotype(object):
         self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
         self.local_bnf[BNF_PROGRAM] = program
-        self._fitness = self._fitness_fail
         timedout=False
         l=[None,None]        
         t=Thread(target=self._execute_code,kwargs={'program':program,'l':l})
@@ -269,7 +268,7 @@ class Genotype(object):
                 except:
                     pass
         (out,err,rc)=l[1]
-        if rc == 9 and timedout:
+        if rc == 9 :
                     FILECOUNT = len(listdir(("generatedTestCases")))    
                     FILECOUNT+=1
                     newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
@@ -277,30 +276,27 @@ class Genotype(object):
                     f.write(program)
                     f.close
                     self._fitness=self._fitness_fail*-1
-        if 'SyntaxError' in err or 'Syntax error' in err:
-                    self.local_bnf[BNF_PROGRAM]=""
-                    self._fitness = self._fitness_fail
         else:
+            if not ('SyntaxError' in err or 'Syntax error' in err):
                     elapsedTime = datetime.now() - self.starttime
-                    
                     from langparser.AntlrParser import AntlrParser
-                    a=AntlrParser()
-                    (a,b,c,d)=a.CountNestedStructures(program)
+                    parser=AntlrParser()
+                    a,b,c,d=parser.CountNestedStructures(program)
                     score=0
                     for temp in a:
-                        if temp > 2:
+                        if temp > 1:
                             score += temp*15
                     for temp in b:
-                        if temp > 2:
+                        if temp > 1:
                             score += temp*10
                     for temp in c:
-                        if temp > 2:
+                        if temp > 1:
                             score += temp*10
                     for temp in d:
-                        if temp > 2:
+                        if temp > 1:
                             score += temp*5
 
-                    self._fitness = score
+                    self._fitness = score*-1
 
     def _execute_code(self, program,l):
         program = sub(r'\s+', ' ', program)

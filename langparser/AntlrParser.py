@@ -31,24 +31,25 @@ class AntlrParser(object):
 
 
     def printChild(self,root,nT,position):
-        for child in root:
-            self.position+=1
-            if self.position==position and nT == child.tag:
-                self.out += nT 
-                if child.text is None:
-                    self.subcode = ""
-                else:
-                    self.subcode=child.text
-                self.subCode(child)
-                continue
-            if child.tag =='identifier':
-                self.identifiers.append(child.text)
-            if child.text is not None:
-                self.out+=child.text
-            self.printChild(child,nT,position)   
-            if child.tail is not None:
-                self.out+=child.tail
-            
+        if root is not None:
+            for child in root:
+                self.position+=1
+                if self.position==position and nT == child.tag:
+                    self.out += nT 
+                    if child.text is None:
+                        self.subcode = ""
+                    else:
+                        self.subcode=child.text
+                    self.subCode(child)
+                    continue
+                if child.tag =='identifier':
+                    self.identifiers.append(child.text)
+                if child.text is not None:
+                    self.out+=child.text
+                self.printChild(child,nT,position)   
+                if child.tail is not None:
+                    self.out+=child.tail
+                
         
 
 
@@ -58,6 +59,7 @@ class AntlrParser(object):
         selectedNt=None
         if len(input) > 0:
             for pop_count in range(0, population_size):
+                root=None
                 selectedNt=None
                 self.identifiers=[]
                 if len(nT) != 0: 
@@ -203,27 +205,31 @@ class AntlrParser(object):
                 dInd=True
             for child in root:
                 self.Analayse(child,aInd,bInd,cInd,dInd)
-            if root.tag == 'a':
+            if root.tag == 'iterationStatement':
                 self.a.append(self.aCount)
                 self.aCount=0
                 aInd=False
-            elif root.tag == 'b':
+            elif root.tag == 'functionExpression':
                 self.b.append(self.bCount)
                 self.bCount=0
                 bInd=False
-            elif root.tag == 'c':
+            elif root.tag == 'ifStatement':
                 self.c.append(self.cCount)
                 self.cCount=0
                 cInd=False
-            elif root.tag == 'c':
+            elif root.tag == 'functionDeclaration':
                 self.d.append(self.dCount)
                 self.dCount=0
                 dInd=False
 
     def CountNestedStructures(self,input):
         self.init()
-        root = ElementTree.fromstring(self.parseTree(input,True))
-        self.Analayse(root)
+        try:
+            root = ElementTree.fromstring(self.parseTree(input,True))
+            self.Analayse(root)
+        except:
+            pass
+
         return (self.a,self.b,self.c,self.d)                 
     
 if __name__=='__main__':

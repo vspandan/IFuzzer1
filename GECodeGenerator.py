@@ -67,11 +67,9 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                     
                     ges.set_replacement_selections(
                             ReplacementTournament(ges.fitness_list, tournament_size=int(set_replacement_tournmant_size.get())))
-                    if (maintain_history.get()==1):
-                        ges.set_maintain_history(True)
-                    else:
-                        ges.set_maintain_history(False)
-                    ges.set_extend_genotype(extend_genotype.get())
+                    
+                    ges.set_maintain_history(bool(maintain_history.get()))
+                    ges.set_extend_genotype(bool(extend_genotype.get())
                     
                     ges.dynamic_mutation_rate(dynM.get())
                     ges.dynamic_crossover_rate(dynM1.get())
@@ -124,7 +122,6 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                     p.join(5)
                     if p.is_alive():
                         p.terminate()
-                    break
                     #print fi
         frame.quit()
         
@@ -190,7 +187,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
     
     label9= Label(frame,text="Fitness Target",width=25).grid(row = 8,column=2)
     set_fitness_traget_val=Entry(frame,width=20)
-    set_fitness_traget_val.insert(0,"0.0001")
+    set_fitness_traget_val.insert(0,"-1000")
     set_fitness_traget_val.grid(row=8,column=3)
     
     label10= Label(frame,text="Min Time Out",width=25).grid(row = 9,column=0)
