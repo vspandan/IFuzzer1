@@ -5,7 +5,7 @@ from re import sub,split
 from string import lower
 from subprocess import Popen,PIPE
 from marshal import load
-from os import path,remove,kill,rename
+from os import path,remove,kill,rename,listdir
 from threading import Thread
 from codegen.Utilities import base10tobase2, base2tobase10
 from random import randint
@@ -47,6 +47,8 @@ class Genotype(object):
         self.errors = []
         self.interpreter_Shell=interpreter_Shell
         self.interpreter_options=interpreter_options
+        self.score=0
+
     
     def set_keys(self, keys):
         self._keys = keys
@@ -95,6 +97,7 @@ class Genotype(object):
             self.local_bnf[variable_name] = [str(value)]
 
     def resolve_variable(self, variable):
+        self.score+=100
         values = self.local_bnf[variable]
         value = self._select_choice(self._get_codon(), values)
         value = sub('[\'()]', '', value)
@@ -269,34 +272,33 @@ class Genotype(object):
                     pass
         (out,err,rc)=l[1]
         if rc == 9 :
-                    FILECOUNT = len(listdir(("generatedTestCases")))    
-                    FILECOUNT+=1
-                    newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
-                    f=open(newFile,'w')
-                    f.write(program)
-                    f.close
-                    self._fitness=self._fitness_fail*-1
+            print "CRASH"
+            FILECOUNT = len(listdir("generatedTestCases"))+1
+            newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+            f=open(newFile,'w')
+            f.write(program)
+            f.close
+            self._fitness=self._fitness_fail*-1
         else:
             if not ('SyntaxError' in err or 'Syntax error' in err):
                     elapsedTime = datetime.now() - self.starttime
                     from langparser.AntlrParser import AntlrParser
                     parser=AntlrParser()
                     a,b,c,d=parser.CountNestedStructures(program)
-                    score=0
                     for temp in a:
                         if temp > 1:
-                            score += temp*15
+                            self.score += temp*15
                     for temp in b:
                         if temp > 1:
-                            score += temp*10
+                            self.score += temp*10
                     for temp in c:
                         if temp > 1:
-                            score += temp*10
+                            self.score += temp*10
                     for temp in d:
                         if temp > 1:
-                            score += temp*5
+                            self.score += temp*5
 
-                    self._fitness = score*-1
+                    self._fitness = self.score*-1
 
     def _execute_code(self, program,l):
         program = sub(r'\s+', ' ', program)

@@ -69,7 +69,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                             ReplacementTournament(ges.fitness_list, tournament_size=int(set_replacement_tournmant_size.get())))
                     
                     ges.set_maintain_history(bool(maintain_history.get()))
-                    ges.set_extend_genotype(bool(extend_genotype.get())
+                    ges.set_extend_genotype(bool(extend_genotype.get()))
                     
                     ges.dynamic_mutation_rate(dynM.get())
                     ges.dynamic_crossover_rate(dynM1.get())
@@ -81,8 +81,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                             ges.fitness_list.sorted()
                             gene = ges.population[ges.fitness_list.best_member()]
                             if gene.get_fitness() != gene.get_fitness_fail() :
-                                FILECOUNT = len(listdir(targetDirectory))    
-                                FILECOUNT+=1
+                                FILECOUNT = len(listdir(targetDirectory))+1 
                                 generatedPrg= gene.get_program()
                                 print generatedPrg
                                 newFile=targetDirectory+"/"+str(FILECOUNT)+".js"
