@@ -388,9 +388,9 @@ class GrammaticalEvolution(object):
         return True;  
 
     def _perform_endcycle(self):
-        ch=choice([0,1])
-        childList=[]
+        childList= self._evaluate_fitness(True)
         while len(childList) < self._population_size:
+            ch=choice([0,1])
             fitness_pool = self._evaluate_fitness()
             if ch == 1:
                 child_list = self._perform_crossovers(fitness_pool)
@@ -406,22 +406,47 @@ class GrammaticalEvolution(object):
                 childList.extend(child_list)
         self._perform_replacements(childList)
 
-    def _evaluate_fitness(self):
-        flist = []
-        total = int(round(
-            self._max_fitness_rate * float(self._population_size)))        
-        count = 0
-        for fsel in self.fitness_selections:
-            fsel.set_fitness_list(self.fitness_list)
-            for i in fsel.select():
-                flist.append(i)
-                count += 1
-                if count == total:
-                    break
-        flist1 = []
-        for member_no in flist:
-            flist1.append(deepcopy(self.population[member_no]))
-        return flist1
+    """
+        if ind=True; certain num of indv are selected based on max fitness rate (say m). These are included in offspring list.
+
+        remianing individuals max_pop - m are selected which includes these m indiv undergo crossover and mutation
+        m+(n-m) = n (new offspring are generated which represents next generations)
+    """
+    def _evaluate_fitness(self,ind=False):
+        if ind:
+            flist = []
+            total = int(round(
+                self._max_fitness_rate * float(self._population_size)))        
+            count = 0
+            for fsel in self.fitness_selections:
+                fsel.set_fitness_list(self.fitness_list)
+                for i in fsel.select():
+                    flist.append(i)
+                    count += 1
+                    if count == total:
+                        break
+            flist1 = []
+            for member_no in flist:
+                flist1.append(deepcopy(self.population[member_no]))
+            return flist1
+        else:
+            flist3=[]
+            total = int(round(
+                self._max_fitness_rate * float(self._population_size)))        
+            total=self._population_size-total
+            count = 0
+            for fsel in self.fitness_selections:
+                fsel.set_fitness_list(self.fitness_list)
+                for i in fsel.select():
+                    flist3.append(i)
+                    count += 1
+                    if count == total:
+                        break
+            flist2 = []
+            for member_no in flist3:
+                flist2.append(deepcopy(self.population[member_no]))
+
+            return flist2
 
     def _perform_crossovers(self, flist):
         child_list = []
@@ -539,7 +564,8 @@ class GrammaticalEvolution(object):
                         gene.local_bnf['program']=(gene.local_bnf['CodeFrag'][0:position1]+" "+ replCode +" "+gene.local_bnf['CodeFrag'][position2:]).replace("__id__","")
                         #gene.set_binary_gene(self._mutatebinarygene(gene.binary_gene, position1, position2))
                         gene.generate_decimal_gene()
-                mutatedList.append(gene)
+                    if gene.get_fitness() != gene.get_fitness_fail() :
+                        mutatedList.append(gene)
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
@@ -547,14 +573,14 @@ class GrammaticalEvolution(object):
         for rsel in self.replacement_selections:
             rsel.set_fitness_list(self.fitness_list)
 
-            for replaced_no in rsel.select():
-                replaced_g = self.population[replaced_no]
+            for i in rsel.select():
+                replaced_g = self.population[i]
                 if position < len(fitness_pool):
-                    new_g = fitness_pool[position]
-                    new_g.member_no = replaced_g.member_no
-                    new_g._generation = self._generation + 1
-                    new_g.local_bnf['<member_no>'] = [new_g.member_no]
-                    self.population[new_g.member_no] = new_g
+                    newGene = fitness_pool[position]
+                    newGene.member_no = replaced_g.member_no
+                    newGene._generation = self._generation + 1
+                    newGene.local_bnf['<member_no>'] = [newGene.member_no]
+                    self.population[newGene.member_no] = newGene
                     position += 1
                 else:
                     break

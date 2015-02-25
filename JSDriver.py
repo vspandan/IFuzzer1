@@ -19,7 +19,7 @@ from mozillaJSTestSuite.lib.progressbar import ProgressBar
 
 import mozillaJSTestSuite.lib.manifest as manifest
 
-from GECodeGenerator import runFuzzer 
+
 from langparser.AntlrParser import AntlrParser
 import datetime
 import threading
@@ -378,7 +378,7 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
 
     return skip_list, test_list
 
-def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shell_options,js_shell_path, createFragPool=False,excludeFiles=[],nTInvlvdGenProcess=[]): 
+def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shell_options,js_shell_path, gui=False, genProgs=True,createFragPool=False,excludeFiles=[],nTInvlvdGenProcess=[]): 
     options, requested_paths, excluded_paths = parse_args(js_shell_path)
     if options.js_shell is not None and not isfile(options.js_shell):
         print('Could not find shell at given path.')
@@ -420,13 +420,18 @@ def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shel
     try:
         while True:
             location = os.path.join(os.path.dirname(__file__), targetDirectory)
-            runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,js_shell_options,excludeFiles,nTInvlvdGenProcess)
+            if gui:
+                from GECodeGeneratorGUI import runFuzzer 
+            else:
+                from GECodeGenerator import runFuzzer 
+            if genProgs:
+                runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,js_shell_options,excludeFiles,nTInvlvdGenProcess)
             if os.path.exists(location):
                 test_list1=manifest.load(location,  requested_paths, excluded_paths, xul_tester,'',True)
                 results = ResultsSink(options, len(skip_list) + len(test_list) + len(test_list1), crashListFile, typeErrorFlist)
                 for t in skip_list:
                     results.push(NullTestOutput(t))
-                results = ResultsSink(options, len(test_list1), crashListFile, typeErrorFlist)
+                #results = ResultsSink(options, len(test_list1), crashListFile, typeErrorFlist)
                 run_tests(options, test_list, results)
                 run_tests(options, test_list1, results)
             break

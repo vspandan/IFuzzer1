@@ -7,8 +7,8 @@ import os
 from string import lower
 import sys
 
-JS_SHELL_PATH1="/home/spandan/js/js-1.8.5/js/src/dist/bin/js"
-JS_SHELL_PATH2="/home/spandan/js/mozilla-central/js/src/dist/bin/js"
+JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/shell/js"
+JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
 
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
@@ -19,6 +19,8 @@ TargetDirectory =  "generatedTestCases"
 TestCasesDirectory= "testsamples"
 
 CREATE_FRAG_POOL=False
+GEN_PRGS=True
+GUI=False
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'user.js', 'sta.js',
                     'test262-browser.js', 'test262-shell.js',
@@ -26,9 +28,9 @@ EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
-INCLUDE_NT=None
-#INCLUDE_NT=['statement','block','variableStatement','ifStatement','iterationStatement','withStatement','switchStatement','throwStatement','tryStatement','variableDeclarationList','variableDeclaration','finallyProduction','functionDeclaration','formalParameterList','functionExpression','functionBody','singleExpression','assignmentOperator','identifier','booleanLiteral','','numericLiteral','literal','objectLiteral']
+INCLUDE_NT=['block','ifStatement','iterationStatement','continueStatement','breakStatement','returnStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','initialiser','functionDeclaration','functionExpression','singleExpression','expressionSequence','assignmentOperator','booleanLiteral','numericLiteral','literal','caseClause']
 
+JS_SHELL_OPTIONS="-w -f"
 
 def options(choice):
     if choice == 1:
@@ -73,7 +75,7 @@ if __name__ == "__main__":
         else:
              print "Answer must be 'Y' or 'N'"
     
-    main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_PATH1,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
-    main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_PATH2,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    #main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_OPTIONS,JS_SHELL_PATH1,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     print datetime.now()
  
