@@ -110,10 +110,16 @@ class AParser{
 }
 
 class AntlrParser {
+
+	AParser a=null;
 	public AParser getParser(){
-		return new AParser();
+		a = new AParser();
+		return a;
 	}
 
+	public void nullify(){
+		a=null;
+	}
 
 	public static void main(String[] args) {
 		AntlrParser a = new AntlrParser();

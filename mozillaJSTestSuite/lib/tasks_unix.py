@@ -150,13 +150,14 @@ def reap_zombies(tasks, results, timeout):
             if e.errno == errno.ECHILD:
                 break
             raise e
-
-        ended = remove_task(tasks, pid)
-        flush_input(ended.stdout, ended.out)
-        flush_input(ended.stderr, ended.err)
-        os.close(ended.stdout)
-        os.close(ended.stderr)
-
+        try:
+            ended = remove_task(tasks, pid)
+            flush_input(ended.stdout, ended.out)
+            flush_input(ended.stderr, ended.err)
+            os.close(ended.stdout)
+            os.close(ended.stderr)
+        except:
+            continue
         returncode = os.WEXITSTATUS(status)
         if os.WIFSIGNALED(status):
             returncode = -os.WTERMSIG(status)

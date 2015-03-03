@@ -33,9 +33,9 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 ges.setGrammarFile(abspath("grammarFiles/JavaScript.g4"))
                 ges.set_bnf(bnf)
                 ges.set_genotype_length(20, 5000)
-                ges.set_population_size(5)
+                ges.set_population_size(10)
                 ges.set_wrap(True)
-                ges.set_max_generations(2)
+                ges.set_max_generations(10)
                 ges.set_fitness_type("min".lower(), float(-1000))
                 
                 ges.set_max_program_length(500)
@@ -95,7 +95,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
         						f1.close()
                         """
             except Exception as e:
-                pass
+                print e
         
         for subDir in TestCaseSubDirs :
             for f in listdir(subDir) :

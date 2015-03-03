@@ -60,6 +60,8 @@ class TestResult:
 
         out, rc = output.out, output.rc
 
+
+
         failures = 0
         passes = 0
         expected_rcs = []
@@ -90,6 +92,10 @@ class TestResult:
                 result = cls.PASS
             else:
                 result = cls.FAIL
+        """
+        if 'Assertion' in out or 'Assertion' in output.err or 'assertion' in out or 'Assertion' in output.err:
+                result = cls.CRASH
+        """
         if result==cls.CRASH:
             return cls(test, result, results),str(test)
         return cls(test, result, results),None

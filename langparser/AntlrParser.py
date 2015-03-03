@@ -132,8 +132,10 @@ class AntlrParser(object):
         if len(input)>0:
             gateway = JavaGateway()
             parser = gateway.entry_point.getParser()
-            output = parser.parseTree(input,ind) 
+            output = parser.parseTree(input,ind)
+            gateway.entry_point.nullify()
             gateway.close()
+            parser=None
             return output
         return ""
                 

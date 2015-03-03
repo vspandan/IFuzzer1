@@ -270,17 +270,18 @@ class Genotype(object):
                     sleep(.1)
                 except:
                     pass
-        (out,err,rc)=l[1]
-        if rc == 9 :
-            print "CRASH"
-            FILECOUNT = len(listdir("generatedTestCases"))+1
-            newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
-            f=open(newFile,'w')
-            f.write(program)
-            f.close
-            self._fitness=self._fitness_fail*-1
         else:
-            if not ('SyntaxError' in err or 'Syntax error' in err):
+            (out,err,rc)=l[1]
+            if rc and rc not in [0,1,2,3,4]:
+                print "CRASH FOUND"
+                FILECOUNT = len(listdir("generatedTestCases"))+1
+                newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                f=open(newFile,'w')
+                f.write(program)
+                f.close
+                self._fitness=self._fitness_fail*-1
+            else:
+                if not ('SyntaxError' in err or 'Syntax error' in err) and rc != 3:
                     elapsedTime = datetime.now() - self.starttime
                     from langparser.AntlrParser import AntlrParser
                     parser=AntlrParser()
@@ -297,10 +298,19 @@ class Genotype(object):
                     for temp in d:
                         if temp > 1:
                             self.score += temp*5
-
+                    if "warning" in err:
+                        self.score+=300
                     self._fitness = self.score*-1
 
     def _execute_code(self, program,l):
+        def set_limits():
+            # resource module not supported on all platforms
+            try:
+                import resource
+                GB = 2**30
+                resource.setrlimit(resource.RLIMIT_AS, (2*GB, 2*GB))
+            except:
+                return
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program    
         
@@ -312,13 +322,18 @@ class Genotype(object):
                 f=open("/tmp/"+fi,"a+")
                 f.write(program)
                 f.close()
-                p = Popen([self.interpreter_Shell+" "+self.interpreter_options+" /tmp/" + fi], stdout=PIPE, stderr=PIPE, shell=True)
+                options = {}
+                if sys.platform != 'win32':
+                    options["close_fds"] = True
+                    options["preexec_fn"] = set_limits
+                p = Popen([self.interpreter_Shell+" "+self.interpreter_options+" /tmp/" + fi], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
                 l[0]=p
                 out, err = p.communicate()
-                remove("/tmp/"+fi)
                 l[1]=(out,err,p.returncode)
-            except:
-                pass
+            except Exception as ex:
+                print ex
+            finally:
+                remove("/tmp/"+fi)
 
     def get_binary_gene_length(self):
        return self._gene_length * 8

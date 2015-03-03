@@ -7,15 +7,18 @@ import os
 from string import lower
 import sys
 
-JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/shell/js"
+JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
 
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
 CrashListFile2="CrashList2"
 TypeErrorList2="TypeErrorList2"
+Target=""
 
-TargetDirectory =  "generatedTestCases"
+
+
+TargetDirectory =  "generatedTestCases/"+Target
 TestCasesDirectory= "testsamples"
 
 CREATE_FRAG_POOL=False
@@ -30,7 +33,7 @@ EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
 
 INCLUDE_NT=['block','ifStatement','iterationStatement','continueStatement','breakStatement','returnStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','initialiser','functionDeclaration','functionExpression','singleExpression','expressionSequence','assignmentOperator','booleanLiteral','numericLiteral','literal','caseClause']
 
-JS_SHELL_OPTIONS="-w -f"
+JS_SHELL_OPTIONS="--no-ion -w -f"
 
 def options(choice):
     if choice == 1:
@@ -75,7 +78,7 @@ if __name__ == "__main__":
         else:
              print "Answer must be 'Y' or 'N'"
     
-    #main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_OPTIONS,JS_SHELL_PATH1,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_OPTIONS,JS_SHELL_PATH1,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     print datetime.now()
  
