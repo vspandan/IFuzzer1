@@ -17,7 +17,6 @@ class AntlrParser(object):
         self.out=""
         self.nonTerminals=[]
         self.values=[]
-        self.position=0
         self.subcode =""
 
     def subCode(self,root):
@@ -52,7 +51,6 @@ class AntlrParser(object):
                 
         
 
-
     def genCodeFrag(self, input, population_size,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST =None):
         population = []
         identiferList=[]            
@@ -67,7 +65,7 @@ class AntlrParser(object):
                     if nonTerminal is None:
                         while True:
                             selected=randint(0,len(nT)-1)
-                            selectedNt=nT[selected-1]
+                            selectedNt=nT[selected]
                             if INCLUDE_NT_LIST is not None:
                                 if selectedNt in INCLUDE_NT_LIST:
                                     break
@@ -85,6 +83,7 @@ class AntlrParser(object):
                             self.out=root.text
                     except:
                         self.out=""
+                    self.position=0
                     self.printChild(root,selectedNt,selected)
                     population.append(self.out)
                     identiferList.append(self.identifiers)

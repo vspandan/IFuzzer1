@@ -100,7 +100,7 @@ class Genotype(object):
         self.score+=100
         values = self.local_bnf[variable]
         value = self._select_choice(self._get_codon(), values)
-        value = sub('[\'()]', '', value)
+        #value = sub('[\'()]', '', value)
         return str(value)
     
     def _converge(self, item):
@@ -138,7 +138,7 @@ class Genotype(object):
                     position += 1
                     continue
         
-                elif "__id__" in item:
+                elif "__id__" in item or item == "Ident":
                     t= item.replace("__id__","")
                     if t in self._keys:
                     	l=len(self._identifiers)
@@ -168,17 +168,24 @@ class Genotype(object):
                             prg_list[position] = self.resolve_variable(item)
                         else:
                             temp=""
+                            idMapping={}
                             temp_list = split(VARIABLE_FORMAT, self._converge(item))
                             for t in temp_list:
-                                if t == "identifier" or "__id__" in t:
-                                    l=len(self._identifiers)
-                                    if l>0:
-                                        ident=str(self._identifiers[randint(0,l-1)])
-                                        t= ident.replace("__id__","")
-                                        if t in self._keys:
-                                            t="id"
+                                if t == "Ident" or "__id__" in t:
+                                    t=t.replace("__id__","")
+                                    if idMapping.has_key(t):
+                                        t=idMapping[t]
                                     else:
-                                        t="id"
+                                        l=len(self._identifiers)
+                                        if l>0:
+                                            ident=str(self._identifiers[randint(0,l-1)])
+                                            t1= ident.replace("__id__","")
+                                            if t1 in self._keys:
+                                                t1="id"
+                                        else:
+                                            t1="id"
+                                        idMapping[t]=t1
+                                        t=t1
                                 temp=temp+" "+t
                             prg_list[position] = temp
                         continue_map = True
@@ -187,6 +194,7 @@ class Genotype(object):
                 
             initialMapping += 1
             program = ''.join(prg_list)
+            
             prg_list = split(VARIABLE_FORMAT, str(program))
             elapsed = datetime.now() - self.starttime
 
@@ -252,10 +260,41 @@ class Genotype(object):
 
         return self._fitness
 
+    def tracePrg2File(self,program):
+        pass
+        """
+        f=open("spandan.l","a+")
+        f.write("\t"+program+"\n");
+        f.close()
+        """
+
+    def computeSubScore (self, program,err):
+        score=0
+        from langparser.AntlrParser import AntlrParser
+        parser=AntlrParser()
+        a,b,c,d=parser.CountNestedStructures(program)
+        for temp in a:
+            if temp > 1:
+                score += temp*15
+        for temp in b:
+            if temp > 1:
+                score += temp*10
+        for temp in c:
+            if temp > 1:
+                score += temp*10
+        for temp in d:
+            if temp > 1:
+
+
+                score += temp*5
+        if "warning" in err:
+            score+=300
+        return score
+
     def _map_gene(self):
         self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
-        self.local_bnf[BNF_PROGRAM] = program
+        self.tracePrg2File("c::::\t"+program)
         timedout=False
         l=[None,None]        
         t=Thread(target=self._execute_code,kwargs={'program':program,'l':l})
@@ -272,35 +311,11 @@ class Genotype(object):
                     pass
         else:
             (out,err,rc)=l[1]
-            if rc and rc not in [0,1,2,3,4]:
-                print "CRASH FOUND"
-                FILECOUNT = len(listdir("generatedTestCases"))+1
-                newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
-                f=open(newFile,'w')
-                f.write(program)
-                f.close
+            if rc and rc not in [0,1,2,3,4] :
                 self._fitness=self._fitness_fail*-1
             else:
-                if not ('SyntaxError' in err or 'Syntax error' in err) and rc != 3:
-                    elapsedTime = datetime.now() - self.starttime
-                    from langparser.AntlrParser import AntlrParser
-                    parser=AntlrParser()
-                    a,b,c,d=parser.CountNestedStructures(program)
-                    for temp in a:
-                        if temp > 1:
-                            self.score += temp*15
-                    for temp in b:
-                        if temp > 1:
-                            self.score += temp*10
-                    for temp in c:
-                        if temp > 1:
-                            self.score += temp*10
-                    for temp in d:
-                        if temp > 1:
-                            self.score += temp*5
-                    if "warning" in err:
-                        self.score+=300
-                    self._fitness = self.score*-1
+                if rc != 3:
+                    self._fitness = self.computeSubScore(program,err)*-1
 
     def _execute_code(self, program,l):
         def set_limits():
@@ -313,7 +328,7 @@ class Genotype(object):
                 return
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program    
-        
+        self.tracePrg2File(program)
         if len(program) == 0:
             return 0
         else:                

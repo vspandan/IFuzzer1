@@ -27,7 +27,6 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
     #Author: Spandan Veggalam
     def initialize():
         def process(fil):
-            try:
                 bnf=""
                 ges = GrammaticalEvolution()
                 ges.setGrammarFile(abspath("grammarFiles/JavaScript.g4"))
@@ -35,14 +34,14 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 ges.set_genotype_length(20, 5000)
                 ges.set_population_size(10)
                 ges.set_wrap(True)
-                ges.set_max_generations(10)
+                ges.set_max_generations(3)
                 ges.set_fitness_type("min".lower(), float(-1000))
                 
                 ges.set_max_program_length(500)
                 ges.set_timeouts(20, 3600)
                 ges.set_fitness_fail(float(1000))
                 
-                ges.set_mutation_rate(float(0.02))
+                ges.set_mutation_rate(float(0.5))
                 
                 ges.set_fitness_selections(
                     FitnessElites(ges.fitness_list, .05),
@@ -94,19 +93,24 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
         						dump(temp, f1)
         						f1.close()
                         """
-            except Exception as e:
-                print e
-        
+            
+        #count=0
         for subDir in TestCaseSubDirs :
             for f in listdir(subDir) :
                 fi=join(subDir,f)
                 if isfile(fi) and f.endswith(".js") and f not in excludeFiles :
                     from multiprocessing import Process
+                    f111=open("spandan.l","a+")
+                    f111.write("\n\n\n\n\n"+f+"\n")
+                    f111.close()
+                    #count+=1
                     p=Process(target=process, kwargs={'fil':fi})
                     p.start()
                     p.join(5)
                     if p.is_alive():
                         p.terminate()
+                #if count==10:
+                    #sys.exit()
                     #print fi
     initialize()
     

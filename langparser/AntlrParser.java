@@ -101,7 +101,7 @@ class AParser{
 					parseTr = parseTr + "__id__"+s.getText();
 					isIdentifier = false;
 				} else {
-					parseTr = parseTr + s.getText() + " ";
+					parseTr = parseTr + " " + s.getText() + " ";
 				}
 			}
 		} catch (Exception e) {
