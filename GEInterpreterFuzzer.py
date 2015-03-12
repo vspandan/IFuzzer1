@@ -77,8 +77,9 @@ if __name__ == "__main__":
             break;
         else:
              print "Answer must be 'Y' or 'N'"
-    
+    JS_SHELL_OPTIONS=" -w -f"
     main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_OPTIONS,JS_SHELL_PATH1,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+    JS_SHELL_OPTIONS="--fuzzing-safe -w -f"
     main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
     print datetime.now()
  

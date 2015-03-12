@@ -66,9 +66,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 
                 print "Processing ::" + fil
                 if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
-                    ges.run()
-                    ges.fitness_list.sorted()
-                    gene = ges.population[ges.fitness_list.best_member()]
+                    gene = ges.population[ges.run()]
                     if gene.get_fitness() != gene.get_fitness_fail() :
                         FILECOUNT = len(listdir(targetDirectory))+1 
                         generatedPrg= gene.get_program()
@@ -106,7 +104,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                     #count+=1
                     p=Process(target=process, kwargs={'fil':fi})
                     p.start()
-                    p.join(5)
+                    p.join(10)
                     if p.is_alive():
                         p.terminate()
                 #if count==10:
