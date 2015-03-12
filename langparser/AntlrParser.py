@@ -33,8 +33,8 @@ class AntlrParser(object):
         if root is not None:
             for child in root:
                 self.position+=1
-                if self.position==position and nT == child.tag:
-                    self.out += nT 
+                if self.position==position+1 and nT == child.tag:
+                    self.out += " "+nT +" "
                     if child.text is None:
                         self.subcode = ""
                     else:
@@ -74,7 +74,7 @@ class AntlrParser(object):
                     else:
                         selectedNt=nonTerminal
                         indices = [i for i, x in enumerate(nT) if x == nonTerminal]
-                        selected=choice(indices)+1
+                        selected=choice(indices)
                     try:   
                         root = ElementTree.fromstring(input)
                         if root.text is None:
@@ -92,7 +92,7 @@ class AntlrParser(object):
             if not subTree:
                 return self.out,selectedNt
             if subTree: 
-                return self.subcode
+                return self.subcode,self.out
         return population,identiferList
 
     def extractNT(self,root):
@@ -235,4 +235,4 @@ class AntlrParser(object):
     
 if __name__=='__main__':
     a= AntlrParser()
-    print a.parseTree("/home/spandan/geinterpreterfuzz/mozillaJSTestSuite/ecma_3/RegExp/perlstress-001.js")
+    print a.parseTree("/home/spandan/Desktop/test.js")

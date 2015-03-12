@@ -31,9 +31,9 @@ EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
-INCLUDE_NT=['block','ifStatement','iterationStatement','continueStatement','breakStatement','returnStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','initialiser','functionDeclaration','functionExpression','singleExpression','expressionSequence','assignmentOperator','booleanLiteral','numericLiteral','literal','caseClause']
+INCLUDE_NT=['block','ifStatement','iterationStatement','continueStatement','breakStatement','returnStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','initialiser','functionDeclaration','functionExpression','assignmentOperator','booleanLiteral','numericLiteral','caseClause']
 
-JS_SHELL_OPTIONS="--no-ion -w -f"
+JS_SHELL_OPTIONS="--fuzzing-safe -w -f"
 
 def options(choice):
     if choice == 1:

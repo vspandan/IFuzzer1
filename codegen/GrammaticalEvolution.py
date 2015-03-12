@@ -384,7 +384,9 @@ class GrammaticalEvolution(object):
             self.population.append(gene)
             member_no += 1
             gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
+            gene.tracePrg2File("i::: \t"+gene.local_bnf['CodeFrag']);
             gene._identifiers=self.identifiers[member_no-1]
+            gene.nTInvlvdGenProcess=nTInvlvdGenProcess
         return True;  
 
     def _perform_endcycle(self):
@@ -502,20 +504,33 @@ class GrammaticalEvolution(object):
             return (child1, child2)
         
         #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
-        subString1=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
-        subString2=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
+
+        subString1,s1=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
+        subString2,s2=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
         
-        #subString1=sub(r'\s+', ' ',subString1)
-        #subString2=sub(r'\s+', ' ',subString2)
-        if child1Prg.find(subString2) <0 or child2Prg.find(subString1) <0:
+        subString1=sub(r'\s+', ' ',subString1)
+        subString2=sub(r'\s+', ' ',subString2)
+        
+        """
+        if child1Prg.find(selectedNt) <0 or child2Prg.find(selectedNt) <0:
             return (child1, child2) 
+        """
+        try:
+            
+            startPoint1=s1.index(selectedNt)
+            startPoint2=s2.index(selectedNt)
         
-        startPoint1=child1Prg.index(subString1)
-        startPoint2=child2Prg.index(subString2)
-        
+        except:
+            return (child1, child2) 
+                
+        """
         child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
         child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
-        
+        """
+
+        child1Prg_ = s1.replace(selectedNt,subString2)
+        child2Prg_ = s2.replace(selectedNt,subString1)
+
         #TODOcheck the binary string against child and also parent
         child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
         child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
@@ -555,7 +570,9 @@ class GrammaticalEvolution(object):
                 incompl=self.parseCode(gene.get_program())
                 gene.set_identifiers(self.identifiers)
                 if len(incompl.strip()) >0:
-                    gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl))
+                    gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl),None,None,self.nT_Invld_Gen_Process)
+                    if selectedNt is None:
+                        continue
                     position1=gene.local_bnf['CodeFrag'].find(selectedNt)
                     position2=position1+len(selectedNt)  
                     if position1 is not None and position2 is not None:

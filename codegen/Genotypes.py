@@ -48,6 +48,7 @@ class Genotype(object):
         self.interpreter_Shell=interpreter_Shell
         self.interpreter_options=interpreter_options
         self.score=0
+        self.nTInvlvdGenProcess=[]
 
     
     def set_keys(self, keys):
@@ -162,9 +163,30 @@ class Genotype(object):
         
                 elif item in self._keys:
                     if check_stoplist and position >= 0:
-                        #print item
-                        if initialMapping < 2:
-
+                        self.tracePrg2File(item+"\n")
+                        if item in self.nTInvlvdGenProcess:
+                            temp=""
+                            idMapping={}
+                            temp_list = split(VARIABLE_FORMAT, self._converge(item))
+                            for t in temp_list:
+                                if t == "Ident" or "__id__" in t:
+                                    t=t.replace("__id__","")
+                                    if idMapping.has_key(t):
+                                        t=idMapping[t]
+                                    else:
+                                        l=len(self._identifiers)
+                                        if l>0:
+                                            ident=str(self._identifiers[randint(0,l-1)])
+                                            t1= ident.replace("__id__","")
+                                            if t1 in self._keys:
+                                                t1="id"
+                                        else:
+                                            t1="id"
+                                        idMapping[t]=t1
+                                        t=t1
+                                temp=temp+" "+t
+                            prg_list[position] = temp
+                        elif initialMapping < 2:
                             prg_list[position] = self.resolve_variable(item)
                         else:
                             temp=""
@@ -188,6 +210,7 @@ class Genotype(object):
                                         t=t1
                                 temp=temp+" "+t
                             prg_list[position] = temp
+                        self.tracePrg2File(prg_list[position]+"\n")
                         continue_map = True
                         #print prg_list[position]
                 position += 1
@@ -341,7 +364,7 @@ class Genotype(object):
                 if sys.platform != 'win32':
                     options["close_fds"] = True
                     options["preexec_fn"] = set_limits
-                p = Popen([self.interpreter_Shell+" "+self.interpreter_options+" /tmp/" + fi], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                p = Popen([self.interpreter_Shell+" "+self.interpreter_options+" shell.js /tmp/" + fi], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
                 l[0]=p
                 out, err = p.communicate()
                 l[1]=(out,err,p.returncode)
@@ -358,8 +381,7 @@ class Genotype(object):
         if isinstance(selection, list):
             return selection[codon % len(selection)]
         else:
-            msg = "selection. %s, must be a list" % (selection)
-            raise ValueError(msg)
+            return msg
 
     def get_program(self):
         return self.local_bnf[BNF_PROGRAM]
