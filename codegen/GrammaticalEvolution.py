@@ -57,7 +57,13 @@ class GrammaticalEvolution(object):
         
         self.dynamic_mutation = 0
         self.dynamic_crossover = 0
-        
+
+        self.mutationCount = 1
+    
+
+    def set_mutation_count(self, count):
+        self.mutationCount=count
+
     def dynamic_mutation_rate(self, ind ):
         self.dynamic_mutation = ind
         self._mutation_rate=0.02
@@ -84,7 +90,8 @@ class GrammaticalEvolution(object):
     def _prepareInitial_Population (self,fileName):
             self.parseRepr=self.parser.parseTree(path.abspath(fileName))
             if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
-                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process)
+                #Generates incomplete code fragment
+                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,1)
             else:
                 return
 
@@ -351,13 +358,15 @@ class GrammaticalEvolution(object):
             self._compute_fitness()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
-            if self._continue_processing():
+            if self._continue_processing() and self.fitness_list.best_value() != self._fitness_fail:
                 self._perform_endcycle()
                 gene = self.population[self.fitness_list.best_member()]
                 program = gene.get_program()
                 self._generation += 1
             else:
                 break
+        print "best fitness value:"
+        print self.fitness_list.best_member()
         return self.fitness_list.best_member()
 
     def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess):
@@ -394,9 +403,10 @@ class GrammaticalEvolution(object):
         while len(childList) < self._population_size:
             ch=choice([0,1])
             fitness_pool = self._evaluate_fitness()
+            ch=1
             if ch == 1:
-                child_list = self._perform_crossovers(fitness_pool)
-                childList.extend(child_list)
+                #child_list = self._perform_crossovers(fitness_pool)
+                #childList.extend(child_list)
                 child_list = self._perform_mutations(fitness_pool)
                 if child_list is not None:
                     childList.extend(child_list)
@@ -530,7 +540,6 @@ class GrammaticalEvolution(object):
 
         child1Prg_ = s1.replace(selectedNt,subString2)
         child2Prg_ = s2.replace(selectedNt,subString1)
-
         #TODOcheck the binary string against child and also parent
         child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
         child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
@@ -543,8 +552,10 @@ class GrammaticalEvolution(object):
 
         child1.set_binary_gene(child1_binary)
         child1.generate_decimal_gene()
+        child1.calculateFitness(child1Prg_)
         child2.set_binary_gene(child2_binary)
         child2.generate_decimal_gene()
+        child2.calculateFitness(child2Prg_)
         
         return (child1, child2) 
         
@@ -570,17 +581,24 @@ class GrammaticalEvolution(object):
                 incompl=self.parseCode(gene.get_program())
                 gene.set_identifiers(self.identifiers)
                 if len(incompl.strip()) >0:
-                    gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl),None,None,self.nT_Invld_Gen_Process)
-                    if selectedNt is None:
+                    #selectedNt List
+                    gene.local_bnf['CodeFrag'],selectedNt=self.parser.genCodeFrag(incompl,1,self.parser.extractNonTerminal(incompl),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
+                    if len(selectedNt) <=0 :
                         continue
+                    gene.tracePrg2File("mutation");
+                    gene._map_gene()
+                    gene.tracePrg2File("after mutation");
+                    """
+                    #losing track of gene
                     position1=gene.local_bnf['CodeFrag'].find(selectedNt)
                     position2=position1+len(selectedNt)  
                     if position1 is not None and position2 is not None:
                         subCode = gene.local_bnf['CodeFrag'][position2:]
-                        replCode = gene._map_variables(selectedNt, True)
+                        replCode = gene._map_variables(gene.local_bnf['CodeFrag'], True)
                         gene.local_bnf['program']=(gene.local_bnf['CodeFrag'][0:position1]+" "+ replCode +" "+gene.local_bnf['CodeFrag'][position2:]).replace("__id__","")
                         #gene.set_binary_gene(self._mutatebinarygene(gene.binary_gene, position1, position2))
                         gene.generate_decimal_gene()
+                    """
                     if gene.get_fitness() != gene.get_fitness_fail() :
                         mutatedList.append(gene)
         return mutatedList
@@ -605,6 +623,8 @@ class GrammaticalEvolution(object):
     def _continue_processing(self):
         status = True
         fitl = self.fitness_list
+        print "fitness values:"
+        print fitl
 
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:

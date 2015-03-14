@@ -17,64 +17,71 @@ class AntlrParser(object):
         self.out=""
         self.nonTerminals=[]
         self.values=[]
-        self.subcode =""
+        self.subcode ={}
 
-    def subCode(self,root):
+    def subCodeGen(self,root,pos):
         for child in root:
+            self.position+=1
             if child.text is not None:
-                self.subcode += child.text
-            self.subCode(child)
+                self.subcode[pos] = self.subcode[pos]+child.text
+            self.subCodeGen(child,pos)
             if child.tail is not None:
-                self.subcode+=child.tail
+                self.subcode[pos]=self.subcode[pos]+child.tail
 
 
 
-    def printChild(self,root,nT,position):
+    def printChild(self,root,nTList):
         if root is not None:
             for child in root:
                 self.position+=1
-                if self.position==position+1 and nT == child.tag:
-                    self.out += " "+nT +" "
-                    if child.text is None:
-                        self.subcode = ""
-                    else:
-                        self.subcode=child.text
-                    self.subCode(child)
-                    continue
+                if nTList.has_key(self.position-1):
+                    if nTList[self.position-1]==child.tag:
+                        self.out += " "+child.tag +" "
+                        if child.text is None:
+                            self.subcode[self.position-1] = ""
+                        else:
+                            self.subcode[self.position-1]=child.text
+                        self.subCodeGen(child,self.position-1)
+                        continue
                 if child.tag =='identifier':
                     self.identifiers.append(child.text)
                 if child.text is not None:
                     self.out+=child.text
-                self.printChild(child,nT,position)   
+                self.printChild(child,nTList)   
                 if child.tail is not None:
                     self.out+=child.tail
                 
         
 
-    def genCodeFrag(self, input, population_size,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST =None):
+    def genCodeFrag(self, input, population_size,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST =None, count=1):
         population = []
         identiferList=[]            
-        selectedNt=None
+        selectedNTList={}
         if len(input) > 0:
             for pop_count in range(0, population_size):
                 root=None
-                selectedNt=None
                 self.identifiers=[]
+                
                 if len(nT) != 0: 
-                    
-                    if nonTerminal is None:
-                        while True:
-                            selected=randint(0,len(nT)-1)
-                            selectedNt=nT[selected]
-                            if INCLUDE_NT_LIST is not None:
-                                if selectedNt in INCLUDE_NT_LIST:
-                                    break
-                            else:
-                                 break
-                    else:
-                        selectedNt=nonTerminal
-                        indices = [i for i, x in enumerate(nT) if x == nonTerminal]
-                        selected=choice(indices)
+                    internalCount=0
+                    while internalCount < count :
+                        selectedNt=None
+                        if nonTerminal is None:
+                            while True:
+                                selected=randint(0,len(nT)-1)
+                                selectedNt=nT[selected]
+                                if INCLUDE_NT_LIST is not None:
+                                    if selectedNt in INCLUDE_NT_LIST : 
+                                            break
+                                else:
+                                     break
+                        else:
+                            selectedNt=nonTerminal[internalCount]
+                            indices = [i for i, x in enumerate(nT) if x == nonTerminal]
+                            selected=choice(indices)
+                        internalCount+=1
+                        selectedNTList[selected]=selectedNt
+
                     try:   
                         root = ElementTree.fromstring(input)
                         if root.text is None:
@@ -84,13 +91,13 @@ class AntlrParser(object):
                     except:
                         self.out=""
                     self.position=0
-                    self.printChild(root,selectedNt,selected)
+                    self.printChild(root,selectedNTList)
                     population.append(self.out)
                     identiferList.append(self.identifiers)
 
         if population_size == 1: 
             if not subTree:
-                return self.out,selectedNt
+                return self.out,selectedNTList
             if subTree: 
                 return self.subcode,self.out
         return population,identiferList
@@ -129,13 +136,16 @@ class AntlrParser(object):
 
     def parseTree(self,input,ind=False):
         if len(input)>0:
-            gateway = JavaGateway()
-            parser = gateway.entry_point.getParser()
-            output = parser.parseTree(input,ind)
-            gateway.entry_point.nullify()
-            gateway.close()
-            parser=None
-            return output
+            try:
+                gateway = JavaGateway()
+                parser = gateway.entry_point.getParser()
+                output = parser.parseTree(input,ind)
+                gateway.entry_point.nullify()
+                gateway.close()
+                parser=None
+                return output
+            except:
+                print "Check Java Gateway connection; Doesn't seem to be started"
         return ""
                 
     def extractCodeFrag(self, fileName):

@@ -52,6 +52,8 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 ges.set_children_per_crossover(2)
                 
                 ges.set_mutation_type('s')
+
+                ges.set_mutation_count(5);
                 
                 ges.set_max_fitness_rate(float(0.5))
                 
@@ -104,7 +106,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                     #count+=1
                     p=Process(target=process, kwargs={'fil':fi})
                     p.start()
-                    p.join(10)
+                    p.join(120)
                     if p.is_alive():
                         p.terminate()
                 #if count==10:

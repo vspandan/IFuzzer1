@@ -317,18 +317,22 @@ class Genotype(object):
     def _map_gene(self):
         self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
+        self.calculateFitness(program)
+
+    def calculateFitness(self,program):
         self.tracePrg2File("c::::\t"+program)
         timedout=False
         l=[None,None]        
         t=Thread(target=self._execute_code,kwargs={'program':program,'l':l})
         t.start()
-        t.join(30)
+        t.join(10)
         if t.isAlive():
             if l[0] is not None:
                 try:
                     if sys.platform != 'win32':
                         kill(l[0].pid, 9)
                         timedout=True
+                        print timedout
                     sleep(.1)
                 except:
                     pass
@@ -364,7 +368,8 @@ class Genotype(object):
                 if sys.platform != 'win32':
                     options["close_fds"] = True
                     options["preexec_fn"] = set_limits
-                p = Popen([self.interpreter_Shell+" "+self.interpreter_options+" shell.js /tmp/" + fi], stdin=PIPE, stdout=PIPE, stderr=PIPE, shell=True)
+                exec_cmd=self.interpreter_Shell+" "+self.interpreter_options+" shell.js /tmp/" + fi
+                p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
                 l[0]=p
                 out, err = p.communicate()
                 l[1]=(out,err,p.returncode)
@@ -381,7 +386,7 @@ class Genotype(object):
         if isinstance(selection, list):
             return selection[codon % len(selection)]
         else:
-            return msg
+            return str(selection)
 
     def get_program(self):
         return self.local_bnf[BNF_PROGRAM]

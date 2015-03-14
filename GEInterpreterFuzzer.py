@@ -42,44 +42,50 @@ def options(choice):
         return lower(raw_input("Do you want to create fragment pool ? Y/N : "))
 
 if __name__ == "__main__":
-    sys.setrecursionlimit(100000)
-    print datetime.now()
-    if not os.path.isdir(TargetDirectory):
-        os.mkdir(TargetDirectory)
-    if not os.path.isdir("database"):
-        os.mkdir("database")
-    if not os.path.exists(TargetDirectory+"/shell.js"):
-        f=open(TargetDirectory+"/shell.js","a+")
-        f.close()
-    while True:
-        input=options(0)
-        if input in ['y','n']:
-            if input=='y':
-                CREATE_FRAG_POOL=True
+    try:
+        sys.setrecursionlimit(100000)
+        print datetime.now()
+        if not os.path.isdir(TargetDirectory):
+            os.mkdir(TargetDirectory)
+        if not os.path.isdir("database"):
+            os.mkdir("database")
+        if not os.path.exists(TargetDirectory+"/shell.js"):
+            f=open(TargetDirectory+"/shell.js","a+")
+            f.close()
+        while True:
+            input=options(0)
+            if input in ['y','n']:
+                if input=='y':
+                    CREATE_FRAG_POOL=True
 
-                fileList=os.listdir("database")
-                if len(fileList):
-                    while True:
-                        input1=options(1)
-                        if input1 in ['y','n']:
-                            if input1=='y':
-                                raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
-                                break;
+                    fileList=os.listdir("database")
+                    if len(fileList):
+                        while True:
+                            input1=options(1)
+                            if input1 in ['y','n']:
+                                if input1=='y':
+                                    raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
+                                    break;
+                                else:
+                                    raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
+                                    for f in fileList:
+                                        os.remove("database"+"/"+f)
+                                    break;
                             else:
-                                raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
-                                for f in fileList:
-                                    os.remove("database"+"/"+f)
-                                break;
-                        else:
-                            print "Answer must be 'Y' or 'N'"
+                                print "Answer must be 'Y' or 'N'"
 
-                
-            break;
-        else:
-             print "Answer must be 'Y' or 'N'"
-    JS_SHELL_OPTIONS=" -w -f"
-    main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_OPTIONS,JS_SHELL_PATH1,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
-    JS_SHELL_OPTIONS="--fuzzing-safe -w -f"
-    main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
-    print datetime.now()
- 
+                    
+                break;
+            else:
+                 print "Answer must be 'Y' or 'N'"
+        JS_SHELL_OPTIONS=" -w -f"
+        #main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_OPTIONS,JS_SHELL_PATH1,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+
+        JS_SHELL_OPTIONS=" --ion-eager --fuzzing-safe -w -f"
+        JS_SHELL_OPTIONS=" --baseline-eager --fuzzing-safe -w -f"
+        JS_SHELL_OPTIONS=" --ion-offthread-compile=off --fuzzing-safe -w -f"
+        JS_SHELL_OPTIONS=" --fuzzing-safe -w -f"
+        main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+        print datetime.now()
+    except:
+        pass       
