@@ -53,7 +53,8 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 
                 ges.set_mutation_type('s')
 
-                ges.set_mutation_count(5);
+                ges.set_mutation_count(3);
+                ges.set_crossover_count(3);
                 
                 ges.set_max_fitness_rate(float(0.5))
                 
@@ -94,7 +95,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
         						f1.close()
                         """
             
-        #count=0
+        count=0
         for subDir in TestCaseSubDirs :
             for f in listdir(subDir) :
                 fi=join(subDir,f)
@@ -103,14 +104,14 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                     f111=open("spandan.l","a+")
                     f111.write("\n\n\n\n\n"+f+"\n")
                     f111.close()
-                    #count+=1
+                    count+=1
                     p=Process(target=process, kwargs={'fil':fi})
                     p.start()
                     p.join(120)
                     if p.is_alive():
                         p.terminate()
-                #if count==10:
-                    #sys.exit()
+                if count==3:
+                    sys.exit()
                     #print fi
     initialize()
     

@@ -57,6 +57,7 @@ class AntlrParser(object):
         population = []
         identiferList=[]            
         selectedNTList={}
+        self.subcode={}
         if len(input) > 0:
             for pop_count in range(0, population_size):
                 root=None
@@ -77,7 +78,7 @@ class AntlrParser(object):
                                      break
                         else:
                             selectedNt=nonTerminal[internalCount]
-                            indices = [i for i, x in enumerate(nT) if x == nonTerminal]
+                            indices = [i for i, x in enumerate(nT) if x == nonTerminal[internalCount]]
                             selected=choice(indices)
                         internalCount+=1
                         selectedNTList[selected]=selectedNt
@@ -99,7 +100,7 @@ class AntlrParser(object):
             if not subTree:
                 return self.out,selectedNTList
             if subTree: 
-                return self.subcode,self.out
+                return self.subcode,self.out,selectedNTList
         return population,identiferList
 
     def extractNT(self,root):

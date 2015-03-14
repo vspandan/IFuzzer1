@@ -59,7 +59,10 @@ class GrammaticalEvolution(object):
         self.dynamic_crossover = 0
 
         self.mutationCount = 1
-    
+        self.crossoverCount = 1
+
+    def set_crossover_count(self, count):
+        self.crossoverCount=count
 
     def set_mutation_count(self, count):
         self.mutationCount=count
@@ -403,10 +406,9 @@ class GrammaticalEvolution(object):
         while len(childList) < self._population_size:
             ch=choice([0,1])
             fitness_pool = self._evaluate_fitness()
-            ch=1
             if ch == 1:
-                #child_list = self._perform_crossovers(fitness_pool)
-                #childList.extend(child_list)
+                child_list = self._perform_crossovers(fitness_pool)
+                childList.extend(child_list)
                 child_list = self._perform_mutations(fitness_pool)
                 if child_list is not None:
                     childList.extend(child_list)
@@ -508,42 +510,44 @@ class GrammaticalEvolution(object):
         else:
             commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
         
+        selectedNt=[]
         if len(commonNonTerm) > 0:
-            selectedNt= choice(commonNonTerm)
+            for i in range(self.crossoverCount):
+                selectedNt.append(choice(commonNonTerm))
         else:
             return (child1, child2)
         
         #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
 
-        subString1,s1=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt)        
-        subString2,s2=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt)       
-        
-        subString1=sub(r'\s+', ' ',subString1)
-        subString2=sub(r'\s+', ' ',subString2)
+        subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt,None,self.crossoverCount)        
+        subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt,None,self.crossoverCount)       
         
         """
         if child1Prg.find(selectedNt) <0 or child2Prg.find(selectedNt) <0:
             return (child1, child2) 
         """
         try:
-            
-            startPoint1=s1.index(selectedNt)
-            startPoint2=s2.index(selectedNt)
+            for k in selected2NTList:
+                child1Prg_ = s1.replace(selected2NTList[k],subString2[k])
+            for k in selected1NTList:
+                child2Prg_ = s2.replace(selected1NTList[k],subString1[k])
         
         except:
             return (child1, child2) 
                 
         """
+        #Alternate Impl
         child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
         child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
         """
 
-        child1Prg_ = s1.replace(selectedNt,subString2)
-        child2Prg_ = s2.replace(selectedNt,subString1)
+        """
+        #Losing track of genes
         #TODOcheck the binary string against child and also parent
         child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
         child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
-        
+        """
+
         incompl1=self.parseCode(child1Prg_)
         incompl2=self.parseCode(child2Prg_)
         
