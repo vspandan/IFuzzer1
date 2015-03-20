@@ -6,6 +6,7 @@ from datetime import datetime
 import os
 from string import lower
 import sys
+from random import choice
 
 JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
@@ -14,11 +15,9 @@ CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
 CrashListFile2="CrashList2"
 TypeErrorList2="TypeErrorList2"
-Target=""
 
 
-
-TargetDirectory =  "generatedTestCases/"+Target
+TargetDirectory =  "generatedTestCases1"
 TestCasesDirectory= "testsamples"
 
 CREATE_FRAG_POOL=False
@@ -31,9 +30,7 @@ EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
-INCLUDE_NT=['block','ifStatement','iterationStatement','continueStatement','breakStatement','returnStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','initialiser','functionDeclaration','functionExpression','assignmentOperator','booleanLiteral','numericLiteral','caseClause']
-
-JS_SHELL_OPTIONS="--fuzzing-safe -w -f"
+INCLUDE_NT=['block','ifStatement','iterationStatement','continueStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','initialiser','functionDeclaration','functionExpression','assignmentOperator','booleanLiteral','numericLiteral','literal','caseClause','expressionSequence','singleExpression']
 
 def options(choice):
     if choice == 1:
@@ -78,14 +75,14 @@ if __name__ == "__main__":
                 break;
             else:
                  print "Answer must be 'Y' or 'N'"
-        JS_SHELL_OPTIONS=" -w -f"
+        
+        #JS_SHELL_OPTIONS=["  -f"]
         #main(TestCasesDirectory,TargetDirectory,CrashListFile1,TypeErrorList1,JS_SHELL_OPTIONS,JS_SHELL_PATH1,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
 
-        JS_SHELL_OPTIONS=" --ion-eager --fuzzing-safe -w -f"
-        JS_SHELL_OPTIONS=" --baseline-eager --fuzzing-safe -w -f"
-        JS_SHELL_OPTIONS=" --ion-offthread-compile=off --fuzzing-safe -w -f"
-        JS_SHELL_OPTIONS=" --fuzzing-safe -w -f"
+
+        JS_SHELL_OPTIONS=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
         main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+        
         print datetime.now()
     except:
         pass       

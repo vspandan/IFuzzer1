@@ -8,7 +8,7 @@ from marshal import load
 from os import path,remove,kill,rename,listdir
 from threading import Thread
 from codegen.Utilities import base10tobase2, base2tobase10
-from random import randint
+from random import randint, choice
 from os.path import abspath
 from time import time,sleep
 
@@ -321,38 +321,7 @@ class Genotype(object):
 
     def calculateFitness(self,program):
         self.tracePrg2File("c::::\t"+program)
-        timedout=False
-        l=[None,None]        
-        t=Thread(target=self._execute_code,kwargs={'program':program,'l':l})
-        t.start()
-        t.join(10)
-        if t.isAlive():
-            if l[0] is not None:
-                try:
-                    if sys.platform != 'win32':
-                        kill(l[0].pid, 9)
-                        timedout=True
-                        print timedout
-                    sleep(.1)
-                except:
-                    pass
-        else:
-            (out,err,rc)=l[1]
-            if rc and rc not in [0,1,2,3,4] :
-                self._fitness=self._fitness_fail*-1
-            else:
-                if rc != 3:
-                    self._fitness = self.computeSubScore(program,err)*-1
-
-    def _execute_code(self, program,l):
-        def set_limits():
-            # resource module not supported on all platforms
-            try:
-                import resource
-                GB = 2**30
-                resource.setrlimit(resource.RLIMIT_AS, (2*GB, 2*GB))
-            except:
-                return
+        count=0
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program    
         self.tracePrg2File(program)
@@ -364,19 +333,57 @@ class Genotype(object):
                 f=open("/tmp/"+fi,"a+")
                 f.write(program)
                 f.close()
-                options = {}
-                if sys.platform != 'win32':
-                    options["close_fds"] = True
-                    options["preexec_fn"] = set_limits
-                exec_cmd=self.interpreter_Shell+" "+self.interpreter_options+" shell.js /tmp/" + fi
-                p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
-                l[0]=p
-                out, err = p.communicate()
-                l[1]=(out,err,p.returncode)
-            except Exception as ex:
+                option = choice(self.interpreter_options)
+                count+=1
+                timedout=False
+                l=[None,None]        
+                t=Thread(target=self.run_cmd,kwargs={'fi':fi,'l':l,'option':option})
+                t.start()
+                t.join(10)
+                if t.isAlive():
+                    if l[0] is not None:
+                        try:
+                            if sys.platform != 'win32':
+                                kill(l[0].pid, 9)
+                                timedout=True
+                            sleep(.1)
+                        except:
+                            pass
+                else:
+                    (out,err,rc)=l[1]
+                    if rc and rc not in [0,1,2,3,4] :
+                        self._fitness=self._fitness+self._fitness_fail*-1
+                        FILECOUNT = len(listdir("generatedTestCases"))+1 
+                        newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                        program+="\n//"+option
+                        f=open(newFile,'w')
+                        f.write(program)
+                        f.close
+                    else:
+                        if rc != 3 and count == 1:
+                            self._fitness = self.computeSubScore(program,err)*-1
+            except Exception as ex: 
                 print ex
             finally:
                 remove("/tmp/"+fi)
+
+
+    def run_cmd(self, fi,l,option):
+        def set_limits():
+            # resource module not supported on all platforms
+            try:
+                import resource
+                GB = 1**30
+                resource.setrlimit(resource.RLIMIT_AS, (1*GB, 1*GB))
+            except:
+                return
+        exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
+        p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        l[0]=p
+        out, err = p.communicate()
+        l[1]=(out,err,p.returncode)
+    
+              
 
     def get_binary_gene_length(self):
        return self._gene_length * 8

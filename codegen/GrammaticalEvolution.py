@@ -94,7 +94,7 @@ class GrammaticalEvolution(object):
             self.parseRepr=self.parser.parseTree(path.abspath(fileName))
             if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
                 #Generates incomplete code fragment
-                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,1)
+                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
             else:
                 return
 

@@ -70,7 +70,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 print "Processing ::" + fil
                 if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
                     gene = ges.population[ges.run()]
-                    if gene.get_fitness() != gene.get_fitness_fail() :
+                    if gene.get_fitness() != gene.get_fitness_fail() and  gene.get_fitness() > gene.get_fitness_fail() * -1:
                         FILECOUNT = len(listdir(targetDirectory))+1 
                         generatedPrg= gene.get_program()
                         print generatedPrg
@@ -95,7 +95,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
         						f1.close()
                         """
             
-        count=0
+        #count=0
         for subDir in TestCaseSubDirs :
             for f in listdir(subDir) :
                 fi=join(subDir,f)
@@ -104,14 +104,14 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                     f111=open("spandan.l","a+")
                     f111.write("\n\n\n\n\n"+f+"\n")
                     f111.close()
-                    count+=1
+                    #count+=1
                     p=Process(target=process, kwargs={'fil':fi})
                     p.start()
                     p.join(120)
                     if p.is_alive():
                         p.terminate()
-                if count==3:
-                    sys.exit()
+                #if count==3:
+                    #sys.exit()
                     #print fi
     initialize()
     
