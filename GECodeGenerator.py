@@ -13,10 +13,14 @@ from codegen.GrammaticalEvolution import GrammaticalEvolution
 
 from langparser.AntlrParser import AntlrParser
 from marshal import load,dump
+from random import choice
 
 FILECOUNT = 0
 
 TestCaseSubDirs=[]
+TestCases=[]
+Population_size=10
+
 #Author: Spandan Veggalam
 def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess):
     listAllTestCasesDir(testCasesDir)   
@@ -32,7 +36,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 ges.setGrammarFile(abspath("grammarFiles/JavaScript.g4"))
                 ges.set_bnf(bnf)
                 ges.set_genotype_length(20, 5000)
-                ges.set_population_size(10)
+                ges.set_population_size(Population_size)
                 ges.set_wrap(True)
                 ges.set_max_generations(3)
                 ges.set_fitness_type("min".lower(), float(-1000))
@@ -67,7 +71,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 ges.dynamic_mutation_rate(1)
                 ges.dynamic_crossover_rate(1)
                 
-                print "Processing ::" + fil
+                print fil
                 if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
                     gene = ges.population[ges.run()]
                     if gene.get_fitness() != gene.get_fitness_fail() and  gene.get_fitness() > gene.get_fitness_fail() * -1:
@@ -96,6 +100,23 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                         """
             
         #count=0
+        TestCases1=TestCases
+        while True:
+            if len(TestCases1) < Population_size :
+                TestCases.extend(TestCases1)
+            tempList=[]
+            for i in range(Population_size):
+                t=choice(TestCases)
+                TestCases.remove(t)
+                tempList.append(t)
+            from multiprocessing import Process
+            p=Process(target=process, kwargs={'fil':tempList})
+            p.start()
+            p.join(120)
+            if p.is_alive():
+                p.terminate()
+
+
         for subDir in TestCaseSubDirs :
             for f in listdir(subDir) :
                 fi=join(subDir,f)
@@ -122,3 +143,4 @@ def listAllTestCasesDir(testCasesDir):
             if not isfile(fi):
                 TestCaseSubDirs.append(fi)
                 listAllTestCasesDir(fi)
+            TestCases.append(fi)

@@ -163,7 +163,7 @@ class Genotype(object):
         
                 elif item in self._keys:
                     if check_stoplist and position >= 0:
-                        self.tracePrg2File(item+"\n")
+                        #self.tracePrg2File(item+"\n")
                         if item in self.nTInvlvdGenProcess:
                             temp=""
                             idMapping={}
@@ -210,7 +210,7 @@ class Genotype(object):
                                         t=t1
                                 temp=temp+" "+t
                             prg_list[position] = temp
-                        self.tracePrg2File(prg_list[position]+"\n")
+                        #self.tracePrg2File(prg_list[position]+"\n")
                         continue_map = True
                         #print prg_list[position]
                 position += 1

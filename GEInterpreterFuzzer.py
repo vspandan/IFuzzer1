@@ -17,7 +17,7 @@ CrashListFile2="CrashList2"
 TypeErrorList2="TypeErrorList2"
 
 
-TargetDirectory =  "generatedTestCases1"
+TargetDirectory =  "generatedTestCases"
 TestCasesDirectory= "testsamples"
 
 CREATE_FRAG_POOL=False

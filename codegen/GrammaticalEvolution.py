@@ -90,13 +90,20 @@ class GrammaticalEvolution(object):
         codeFragment= codeFragment.replace('\n', ' ')
         return self.parser.parseTree(codeFragment,True)
     
-    def _prepareInitial_Population (self,fileName):
-            self.parseRepr=self.parser.parseTree(path.abspath(fileName))
-            if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
-                #Generates incomplete code fragment
-                self.initial_Population,self.identifiers = self.parser.genCodeFrag(self.parseRepr,self._population_size,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
-            else:
-                return
+    def _prepareInitial_Population (self,fileList):
+            self.identifiers=[]
+            self.initial_Population=[]
+            count=0
+            for fileName in fileList:
+                temp=""
+                temp1=[]
+                self.parseRepr=self.parser.parseTree(path.abspath(fileName))
+                if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
+                    #Generates incomplete code fragment
+                    temp,temp1 = self.parser.genCodeFrag(self.parseRepr,1,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,self.mutationCount,True)
+                self.initial_Population.append(temp)
+                self.identifiers.append(temp1)
+                count+=1
 
     def set_population_size(self, size):
         size = long(size)
@@ -519,8 +526,8 @@ class GrammaticalEvolution(object):
         
         #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
 
-        subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt,None,self.crossoverCount)        
-        subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt,None,self.crossoverCount)       
+        subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,1,non_term1,True,selectedNt,None,len(selectedNt))
+        subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,1,non_term2,True,selectedNt,None,len(selectedNt))
         
         """
         if child1Prg.find(selectedNt) <0 or child2Prg.find(selectedNt) <0:
@@ -528,9 +535,11 @@ class GrammaticalEvolution(object):
         """
         try:
             for k in selected2NTList:
-                child1Prg_ = s1.replace(selected2NTList[k],subString2[k])
+                s1 = s1.replace(selected2NTList[k],subString2[k])
             for k in selected1NTList:
-                child2Prg_ = s2.replace(selected1NTList[k],subString1[k])
+                s2 = s2.replace(selected1NTList[k],subString1[k])
+            child1Prg_=s1
+            child2Prg_=s2
         
         except:
             return (child1, child2) 
@@ -550,9 +559,9 @@ class GrammaticalEvolution(object):
 
         incompl1=self.parseCode(child1Prg_)
         incompl2=self.parseCode(child2Prg_)
-        
-        child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,1,self.parser.extractNonTerminal(incompl1))
-        child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,1,self.parser.extractNonTerminal(incompl2))
+
+        child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,1,self.parser.extractNonTerminal(incompl1),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
+        child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,1,self.parser.extractNonTerminal(incompl2),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
 
         child1.set_binary_gene(child1_binary)
         child1.generate_decimal_gene()
