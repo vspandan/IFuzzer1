@@ -10,7 +10,7 @@ block : { statementList } |  { }
 
 statementList : statement | statement statementList
 
-variableStatement : Var variableDeclarationList ;
+variableStatement : var variableDeclarationList ;
 
 variableDeclarationList : variableDeclaration , variableDeclarationList | variableDeclaration
 
@@ -22,49 +22,49 @@ emptyStatement : ;
 
 expressionStatement : expressionSequence
 
-ifStatement : If ( expressionSequence ) statement Else statement | If ( expressionSequence ) statement 
+ifStatement : if ( expressionSequence ) statement else statement | if ( expressionSequence ) statement 
 
-iterationStatement : Do statement While ( expressionSequence ) ; | While ( expressionSequence ) statement | For ( ; ; ) statement | For ( ; ; expressionSequence ) statement | For ( ; expressionSequence ; ) statement | For ( ; expressionSequence ; expressionSequence ) statement | For ( expressionSequence ; ; ) statement | For ( expressionSequence ; ; expressionSequence ) statement | For ( expressionSequence ; expressionSequence ; ) statement | For ( expressionSequence ; expressionSequence ; expressionSequence ) statement | For ( Var variableDeclarationList ; ; ) statement | For ( Var variableDeclarationList ; ; expressionSequence ) statement | For ( Var variableDeclarationList ; expressionSequence ; ) statement | For ( Var variableDeclarationList ; expressionSequence ; expressionSequence ) statement | For ( singleExpression In expressionSequence ) statement | For ( Var variableDeclaration In expressionSequence ) statement
+iterationStatement : do statement while ( expressionSequence ) ; | while ( expressionSequence ) statement | for ( ; ; ) statement | for ( ; ; expressionSequence ) statement | for ( ; expressionSequence ; ) statement | for ( ; expressionSequence ; expressionSequence ) statement | for ( expressionSequence ; ; ) statement | for ( expressionSequence ; ; expressionSequence ) statement | for ( expressionSequence ; expressionSequence ; ) statement | for ( expressionSequence ; expressionSequence ; expressionSequence ) statement | for ( var variableDeclarationList ; ; ) statement | for ( var variableDeclarationList ; ; expressionSequence ) statement | for ( var variableDeclarationList ; expressionSequence ; ) statement | for ( var variableDeclarationList ; expressionSequence ; expressionSequence ) statement | for ( singleExpression In expressionSequence ) statement | for ( var variableDeclaration In expressionSequence ) statement
 
-continueStatement : Continue identifier ; | Continue ;
+continueStatement : continue identifier ; | continue ;
 
-breakStatement : Break identifier ; | Break ;
+breakStatement : break identifier ; | break ;
 
-returnStatement : Return expressionSequence ; | Return ;
+returnStatement : return expressionSequence ; | return ;
 
-withStatement : With ( expressionSequence ) statement
+withStatement : with ( expressionSequence ) statement
 
-switchStatement : Switch ( expressionSequence ) caseBlock
+switchStatement : switch ( expressionSequence ) caseBlock
 
 caseBlock : { caseClauses defaultClause caseClauses } | { caseClauses defaultClause } | { caseClauses } | { defaultClause caseClauses } |{ defaultClause } | { } 
 
 caseClauses : caseClause | caseClause caseClauses
 
-caseClause : Case expressionSequence : statementList |  Case expressionSequence :
+caseClause : case expressionSequence : statementList |  case expressionSequence :
 
-defaultClause : Default : statementList | Default : 
+defaultClause : default : statementList | default : 
 
 labelledStatement : identifier : statement
 
-throwStatement : Throw expressionSequence ;
+throwStatement : throw expressionSequence ;
 
-tryStatement : Try block catchProduction | Try block finallyProduction | Try block catchProduction finallyProduction
+tryStatement : try block catchProduction | try block finallyProduction | try block catchProduction finallyProduction
 
-catchProduction : Catch ( identifier ) block
+catchProduction : catch ( identifier ) block
 
-finallyProduction : Finally block
+finallyProduction : finally block
 
-debuggerStatement : Debugger ;
+debuggerStatement : debugger ;
 
-functionDeclaration : Function identifier ( formalParameterList ) { functionBody } | Function identifier ( ) { functionBody }
+functionDeclaration : function identifier ( formalParameterList ) { functionBody } | function identifier ( ) { functionBody }
 
-formalParameterList : identifier , formalParameterList| identifier
+formalParameterList : identifier , formalParameterList | identifier
 
-functionExpression	: Function ( formalParameterList ) { functionBody }	| Function  ( ) { functionBody }
+functionExpression	: function ( formalParameterList ) { functionBody }	| function  ( ) { functionBody }
 
 functionBody : sourceElements |
     
-arrayLiteral : [ elementList , elision ] | [ elementList , ] |[ elementList ] | [ , elision ] | [ , ] |[ elision ] | []
+arrayLiteral : [ elementList , elision ] | [ elementList , ] |[ elementList ] | [ , elision ] | [ , ] |[ elision ] | [] | [elementList elision]
  
 elementList : elision singleExpression elementList | elision singleExpression | singleExpression |elision elementList
 
@@ -86,69 +86,25 @@ argumentList : singleExpression , argumentList | singleExpression
     
 expressionSequence : singleExpression expressionSequence | singleExpression
 
-singleExpression : functionExpression | singleExpression [ expressionSequence ] | singleExpression . identifierName | singleExpression arguments | New singleExpression arguments | New singleExpression | singleExpression ++ | singleExpression -- | Delete singleExpression | Void singleExpression | Typeof singleExpression | ++ singleExpression | -- singleExpression | + singleExpression | - singleExpression | ~ singleExpression | ! singleExpression | singleExpression * singleExpression | singleExpression / singleExpression | singleExpression % singleExpression | singleExpression + singleExpression | singleExpression - singleExpression | singleExpression << singleExpression | singleExpression >> singleExpression | singleExpression >>> singleExpression | singleExpression < singleExpression | singleExpression > singleExpression | singleExpression <= singleExpression | singleExpression >= singleExpression | singleExpression Instanceof singleExpression | singleExpression In singleExpression | singleExpression == singleExpression | singleExpression != singleExpression | singleExpression === singleExpression | singleExpression !== singleExpression | singleExpression & singleExpression | singleExpression ^ singleExpression | singleExpression | singleExpression | singleExpression && singleExpression | singleExpression ## singleExpression | singleExpression ? singleExpression : singleExpression | singleExpression = expressionSequence | singleExpression assignmentOperator expressionSequence | This | identifier | literal | arrayLiteral | objectLiteral | ( expressionSequence )
+singleExpression : functionExpression | singleExpression [ expressionSequence ] | singleExpression . identifierName | singleExpression arguments | new singleExpression arguments | new singleExpression | singleExpression ++ | singleExpression -- | delete singleExpression | void singleExpression | typeof singleExpression | ++ singleExpression | -- singleExpression | + singleExpression | - singleExpression | ~ singleExpression | ! singleExpression | singleExpression * singleExpression | singleExpression / singleExpression | singleExpression % singleExpression | singleExpression + singleExpression | singleExpression - singleExpression | singleExpression << singleExpression | singleExpression >> singleExpression | singleExpression >>> singleExpression | singleExpression < singleExpression | singleExpression > singleExpression | singleExpression <= singleExpression | singleExpression >= singleExpression | singleExpression instanceof singleExpression | singleExpression in singleExpression | singleExpression == singleExpression | singleExpression != singleExpression | singleExpression === singleExpression | singleExpression !== singleExpression | singleExpression & singleExpression | singleExpression ^ singleExpression | singleExpression | singleExpression | singleExpression && singleExpression | singleExpression ## singleExpression | singleExpression ? singleExpression : singleExpression | singleExpression = expressionSequence | singleExpression assignmentOperator expressionSequence | this | identifier | literal | arrayLiteral | objectLiteral | ( expressionSequence )
 
 assignmentOperator : *= | /= | %= | += | -= | <<= | >>= | >>>= | &= | ^= | |=
 
-literal : nullLiteral | booleanLiteral | StringLiteral | RegularExpressionLiteral | numericLiteral
+literal : NullLiteral | BooleanLiteral | StringLiteral | RegularExpressionLiteral | numericLiteral
 
 numericLiteral : DecimalLiteral | HexIntegerLiteral | OctalIntegerLiteral
 
 identifierName : identifier | reservedWord
 
-reservedWord : keyword | futureReservedWord | nullLiteral | booleanLiteral
+reservedWord : keyword | futureReservedWord | NullLiteral | BooleanLiteral
 
-keyword : Break | Do | Instanceof | Typeof | Case | Else | New | Var | Catch | Finally | Return | Void | Continue | For | Switch | While | Debugger | Function | This | With | Default | If | Throw | Delete | In | Try
+keyword : break | do | instanceof | typeof | case | else | new | var | catch | finally | return | void | continue | for | switch | while | debugger | function | this | with | default | if | throw | delete | in | try
 
-futureReservedWord : Class | Enum | Extends | Super | Const | Export | Import | Implements | Let | Private | Public | Interface | Package | Protected | Static | Yield
+futureReservedWord : class | enum | extends | super | const | export | import | implements | let | private | public | interface | package | protected | static | yield
 
-nullLiteral : null
+NullLiteral : null
 
-booleanLiteral : true | false
-
-Break      : break
-Do         : do
-Instanceof : instanceof
-Typeof     : typeof
-Case       : case
-Else       : else
-New        : new
-Var        : var
-Catch      : catch
-Finally    : finally
-Return     : return
-Void       : void
-Continue   : continue
-For        : for
-Switch     : switch
-While      : while
-Debugger   : debugger
-Function   : function
-This       : this
-With       : with
-Default    : default
-If         : if
-Throw      : throw
-Delete     : delete
-In         : in
-Try        : try
-
-Class   : class
-Enum    : enum
-Extends : extends
-Super   : super
-Const   : const
-Export  : export
-Import  : import
-Implements : implements
-Let        : let
-Private    : private
-Public     : public
-Interface  : interface
-Package    : package
-Protected  : protected
-Static     : static
-Yield      : yield
+BooleanLiteral : true | false
 
 identifier : Ident
 

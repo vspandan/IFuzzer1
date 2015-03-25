@@ -163,7 +163,6 @@ class Genotype(object):
         
                 elif item in self._keys:
                     if check_stoplist and position >= 0:
-                        #self.tracePrg2File(item+"\n")
                         if item in self.nTInvlvdGenProcess:
                             temp=""
                             idMapping={}
@@ -210,7 +209,6 @@ class Genotype(object):
                                         t=t1
                                 temp=temp+" "+t
                             prg_list[position] = temp
-                        #self.tracePrg2File(prg_list[position]+"\n")
                         continue_map = True
                         #print prg_list[position]
                 position += 1
@@ -275,14 +273,6 @@ class Genotype(object):
     def _update_genotype(self):
         self.set_binary_gene(self._dec2bin_gene(self.decimal_gene))
 
-    def tracePrg2File(self,program):
-        pass
-        """
-        f=open("spandan.l","a+")
-        f.write("\t"+program+"\n");
-        f.close()
-        """
-
     def computeSubScore (self, program,err):
         score=0
         from langparser.AntlrParser import AntlrParser
@@ -314,13 +304,11 @@ class Genotype(object):
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program  
-        self.compute_fitness(program)
+        self.compute_fitness()
 
     def compute_fitness(self):
         program=self.local_bnf[BNF_PROGRAM]
-        self.tracePrg2File("c::::\t"+program)
         count=0
-        self.tracePrg2File(program)
         if len(program) == 0:
             return 0
         else:                

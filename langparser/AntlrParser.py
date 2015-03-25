@@ -29,8 +29,6 @@ class AntlrParser(object):
             if child.tail is not None:
                 self.subcode[pos]=self.subcode[pos]+child.tail
 
-
-
     def printChild(self,root,nTList):
         if root is not None:
             for child in root:
@@ -51,60 +49,42 @@ class AntlrParser(object):
                 self.printChild(child,nTList)   
                 if child.tail is not None:
                     self.out+=child.tail
-                
-        
 
-    def genCodeFrag(self, input, population_size,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST =None, count=1, ind = False):
-        population = []
-        identiferList=[]            
+    def genCodeFrag(self, input,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
         selectedNTList={}
         self.subcode={}
-        if len(input) > 0:
-            for pop_count in range(0, population_size):
+        self.out=""
+        self.position=0
+        try: 
+            if len(input) > 0 and len(nT) != 0:
                 root=None
-                self.identifiers=[]
-                
-                if len(nT) != 0: 
-                    internalCount=0
-                    while internalCount < count :
-                        selectedNt=None
-                        if nonTerminal is None:
-                            while True:
-                                selected=randint(0,len(nT)-1)
-                                selectedNt=nT[selected]
-                                if INCLUDE_NT_LIST is not None:
-                                    if selectedNt in INCLUDE_NT_LIST : 
-                                            break
-                                else:
-                                     break
-                        else:
-                            selectedNt=nonTerminal[internalCount]
-                            indices = [i for i, x in enumerate(nT) if x == nonTerminal[internalCount]]
-                            selected=choice(indices)
-                        internalCount+=1
-                        selectedNTList[selected]=selectedNt
-
-                    try:   
-                        root = ElementTree.fromstring(input)
-                        if root.text is None:
-                            self.out=""
-                        else:
-                            self.out=root.text
-                    except:
-                        self.out=""
-                    self.position=0
-                    self.printChild(root,selectedNTList)
-                    population.append(self.out)
-                    identiferList.append(self.identifiers)
-
-        if population_size == 1: 
-            if ind:
-                return self.out, self.identifiers
-            if not subTree:
-                return self.out,selectedNTList
-            if subTree: 
-                return self.subcode,self.out,selectedNTList
-        return population,identiferList
+                internalCount=0
+                while internalCount < count :
+                    selectedNt=None
+                    if nonTerminal is None:
+                        while True:
+                            selected=randint(0,len(nT)-1)
+                            selectedNt=nT[selected]
+                            if INCLUDE_NT_LIST is None:
+                                break;
+                            if selectedNt in INCLUDE_NT_LIST : 
+                                break
+                    else:
+                        selectedNt=nonTerminal[internalCount]
+                        indices = [i for i, x in enumerate(nT) if x == nonTerminal[internalCount]]
+                        selected=choice(indices)
+                    internalCount+=1
+                    selectedNTList[selected]=selectedNt
+                    root = ElementTree.fromstring(input)
+                    if root.text is not None:
+                        self.out=root.text
+                self.printChild(root,selectedNTList)
+        except:
+            pass
+        if not subTree:
+            return self.out,selectedNTList
+        if subTree: 
+            return self.subcode,self.out,selectedNTList
 
     def extractNT(self,root):
         for child in root:
@@ -120,23 +100,6 @@ class AntlrParser(object):
             except:
                 pass
         return self.nonTerminals
-
-    def extractIdent(self,root):
-        for child in root:
-            if child.tag == 'identifier' and child.text is not None:
-                self.identifiers.append(child.text)
-            self.extractIdent(child)
-    
-    def extractNTandText(self,root):
-        for child in root:
-            self.nonTerminals.append(child.tag)
-            if child.text is not None:
-                self.out=child.text
-            else:
-                self.out =""
-            #self.values.append(self.getText(child))
-            self.values.append(ElementTree.tostring(child,method="text"))
-            self.extractNTandText(child)            
 
     def parseTree(self,input,ind=False):
         if len(input)>0:
@@ -170,16 +133,6 @@ class AntlrParser(object):
         if self.que is None:
             return d
     
-    def init(self):
-        self.aCount=0
-        self.bCount=0
-        self.cCount=0
-        self.dCount=0
-        self.a=[]
-        self.b=[]
-        self.c=[]
-        self.d=[]
-
     def Analayse(self,root,aInd=False,bInd=False,cInd=False,dInd=False):
         if root is not None:
             if root.tag == 'iterationStatement':
@@ -215,15 +168,17 @@ class AntlrParser(object):
                 dInd=False
 
     def CountNestedStructures(self,input):
-        self.init()
-        try:
-            root = ElementTree.fromstring(self.parseTree(input,True))
-            self.Analayse(root)
-        except:
-            pass
-
-        return (self.a,self.b,self.c,self.d)                 
-    
-if __name__=='__main__':
-    a= AntlrParser()
-    print a.extractCodeFrag("/home/spandan/Desktop/test.js")
+		self.aCount=0
+		self.bCount=0
+		self.cCount=0
+		self.dCount=0
+		self.a=[]
+		self.b=[]
+		self.c=[]
+		self.d=[]
+		try:
+			root = ElementTree.fromstring(self.parseTree(input,True))
+			self.Analayse(root)
+		except:
+			pass
+		return (self.a,self.b,self.c,self.d)                 

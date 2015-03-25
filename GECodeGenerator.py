@@ -20,9 +20,11 @@ FILECOUNT = 0
 TestCaseSubDirs=[]
 TestCases=[]
 Population_size=10
+excludeFiles = []
 
 #Author: Spandan Veggalam
 def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess):
+    excludeFiles=excludeFiles
     listAllTestCasesDir(testCasesDir)   
     def selectGrammarFIle():
         Tk().withdraw()        
@@ -45,22 +47,23 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 ges.set_timeouts(20, 3600)
                 ges.set_fitness_fail(float(1000))
                 
-                ges.set_mutation_rate(float(0.5))
-                ges.set_multiple_m_c_rate(float(0.4))
+                
                 
                 ges.set_fitness_selections(
                     FitnessElites(ges.fitness_list, .05),
                     FitnessTournament(ges.fitness_list, tournament_size=2))
-                ges.set_max_fitness_rate(float(0.2))
                 
                 ges.set_crossover_rate(float(0.4))
+                ges.set_mutation_rate(float(1))
+
                 ges.set_children_per_crossover(2)
                 
                 ges.set_mutation_type('s')
 
                 ges.set_mutation_count(3);
                 ges.set_crossover_count(3);
-                
+                #ges.set_multiple_rate(float(0.4))
+
                 ges.set_max_fitness_rate(float(0.5))
                 
                 ges.set_replacement_selections(
@@ -100,8 +103,6 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
             p.join(120)
             if p.is_alive():
                 p.terminate()
-            # import sys
-            # sys.exit()
 
         
     initialize()
@@ -114,4 +115,5 @@ def listAllTestCasesDir(testCasesDir):
                 TestCaseSubDirs.append(fi)
                 listAllTestCasesDir(fi)
             else:
-                TestCases.append(fi)
+                if f not in excludeFiles :
+                    TestCases.append(fi)
