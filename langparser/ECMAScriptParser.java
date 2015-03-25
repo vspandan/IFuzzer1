@@ -1,4 +1,4 @@
-// Generated from ECMAScript.g4 by ANTLR 4.5
+// Generated from antlr4/nl/bigo/ecmascriptparser/ECMAScript.g4 by ANTLR 4.5
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -26,15 +26,15 @@ public class ECMAScriptParser extends Parser {
 		BitOr=37, And=38, Or=39, MultiplyAssign=40, DivideAssign=41, ModulusAssign=42, 
 		PlusAssign=43, MinusAssign=44, LeftShiftArithmeticAssign=45, RightShiftArithmeticAssign=46, 
 		RightShiftLogicalAssign=47, BitAndAssign=48, BitXorAssign=49, BitOrAssign=50, 
-		Null=51, True=52, False=53, DecimalLiteral=54, HexIntegerLiteral=55, OctalIntegerLiteral=56, 
-		Break=57, Do=58, Instanceof=59, Typeof=60, Case=61, Else=62, New=63, Var=64, 
-		Catch=65, Finally=66, Return=67, Void=68, Continue=69, For=70, Switch=71, 
-		While=72, Debugger=73, Function=74, This=75, With=76, Default=77, If=78, 
-		Throw=79, Delete=80, In=81, Try=82, Class=83, Enum=84, Extends=85, Super=86, 
-		Const=87, Export=88, Import=89, Implements=90, Let=91, Private=92, Public=93, 
-		Interface=94, Package=95, Protected=96, Static=97, Yield=98, Ident=99, 
-		StringLiteral=100, WhiteSpaces=101, MultiLineComment=102, SingleLineComment=103, 
-		UnexpectedCharacter=104;
+		NullLiteral=51, BooleanLiteral=52, DecimalLiteral=53, HexIntegerLiteral=54, 
+		OctalIntegerLiteral=55, Break=56, Do=57, Instanceof=58, Typeof=59, Case=60, 
+		Else=61, New=62, Var=63, Catch=64, Finally=65, Return=66, Void=67, Continue=68, 
+		For=69, Switch=70, While=71, Debugger=72, Function=73, This=74, With=75, 
+		Default=76, If=77, Throw=78, Delete=79, In=80, Try=81, Class=82, Enum=83, 
+		Extends=84, Super=85, Const=86, Export=87, Import=88, Implements=89, Let=90, 
+		Private=91, Public=92, Interface=93, Package=94, Protected=95, Static=96, 
+		Yield=97, Identifier=98, StringLiteral=99, WhiteSpaces=100, MultiLineComment=101, 
+		SingleLineComment=102, UnexpectedCharacter=103;
 	public static final int
 		RULE_program = 0, RULE_sourceElements = 1, RULE_sourceElement = 2, RULE_statement = 3, 
 		RULE_block = 4, RULE_statementList = 5, RULE_variableStatement = 6, RULE_variableDeclarationList = 7, 
@@ -45,16 +45,14 @@ public class ECMAScriptParser extends Parser {
 		RULE_caseClauses = 20, RULE_caseClause = 21, RULE_defaultClause = 22, 
 		RULE_labelledStatement = 23, RULE_throwStatement = 24, RULE_tryStatement = 25, 
 		RULE_catchProduction = 26, RULE_finallyProduction = 27, RULE_debuggerStatement = 28, 
-		RULE_functionDeclaration = 29, RULE_formalParameterList = 30, RULE_functionExpression = 31, 
-		RULE_functionBody = 32, RULE_arrayLiteral = 33, RULE_elementList = 34, 
-		RULE_elision = 35, RULE_objectLiteral = 36, RULE_propertyNameAndValueList = 37, 
-		RULE_propertyAssignment = 38, RULE_propertyName = 39, RULE_propertySetParameterList = 40, 
-		RULE_arguments = 41, RULE_argumentList = 42, RULE_expressionSequence = 43, 
-		RULE_singleExpression = 44, RULE_assignmentOperator = 45, RULE_literal = 46, 
-		RULE_numericLiteral = 47, RULE_identifierName = 48, RULE_reservedWord = 49, 
-		RULE_keyword = 50, RULE_futureReservedWord = 51, RULE_getter = 52, RULE_setter = 53, 
-		RULE_eos = 54, RULE_eof = 55, RULE_nullLiteral = 56, RULE_booleanLiteral = 57, 
-		RULE_identifier = 58;
+		RULE_functionDeclaration = 29, RULE_formalParameterList = 30, RULE_functionBody = 31, 
+		RULE_arrayLiteral = 32, RULE_elementList = 33, RULE_elision = 34, RULE_objectLiteral = 35, 
+		RULE_propertyNameAndValueList = 36, RULE_propertyAssignment = 37, RULE_propertyName = 38, 
+		RULE_propertySetParameterList = 39, RULE_arguments = 40, RULE_argumentList = 41, 
+		RULE_expressionSequence = 42, RULE_singleExpression = 43, RULE_assignmentOperator = 44, 
+		RULE_literal = 45, RULE_numericLiteral = 46, RULE_identifierName = 47, 
+		RULE_reservedWord = 48, RULE_keyword = 49, RULE_futureReservedWord = 50, 
+		RULE_getter = 51, RULE_setter = 52, RULE_eos = 53, RULE_eof = 54;
 	public static final String[] ruleNames = {
 		"program", "sourceElements", "sourceElement", "statement", "block", "statementList", 
 		"variableStatement", "variableDeclarationList", "variableDeclaration", 
@@ -63,13 +61,12 @@ public class ECMAScriptParser extends Parser {
 		"withStatement", "switchStatement", "caseBlock", "caseClauses", "caseClause", 
 		"defaultClause", "labelledStatement", "throwStatement", "tryStatement", 
 		"catchProduction", "finallyProduction", "debuggerStatement", "functionDeclaration", 
-		"formalParameterList", "functionExpression", "functionBody", "arrayLiteral", 
-		"elementList", "elision", "objectLiteral", "propertyNameAndValueList", 
-		"propertyAssignment", "propertyName", "propertySetParameterList", "arguments", 
-		"argumentList", "expressionSequence", "singleExpression", "assignmentOperator", 
-		"literal", "numericLiteral", "identifierName", "reservedWord", "keyword", 
-		"futureReservedWord", "getter", "setter", "eos", "eof", "nullLiteral", 
-		"booleanLiteral", "identifier"
+		"formalParameterList", "functionBody", "arrayLiteral", "elementList", 
+		"elision", "objectLiteral", "propertyNameAndValueList", "propertyAssignment", 
+		"propertyName", "propertySetParameterList", "arguments", "argumentList", 
+		"expressionSequence", "singleExpression", "assignmentOperator", "literal", 
+		"numericLiteral", "identifierName", "reservedWord", "keyword", "futureReservedWord", 
+		"getter", "setter", "eos", "eof"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
@@ -78,12 +75,12 @@ public class ECMAScriptParser extends Parser {
 		"'*'", "'/'", "'%'", "'>>'", "'<<'", "'>>>'", "'<'", "'>'", "'<='", "'>='", 
 		"'=='", "'!='", "'==='", "'!=='", "'&'", "'^'", "'|'", "'&&'", "'||'", 
 		"'*='", "'/='", "'%='", "'+='", "'-='", "'<<='", "'>>='", "'>>>='", "'&='", 
-		"'^='", "'|='", "'null'", "'true'", "'false'", null, null, null, "'break'", 
-		"'do'", "'instanceof'", "'typeof'", "'case'", "'else'", "'new'", "'var'", 
-		"'catch'", "'finally'", "'return'", "'void'", "'continue'", "'for'", "'switch'", 
-		"'while'", "'debugger'", "'function'", "'this'", "'with'", "'default'", 
-		"'if'", "'throw'", "'delete'", "'in'", "'try'", "'class'", "'enum'", "'extends'", 
-		"'super'", "'const'", "'export'", "'import'"
+		"'^='", "'|='", "'null'", null, null, null, null, "'break'", "'do'", "'instanceof'", 
+		"'typeof'", "'case'", "'else'", "'new'", "'var'", "'catch'", "'finally'", 
+		"'return'", "'void'", "'continue'", "'for'", "'switch'", "'while'", "'debugger'", 
+		"'function'", "'this'", "'with'", "'default'", "'if'", "'throw'", "'delete'", 
+		"'in'", "'try'", "'class'", "'enum'", "'extends'", "'super'", "'const'", 
+		"'export'", "'import'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, "RegularExpressionLiteral", "LineTerminator", "OpenBracket", "CloseBracket", 
@@ -95,14 +92,14 @@ public class ECMAScriptParser extends Parser {
 		"BitAnd", "BitXOr", "BitOr", "And", "Or", "MultiplyAssign", "DivideAssign", 
 		"ModulusAssign", "PlusAssign", "MinusAssign", "LeftShiftArithmeticAssign", 
 		"RightShiftArithmeticAssign", "RightShiftLogicalAssign", "BitAndAssign", 
-		"BitXorAssign", "BitOrAssign", "Null", "True", "False", "DecimalLiteral", 
+		"BitXorAssign", "BitOrAssign", "NullLiteral", "BooleanLiteral", "DecimalLiteral", 
 		"HexIntegerLiteral", "OctalIntegerLiteral", "Break", "Do", "Instanceof", 
 		"Typeof", "Case", "Else", "New", "Var", "Catch", "Finally", "Return", 
 		"Void", "Continue", "For", "Switch", "While", "Debugger", "Function", 
 		"This", "With", "Default", "If", "Throw", "Delete", "In", "Try", "Class", 
 		"Enum", "Extends", "Super", "Const", "Export", "Import", "Implements", 
 		"Let", "Private", "Public", "Interface", "Package", "Protected", "Static", 
-		"Yield", "Ident", "StringLiteral", "WhiteSpaces", "MultiLineComment", 
+		"Yield", "Identifier", "StringLiteral", "WhiteSpaces", "MultiLineComment", 
 		"SingleLineComment", "UnexpectedCharacter"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
@@ -151,23 +148,61 @@ public class ECMAScriptParser extends Parser {
 	public ATN getATN() { return _ATN; }
 
 
-		private boolean here(final int type) {
-			int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
-			Token ahead = _input.get(possibleIndexEosToken);
-			return (ahead.getChannel() == Lexer.HIDDEN) && (ahead.getType() == type);
-		}
-		private boolean lineTerminatorAhead() {
-			int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
-			Token ahead = _input.get(possibleIndexEosToken);
-			if (ahead.getChannel() != Lexer.HIDDEN) {
-				return false;
-		}
-		String text = ahead.getText();
-		int type = ahead.getType();
-		
-		return (type == MultiLineComment && (text.contains("\r") || text.contains("\n"))) ||
-			(type == LineTerminator);
-		}
+	  
+	    /**
+	     * Returns {@code true} iff on the current index of the parser's
+	     * token stream a token of the given {@code type} exists on the
+	     * {@code HIDDEN} channel.
+	     *
+	     * @param type
+	     *         the type of the token on the {@code HIDDEN} channel
+	     *         to check.
+	     *
+	     * @return {@code true} iff on the current index of the parser's
+	     * token stream a token of the given {@code type} exists on the
+	     * {@code HIDDEN} channel.
+	     */
+	    private boolean here(final int type) {
+
+	        // Get the token ahead of the current index.
+	        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
+	        Token ahead = _input.get(possibleIndexEosToken);
+
+	        // Check if the token resides on the HIDDEN channel and if it's of the
+	        // provided type.
+	        return (ahead.getChannel() == Lexer.HIDDEN) && (ahead.getType() == type);
+	    }
+
+	    /**
+	     * Returns {@code true} iff on the current index of the parser's
+	     * token stream a token exists on the {@code HIDDEN} channel which
+	     * either is a line terminator, or is a multi line comment that
+	     * contains a line terminator.
+	     *
+	     * @return {@code true} iff on the current index of the parser's
+	     * token stream a token exists on the {@code HIDDEN} channel which
+	     * either is a line terminator, or is a multi line comment that
+	     * contains a line terminator.
+	     */
+	    private boolean lineTerminatorAhead() {
+
+	        // Get the token ahead of the current index.
+	        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
+	        Token ahead = _input.get(possibleIndexEosToken);
+
+	        if (ahead.getChannel() != Lexer.HIDDEN) {
+	            // We're only interested in tokens on the HIDDEN channel.
+	            return false;
+	        }
+
+	        // Get the token's text and type.
+	        String text = ahead.getText();
+	        int type = ahead.getType();
+
+	        // Check if the token is, or contains a line terminator.
+	        return (type == MultiLineComment && (text.contains("\r") || text.contains("\n"))) ||
+	                (type == LineTerminator);
+	    }                                
 
 	public ECMAScriptParser(TokenStream input) {
 		super(input);
@@ -199,16 +234,16 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(119);
+			setState(111);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (Var - 64)) | (1L << (Return - 64)) | (1L << (Void - 64)) | (1L << (Continue - 64)) | (1L << (For - 64)) | (1L << (Switch - 64)) | (1L << (While - 64)) | (1L << (Debugger - 64)) | (1L << (Function - 64)) | (1L << (This - 64)) | (1L << (With - 64)) | (1L << (If - 64)) | (1L << (Throw - 64)) | (1L << (Delete - 64)) | (1L << (Try - 64)) | (1L << (Ident - 64)) | (1L << (StringLiteral - 64)))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New) | (1L << Var))) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & ((1L << (Return - 66)) | (1L << (Void - 66)) | (1L << (Continue - 66)) | (1L << (For - 66)) | (1L << (Switch - 66)) | (1L << (While - 66)) | (1L << (Debugger - 66)) | (1L << (Function - 66)) | (1L << (This - 66)) | (1L << (With - 66)) | (1L << (If - 66)) | (1L << (Throw - 66)) | (1L << (Delete - 66)) | (1L << (Try - 66)) | (1L << (Identifier - 66)) | (1L << (StringLiteral - 66)))) != 0)) {
 				{
-				setState(118); 
+				setState(110); 
 				sourceElements();
 				}
 			}
 
-			setState(121); 
+			setState(113); 
 			match(EOF);
 			}
 		}
@@ -251,20 +286,20 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(124); 
+			setState(116); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(123); 
+				setState(115); 
 				sourceElement();
 				}
 				}
-				setState(126); 
+				setState(118); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (Var - 64)) | (1L << (Return - 64)) | (1L << (Void - 64)) | (1L << (Continue - 64)) | (1L << (For - 64)) | (1L << (Switch - 64)) | (1L << (While - 64)) | (1L << (Debugger - 64)) | (1L << (Function - 64)) | (1L << (This - 64)) | (1L << (With - 64)) | (1L << (If - 64)) | (1L << (Throw - 64)) | (1L << (Delete - 64)) | (1L << (Try - 64)) | (1L << (Ident - 64)) | (1L << (StringLiteral - 64)))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New) | (1L << Var))) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & ((1L << (Return - 66)) | (1L << (Void - 66)) | (1L << (Continue - 66)) | (1L << (For - 66)) | (1L << (Switch - 66)) | (1L << (While - 66)) | (1L << (Debugger - 66)) | (1L << (Function - 66)) | (1L << (This - 66)) | (1L << (With - 66)) | (1L << (If - 66)) | (1L << (Throw - 66)) | (1L << (Delete - 66)) | (1L << (Try - 66)) | (1L << (Identifier - 66)) | (1L << (StringLiteral - 66)))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -303,19 +338,19 @@ public class ECMAScriptParser extends Parser {
 		SourceElementContext _localctx = new SourceElementContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_sourceElement);
 		try {
-			setState(130);
+			setState(122);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(128); 
+				setState(120); 
 				statement();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(129); 
+				setState(121); 
 				functionDeclaration();
 				}
 				break;
@@ -396,110 +431,110 @@ public class ECMAScriptParser extends Parser {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_statement);
 		try {
-			setState(147);
+			setState(139);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(132); 
+				setState(124); 
 				block();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(133); 
+				setState(125); 
 				variableStatement();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(134); 
+				setState(126); 
 				emptyStatement();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(135); 
+				setState(127); 
 				expressionStatement();
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(136); 
+				setState(128); 
 				ifStatement();
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(137); 
+				setState(129); 
 				iterationStatement();
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(138); 
+				setState(130); 
 				continueStatement();
 				}
 				break;
 			case 8:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(139); 
+				setState(131); 
 				breakStatement();
 				}
 				break;
 			case 9:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(140); 
+				setState(132); 
 				returnStatement();
 				}
 				break;
 			case 10:
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(141); 
+				setState(133); 
 				withStatement();
 				}
 				break;
 			case 11:
 				enterOuterAlt(_localctx, 11);
 				{
-				setState(142); 
+				setState(134); 
 				labelledStatement();
 				}
 				break;
 			case 12:
 				enterOuterAlt(_localctx, 12);
 				{
-				setState(143); 
+				setState(135); 
 				switchStatement();
 				}
 				break;
 			case 13:
 				enterOuterAlt(_localctx, 13);
 				{
-				setState(144); 
+				setState(136); 
 				throwStatement();
 				}
 				break;
 			case 14:
 				enterOuterAlt(_localctx, 14);
 				{
-				setState(145); 
+				setState(137); 
 				tryStatement();
 				}
 				break;
 			case 15:
 				enterOuterAlt(_localctx, 15);
 				{
-				setState(146); 
+				setState(138); 
 				debuggerStatement();
 				}
 				break;
@@ -541,18 +576,18 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(149); 
+			setState(141); 
 			match(OpenBrace);
-			setState(151);
+			setState(143);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (Var - 64)) | (1L << (Return - 64)) | (1L << (Void - 64)) | (1L << (Continue - 64)) | (1L << (For - 64)) | (1L << (Switch - 64)) | (1L << (While - 64)) | (1L << (Debugger - 64)) | (1L << (Function - 64)) | (1L << (This - 64)) | (1L << (With - 64)) | (1L << (If - 64)) | (1L << (Throw - 64)) | (1L << (Delete - 64)) | (1L << (Try - 64)) | (1L << (Ident - 64)) | (1L << (StringLiteral - 64)))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New) | (1L << Var))) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & ((1L << (Return - 66)) | (1L << (Void - 66)) | (1L << (Continue - 66)) | (1L << (For - 66)) | (1L << (Switch - 66)) | (1L << (While - 66)) | (1L << (Debugger - 66)) | (1L << (Function - 66)) | (1L << (This - 66)) | (1L << (With - 66)) | (1L << (If - 66)) | (1L << (Throw - 66)) | (1L << (Delete - 66)) | (1L << (Try - 66)) | (1L << (Identifier - 66)) | (1L << (StringLiteral - 66)))) != 0)) {
 				{
-				setState(150); 
+				setState(142); 
 				statementList();
 				}
 			}
 
-			setState(153); 
+			setState(145); 
 			match(CloseBrace);
 			}
 		}
@@ -595,20 +630,20 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(156); 
+			setState(148); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(155); 
+				setState(147); 
 				statement();
 				}
 				}
-				setState(158); 
+				setState(150); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (Var - 64)) | (1L << (Return - 64)) | (1L << (Void - 64)) | (1L << (Continue - 64)) | (1L << (For - 64)) | (1L << (Switch - 64)) | (1L << (While - 64)) | (1L << (Debugger - 64)) | (1L << (Function - 64)) | (1L << (This - 64)) | (1L << (With - 64)) | (1L << (If - 64)) | (1L << (Throw - 64)) | (1L << (Delete - 64)) | (1L << (Try - 64)) | (1L << (Ident - 64)) | (1L << (StringLiteral - 64)))) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New) | (1L << Var))) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & ((1L << (Return - 66)) | (1L << (Void - 66)) | (1L << (Continue - 66)) | (1L << (For - 66)) | (1L << (Switch - 66)) | (1L << (While - 66)) | (1L << (Debugger - 66)) | (1L << (Function - 66)) | (1L << (This - 66)) | (1L << (With - 66)) | (1L << (If - 66)) | (1L << (Throw - 66)) | (1L << (Delete - 66)) | (1L << (Try - 66)) | (1L << (Identifier - 66)) | (1L << (StringLiteral - 66)))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -650,11 +685,11 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(160); 
+			setState(152); 
 			match(Var);
-			setState(161); 
+			setState(153); 
 			variableDeclarationList();
-			setState(162); 
+			setState(154); 
 			eos();
 			}
 		}
@@ -697,23 +732,23 @@ public class ECMAScriptParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(164); 
+			setState(156); 
 			variableDeclaration();
-			setState(169);
+			setState(161);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(165); 
+					setState(157); 
 					match(Comma);
-					setState(166); 
+					setState(158); 
 					variableDeclaration();
 					}
 					} 
 				}
-				setState(171);
+				setState(163);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			}
@@ -731,9 +766,7 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class VariableDeclarationContext extends ParserRuleContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public InitialiserContext initialiser() {
 			return getRuleContext(InitialiserContext.class,0);
 		}
@@ -757,13 +790,13 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(172); 
-			identifier();
-			setState(174);
+			setState(164); 
+			match(Identifier);
+			setState(166);
 			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				{
-				setState(173); 
+				setState(165); 
 				initialiser();
 				}
 				break;
@@ -805,9 +838,9 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(176); 
+			setState(168); 
 			match(Assign);
-			setState(177); 
+			setState(169); 
 			singleExpression(0);
 			}
 		}
@@ -844,7 +877,7 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(179); 
+			setState(171); 
 			match(SemiColon);
 			}
 		}
@@ -883,7 +916,7 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(181); 
+			setState(173); 
 			expressionSequence();
 			}
 		}
@@ -930,23 +963,23 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(183); 
+			setState(175); 
 			match(If);
-			setState(184); 
+			setState(176); 
 			match(OpenParen);
-			setState(185); 
+			setState(177); 
 			expressionSequence();
-			setState(186); 
+			setState(178); 
 			match(CloseParen);
-			setState(187); 
+			setState(179); 
 			statement();
-			setState(190);
+			setState(182);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				{
-				setState(188); 
+				setState(180); 
 				match(Else);
-				setState(189); 
+				setState(181); 
 				statement();
 				}
 				break;
@@ -1112,25 +1145,25 @@ public class ECMAScriptParser extends Parser {
 		enterRule(_localctx, 26, RULE_iterationStatement);
 		int _la;
 		try {
-			setState(253);
+			setState(245);
 			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
 				_localctx = new DoStatementContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(192); 
+				setState(184); 
 				match(Do);
-				setState(193); 
+				setState(185); 
 				statement();
-				setState(194); 
+				setState(186); 
 				match(While);
-				setState(195); 
+				setState(187); 
 				match(OpenParen);
-				setState(196); 
+				setState(188); 
 				expressionSequence();
-				setState(197); 
+				setState(189); 
 				match(CloseParen);
-				setState(198); 
+				setState(190); 
 				eos();
 				}
 				break;
@@ -1138,15 +1171,15 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new WhileStatementContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(200); 
+				setState(192); 
 				match(While);
-				setState(201); 
+				setState(193); 
 				match(OpenParen);
-				setState(202); 
+				setState(194); 
 				expressionSequence();
-				setState(203); 
+				setState(195); 
 				match(CloseParen);
-				setState(204); 
+				setState(196); 
 				statement();
 				}
 				break;
@@ -1154,13 +1187,35 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ForStatementContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(206); 
+				setState(198); 
 				match(For);
-				setState(207); 
+				setState(199); 
 				match(OpenParen);
+				setState(201);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (Void - 67)) | (1L << (Function - 67)) | (1L << (This - 67)) | (1L << (Delete - 67)) | (1L << (Identifier - 67)) | (1L << (StringLiteral - 67)))) != 0)) {
+					{
+					setState(200); 
+					expressionSequence();
+					}
+				}
+
+				setState(203); 
+				match(SemiColon);
+				setState(205);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (Void - 67)) | (1L << (Function - 67)) | (1L << (This - 67)) | (1L << (Delete - 67)) | (1L << (Identifier - 67)) | (1L << (StringLiteral - 67)))) != 0)) {
+					{
+					setState(204); 
+					expressionSequence();
+					}
+				}
+
+				setState(207); 
+				match(SemiColon);
 				setState(209);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & ((1L << (Void - 68)) | (1L << (Function - 68)) | (1L << (This - 68)) | (1L << (Delete - 68)) | (1L << (Ident - 68)) | (1L << (StringLiteral - 68)))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (Void - 67)) | (1L << (Function - 67)) | (1L << (This - 67)) | (1L << (Delete - 67)) | (1L << (Identifier - 67)) | (1L << (StringLiteral - 67)))) != 0)) {
 					{
 					setState(208); 
 					expressionSequence();
@@ -1168,30 +1223,8 @@ public class ECMAScriptParser extends Parser {
 				}
 
 				setState(211); 
-				match(SemiColon);
-				setState(213);
-				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & ((1L << (Void - 68)) | (1L << (Function - 68)) | (1L << (This - 68)) | (1L << (Delete - 68)) | (1L << (Ident - 68)) | (1L << (StringLiteral - 68)))) != 0)) {
-					{
-					setState(212); 
-					expressionSequence();
-					}
-				}
-
-				setState(215); 
-				match(SemiColon);
-				setState(217);
-				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & ((1L << (Void - 68)) | (1L << (Function - 68)) | (1L << (This - 68)) | (1L << (Delete - 68)) | (1L << (Ident - 68)) | (1L << (StringLiteral - 68)))) != 0)) {
-					{
-					setState(216); 
-					expressionSequence();
-					}
-				}
-
-				setState(219); 
 				match(CloseParen);
-				setState(220); 
+				setState(212); 
 				statement();
 				}
 				break;
@@ -1199,39 +1232,39 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ForVarStatementContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(221); 
+				setState(213); 
 				match(For);
-				setState(222); 
+				setState(214); 
 				match(OpenParen);
-				setState(223); 
+				setState(215); 
 				match(Var);
-				setState(224); 
+				setState(216); 
 				variableDeclarationList();
+				setState(217); 
+				match(SemiColon);
+				setState(219);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (Void - 67)) | (1L << (Function - 67)) | (1L << (This - 67)) | (1L << (Delete - 67)) | (1L << (Identifier - 67)) | (1L << (StringLiteral - 67)))) != 0)) {
+					{
+					setState(218); 
+					expressionSequence();
+					}
+				}
+
+				setState(221); 
+				match(SemiColon);
+				setState(223);
+				_la = _input.LA(1);
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (Void - 67)) | (1L << (Function - 67)) | (1L << (This - 67)) | (1L << (Delete - 67)) | (1L << (Identifier - 67)) | (1L << (StringLiteral - 67)))) != 0)) {
+					{
+					setState(222); 
+					expressionSequence();
+					}
+				}
+
 				setState(225); 
-				match(SemiColon);
-				setState(227);
-				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & ((1L << (Void - 68)) | (1L << (Function - 68)) | (1L << (This - 68)) | (1L << (Delete - 68)) | (1L << (Ident - 68)) | (1L << (StringLiteral - 68)))) != 0)) {
-					{
-					setState(226); 
-					expressionSequence();
-					}
-				}
-
-				setState(229); 
-				match(SemiColon);
-				setState(231);
-				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & ((1L << (Void - 68)) | (1L << (Function - 68)) | (1L << (This - 68)) | (1L << (Delete - 68)) | (1L << (Ident - 68)) | (1L << (StringLiteral - 68)))) != 0)) {
-					{
-					setState(230); 
-					expressionSequence();
-					}
-				}
-
-				setState(233); 
 				match(CloseParen);
-				setState(234); 
+				setState(226); 
 				statement();
 				}
 				break;
@@ -1239,19 +1272,19 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ForInStatementContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(236); 
+				setState(228); 
 				match(For);
-				setState(237); 
+				setState(229); 
 				match(OpenParen);
-				setState(238); 
+				setState(230); 
 				singleExpression(0);
-				setState(239); 
+				setState(231); 
 				match(In);
-				setState(240); 
+				setState(232); 
 				expressionSequence();
-				setState(241); 
+				setState(233); 
 				match(CloseParen);
-				setState(242); 
+				setState(234); 
 				statement();
 				}
 				break;
@@ -1259,21 +1292,21 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ForVarInStatementContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(244); 
+				setState(236); 
 				match(For);
-				setState(245); 
+				setState(237); 
 				match(OpenParen);
-				setState(246); 
+				setState(238); 
 				match(Var);
-				setState(247); 
+				setState(239); 
 				variableDeclaration();
-				setState(248); 
+				setState(240); 
 				match(In);
-				setState(249); 
+				setState(241); 
 				expressionSequence();
-				setState(250); 
+				setState(242); 
 				match(CloseParen);
-				setState(251); 
+				setState(243); 
 				statement();
 				}
 				break;
@@ -1295,9 +1328,7 @@ public class ECMAScriptParser extends Parser {
 		public EosContext eos() {
 			return getRuleContext(EosContext.class,0);
 		}
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public ContinueStatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1318,18 +1349,18 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(255); 
+			setState(247); 
 			match(Continue);
-			setState(257);
+			setState(249);
 			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				{
-				setState(256); 
-				identifier();
+				setState(248); 
+				match(Identifier);
 				}
 				break;
 			}
-			setState(259); 
+			setState(251); 
 			eos();
 			}
 		}
@@ -1349,9 +1380,7 @@ public class ECMAScriptParser extends Parser {
 		public EosContext eos() {
 			return getRuleContext(EosContext.class,0);
 		}
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public BreakStatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1372,18 +1401,18 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(261); 
+			setState(253); 
 			match(Break);
-			setState(263);
+			setState(255);
 			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
 				{
-				setState(262); 
-				identifier();
+				setState(254); 
+				match(Identifier);
 				}
 				break;
 			}
-			setState(265); 
+			setState(257); 
 			eos();
 			}
 		}
@@ -1426,18 +1455,18 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(267); 
+			setState(259); 
 			match(Return);
-			setState(269);
+			setState(261);
 			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 			case 1:
 				{
-				setState(268); 
+				setState(260); 
 				expressionSequence();
 				}
 				break;
 			}
-			setState(271); 
+			setState(263); 
 			eos();
 			}
 		}
@@ -1480,15 +1509,15 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(273); 
+			setState(265); 
 			match(With);
-			setState(274); 
+			setState(266); 
 			match(OpenParen);
-			setState(275); 
+			setState(267); 
 			expressionSequence();
-			setState(276); 
+			setState(268); 
 			match(CloseParen);
-			setState(277); 
+			setState(269); 
 			statement();
 			}
 		}
@@ -1531,15 +1560,15 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(279); 
+			setState(271); 
 			match(Switch);
-			setState(280); 
+			setState(272); 
 			match(OpenParen);
-			setState(281); 
+			setState(273); 
 			expressionSequence();
-			setState(282); 
+			setState(274); 
 			match(CloseParen);
-			setState(283); 
+			setState(275); 
 			caseBlock();
 			}
 		}
@@ -1585,28 +1614,28 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(285); 
+			setState(277); 
 			match(OpenBrace);
-			setState(287);
+			setState(279);
 			_la = _input.LA(1);
 			if (_la==Case) {
 				{
-				setState(286); 
+				setState(278); 
 				caseClauses();
 				}
 			}
 
-			setState(293);
+			setState(285);
 			_la = _input.LA(1);
 			if (_la==Default) {
 				{
-				setState(289); 
+				setState(281); 
 				defaultClause();
-				setState(291);
+				setState(283);
 				_la = _input.LA(1);
 				if (_la==Case) {
 					{
-					setState(290); 
+					setState(282); 
 					caseClauses();
 					}
 				}
@@ -1614,7 +1643,7 @@ public class ECMAScriptParser extends Parser {
 				}
 			}
 
-			setState(295); 
+			setState(287); 
 			match(CloseBrace);
 			}
 		}
@@ -1657,17 +1686,17 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(298); 
+			setState(290); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(297); 
+				setState(289); 
 				caseClause();
 				}
 				}
-				setState(300); 
+				setState(292); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==Case );
@@ -1713,17 +1742,17 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(302); 
+			setState(294); 
 			match(Case);
-			setState(303); 
+			setState(295); 
 			expressionSequence();
-			setState(304); 
+			setState(296); 
 			match(Colon);
-			setState(306);
+			setState(298);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (Var - 64)) | (1L << (Return - 64)) | (1L << (Void - 64)) | (1L << (Continue - 64)) | (1L << (For - 64)) | (1L << (Switch - 64)) | (1L << (While - 64)) | (1L << (Debugger - 64)) | (1L << (Function - 64)) | (1L << (This - 64)) | (1L << (With - 64)) | (1L << (If - 64)) | (1L << (Throw - 64)) | (1L << (Delete - 64)) | (1L << (Try - 64)) | (1L << (Ident - 64)) | (1L << (StringLiteral - 64)))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New) | (1L << Var))) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & ((1L << (Return - 66)) | (1L << (Void - 66)) | (1L << (Continue - 66)) | (1L << (For - 66)) | (1L << (Switch - 66)) | (1L << (While - 66)) | (1L << (Debugger - 66)) | (1L << (Function - 66)) | (1L << (This - 66)) | (1L << (With - 66)) | (1L << (If - 66)) | (1L << (Throw - 66)) | (1L << (Delete - 66)) | (1L << (Try - 66)) | (1L << (Identifier - 66)) | (1L << (StringLiteral - 66)))) != 0)) {
 				{
-				setState(305); 
+				setState(297); 
 				statementList();
 				}
 			}
@@ -1767,15 +1796,15 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(308); 
+			setState(300); 
 			match(Default);
-			setState(309); 
+			setState(301); 
 			match(Colon);
-			setState(311);
+			setState(303);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (Var - 64)) | (1L << (Return - 64)) | (1L << (Void - 64)) | (1L << (Continue - 64)) | (1L << (For - 64)) | (1L << (Switch - 64)) | (1L << (While - 64)) | (1L << (Debugger - 64)) | (1L << (Function - 64)) | (1L << (This - 64)) | (1L << (With - 64)) | (1L << (If - 64)) | (1L << (Throw - 64)) | (1L << (Delete - 64)) | (1L << (Try - 64)) | (1L << (Ident - 64)) | (1L << (StringLiteral - 64)))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New) | (1L << Var))) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & ((1L << (Return - 66)) | (1L << (Void - 66)) | (1L << (Continue - 66)) | (1L << (For - 66)) | (1L << (Switch - 66)) | (1L << (While - 66)) | (1L << (Debugger - 66)) | (1L << (Function - 66)) | (1L << (This - 66)) | (1L << (With - 66)) | (1L << (If - 66)) | (1L << (Throw - 66)) | (1L << (Delete - 66)) | (1L << (Try - 66)) | (1L << (Identifier - 66)) | (1L << (StringLiteral - 66)))) != 0)) {
 				{
-				setState(310); 
+				setState(302); 
 				statementList();
 				}
 			}
@@ -1794,9 +1823,7 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class LabelledStatementContext extends ParserRuleContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public StatementContext statement() {
 			return getRuleContext(StatementContext.class,0);
 		}
@@ -1820,11 +1847,11 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(313); 
-			identifier();
-			setState(314); 
+			setState(305); 
+			match(Identifier);
+			setState(306); 
 			match(Colon);
-			setState(315); 
+			setState(307); 
 			statement();
 			}
 		}
@@ -1867,11 +1894,11 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(317); 
+			setState(309); 
 			match(Throw);
-			setState(318); 
+			setState(310); 
 			expressionSequence();
-			setState(319); 
+			setState(311); 
 			eos();
 			}
 		}
@@ -1915,10 +1942,32 @@ public class ECMAScriptParser extends Parser {
 		TryStatementContext _localctx = new TryStatementContext(_ctx, getState());
 		enterRule(_localctx, 50, RULE_tryStatement);
 		try {
-			setState(334);
+			setState(326);
 			switch ( getInterpreter().adaptivePredict(_input,24,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
+				{
+				setState(313); 
+				match(Try);
+				setState(314); 
+				block();
+				setState(315); 
+				catchProduction();
+				}
+				break;
+			case 2:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(317); 
+				match(Try);
+				setState(318); 
+				block();
+				setState(319); 
+				finallyProduction();
+				}
+				break;
+			case 3:
+				enterOuterAlt(_localctx, 3);
 				{
 				setState(321); 
 				match(Try);
@@ -1926,29 +1975,7 @@ public class ECMAScriptParser extends Parser {
 				block();
 				setState(323); 
 				catchProduction();
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(325); 
-				match(Try);
-				setState(326); 
-				block();
-				setState(327); 
-				finallyProduction();
-				}
-				break;
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(329); 
-				match(Try);
-				setState(330); 
-				block();
-				setState(331); 
-				catchProduction();
-				setState(332); 
+				setState(324); 
 				finallyProduction();
 				}
 				break;
@@ -1967,9 +1994,7 @@ public class ECMAScriptParser extends Parser {
 
 	public static class CatchProductionContext extends ParserRuleContext {
 		public TerminalNode Catch() { return getToken(ECMAScriptParser.Catch, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
 		}
@@ -1993,15 +2018,15 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(336); 
+			setState(328); 
 			match(Catch);
-			setState(337); 
+			setState(329); 
 			match(OpenParen);
-			setState(338); 
-			identifier();
-			setState(339); 
+			setState(330); 
+			match(Identifier);
+			setState(331); 
 			match(CloseParen);
-			setState(340); 
+			setState(332); 
 			block();
 			}
 		}
@@ -2041,9 +2066,9 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(342); 
+			setState(334); 
 			match(Finally);
-			setState(343); 
+			setState(335); 
 			block();
 			}
 		}
@@ -2083,9 +2108,9 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(345); 
+			setState(337); 
 			match(Debugger);
-			setState(346); 
+			setState(338); 
 			eos();
 			}
 		}
@@ -2102,9 +2127,7 @@ public class ECMAScriptParser extends Parser {
 
 	public static class FunctionDeclarationContext extends ParserRuleContext {
 		public TerminalNode Function() { return getToken(ECMAScriptParser.Function, 0); }
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public FunctionBodyContext functionBody() {
 			return getRuleContext(FunctionBodyContext.class,0);
 		}
@@ -2132,28 +2155,28 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(348); 
+			setState(340); 
 			match(Function);
-			setState(349); 
-			identifier();
-			setState(350); 
+			setState(341); 
+			match(Identifier);
+			setState(342); 
 			match(OpenParen);
-			setState(352);
+			setState(344);
 			_la = _input.LA(1);
-			if (_la==Ident) {
+			if (_la==Identifier) {
 				{
-				setState(351); 
+				setState(343); 
 				formalParameterList();
 				}
 			}
 
-			setState(354); 
+			setState(346); 
 			match(CloseParen);
-			setState(355); 
+			setState(347); 
 			match(OpenBrace);
-			setState(356); 
+			setState(348); 
 			functionBody();
-			setState(357); 
+			setState(349); 
 			match(CloseBrace);
 			}
 		}
@@ -2169,11 +2192,9 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class FormalParameterListContext extends ParserRuleContext {
-		public List<IdentifierContext> identifier() {
-			return getRuleContexts(IdentifierContext.class);
-		}
-		public IdentifierContext identifier(int i) {
-			return getRuleContext(IdentifierContext.class,i);
+		public List<TerminalNode> Identifier() { return getTokens(ECMAScriptParser.Identifier); }
+		public TerminalNode Identifier(int i) {
+			return getToken(ECMAScriptParser.Identifier, i);
 		}
 		public FormalParameterListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2196,101 +2217,24 @@ public class ECMAScriptParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(359); 
-			identifier();
-			setState(364);
+			setState(351); 
+			match(Identifier);
+			setState(356);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==Comma) {
 				{
 				{
-				setState(360); 
+				setState(352); 
 				match(Comma);
-				setState(361); 
-				identifier();
+				setState(353); 
+				match(Identifier);
 				}
 				}
-				setState(366);
+				setState(358);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class FunctionExpressionContext extends ParserRuleContext {
-		public TerminalNode Function() { return getToken(ECMAScriptParser.Function, 0); }
-		public FormalParameterListContext formalParameterList() {
-			return getRuleContext(FormalParameterListContext.class,0);
-		}
-		public FunctionBodyContext functionBody() {
-			return getRuleContext(FunctionBodyContext.class,0);
-		}
-		public FunctionExpressionContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_functionExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).enterFunctionExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitFunctionExpression(this);
-		}
-	}
-
-	public final FunctionExpressionContext functionExpression() throws RecognitionException {
-		FunctionExpressionContext _localctx = new FunctionExpressionContext(_ctx, getState());
-		enterRule(_localctx, 62, RULE_functionExpression);
-		try {
-			setState(382);
-			switch ( getInterpreter().adaptivePredict(_input,27,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(367); 
-				match(Function);
-				setState(368); 
-				match(OpenParen);
-				setState(369); 
-				formalParameterList();
-				setState(370); 
-				match(CloseParen);
-				setState(371); 
-				match(OpenBrace);
-				setState(372); 
-				functionBody();
-				setState(373); 
-				match(CloseBrace);
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(375); 
-				match(Function);
-				setState(376); 
-				match(OpenParen);
-				setState(377); 
-				match(CloseParen);
-				setState(378); 
-				match(OpenBrace);
-				setState(379); 
-				functionBody();
-				setState(380); 
-				match(CloseBrace);
-				}
-				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -2324,16 +2268,16 @@ public class ECMAScriptParser extends Parser {
 
 	public final FunctionBodyContext functionBody() throws RecognitionException {
 		FunctionBodyContext _localctx = new FunctionBodyContext(_ctx, getState());
-		enterRule(_localctx, 64, RULE_functionBody);
+		enterRule(_localctx, 62, RULE_functionBody);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(385);
+			setState(360);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (Var - 64)) | (1L << (Return - 64)) | (1L << (Void - 64)) | (1L << (Continue - 64)) | (1L << (For - 64)) | (1L << (Switch - 64)) | (1L << (While - 64)) | (1L << (Debugger - 64)) | (1L << (Function - 64)) | (1L << (This - 64)) | (1L << (With - 64)) | (1L << (If - 64)) | (1L << (Throw - 64)) | (1L << (Delete - 64)) | (1L << (Try - 64)) | (1L << (Ident - 64)) | (1L << (StringLiteral - 64)))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << SemiColon) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Break) | (1L << Do) | (1L << Typeof) | (1L << New) | (1L << Var))) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & ((1L << (Return - 66)) | (1L << (Void - 66)) | (1L << (Continue - 66)) | (1L << (For - 66)) | (1L << (Switch - 66)) | (1L << (While - 66)) | (1L << (Debugger - 66)) | (1L << (Function - 66)) | (1L << (This - 66)) | (1L << (With - 66)) | (1L << (If - 66)) | (1L << (Throw - 66)) | (1L << (Delete - 66)) | (1L << (Try - 66)) | (1L << (Identifier - 66)) | (1L << (StringLiteral - 66)))) != 0)) {
 				{
-				setState(384); 
+				setState(359); 
 				sourceElements();
 				}
 			}
@@ -2374,41 +2318,41 @@ public class ECMAScriptParser extends Parser {
 
 	public final ArrayLiteralContext arrayLiteral() throws RecognitionException {
 		ArrayLiteralContext _localctx = new ArrayLiteralContext(_ctx, getState());
-		enterRule(_localctx, 66, RULE_arrayLiteral);
+		enterRule(_localctx, 64, RULE_arrayLiteral);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(387); 
+			setState(362); 
 			match(OpenBracket);
-			setState(389);
-			switch ( getInterpreter().adaptivePredict(_input,29,_ctx) ) {
+			setState(364);
+			switch ( getInterpreter().adaptivePredict(_input,28,_ctx) ) {
 			case 1:
 				{
-				setState(388); 
+				setState(363); 
 				elementList();
 				}
 				break;
 			}
-			setState(392);
-			switch ( getInterpreter().adaptivePredict(_input,30,_ctx) ) {
+			setState(367);
+			switch ( getInterpreter().adaptivePredict(_input,29,_ctx) ) {
 			case 1:
 				{
-				setState(391); 
+				setState(366); 
 				match(Comma);
 				}
 				break;
 			}
-			setState(395);
+			setState(370);
 			_la = _input.LA(1);
 			if (_la==Comma) {
 				{
-				setState(394); 
+				setState(369); 
 				elision();
 				}
 			}
 
-			setState(397); 
+			setState(372); 
 			match(CloseBracket);
 			}
 		}
@@ -2452,49 +2396,49 @@ public class ECMAScriptParser extends Parser {
 
 	public final ElementListContext elementList() throws RecognitionException {
 		ElementListContext _localctx = new ElementListContext(_ctx, getState());
-		enterRule(_localctx, 68, RULE_elementList);
+		enterRule(_localctx, 66, RULE_elementList);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(400);
+			setState(375);
 			_la = _input.LA(1);
 			if (_la==Comma) {
 				{
-				setState(399); 
+				setState(374); 
 				elision();
 				}
 			}
 
-			setState(402); 
+			setState(377); 
 			singleExpression(0);
-			setState(410);
+			setState(385);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,34,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,33,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(403); 
+					setState(378); 
 					match(Comma);
-					setState(405);
+					setState(380);
 					_la = _input.LA(1);
 					if (_la==Comma) {
 						{
-						setState(404); 
+						setState(379); 
 						elision();
 						}
 					}
 
-					setState(407); 
+					setState(382); 
 					singleExpression(0);
 					}
 					} 
 				}
-				setState(412);
+				setState(387);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,34,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,33,_ctx);
 			}
 			}
 		}
@@ -2526,22 +2470,22 @@ public class ECMAScriptParser extends Parser {
 
 	public final ElisionContext elision() throws RecognitionException {
 		ElisionContext _localctx = new ElisionContext(_ctx, getState());
-		enterRule(_localctx, 70, RULE_elision);
+		enterRule(_localctx, 68, RULE_elision);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(414); 
+			setState(389); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
 				{
-				setState(413); 
+				setState(388); 
 				match(Comma);
 				}
 				}
-				setState(416); 
+				setState(391); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( _la==Comma );
@@ -2578,32 +2522,32 @@ public class ECMAScriptParser extends Parser {
 
 	public final ObjectLiteralContext objectLiteral() throws RecognitionException {
 		ObjectLiteralContext _localctx = new ObjectLiteralContext(_ctx, getState());
-		enterRule(_localctx, 72, RULE_objectLiteral);
+		enterRule(_localctx, 70, RULE_objectLiteral);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(418); 
+			setState(393); 
 			match(OpenBrace);
-			setState(420);
-			switch ( getInterpreter().adaptivePredict(_input,36,_ctx) ) {
+			setState(395);
+			switch ( getInterpreter().adaptivePredict(_input,35,_ctx) ) {
 			case 1:
 				{
-				setState(419); 
+				setState(394); 
 				propertyNameAndValueList();
 				}
 				break;
 			}
-			setState(423);
+			setState(398);
 			_la = _input.LA(1);
 			if (_la==Comma) {
 				{
-				setState(422); 
+				setState(397); 
 				match(Comma);
 				}
 			}
 
-			setState(425); 
+			setState(400); 
 			match(CloseBrace);
 			}
 		}
@@ -2641,30 +2585,30 @@ public class ECMAScriptParser extends Parser {
 
 	public final PropertyNameAndValueListContext propertyNameAndValueList() throws RecognitionException {
 		PropertyNameAndValueListContext _localctx = new PropertyNameAndValueListContext(_ctx, getState());
-		enterRule(_localctx, 74, RULE_propertyNameAndValueList);
+		enterRule(_localctx, 72, RULE_propertyNameAndValueList);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(427); 
+			setState(402); 
 			propertyAssignment();
-			setState(432);
+			setState(407);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,38,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,37,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(428); 
+					setState(403); 
 					match(Comma);
-					setState(429); 
+					setState(404); 
 					propertyAssignment();
 					}
 					} 
 				}
-				setState(434);
+				setState(409);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,38,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,37,_ctx);
 			}
 			}
 		}
@@ -2747,19 +2691,19 @@ public class ECMAScriptParser extends Parser {
 
 	public final PropertyAssignmentContext propertyAssignment() throws RecognitionException {
 		PropertyAssignmentContext _localctx = new PropertyAssignmentContext(_ctx, getState());
-		enterRule(_localctx, 76, RULE_propertyAssignment);
+		enterRule(_localctx, 74, RULE_propertyAssignment);
 		try {
-			setState(454);
-			switch ( getInterpreter().adaptivePredict(_input,39,_ctx) ) {
+			setState(429);
+			switch ( getInterpreter().adaptivePredict(_input,38,_ctx) ) {
 			case 1:
 				_localctx = new PropertyExpressionAssignmentContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(435); 
+				setState(410); 
 				propertyName();
-				setState(436); 
+				setState(411); 
 				match(Colon);
-				setState(437); 
+				setState(412); 
 				singleExpression(0);
 				}
 				break;
@@ -2767,17 +2711,17 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new PropertyGetterContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(439); 
+				setState(414); 
 				getter();
-				setState(440); 
+				setState(415); 
 				match(OpenParen);
-				setState(441); 
+				setState(416); 
 				match(CloseParen);
-				setState(442); 
+				setState(417); 
 				match(OpenBrace);
-				setState(443); 
+				setState(418); 
 				functionBody();
-				setState(444); 
+				setState(419); 
 				match(CloseBrace);
 				}
 				break;
@@ -2785,19 +2729,19 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new PropertySetterContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(446); 
+				setState(421); 
 				setter();
-				setState(447); 
+				setState(422); 
 				match(OpenParen);
-				setState(448); 
+				setState(423); 
 				propertySetParameterList();
-				setState(449); 
+				setState(424); 
 				match(CloseParen);
-				setState(450); 
+				setState(425); 
 				match(OpenBrace);
-				setState(451); 
+				setState(426); 
 				functionBody();
-				setState(452); 
+				setState(427); 
 				match(CloseBrace);
 				}
 				break;
@@ -2838,13 +2782,12 @@ public class ECMAScriptParser extends Parser {
 
 	public final PropertyNameContext propertyName() throws RecognitionException {
 		PropertyNameContext _localctx = new PropertyNameContext(_ctx, getState());
-		enterRule(_localctx, 78, RULE_propertyName);
+		enterRule(_localctx, 76, RULE_propertyName);
 		try {
-			setState(459);
+			setState(434);
 			switch (_input.LA(1)) {
-			case Null:
-			case True:
-			case False:
+			case NullLiteral:
+			case BooleanLiteral:
 			case Break:
 			case Do:
 			case Instanceof:
@@ -2887,17 +2830,17 @@ public class ECMAScriptParser extends Parser {
 			case Protected:
 			case Static:
 			case Yield:
-			case Ident:
+			case Identifier:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(456); 
+				setState(431); 
 				identifierName();
 				}
 				break;
 			case StringLiteral:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(457); 
+				setState(432); 
 				match(StringLiteral);
 				}
 				break;
@@ -2906,7 +2849,7 @@ public class ECMAScriptParser extends Parser {
 			case OctalIntegerLiteral:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(458); 
+				setState(433); 
 				numericLiteral();
 				}
 				break;
@@ -2926,9 +2869,7 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class PropertySetParameterListContext extends ParserRuleContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public PropertySetParameterListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2945,12 +2886,12 @@ public class ECMAScriptParser extends Parser {
 
 	public final PropertySetParameterListContext propertySetParameterList() throws RecognitionException {
 		PropertySetParameterListContext _localctx = new PropertySetParameterListContext(_ctx, getState());
-		enterRule(_localctx, 80, RULE_propertySetParameterList);
+		enterRule(_localctx, 78, RULE_propertySetParameterList);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(461); 
-			identifier();
+			setState(436); 
+			match(Identifier);
 			}
 		}
 		catch (RecognitionException re) {
@@ -2984,23 +2925,23 @@ public class ECMAScriptParser extends Parser {
 
 	public final ArgumentsContext arguments() throws RecognitionException {
 		ArgumentsContext _localctx = new ArgumentsContext(_ctx, getState());
-		enterRule(_localctx, 82, RULE_arguments);
+		enterRule(_localctx, 80, RULE_arguments);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(463); 
+			setState(438); 
 			match(OpenParen);
-			setState(465);
+			setState(440);
 			_la = _input.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << Null) | (1L << True) | (1L << False) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & ((1L << (Void - 68)) | (1L << (Function - 68)) | (1L << (This - 68)) | (1L << (Delete - 68)) | (1L << (Ident - 68)) | (1L << (StringLiteral - 68)))) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << OpenBracket) | (1L << OpenParen) | (1L << OpenBrace) | (1L << PlusPlus) | (1L << MinusMinus) | (1L << Plus) | (1L << Minus) | (1L << BitNot) | (1L << Not) | (1L << NullLiteral) | (1L << BooleanLiteral) | (1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral) | (1L << Typeof) | (1L << New))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (Void - 67)) | (1L << (Function - 67)) | (1L << (This - 67)) | (1L << (Delete - 67)) | (1L << (Identifier - 67)) | (1L << (StringLiteral - 67)))) != 0)) {
 				{
-				setState(464); 
+				setState(439); 
 				argumentList();
 				}
 			}
 
-			setState(467); 
+			setState(442); 
 			match(CloseParen);
 			}
 		}
@@ -3038,26 +2979,26 @@ public class ECMAScriptParser extends Parser {
 
 	public final ArgumentListContext argumentList() throws RecognitionException {
 		ArgumentListContext _localctx = new ArgumentListContext(_ctx, getState());
-		enterRule(_localctx, 84, RULE_argumentList);
+		enterRule(_localctx, 82, RULE_argumentList);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(469); 
+			setState(444); 
 			singleExpression(0);
-			setState(474);
+			setState(449);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==Comma) {
 				{
 				{
-				setState(470); 
+				setState(445); 
 				match(Comma);
-				setState(471); 
+				setState(446); 
 				singleExpression(0);
 				}
 				}
-				setState(476);
+				setState(451);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -3097,30 +3038,30 @@ public class ECMAScriptParser extends Parser {
 
 	public final ExpressionSequenceContext expressionSequence() throws RecognitionException {
 		ExpressionSequenceContext _localctx = new ExpressionSequenceContext(_ctx, getState());
-		enterRule(_localctx, 86, RULE_expressionSequence);
+		enterRule(_localctx, 84, RULE_expressionSequence);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(477); 
+			setState(452); 
 			singleExpression(0);
-			setState(482);
+			setState(457);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,43,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,42,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(478); 
+					setState(453); 
 					match(Comma);
-					setState(479); 
+					setState(454); 
 					singleExpression(0);
 					}
 					} 
 				}
-				setState(484);
+				setState(459);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,43,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,42,_ctx);
 			}
 			}
 		}
@@ -3356,9 +3297,7 @@ public class ECMAScriptParser extends Parser {
 		}
 	}
 	public static class IdentifierExpressionContext extends SingleExpressionContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public IdentifierExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -3367,20 +3306,6 @@ public class ECMAScriptParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitIdentifierExpression(this);
-		}
-	}
-	public static class FnExpressionContext extends SingleExpressionContext {
-		public FunctionExpressionContext functionExpression() {
-			return getRuleContext(FunctionExpressionContext.class,0);
-		}
-		public FnExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).enterFnExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitFnExpression(this);
 		}
 	}
 	public static class BitAndExpressionContext extends SingleExpressionContext {
@@ -3426,6 +3351,25 @@ public class ECMAScriptParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitPreIncrementExpression(this);
+		}
+	}
+	public static class FunctionExpressionContext extends SingleExpressionContext {
+		public TerminalNode Function() { return getToken(ECMAScriptParser.Function, 0); }
+		public FunctionBodyContext functionBody() {
+			return getRuleContext(FunctionBodyContext.class,0);
+		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
+		public FormalParameterListContext formalParameterList() {
+			return getRuleContext(FormalParameterListContext.class,0);
+		}
+		public FunctionExpressionContext(SingleExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).enterFunctionExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitFunctionExpression(this);
 		}
 	}
 	public static class BitShiftExpressionContext extends SingleExpressionContext {
@@ -3738,14 +3682,14 @@ public class ECMAScriptParser extends Parser {
 		int _parentState = getState();
 		SingleExpressionContext _localctx = new SingleExpressionContext(_ctx, _parentState);
 		SingleExpressionContext _prevctx = _localctx;
-		int _startState = 88;
-		enterRecursionRule(_localctx, 88, RULE_singleExpression, _p);
+		int _startState = 86;
+		enterRecursionRule(_localctx, 86, RULE_singleExpression, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(519);
+			setState(506);
 			switch (_input.LA(1)) {
 			case Delete:
 				{
@@ -3753,9 +3697,9 @@ public class ECMAScriptParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(486); 
+				setState(461); 
 				match(Delete);
-				setState(487); 
+				setState(462); 
 				singleExpression(30);
 				}
 				break;
@@ -3764,9 +3708,9 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new VoidExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(488); 
+				setState(463); 
 				match(Void);
-				setState(489); 
+				setState(464); 
 				singleExpression(29);
 				}
 				break;
@@ -3775,9 +3719,9 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new TypeofExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(490); 
+				setState(465); 
 				match(Typeof);
-				setState(491); 
+				setState(466); 
 				singleExpression(28);
 				}
 				break;
@@ -3786,9 +3730,9 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new PreIncrementExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(492); 
+				setState(467); 
 				match(PlusPlus);
-				setState(493); 
+				setState(468); 
 				singleExpression(27);
 				}
 				break;
@@ -3797,9 +3741,9 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new PreDecreaseExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(494); 
+				setState(469); 
 				match(MinusMinus);
-				setState(495); 
+				setState(470); 
 				singleExpression(26);
 				}
 				break;
@@ -3808,9 +3752,9 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new UnaryPlusExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(496); 
+				setState(471); 
 				match(Plus);
-				setState(497); 
+				setState(472); 
 				singleExpression(25);
 				}
 				break;
@@ -3819,9 +3763,9 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new UnaryMinusExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(498); 
+				setState(473); 
 				match(Minus);
-				setState(499); 
+				setState(474); 
 				singleExpression(24);
 				}
 				break;
@@ -3830,9 +3774,9 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new BitNotExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(500); 
+				setState(475); 
 				match(BitNot);
-				setState(501); 
+				setState(476); 
 				singleExpression(23);
 				}
 				break;
@@ -3841,19 +3785,47 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new NotExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(502); 
+				setState(477); 
 				match(Not);
-				setState(503); 
+				setState(478); 
 				singleExpression(22);
 				}
 				break;
 			case Function:
 				{
-				_localctx = new FnExpressionContext(_localctx);
+				_localctx = new FunctionExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(504); 
-				functionExpression();
+				setState(479); 
+				match(Function);
+				setState(481);
+				_la = _input.LA(1);
+				if (_la==Identifier) {
+					{
+					setState(480); 
+					match(Identifier);
+					}
+				}
+
+				setState(483); 
+				match(OpenParen);
+				setState(485);
+				_la = _input.LA(1);
+				if (_la==Identifier) {
+					{
+					setState(484); 
+					formalParameterList();
+					}
+				}
+
+				setState(487); 
+				match(CloseParen);
+				setState(488); 
+				match(OpenBrace);
+				setState(489); 
+				functionBody();
+				setState(490); 
+				match(CloseBrace);
 				}
 				break;
 			case New:
@@ -3861,15 +3833,15 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new NewExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(505); 
+				setState(492); 
 				match(New);
-				setState(506); 
+				setState(493); 
 				singleExpression(0);
-				setState(508);
-				switch ( getInterpreter().adaptivePredict(_input,44,_ctx) ) {
+				setState(495);
+				switch ( getInterpreter().adaptivePredict(_input,45,_ctx) ) {
 				case 1:
 					{
-					setState(507); 
+					setState(494); 
 					arguments();
 					}
 					break;
@@ -3881,23 +3853,22 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ThisExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(510); 
+				setState(497); 
 				match(This);
 				}
 				break;
-			case Ident:
+			case Identifier:
 				{
 				_localctx = new IdentifierExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(511); 
-				identifier();
+				setState(498); 
+				match(Identifier);
 				}
 				break;
 			case RegularExpressionLiteral:
-			case Null:
-			case True:
-			case False:
+			case NullLiteral:
+			case BooleanLiteral:
 			case DecimalLiteral:
 			case HexIntegerLiteral:
 			case OctalIntegerLiteral:
@@ -3906,7 +3877,7 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new LiteralExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(512); 
+				setState(499); 
 				literal();
 				}
 				break;
@@ -3915,7 +3886,7 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ArrayLiteralExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(513); 
+				setState(500); 
 				arrayLiteral();
 				}
 				break;
@@ -3924,7 +3895,7 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ObjectLiteralExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(514); 
+				setState(501); 
 				objectLiteral();
 				}
 				break;
@@ -3933,11 +3904,11 @@ public class ECMAScriptParser extends Parser {
 				_localctx = new ParenthesizedExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(515); 
+				setState(502); 
 				match(OpenParen);
-				setState(516); 
+				setState(503); 
 				expressionSequence();
-				setState(517); 
+				setState(504); 
 				match(CloseParen);
 				}
 				break;
@@ -3945,29 +3916,29 @@ public class ECMAScriptParser extends Parser {
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(588);
+			setState(575);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,47,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,48,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					setState(586);
-					switch ( getInterpreter().adaptivePredict(_input,46,_ctx) ) {
+					setState(573);
+					switch ( getInterpreter().adaptivePredict(_input,47,_ctx) ) {
 					case 1:
 						{
 						_localctx = new MultiplicativeExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(521);
+						setState(508);
 						if (!(precpred(_ctx, 21))) throw new FailedPredicateException(this, "precpred(_ctx, 21)");
-						setState(522);
+						setState(509);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << Multiply) | (1L << Divide) | (1L << Modulus))) != 0)) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(523); 
+						setState(510); 
 						singleExpression(22);
 						}
 						break;
@@ -3975,15 +3946,15 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new AdditiveExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(524);
+						setState(511);
 						if (!(precpred(_ctx, 20))) throw new FailedPredicateException(this, "precpred(_ctx, 20)");
-						setState(525);
+						setState(512);
 						_la = _input.LA(1);
 						if ( !(_la==Plus || _la==Minus) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(526); 
+						setState(513); 
 						singleExpression(21);
 						}
 						break;
@@ -3991,15 +3962,15 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new BitShiftExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(527);
+						setState(514);
 						if (!(precpred(_ctx, 19))) throw new FailedPredicateException(this, "precpred(_ctx, 19)");
-						setState(528);
+						setState(515);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RightShiftArithmetic) | (1L << LeftShiftArithmetic) | (1L << RightShiftLogical))) != 0)) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(529); 
+						setState(516); 
 						singleExpression(20);
 						}
 						break;
@@ -4007,15 +3978,15 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new RelationalExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(530);
+						setState(517);
 						if (!(precpred(_ctx, 18))) throw new FailedPredicateException(this, "precpred(_ctx, 18)");
-						setState(531);
+						setState(518);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LessThan) | (1L << MoreThan) | (1L << LessThanEquals) | (1L << GreaterThanEquals))) != 0)) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(532); 
+						setState(519); 
 						singleExpression(19);
 						}
 						break;
@@ -4023,11 +3994,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new InstanceofExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(533);
+						setState(520);
 						if (!(precpred(_ctx, 17))) throw new FailedPredicateException(this, "precpred(_ctx, 17)");
-						setState(534); 
+						setState(521); 
 						match(Instanceof);
-						setState(535); 
+						setState(522); 
 						singleExpression(18);
 						}
 						break;
@@ -4035,11 +4006,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new InExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(536);
+						setState(523);
 						if (!(precpred(_ctx, 16))) throw new FailedPredicateException(this, "precpred(_ctx, 16)");
-						setState(537); 
+						setState(524); 
 						match(In);
-						setState(538); 
+						setState(525); 
 						singleExpression(17);
 						}
 						break;
@@ -4047,15 +4018,15 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new EqualityExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(539);
+						setState(526);
 						if (!(precpred(_ctx, 15))) throw new FailedPredicateException(this, "precpred(_ctx, 15)");
-						setState(540);
+						setState(527);
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << Equals) | (1L << NotEquals) | (1L << IdentityEquals) | (1L << IdentityNotEquals))) != 0)) ) {
 						_errHandler.recoverInline(this);
 						}
 						consume();
-						setState(541); 
+						setState(528); 
 						singleExpression(16);
 						}
 						break;
@@ -4063,11 +4034,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new BitAndExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(542);
+						setState(529);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
-						setState(543); 
+						setState(530); 
 						match(BitAnd);
-						setState(544); 
+						setState(531); 
 						singleExpression(15);
 						}
 						break;
@@ -4075,11 +4046,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new BitXOrExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(545);
+						setState(532);
 						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
-						setState(546); 
+						setState(533); 
 						match(BitXOr);
-						setState(547); 
+						setState(534); 
 						singleExpression(14);
 						}
 						break;
@@ -4087,11 +4058,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new BitOrExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(548);
+						setState(535);
 						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
-						setState(549); 
+						setState(536); 
 						match(BitOr);
-						setState(550); 
+						setState(537); 
 						singleExpression(13);
 						}
 						break;
@@ -4099,11 +4070,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new LogicalAndExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(551);
+						setState(538);
 						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
-						setState(552); 
+						setState(539); 
 						match(And);
-						setState(553); 
+						setState(540); 
 						singleExpression(12);
 						}
 						break;
@@ -4111,11 +4082,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new LogicalOrExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(554);
+						setState(541);
 						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
-						setState(555); 
+						setState(542); 
 						match(Or);
-						setState(556); 
+						setState(543); 
 						singleExpression(11);
 						}
 						break;
@@ -4123,15 +4094,15 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new TernaryExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(557);
+						setState(544);
 						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
-						setState(558); 
+						setState(545); 
 						match(QuestionMark);
-						setState(559); 
+						setState(546); 
 						singleExpression(0);
-						setState(560); 
+						setState(547); 
 						match(Colon);
-						setState(561); 
+						setState(548); 
 						singleExpression(10);
 						}
 						break;
@@ -4139,13 +4110,13 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new MemberIndexExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(563);
+						setState(550);
 						if (!(precpred(_ctx, 36))) throw new FailedPredicateException(this, "precpred(_ctx, 36)");
-						setState(564); 
+						setState(551); 
 						match(OpenBracket);
-						setState(565); 
+						setState(552); 
 						expressionSequence();
-						setState(566); 
+						setState(553); 
 						match(CloseBracket);
 						}
 						break;
@@ -4153,11 +4124,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new MemberDotExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(568);
+						setState(555);
 						if (!(precpred(_ctx, 35))) throw new FailedPredicateException(this, "precpred(_ctx, 35)");
-						setState(569); 
+						setState(556); 
 						match(Dot);
-						setState(570); 
+						setState(557); 
 						identifierName();
 						}
 						break;
@@ -4165,9 +4136,9 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new ArgumentsExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(571);
+						setState(558);
 						if (!(precpred(_ctx, 34))) throw new FailedPredicateException(this, "precpred(_ctx, 34)");
-						setState(572); 
+						setState(559); 
 						arguments();
 						}
 						break;
@@ -4175,11 +4146,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new PostIncrementExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(573);
+						setState(560);
 						if (!(precpred(_ctx, 32))) throw new FailedPredicateException(this, "precpred(_ctx, 32)");
-						setState(574);
+						setState(561);
 						if (!(!here(LineTerminator))) throw new FailedPredicateException(this, "!here(LineTerminator)");
-						setState(575); 
+						setState(562); 
 						match(PlusPlus);
 						}
 						break;
@@ -4187,11 +4158,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new PostDecreaseExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(576);
+						setState(563);
 						if (!(precpred(_ctx, 31))) throw new FailedPredicateException(this, "precpred(_ctx, 31)");
-						setState(577);
+						setState(564);
 						if (!(!here(LineTerminator))) throw new FailedPredicateException(this, "!here(LineTerminator)");
-						setState(578); 
+						setState(565); 
 						match(MinusMinus);
 						}
 						break;
@@ -4199,11 +4170,11 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new AssignmentExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(579);
+						setState(566);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
-						setState(580); 
+						setState(567); 
 						match(Assign);
-						setState(581); 
+						setState(568); 
 						expressionSequence();
 						}
 						break;
@@ -4211,20 +4182,20 @@ public class ECMAScriptParser extends Parser {
 						{
 						_localctx = new AssignmentOperatorExpressionContext(new SingleExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_singleExpression);
-						setState(582);
+						setState(569);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
-						setState(583); 
+						setState(570); 
 						assignmentOperator();
-						setState(584); 
+						setState(571); 
 						expressionSequence();
 						}
 						break;
 					}
 					} 
 				}
-				setState(590);
+				setState(577);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,47,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,48,_ctx);
 			}
 			}
 		}
@@ -4256,12 +4227,12 @@ public class ECMAScriptParser extends Parser {
 
 	public final AssignmentOperatorContext assignmentOperator() throws RecognitionException {
 		AssignmentOperatorContext _localctx = new AssignmentOperatorContext(_ctx, getState());
-		enterRule(_localctx, 90, RULE_assignmentOperator);
+		enterRule(_localctx, 88, RULE_assignmentOperator);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(591);
+			setState(578);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << MultiplyAssign) | (1L << DivideAssign) | (1L << ModulusAssign) | (1L << PlusAssign) | (1L << MinusAssign) | (1L << LeftShiftArithmeticAssign) | (1L << RightShiftArithmeticAssign) | (1L << RightShiftLogicalAssign) | (1L << BitAndAssign) | (1L << BitXorAssign) | (1L << BitOrAssign))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -4281,12 +4252,8 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class LiteralContext extends ParserRuleContext {
-		public NullLiteralContext nullLiteral() {
-			return getRuleContext(NullLiteralContext.class,0);
-		}
-		public BooleanLiteralContext booleanLiteral() {
-			return getRuleContext(BooleanLiteralContext.class,0);
-		}
+		public TerminalNode NullLiteral() { return getToken(ECMAScriptParser.NullLiteral, 0); }
+		public TerminalNode BooleanLiteral() { return getToken(ECMAScriptParser.BooleanLiteral, 0); }
 		public TerminalNode StringLiteral() { return getToken(ECMAScriptParser.StringLiteral, 0); }
 		public TerminalNode RegularExpressionLiteral() { return getToken(ECMAScriptParser.RegularExpressionLiteral, 0); }
 		public NumericLiteralContext numericLiteral() {
@@ -4308,45 +4275,31 @@ public class ECMAScriptParser extends Parser {
 
 	public final LiteralContext literal() throws RecognitionException {
 		LiteralContext _localctx = new LiteralContext(_ctx, getState());
-		enterRule(_localctx, 92, RULE_literal);
+		enterRule(_localctx, 90, RULE_literal);
+		int _la;
 		try {
-			setState(598);
+			setState(582);
 			switch (_input.LA(1)) {
-			case Null:
+			case RegularExpressionLiteral:
+			case NullLiteral:
+			case BooleanLiteral:
+			case StringLiteral:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(593); 
-				nullLiteral();
+				setState(580);
+				_la = _input.LA(1);
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << RegularExpressionLiteral) | (1L << NullLiteral) | (1L << BooleanLiteral))) != 0) || _la==StringLiteral) ) {
+				_errHandler.recoverInline(this);
 				}
-				break;
-			case True:
-			case False:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(594); 
-				booleanLiteral();
-				}
-				break;
-			case StringLiteral:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(595); 
-				match(StringLiteral);
-				}
-				break;
-			case RegularExpressionLiteral:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(596); 
-				match(RegularExpressionLiteral);
+				consume();
 				}
 				break;
 			case DecimalLiteral:
 			case HexIntegerLiteral:
 			case OctalIntegerLiteral:
-				enterOuterAlt(_localctx, 5);
+				enterOuterAlt(_localctx, 2);
 				{
-				setState(597); 
+				setState(581); 
 				numericLiteral();
 				}
 				break;
@@ -4385,12 +4338,12 @@ public class ECMAScriptParser extends Parser {
 
 	public final NumericLiteralContext numericLiteral() throws RecognitionException {
 		NumericLiteralContext _localctx = new NumericLiteralContext(_ctx, getState());
-		enterRule(_localctx, 94, RULE_numericLiteral);
+		enterRule(_localctx, 92, RULE_numericLiteral);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(600);
+			setState(584);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << DecimalLiteral) | (1L << HexIntegerLiteral) | (1L << OctalIntegerLiteral))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -4410,9 +4363,7 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class IdentifierNameContext extends ParserRuleContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public ReservedWordContext reservedWord() {
 			return getRuleContext(ReservedWordContext.class,0);
 		}
@@ -4432,20 +4383,19 @@ public class ECMAScriptParser extends Parser {
 
 	public final IdentifierNameContext identifierName() throws RecognitionException {
 		IdentifierNameContext _localctx = new IdentifierNameContext(_ctx, getState());
-		enterRule(_localctx, 96, RULE_identifierName);
+		enterRule(_localctx, 94, RULE_identifierName);
 		try {
-			setState(604);
+			setState(588);
 			switch (_input.LA(1)) {
-			case Ident:
+			case Identifier:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(602); 
-				identifier();
+				setState(586); 
+				match(Identifier);
 				}
 				break;
-			case Null:
-			case True:
-			case False:
+			case NullLiteral:
+			case BooleanLiteral:
 			case Break:
 			case Do:
 			case Instanceof:
@@ -4490,7 +4440,7 @@ public class ECMAScriptParser extends Parser {
 			case Yield:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(603); 
+				setState(587); 
 				reservedWord();
 				}
 				break;
@@ -4516,12 +4466,8 @@ public class ECMAScriptParser extends Parser {
 		public FutureReservedWordContext futureReservedWord() {
 			return getRuleContext(FutureReservedWordContext.class,0);
 		}
-		public NullLiteralContext nullLiteral() {
-			return getRuleContext(NullLiteralContext.class,0);
-		}
-		public BooleanLiteralContext booleanLiteral() {
-			return getRuleContext(BooleanLiteralContext.class,0);
-		}
+		public TerminalNode NullLiteral() { return getToken(ECMAScriptParser.NullLiteral, 0); }
+		public TerminalNode BooleanLiteral() { return getToken(ECMAScriptParser.BooleanLiteral, 0); }
 		public ReservedWordContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4538,9 +4484,10 @@ public class ECMAScriptParser extends Parser {
 
 	public final ReservedWordContext reservedWord() throws RecognitionException {
 		ReservedWordContext _localctx = new ReservedWordContext(_ctx, getState());
-		enterRule(_localctx, 98, RULE_reservedWord);
+		enterRule(_localctx, 96, RULE_reservedWord);
+		int _la;
 		try {
-			setState(610);
+			setState(593);
 			switch (_input.LA(1)) {
 			case Break:
 			case Do:
@@ -4570,7 +4517,7 @@ public class ECMAScriptParser extends Parser {
 			case Try:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(606); 
+				setState(590); 
 				keyword();
 				}
 				break;
@@ -4592,23 +4539,20 @@ public class ECMAScriptParser extends Parser {
 			case Yield:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(607); 
+				setState(591); 
 				futureReservedWord();
 				}
 				break;
-			case Null:
+			case NullLiteral:
+			case BooleanLiteral:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(608); 
-				nullLiteral();
+				setState(592);
+				_la = _input.LA(1);
+				if ( !(_la==NullLiteral || _la==BooleanLiteral) ) {
+				_errHandler.recoverInline(this);
 				}
-				break;
-			case True:
-			case False:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(609); 
-				booleanLiteral();
+				consume();
 				}
 				break;
 			default:
@@ -4669,14 +4613,14 @@ public class ECMAScriptParser extends Parser {
 
 	public final KeywordContext keyword() throws RecognitionException {
 		KeywordContext _localctx = new KeywordContext(_ctx, getState());
-		enterRule(_localctx, 100, RULE_keyword);
+		enterRule(_localctx, 98, RULE_keyword);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(612);
+			setState(595);
 			_la = _input.LA(1);
-			if ( !(((((_la - 57)) & ~0x3f) == 0 && ((1L << (_la - 57)) & ((1L << (Break - 57)) | (1L << (Do - 57)) | (1L << (Instanceof - 57)) | (1L << (Typeof - 57)) | (1L << (Case - 57)) | (1L << (Else - 57)) | (1L << (New - 57)) | (1L << (Var - 57)) | (1L << (Catch - 57)) | (1L << (Finally - 57)) | (1L << (Return - 57)) | (1L << (Void - 57)) | (1L << (Continue - 57)) | (1L << (For - 57)) | (1L << (Switch - 57)) | (1L << (While - 57)) | (1L << (Debugger - 57)) | (1L << (Function - 57)) | (1L << (This - 57)) | (1L << (With - 57)) | (1L << (Default - 57)) | (1L << (If - 57)) | (1L << (Throw - 57)) | (1L << (Delete - 57)) | (1L << (In - 57)) | (1L << (Try - 57)))) != 0)) ) {
+			if ( !(((((_la - 56)) & ~0x3f) == 0 && ((1L << (_la - 56)) & ((1L << (Break - 56)) | (1L << (Do - 56)) | (1L << (Instanceof - 56)) | (1L << (Typeof - 56)) | (1L << (Case - 56)) | (1L << (Else - 56)) | (1L << (New - 56)) | (1L << (Var - 56)) | (1L << (Catch - 56)) | (1L << (Finally - 56)) | (1L << (Return - 56)) | (1L << (Void - 56)) | (1L << (Continue - 56)) | (1L << (For - 56)) | (1L << (Switch - 56)) | (1L << (While - 56)) | (1L << (Debugger - 56)) | (1L << (Function - 56)) | (1L << (This - 56)) | (1L << (With - 56)) | (1L << (Default - 56)) | (1L << (If - 56)) | (1L << (Throw - 56)) | (1L << (Delete - 56)) | (1L << (In - 56)) | (1L << (Try - 56)))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			consume();
@@ -4726,14 +4670,14 @@ public class ECMAScriptParser extends Parser {
 
 	public final FutureReservedWordContext futureReservedWord() throws RecognitionException {
 		FutureReservedWordContext _localctx = new FutureReservedWordContext(_ctx, getState());
-		enterRule(_localctx, 102, RULE_futureReservedWord);
+		enterRule(_localctx, 100, RULE_futureReservedWord);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(614);
+			setState(597);
 			_la = _input.LA(1);
-			if ( !(((((_la - 83)) & ~0x3f) == 0 && ((1L << (_la - 83)) & ((1L << (Class - 83)) | (1L << (Enum - 83)) | (1L << (Extends - 83)) | (1L << (Super - 83)) | (1L << (Const - 83)) | (1L << (Export - 83)) | (1L << (Import - 83)) | (1L << (Implements - 83)) | (1L << (Let - 83)) | (1L << (Private - 83)) | (1L << (Public - 83)) | (1L << (Interface - 83)) | (1L << (Package - 83)) | (1L << (Protected - 83)) | (1L << (Static - 83)) | (1L << (Yield - 83)))) != 0)) ) {
+			if ( !(((((_la - 82)) & ~0x3f) == 0 && ((1L << (_la - 82)) & ((1L << (Class - 82)) | (1L << (Enum - 82)) | (1L << (Extends - 82)) | (1L << (Super - 82)) | (1L << (Const - 82)) | (1L << (Export - 82)) | (1L << (Import - 82)) | (1L << (Implements - 82)) | (1L << (Let - 82)) | (1L << (Private - 82)) | (1L << (Public - 82)) | (1L << (Interface - 82)) | (1L << (Package - 82)) | (1L << (Protected - 82)) | (1L << (Static - 82)) | (1L << (Yield - 82)))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			consume();
@@ -4751,9 +4695,7 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class GetterContext extends ParserRuleContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public GetterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4770,14 +4712,14 @@ public class ECMAScriptParser extends Parser {
 
 	public final GetterContext getter() throws RecognitionException {
 		GetterContext _localctx = new GetterContext(_ctx, getState());
-		enterRule(_localctx, 104, RULE_getter);
+		enterRule(_localctx, 102, RULE_getter);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(616);
+			setState(599);
 			if (!(_input.LT(1).getText().startsWith("get"))) throw new FailedPredicateException(this, "_input.LT(1).getText().startsWith(\"get\")");
-			setState(617); 
-			identifier();
+			setState(600); 
+			match(Identifier);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4792,9 +4734,7 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static class SetterContext extends ParserRuleContext {
-		public IdentifierContext identifier() {
-			return getRuleContext(IdentifierContext.class,0);
-		}
+		public TerminalNode Identifier() { return getToken(ECMAScriptParser.Identifier, 0); }
 		public SetterContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4811,14 +4751,14 @@ public class ECMAScriptParser extends Parser {
 
 	public final SetterContext setter() throws RecognitionException {
 		SetterContext _localctx = new SetterContext(_ctx, getState());
-		enterRule(_localctx, 106, RULE_setter);
+		enterRule(_localctx, 104, RULE_setter);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(619);
+			setState(602);
 			if (!(_input.LT(1).getText().startsWith("set"))) throw new FailedPredicateException(this, "_input.LT(1).getText().startsWith(\"set\")");
-			setState(620); 
-			identifier();
+			setState(603); 
+			match(Identifier);
 			}
 		}
 		catch (RecognitionException re) {
@@ -4851,35 +4791,35 @@ public class ECMAScriptParser extends Parser {
 
 	public final EosContext eos() throws RecognitionException {
 		EosContext _localctx = new EosContext(_ctx, getState());
-		enterRule(_localctx, 108, RULE_eos);
+		enterRule(_localctx, 106, RULE_eos);
 		try {
-			setState(626);
-			switch ( getInterpreter().adaptivePredict(_input,51,_ctx) ) {
+			setState(609);
+			switch ( getInterpreter().adaptivePredict(_input,52,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(622); 
+				setState(605); 
 				match(SemiColon);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(623); 
+				setState(606); 
 				match(EOF);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(624);
+				setState(607);
 				if (!(lineTerminatorAhead())) throw new FailedPredicateException(this, "lineTerminatorAhead()");
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(625);
+				setState(608);
 				if (!(_input.LT(1).getType() == CloseBrace)) throw new FailedPredicateException(this, "_input.LT(1).getType() == CloseBrace");
 				}
 				break;
@@ -4914,129 +4854,12 @@ public class ECMAScriptParser extends Parser {
 
 	public final EofContext eof() throws RecognitionException {
 		EofContext _localctx = new EofContext(_ctx, getState());
-		enterRule(_localctx, 110, RULE_eof);
+		enterRule(_localctx, 108, RULE_eof);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(628); 
+			setState(611); 
 			match(EOF);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class NullLiteralContext extends ParserRuleContext {
-		public TerminalNode Null() { return getToken(ECMAScriptParser.Null, 0); }
-		public NullLiteralContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_nullLiteral; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).enterNullLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitNullLiteral(this);
-		}
-	}
-
-	public final NullLiteralContext nullLiteral() throws RecognitionException {
-		NullLiteralContext _localctx = new NullLiteralContext(_ctx, getState());
-		enterRule(_localctx, 112, RULE_nullLiteral);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(630); 
-			match(Null);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class BooleanLiteralContext extends ParserRuleContext {
-		public TerminalNode True() { return getToken(ECMAScriptParser.True, 0); }
-		public TerminalNode False() { return getToken(ECMAScriptParser.False, 0); }
-		public BooleanLiteralContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_booleanLiteral; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).enterBooleanLiteral(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitBooleanLiteral(this);
-		}
-	}
-
-	public final BooleanLiteralContext booleanLiteral() throws RecognitionException {
-		BooleanLiteralContext _localctx = new BooleanLiteralContext(_ctx, getState());
-		enterRule(_localctx, 114, RULE_booleanLiteral);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(632);
-			_la = _input.LA(1);
-			if ( !(_la==True || _la==False) ) {
-			_errHandler.recoverInline(this);
-			}
-			consume();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class IdentifierContext extends ParserRuleContext {
-		public TerminalNode Ident() { return getToken(ECMAScriptParser.Ident, 0); }
-		public IdentifierContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_identifier; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).enterIdentifier(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ECMAScriptListener ) ((ECMAScriptListener)listener).exitIdentifier(this);
-		}
-	}
-
-	public final IdentifierContext identifier() throws RecognitionException {
-		IdentifierContext _localctx = new IdentifierContext(_ctx, getState());
-		enterRule(_localctx, 116, RULE_identifier);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(634); 
-			match(Ident);
 			}
 		}
 		catch (RecognitionException re) {
@@ -5052,13 +4875,13 @@ public class ECMAScriptParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 44: 
+		case 43: 
 			return singleExpression_sempred((SingleExpressionContext)_localctx, predIndex);
-		case 52: 
+		case 51: 
 			return getter_sempred((GetterContext)_localctx, predIndex);
-		case 53: 
+		case 52: 
 			return setter_sempred((SetterContext)_localctx, predIndex);
-		case 54: 
+		case 53: 
 			return eos_sempred((EosContext)_localctx, predIndex);
 		}
 		return true;
@@ -5137,240 +4960,233 @@ public class ECMAScriptParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3j\u027f\4\2\t\2\4"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3i\u0268\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
 		"\4\32\t\32\4\33\t\33\4\34\t\34\4\35\t\35\4\36\t\36\4\37\t\37\4 \t \4!"+
 		"\t!\4\"\t\"\4#\t#\4$\t$\4%\t%\4&\t&\4\'\t\'\4(\t(\4)\t)\4*\t*\4+\t+\4"+
 		",\t,\4-\t-\4.\t.\4/\t/\4\60\t\60\4\61\t\61\4\62\t\62\4\63\t\63\4\64\t"+
-		"\64\4\65\t\65\4\66\t\66\4\67\t\67\48\t8\49\t9\4:\t:\4;\t;\4<\t<\3\2\5"+
-		"\2z\n\2\3\2\3\2\3\3\6\3\177\n\3\r\3\16\3\u0080\3\4\3\4\5\4\u0085\n\4\3"+
-		"\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\5\5\u0096\n"+
-		"\5\3\6\3\6\5\6\u009a\n\6\3\6\3\6\3\7\6\7\u009f\n\7\r\7\16\7\u00a0\3\b"+
-		"\3\b\3\b\3\b\3\t\3\t\3\t\7\t\u00aa\n\t\f\t\16\t\u00ad\13\t\3\n\3\n\5\n"+
-		"\u00b1\n\n\3\13\3\13\3\13\3\f\3\f\3\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16"+
-		"\3\16\5\16\u00c1\n\16\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
-		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00d4\n\17\3\17\3\17\5\17\u00d8"+
-		"\n\17\3\17\3\17\5\17\u00dc\n\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
-		"\5\17\u00e6\n\17\3\17\3\17\5\17\u00ea\n\17\3\17\3\17\3\17\3\17\3\17\3"+
+		"\64\4\65\t\65\4\66\t\66\4\67\t\67\48\t8\3\2\5\2r\n\2\3\2\3\2\3\3\6\3w"+
+		"\n\3\r\3\16\3x\3\4\3\4\5\4}\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3\5\3"+
+		"\5\3\5\3\5\3\5\3\5\3\5\5\5\u008e\n\5\3\6\3\6\5\6\u0092\n\6\3\6\3\6\3\7"+
+		"\6\7\u0097\n\7\r\7\16\7\u0098\3\b\3\b\3\b\3\b\3\t\3\t\3\t\7\t\u00a2\n"+
+		"\t\f\t\16\t\u00a5\13\t\3\n\3\n\5\n\u00a9\n\n\3\13\3\13\3\13\3\f\3\f\3"+
+		"\r\3\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u00b9\n\16\3\17\3\17\3"+
 		"\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3"+
-		"\17\5\17\u0100\n\17\3\20\3\20\5\20\u0104\n\20\3\20\3\20\3\21\3\21\5\21"+
-		"\u010a\n\21\3\21\3\21\3\22\3\22\5\22\u0110\n\22\3\22\3\22\3\23\3\23\3"+
-		"\23\3\23\3\23\3\23\3\24\3\24\3\24\3\24\3\24\3\24\3\25\3\25\5\25\u0122"+
-		"\n\25\3\25\3\25\5\25\u0126\n\25\5\25\u0128\n\25\3\25\3\25\3\26\6\26\u012d"+
-		"\n\26\r\26\16\26\u012e\3\27\3\27\3\27\3\27\5\27\u0135\n\27\3\30\3\30\3"+
-		"\30\5\30\u013a\n\30\3\31\3\31\3\31\3\31\3\32\3\32\3\32\3\32\3\33\3\33"+
-		"\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33\5\33\u0151\n\33"+
-		"\3\34\3\34\3\34\3\34\3\34\3\34\3\35\3\35\3\35\3\36\3\36\3\36\3\37\3\37"+
-		"\3\37\3\37\5\37\u0163\n\37\3\37\3\37\3\37\3\37\3\37\3 \3 \3 \7 \u016d"+
-		"\n \f \16 \u0170\13 \3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\3!\5!\u0181"+
-		"\n!\3\"\5\"\u0184\n\"\3#\3#\5#\u0188\n#\3#\5#\u018b\n#\3#\5#\u018e\n#"+
-		"\3#\3#\3$\5$\u0193\n$\3$\3$\3$\5$\u0198\n$\3$\7$\u019b\n$\f$\16$\u019e"+
-		"\13$\3%\6%\u01a1\n%\r%\16%\u01a2\3&\3&\5&\u01a7\n&\3&\5&\u01aa\n&\3&\3"+
-		"&\3\'\3\'\3\'\7\'\u01b1\n\'\f\'\16\'\u01b4\13\'\3(\3(\3(\3(\3(\3(\3(\3"+
-		"(\3(\3(\3(\3(\3(\3(\3(\3(\3(\3(\3(\5(\u01c9\n(\3)\3)\3)\5)\u01ce\n)\3"+
-		"*\3*\3+\3+\5+\u01d4\n+\3+\3+\3,\3,\3,\7,\u01db\n,\f,\16,\u01de\13,\3-"+
-		"\3-\3-\7-\u01e3\n-\f-\16-\u01e6\13-\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3"+
-		".\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\5.\u01ff\n.\3.\3.\3.\3.\3.\3.\3.\3"+
-		".\3.\5.\u020a\n.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3"+
-		".\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3"+
-		".\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3.\3"+
-		".\3.\7.\u024d\n.\f.\16.\u0250\13.\3/\3/\3\60\3\60\3\60\3\60\3\60\5\60"+
-		"\u0259\n\60\3\61\3\61\3\62\3\62\5\62\u025f\n\62\3\63\3\63\3\63\3\63\5"+
-		"\63\u0265\n\63\3\64\3\64\3\65\3\65\3\66\3\66\3\66\3\67\3\67\3\67\38\3"+
-		"8\38\38\58\u0275\n8\39\39\3:\3:\3;\3;\3<\3<\3<\2\3Z=\2\4\6\b\n\f\16\20"+
-		"\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNPRTVXZ\\^`bdfhj"+
-		"lnprtv\2\f\3\2\27\31\3\2\23\24\3\2\32\34\3\2\35 \3\2!$\3\2*\64\3\28:\3"+
-		"\2;T\3\2Ud\3\2\66\67\u02b3\2y\3\2\2\2\4~\3\2\2\2\6\u0084\3\2\2\2\b\u0095"+
-		"\3\2\2\2\n\u0097\3\2\2\2\f\u009e\3\2\2\2\16\u00a2\3\2\2\2\20\u00a6\3\2"+
-		"\2\2\22\u00ae\3\2\2\2\24\u00b2\3\2\2\2\26\u00b5\3\2\2\2\30\u00b7\3\2\2"+
-		"\2\32\u00b9\3\2\2\2\34\u00ff\3\2\2\2\36\u0101\3\2\2\2 \u0107\3\2\2\2\""+
-		"\u010d\3\2\2\2$\u0113\3\2\2\2&\u0119\3\2\2\2(\u011f\3\2\2\2*\u012c\3\2"+
-		"\2\2,\u0130\3\2\2\2.\u0136\3\2\2\2\60\u013b\3\2\2\2\62\u013f\3\2\2\2\64"+
-		"\u0150\3\2\2\2\66\u0152\3\2\2\28\u0158\3\2\2\2:\u015b\3\2\2\2<\u015e\3"+
-		"\2\2\2>\u0169\3\2\2\2@\u0180\3\2\2\2B\u0183\3\2\2\2D\u0185\3\2\2\2F\u0192"+
-		"\3\2\2\2H\u01a0\3\2\2\2J\u01a4\3\2\2\2L\u01ad\3\2\2\2N\u01c8\3\2\2\2P"+
-		"\u01cd\3\2\2\2R\u01cf\3\2\2\2T\u01d1\3\2\2\2V\u01d7\3\2\2\2X\u01df\3\2"+
-		"\2\2Z\u0209\3\2\2\2\\\u0251\3\2\2\2^\u0258\3\2\2\2`\u025a\3\2\2\2b\u025e"+
-		"\3\2\2\2d\u0264\3\2\2\2f\u0266\3\2\2\2h\u0268\3\2\2\2j\u026a\3\2\2\2l"+
-		"\u026d\3\2\2\2n\u0274\3\2\2\2p\u0276\3\2\2\2r\u0278\3\2\2\2t\u027a\3\2"+
-		"\2\2v\u027c\3\2\2\2xz\5\4\3\2yx\3\2\2\2yz\3\2\2\2z{\3\2\2\2{|\7\2\2\3"+
-		"|\3\3\2\2\2}\177\5\6\4\2~}\3\2\2\2\177\u0080\3\2\2\2\u0080~\3\2\2\2\u0080"+
-		"\u0081\3\2\2\2\u0081\5\3\2\2\2\u0082\u0085\5\b\5\2\u0083\u0085\5<\37\2"+
-		"\u0084\u0082\3\2\2\2\u0084\u0083\3\2\2\2\u0085\7\3\2\2\2\u0086\u0096\5"+
-		"\n\6\2\u0087\u0096\5\16\b\2\u0088\u0096\5\26\f\2\u0089\u0096\5\30\r\2"+
-		"\u008a\u0096\5\32\16\2\u008b\u0096\5\34\17\2\u008c\u0096\5\36\20\2\u008d"+
-		"\u0096\5 \21\2\u008e\u0096\5\"\22\2\u008f\u0096\5$\23\2\u0090\u0096\5"+
-		"\60\31\2\u0091\u0096\5&\24\2\u0092\u0096\5\62\32\2\u0093\u0096\5\64\33"+
-		"\2\u0094\u0096\5:\36\2\u0095\u0086\3\2\2\2\u0095\u0087\3\2\2\2\u0095\u0088"+
-		"\3\2\2\2\u0095\u0089\3\2\2\2\u0095\u008a\3\2\2\2\u0095\u008b\3\2\2\2\u0095"+
-		"\u008c\3\2\2\2\u0095\u008d\3\2\2\2\u0095\u008e\3\2\2\2\u0095\u008f\3\2"+
-		"\2\2\u0095\u0090\3\2\2\2\u0095\u0091\3\2\2\2\u0095\u0092\3\2\2\2\u0095"+
-		"\u0093\3\2\2\2\u0095\u0094\3\2\2\2\u0096\t\3\2\2\2\u0097\u0099\7\t\2\2"+
-		"\u0098\u009a\5\f\7\2\u0099\u0098\3\2\2\2\u0099\u009a\3\2\2\2\u009a\u009b"+
-		"\3\2\2\2\u009b\u009c\7\n\2\2\u009c\13\3\2\2\2\u009d\u009f\5\b\5\2\u009e"+
-		"\u009d\3\2\2\2\u009f\u00a0\3\2\2\2\u00a0\u009e\3\2\2\2\u00a0\u00a1\3\2"+
-		"\2\2\u00a1\r\3\2\2\2\u00a2\u00a3\7B\2\2\u00a3\u00a4\5\20\t\2\u00a4\u00a5"+
-		"\5n8\2\u00a5\17\3\2\2\2\u00a6\u00ab\5\22\n\2\u00a7\u00a8\7\f\2\2\u00a8"+
-		"\u00aa\5\22\n\2\u00a9\u00a7\3\2\2\2\u00aa\u00ad\3\2\2\2\u00ab\u00a9\3"+
-		"\2\2\2\u00ab\u00ac\3\2\2\2\u00ac\21\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ae"+
-		"\u00b0\5v<\2\u00af\u00b1\5\24\13\2\u00b0\u00af\3\2\2\2\u00b0\u00b1\3\2"+
-		"\2\2\u00b1\23\3\2\2\2\u00b2\u00b3\7\r\2\2\u00b3\u00b4\5Z.\2\u00b4\25\3"+
-		"\2\2\2\u00b5\u00b6\7\13\2\2\u00b6\27\3\2\2\2\u00b7\u00b8\5X-\2\u00b8\31"+
-		"\3\2\2\2\u00b9\u00ba\7P\2\2\u00ba\u00bb\7\7\2\2\u00bb\u00bc\5X-\2\u00bc"+
-		"\u00bd\7\b\2\2\u00bd\u00c0\5\b\5\2\u00be\u00bf\7@\2\2\u00bf\u00c1\5\b"+
-		"\5\2\u00c0\u00be\3\2\2\2\u00c0\u00c1\3\2\2\2\u00c1\33\3\2\2\2\u00c2\u00c3"+
-		"\7<\2\2\u00c3\u00c4\5\b\5\2\u00c4\u00c5\7J\2\2\u00c5\u00c6\7\7\2\2\u00c6"+
-		"\u00c7\5X-\2\u00c7\u00c8\7\b\2\2\u00c8\u00c9\5n8\2\u00c9\u0100\3\2\2\2"+
-		"\u00ca\u00cb\7J\2\2\u00cb\u00cc\7\7\2\2\u00cc\u00cd\5X-\2\u00cd\u00ce"+
-		"\7\b\2\2\u00ce\u00cf\5\b\5\2\u00cf\u0100\3\2\2\2\u00d0\u00d1\7H\2\2\u00d1"+
-		"\u00d3\7\7\2\2\u00d2\u00d4\5X-\2\u00d3\u00d2\3\2\2\2\u00d3\u00d4\3\2\2"+
-		"\2\u00d4\u00d5\3\2\2\2\u00d5\u00d7\7\13\2\2\u00d6\u00d8\5X-\2\u00d7\u00d6"+
-		"\3\2\2\2\u00d7\u00d8\3\2\2\2\u00d8\u00d9\3\2\2\2\u00d9\u00db\7\13\2\2"+
-		"\u00da\u00dc\5X-\2\u00db\u00da\3\2\2\2\u00db\u00dc\3\2\2\2\u00dc\u00dd"+
-		"\3\2\2\2\u00dd\u00de\7\b\2\2\u00de\u0100\5\b\5\2\u00df\u00e0\7H\2\2\u00e0"+
-		"\u00e1\7\7\2\2\u00e1\u00e2\7B\2\2\u00e2\u00e3\5\20\t\2\u00e3\u00e5\7\13"+
-		"\2\2\u00e4\u00e6\5X-\2\u00e5\u00e4\3\2\2\2\u00e5\u00e6\3\2\2\2\u00e6\u00e7"+
-		"\3\2\2\2\u00e7\u00e9\7\13\2\2\u00e8\u00ea\5X-\2\u00e9\u00e8\3\2\2\2\u00e9"+
-		"\u00ea\3\2\2\2\u00ea\u00eb\3\2\2\2\u00eb\u00ec\7\b\2\2\u00ec\u00ed\5\b"+
-		"\5\2\u00ed\u0100\3\2\2\2\u00ee\u00ef\7H\2\2\u00ef\u00f0\7\7\2\2\u00f0"+
-		"\u00f1\5Z.\2\u00f1\u00f2\7S\2\2\u00f2\u00f3\5X-\2\u00f3\u00f4\7\b\2\2"+
-		"\u00f4\u00f5\5\b\5\2\u00f5\u0100\3\2\2\2\u00f6\u00f7\7H\2\2\u00f7\u00f8"+
-		"\7\7\2\2\u00f8\u00f9\7B\2\2\u00f9\u00fa\5\22\n\2\u00fa\u00fb\7S\2\2\u00fb"+
-		"\u00fc\5X-\2\u00fc\u00fd\7\b\2\2\u00fd\u00fe\5\b\5\2\u00fe\u0100\3\2\2"+
-		"\2\u00ff\u00c2\3\2\2\2\u00ff\u00ca\3\2\2\2\u00ff\u00d0\3\2\2\2\u00ff\u00df"+
-		"\3\2\2\2\u00ff\u00ee\3\2\2\2\u00ff\u00f6\3\2\2\2\u0100\35\3\2\2\2\u0101"+
-		"\u0103\7G\2\2\u0102\u0104\5v<\2\u0103\u0102\3\2\2\2\u0103\u0104\3\2\2"+
-		"\2\u0104\u0105\3\2\2\2\u0105\u0106\5n8\2\u0106\37\3\2\2\2\u0107\u0109"+
-		"\7;\2\2\u0108\u010a\5v<\2\u0109\u0108\3\2\2\2\u0109\u010a\3\2\2\2\u010a"+
-		"\u010b\3\2\2\2\u010b\u010c\5n8\2\u010c!\3\2\2\2\u010d\u010f\7E\2\2\u010e"+
-		"\u0110\5X-\2\u010f\u010e\3\2\2\2\u010f\u0110\3\2\2\2\u0110\u0111\3\2\2"+
-		"\2\u0111\u0112\5n8\2\u0112#\3\2\2\2\u0113\u0114\7N\2\2\u0114\u0115\7\7"+
-		"\2\2\u0115\u0116\5X-\2\u0116\u0117\7\b\2\2\u0117\u0118\5\b\5\2\u0118%"+
-		"\3\2\2\2\u0119\u011a\7I\2\2\u011a\u011b\7\7\2\2\u011b\u011c\5X-\2\u011c"+
-		"\u011d\7\b\2\2\u011d\u011e\5(\25\2\u011e\'\3\2\2\2\u011f\u0121\7\t\2\2"+
-		"\u0120\u0122\5*\26\2\u0121\u0120\3\2\2\2\u0121\u0122\3\2\2\2\u0122\u0127"+
-		"\3\2\2\2\u0123\u0125\5.\30\2\u0124\u0126\5*\26\2\u0125\u0124\3\2\2\2\u0125"+
-		"\u0126\3\2\2\2\u0126\u0128\3\2\2\2\u0127\u0123\3\2\2\2\u0127\u0128\3\2"+
-		"\2\2\u0128\u0129\3\2\2\2\u0129\u012a\7\n\2\2\u012a)\3\2\2\2\u012b\u012d"+
-		"\5,\27\2\u012c\u012b\3\2\2\2\u012d\u012e\3\2\2\2\u012e\u012c\3\2\2\2\u012e"+
-		"\u012f\3\2\2\2\u012f+\3\2\2\2\u0130\u0131\7?\2\2\u0131\u0132\5X-\2\u0132"+
-		"\u0134\7\17\2\2\u0133\u0135\5\f\7\2\u0134\u0133\3\2\2\2\u0134\u0135\3"+
-		"\2\2\2\u0135-\3\2\2\2\u0136\u0137\7O\2\2\u0137\u0139\7\17\2\2\u0138\u013a"+
-		"\5\f\7\2\u0139\u0138\3\2\2\2\u0139\u013a\3\2\2\2\u013a/\3\2\2\2\u013b"+
-		"\u013c\5v<\2\u013c\u013d\7\17\2\2\u013d\u013e\5\b\5\2\u013e\61\3\2\2\2"+
-		"\u013f\u0140\7Q\2\2\u0140\u0141\5X-\2\u0141\u0142\5n8\2\u0142\63\3\2\2"+
-		"\2\u0143\u0144\7T\2\2\u0144\u0145\5\n\6\2\u0145\u0146\5\66\34\2\u0146"+
-		"\u0151\3\2\2\2\u0147\u0148\7T\2\2\u0148\u0149\5\n\6\2\u0149\u014a\58\35"+
-		"\2\u014a\u0151\3\2\2\2\u014b\u014c\7T\2\2\u014c\u014d\5\n\6\2\u014d\u014e"+
-		"\5\66\34\2\u014e\u014f\58\35\2\u014f\u0151\3\2\2\2\u0150\u0143\3\2\2\2"+
-		"\u0150\u0147\3\2\2\2\u0150\u014b\3\2\2\2\u0151\65\3\2\2\2\u0152\u0153"+
-		"\7C\2\2\u0153\u0154\7\7\2\2\u0154\u0155\5v<\2\u0155\u0156\7\b\2\2\u0156"+
-		"\u0157\5\n\6\2\u0157\67\3\2\2\2\u0158\u0159\7D\2\2\u0159\u015a\5\n\6\2"+
-		"\u015a9\3\2\2\2\u015b\u015c\7K\2\2\u015c\u015d\5n8\2\u015d;\3\2\2\2\u015e"+
-		"\u015f\7L\2\2\u015f\u0160\5v<\2\u0160\u0162\7\7\2\2\u0161\u0163\5> \2"+
-		"\u0162\u0161\3\2\2\2\u0162\u0163\3\2\2\2\u0163\u0164\3\2\2\2\u0164\u0165"+
-		"\7\b\2\2\u0165\u0166\7\t\2\2\u0166\u0167\5B\"\2\u0167\u0168\7\n\2\2\u0168"+
-		"=\3\2\2\2\u0169\u016e\5v<\2\u016a\u016b\7\f\2\2\u016b\u016d\5v<\2\u016c"+
-		"\u016a\3\2\2\2\u016d\u0170\3\2\2\2\u016e\u016c\3\2\2\2\u016e\u016f\3\2"+
-		"\2\2\u016f?\3\2\2\2\u0170\u016e\3\2\2\2\u0171\u0172\7L\2\2\u0172\u0173"+
-		"\7\7\2\2\u0173\u0174\5> \2\u0174\u0175\7\b\2\2\u0175\u0176\7\t\2\2\u0176"+
-		"\u0177\5B\"\2\u0177\u0178\7\n\2\2\u0178\u0181\3\2\2\2\u0179\u017a\7L\2"+
-		"\2\u017a\u017b\7\7\2\2\u017b\u017c\7\b\2\2\u017c\u017d\7\t\2\2\u017d\u017e"+
-		"\5B\"\2\u017e\u017f\7\n\2\2\u017f\u0181\3\2\2\2\u0180\u0171\3\2\2\2\u0180"+
-		"\u0179\3\2\2\2\u0181A\3\2\2\2\u0182\u0184\5\4\3\2\u0183\u0182\3\2\2\2"+
-		"\u0183\u0184\3\2\2\2\u0184C\3\2\2\2\u0185\u0187\7\5\2\2\u0186\u0188\5"+
-		"F$\2\u0187\u0186\3\2\2\2\u0187\u0188\3\2\2\2\u0188\u018a\3\2\2\2\u0189"+
-		"\u018b\7\f\2\2\u018a\u0189\3\2\2\2\u018a\u018b\3\2\2\2\u018b\u018d\3\2"+
-		"\2\2\u018c\u018e\5H%\2\u018d\u018c\3\2\2\2\u018d\u018e\3\2\2\2\u018e\u018f"+
-		"\3\2\2\2\u018f\u0190\7\6\2\2\u0190E\3\2\2\2\u0191\u0193\5H%\2\u0192\u0191"+
-		"\3\2\2\2\u0192\u0193\3\2\2\2\u0193\u0194\3\2\2\2\u0194\u019c\5Z.\2\u0195"+
-		"\u0197\7\f\2\2\u0196\u0198\5H%\2\u0197\u0196\3\2\2\2\u0197\u0198\3\2\2"+
-		"\2\u0198\u0199\3\2\2\2\u0199\u019b\5Z.\2\u019a\u0195\3\2\2\2\u019b\u019e"+
-		"\3\2\2\2\u019c\u019a\3\2\2\2\u019c\u019d\3\2\2\2\u019dG\3\2\2\2\u019e"+
-		"\u019c\3\2\2\2\u019f\u01a1\7\f\2\2\u01a0\u019f\3\2\2\2\u01a1\u01a2\3\2"+
-		"\2\2\u01a2\u01a0\3\2\2\2\u01a2\u01a3\3\2\2\2\u01a3I\3\2\2\2\u01a4\u01a6"+
-		"\7\t\2\2\u01a5\u01a7\5L\'\2\u01a6\u01a5\3\2\2\2\u01a6\u01a7\3\2\2\2\u01a7"+
-		"\u01a9\3\2\2\2\u01a8\u01aa\7\f\2\2\u01a9\u01a8\3\2\2\2\u01a9\u01aa\3\2"+
-		"\2\2\u01aa\u01ab\3\2\2\2\u01ab\u01ac\7\n\2\2\u01acK\3\2\2\2\u01ad\u01b2"+
-		"\5N(\2\u01ae\u01af\7\f\2\2\u01af\u01b1\5N(\2\u01b0\u01ae\3\2\2\2\u01b1"+
-		"\u01b4\3\2\2\2\u01b2\u01b0\3\2\2\2\u01b2\u01b3\3\2\2\2\u01b3M\3\2\2\2"+
-		"\u01b4\u01b2\3\2\2\2\u01b5\u01b6\5P)\2\u01b6\u01b7\7\17\2\2\u01b7\u01b8"+
-		"\5Z.\2\u01b8\u01c9\3\2\2\2\u01b9\u01ba\5j\66\2\u01ba\u01bb\7\7\2\2\u01bb"+
-		"\u01bc\7\b\2\2\u01bc\u01bd\7\t\2\2\u01bd\u01be\5B\"\2\u01be\u01bf\7\n"+
-		"\2\2\u01bf\u01c9\3\2\2\2\u01c0\u01c1\5l\67\2\u01c1\u01c2\7\7\2\2\u01c2"+
-		"\u01c3\5R*\2\u01c3\u01c4\7\b\2\2\u01c4\u01c5\7\t\2\2\u01c5\u01c6\5B\""+
-		"\2\u01c6\u01c7\7\n\2\2\u01c7\u01c9\3\2\2\2\u01c8\u01b5\3\2\2\2\u01c8\u01b9"+
-		"\3\2\2\2\u01c8\u01c0\3\2\2\2\u01c9O\3\2\2\2\u01ca\u01ce\5b\62\2\u01cb"+
-		"\u01ce\7f\2\2\u01cc\u01ce\5`\61\2\u01cd\u01ca\3\2\2\2\u01cd\u01cb\3\2"+
-		"\2\2\u01cd\u01cc\3\2\2\2\u01ceQ\3\2\2\2\u01cf\u01d0\5v<\2\u01d0S\3\2\2"+
-		"\2\u01d1\u01d3\7\7\2\2\u01d2\u01d4\5V,\2\u01d3\u01d2\3\2\2\2\u01d3\u01d4"+
-		"\3\2\2\2\u01d4\u01d5\3\2\2\2\u01d5\u01d6\7\b\2\2\u01d6U\3\2\2\2\u01d7"+
-		"\u01dc\5Z.\2\u01d8\u01d9\7\f\2\2\u01d9\u01db\5Z.\2\u01da\u01d8\3\2\2\2"+
-		"\u01db\u01de\3\2\2\2\u01dc\u01da\3\2\2\2\u01dc\u01dd\3\2\2\2\u01ddW\3"+
-		"\2\2\2\u01de\u01dc\3\2\2\2\u01df\u01e4\5Z.\2\u01e0\u01e1\7\f\2\2\u01e1"+
-		"\u01e3\5Z.\2\u01e2\u01e0\3\2\2\2\u01e3\u01e6\3\2\2\2\u01e4\u01e2\3\2\2"+
-		"\2\u01e4\u01e5\3\2\2\2\u01e5Y\3\2\2\2\u01e6\u01e4\3\2\2\2\u01e7\u01e8"+
-		"\b.\1\2\u01e8\u01e9\7R\2\2\u01e9\u020a\5Z. \u01ea\u01eb\7F\2\2\u01eb\u020a"+
-		"\5Z.\37\u01ec\u01ed\7>\2\2\u01ed\u020a\5Z.\36\u01ee\u01ef\7\21\2\2\u01ef"+
-		"\u020a\5Z.\35\u01f0\u01f1\7\22\2\2\u01f1\u020a\5Z.\34\u01f2\u01f3\7\23"+
-		"\2\2\u01f3\u020a\5Z.\33\u01f4\u01f5\7\24\2\2\u01f5\u020a\5Z.\32\u01f6"+
-		"\u01f7\7\25\2\2\u01f7\u020a\5Z.\31\u01f8\u01f9\7\26\2\2\u01f9\u020a\5"+
-		"Z.\30\u01fa\u020a\5@!\2\u01fb\u01fc\7A\2\2\u01fc\u01fe\5Z.\2\u01fd\u01ff"+
-		"\5T+\2\u01fe\u01fd\3\2\2\2\u01fe\u01ff\3\2\2\2\u01ff\u020a\3\2\2\2\u0200"+
-		"\u020a\7M\2\2\u0201\u020a\5v<\2\u0202\u020a\5^\60\2\u0203\u020a\5D#\2"+
-		"\u0204\u020a\5J&\2\u0205\u0206\7\7\2\2\u0206\u0207\5X-\2\u0207\u0208\7"+
-		"\b\2\2\u0208\u020a\3\2\2\2\u0209\u01e7\3\2\2\2\u0209\u01ea\3\2\2\2\u0209"+
-		"\u01ec\3\2\2\2\u0209\u01ee\3\2\2\2\u0209\u01f0\3\2\2\2\u0209\u01f2\3\2"+
-		"\2\2\u0209\u01f4\3\2\2\2\u0209\u01f6\3\2\2\2\u0209\u01f8\3\2\2\2\u0209"+
-		"\u01fa\3\2\2\2\u0209\u01fb\3\2\2\2\u0209\u0200\3\2\2\2\u0209\u0201\3\2"+
-		"\2\2\u0209\u0202\3\2\2\2\u0209\u0203\3\2\2\2\u0209\u0204\3\2\2\2\u0209"+
-		"\u0205\3\2\2\2\u020a\u024e\3\2\2\2\u020b\u020c\f\27\2\2\u020c\u020d\t"+
-		"\2\2\2\u020d\u024d\5Z.\30\u020e\u020f\f\26\2\2\u020f\u0210\t\3\2\2\u0210"+
-		"\u024d\5Z.\27\u0211\u0212\f\25\2\2\u0212\u0213\t\4\2\2\u0213\u024d\5Z"+
-		".\26\u0214\u0215\f\24\2\2\u0215\u0216\t\5\2\2\u0216\u024d\5Z.\25\u0217"+
-		"\u0218\f\23\2\2\u0218\u0219\7=\2\2\u0219\u024d\5Z.\24\u021a\u021b\f\22"+
-		"\2\2\u021b\u021c\7S\2\2\u021c\u024d\5Z.\23\u021d\u021e\f\21\2\2\u021e"+
-		"\u021f\t\6\2\2\u021f\u024d\5Z.\22\u0220\u0221\f\20\2\2\u0221\u0222\7%"+
-		"\2\2\u0222\u024d\5Z.\21\u0223\u0224\f\17\2\2\u0224\u0225\7&\2\2\u0225"+
-		"\u024d\5Z.\20\u0226\u0227\f\16\2\2\u0227\u0228\7\'\2\2\u0228\u024d\5Z"+
-		".\17\u0229\u022a\f\r\2\2\u022a\u022b\7(\2\2\u022b\u024d\5Z.\16\u022c\u022d"+
-		"\f\f\2\2\u022d\u022e\7)\2\2\u022e\u024d\5Z.\r\u022f\u0230\f\13\2\2\u0230"+
-		"\u0231\7\16\2\2\u0231\u0232\5Z.\2\u0232\u0233\7\17\2\2\u0233\u0234\5Z"+
-		".\f\u0234\u024d\3\2\2\2\u0235\u0236\f&\2\2\u0236\u0237\7\5\2\2\u0237\u0238"+
-		"\5X-\2\u0238\u0239\7\6\2\2\u0239\u024d\3\2\2\2\u023a\u023b\f%\2\2\u023b"+
-		"\u023c\7\20\2\2\u023c\u024d\5b\62\2\u023d\u023e\f$\2\2\u023e\u024d\5T"+
-		"+\2\u023f\u0240\f\"\2\2\u0240\u0241\6.\23\2\u0241\u024d\7\21\2\2\u0242"+
-		"\u0243\f!\2\2\u0243\u0244\6.\25\2\u0244\u024d\7\22\2\2\u0245\u0246\f\n"+
-		"\2\2\u0246\u0247\7\r\2\2\u0247\u024d\5X-\2\u0248\u0249\f\t\2\2\u0249\u024a"+
-		"\5\\/\2\u024a\u024b\5X-\2\u024b\u024d\3\2\2\2\u024c\u020b\3\2\2\2\u024c"+
-		"\u020e\3\2\2\2\u024c\u0211\3\2\2\2\u024c\u0214\3\2\2\2\u024c\u0217\3\2"+
-		"\2\2\u024c\u021a\3\2\2\2\u024c\u021d\3\2\2\2\u024c\u0220\3\2\2\2\u024c"+
-		"\u0223\3\2\2\2\u024c\u0226\3\2\2\2\u024c\u0229\3\2\2\2\u024c\u022c\3\2"+
-		"\2\2\u024c\u022f\3\2\2\2\u024c\u0235\3\2\2\2\u024c\u023a\3\2\2\2\u024c"+
-		"\u023d\3\2\2\2\u024c\u023f\3\2\2\2\u024c\u0242\3\2\2\2\u024c\u0245\3\2"+
-		"\2\2\u024c\u0248\3\2\2\2\u024d\u0250\3\2\2\2\u024e\u024c\3\2\2\2\u024e"+
-		"\u024f\3\2\2\2\u024f[\3\2\2\2\u0250\u024e\3\2\2\2\u0251\u0252\t\7\2\2"+
-		"\u0252]\3\2\2\2\u0253\u0259\5r:\2\u0254\u0259\5t;\2\u0255\u0259\7f\2\2"+
-		"\u0256\u0259\7\3\2\2\u0257\u0259\5`\61\2\u0258\u0253\3\2\2\2\u0258\u0254"+
-		"\3\2\2\2\u0258\u0255\3\2\2\2\u0258\u0256\3\2\2\2\u0258\u0257\3\2\2\2\u0259"+
-		"_\3\2\2\2\u025a\u025b\t\b\2\2\u025ba\3\2\2\2\u025c\u025f\5v<\2\u025d\u025f"+
-		"\5d\63\2\u025e\u025c\3\2\2\2\u025e\u025d\3\2\2\2\u025fc\3\2\2\2\u0260"+
-		"\u0265\5f\64\2\u0261\u0265\5h\65\2\u0262\u0265\5r:\2\u0263\u0265\5t;\2"+
-		"\u0264\u0260\3\2\2\2\u0264\u0261\3\2\2\2\u0264\u0262\3\2\2\2\u0264\u0263"+
-		"\3\2\2\2\u0265e\3\2\2\2\u0266\u0267\t\t\2\2\u0267g\3\2\2\2\u0268\u0269"+
-		"\t\n\2\2\u0269i\3\2\2\2\u026a\u026b\6\66\30\2\u026b\u026c\5v<\2\u026c"+
-		"k\3\2\2\2\u026d\u026e\6\67\31\2\u026e\u026f\5v<\2\u026fm\3\2\2\2\u0270"+
-		"\u0275\7\13\2\2\u0271\u0275\7\2\2\3\u0272\u0275\68\32\2\u0273\u0275\6"+
-		"8\33\2\u0274\u0270\3\2\2\2\u0274\u0271\3\2\2\2\u0274\u0272\3\2\2\2\u0274"+
-		"\u0273\3\2\2\2\u0275o\3\2\2\2\u0276\u0277\7\2\2\3\u0277q\3\2\2\2\u0278"+
-		"\u0279\7\65\2\2\u0279s\3\2\2\2\u027a\u027b\t\13\2\2\u027bu\3\2\2\2\u027c"+
-		"\u027d\7e\2\2\u027dw\3\2\2\2\66y\u0080\u0084\u0095\u0099\u00a0\u00ab\u00b0"+
-		"\u00c0\u00d3\u00d7\u00db\u00e5\u00e9\u00ff\u0103\u0109\u010f\u0121\u0125"+
-		"\u0127\u012e\u0134\u0139\u0150\u0162\u016e\u0180\u0183\u0187\u018a\u018d"+
-		"\u0192\u0197\u019c\u01a2\u01a6\u01a9\u01b2\u01c8\u01cd\u01d3\u01dc\u01e4"+
-		"\u01fe\u0209\u024c\u024e\u0258\u025e\u0264\u0274";
+		"\17\5\17\u00cc\n\17\3\17\3\17\5\17\u00d0\n\17\3\17\3\17\5\17\u00d4\n\17"+
+		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00de\n\17\3\17\3\17\5\17"+
+		"\u00e2\n\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17"+
+		"\3\17\3\17\3\17\3\17\3\17\3\17\3\17\3\17\5\17\u00f8\n\17\3\20\3\20\5\20"+
+		"\u00fc\n\20\3\20\3\20\3\21\3\21\5\21\u0102\n\21\3\21\3\21\3\22\3\22\5"+
+		"\22\u0108\n\22\3\22\3\22\3\23\3\23\3\23\3\23\3\23\3\23\3\24\3\24\3\24"+
+		"\3\24\3\24\3\24\3\25\3\25\5\25\u011a\n\25\3\25\3\25\5\25\u011e\n\25\5"+
+		"\25\u0120\n\25\3\25\3\25\3\26\6\26\u0125\n\26\r\26\16\26\u0126\3\27\3"+
+		"\27\3\27\3\27\5\27\u012d\n\27\3\30\3\30\3\30\5\30\u0132\n\30\3\31\3\31"+
+		"\3\31\3\31\3\32\3\32\3\32\3\32\3\33\3\33\3\33\3\33\3\33\3\33\3\33\3\33"+
+		"\3\33\3\33\3\33\3\33\3\33\5\33\u0149\n\33\3\34\3\34\3\34\3\34\3\34\3\34"+
+		"\3\35\3\35\3\35\3\36\3\36\3\36\3\37\3\37\3\37\3\37\5\37\u015b\n\37\3\37"+
+		"\3\37\3\37\3\37\3\37\3 \3 \3 \7 \u0165\n \f \16 \u0168\13 \3!\5!\u016b"+
+		"\n!\3\"\3\"\5\"\u016f\n\"\3\"\5\"\u0172\n\"\3\"\5\"\u0175\n\"\3\"\3\""+
+		"\3#\5#\u017a\n#\3#\3#\3#\5#\u017f\n#\3#\7#\u0182\n#\f#\16#\u0185\13#\3"+
+		"$\6$\u0188\n$\r$\16$\u0189\3%\3%\5%\u018e\n%\3%\5%\u0191\n%\3%\3%\3&\3"+
+		"&\3&\7&\u0198\n&\f&\16&\u019b\13&\3\'\3\'\3\'\3\'\3\'\3\'\3\'\3\'\3\'"+
+		"\3\'\3\'\3\'\3\'\3\'\3\'\3\'\3\'\3\'\3\'\5\'\u01b0\n\'\3(\3(\3(\5(\u01b5"+
+		"\n(\3)\3)\3*\3*\5*\u01bb\n*\3*\3*\3+\3+\3+\7+\u01c2\n+\f+\16+\u01c5\13"+
+		"+\3,\3,\3,\7,\u01ca\n,\f,\16,\u01cd\13,\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-"+
+		"\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\5-\u01e4\n-\3-\3-\5-\u01e8\n-\3-\3-"+
+		"\3-\3-\3-\3-\3-\3-\5-\u01f2\n-\3-\3-\3-\3-\3-\3-\3-\3-\3-\5-\u01fd\n-"+
+		"\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-"+
+		"\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-"+
+		"\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\3-\7-\u0240\n-"+
+		"\f-\16-\u0243\13-\3.\3.\3/\3/\5/\u0249\n/\3\60\3\60\3\61\3\61\5\61\u024f"+
+		"\n\61\3\62\3\62\3\62\5\62\u0254\n\62\3\63\3\63\3\64\3\64\3\65\3\65\3\65"+
+		"\3\66\3\66\3\66\3\67\3\67\3\67\3\67\5\67\u0264\n\67\38\38\38\2\3X9\2\4"+
+		"\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNP"+
+		"RTVXZ\\^`bdfhjln\2\r\3\2\27\31\3\2\23\24\3\2\32\34\3\2\35 \3\2!$\3\2*"+
+		"\64\5\2\3\3\65\66ee\3\2\679\3\2\65\66\3\2:S\3\2Tc\u029d\2q\3\2\2\2\4v"+
+		"\3\2\2\2\6|\3\2\2\2\b\u008d\3\2\2\2\n\u008f\3\2\2\2\f\u0096\3\2\2\2\16"+
+		"\u009a\3\2\2\2\20\u009e\3\2\2\2\22\u00a6\3\2\2\2\24\u00aa\3\2\2\2\26\u00ad"+
+		"\3\2\2\2\30\u00af\3\2\2\2\32\u00b1\3\2\2\2\34\u00f7\3\2\2\2\36\u00f9\3"+
+		"\2\2\2 \u00ff\3\2\2\2\"\u0105\3\2\2\2$\u010b\3\2\2\2&\u0111\3\2\2\2(\u0117"+
+		"\3\2\2\2*\u0124\3\2\2\2,\u0128\3\2\2\2.\u012e\3\2\2\2\60\u0133\3\2\2\2"+
+		"\62\u0137\3\2\2\2\64\u0148\3\2\2\2\66\u014a\3\2\2\28\u0150\3\2\2\2:\u0153"+
+		"\3\2\2\2<\u0156\3\2\2\2>\u0161\3\2\2\2@\u016a\3\2\2\2B\u016c\3\2\2\2D"+
+		"\u0179\3\2\2\2F\u0187\3\2\2\2H\u018b\3\2\2\2J\u0194\3\2\2\2L\u01af\3\2"+
+		"\2\2N\u01b4\3\2\2\2P\u01b6\3\2\2\2R\u01b8\3\2\2\2T\u01be\3\2\2\2V\u01c6"+
+		"\3\2\2\2X\u01fc\3\2\2\2Z\u0244\3\2\2\2\\\u0248\3\2\2\2^\u024a\3\2\2\2"+
+		"`\u024e\3\2\2\2b\u0253\3\2\2\2d\u0255\3\2\2\2f\u0257\3\2\2\2h\u0259\3"+
+		"\2\2\2j\u025c\3\2\2\2l\u0263\3\2\2\2n\u0265\3\2\2\2pr\5\4\3\2qp\3\2\2"+
+		"\2qr\3\2\2\2rs\3\2\2\2st\7\2\2\3t\3\3\2\2\2uw\5\6\4\2vu\3\2\2\2wx\3\2"+
+		"\2\2xv\3\2\2\2xy\3\2\2\2y\5\3\2\2\2z}\5\b\5\2{}\5<\37\2|z\3\2\2\2|{\3"+
+		"\2\2\2}\7\3\2\2\2~\u008e\5\n\6\2\177\u008e\5\16\b\2\u0080\u008e\5\26\f"+
+		"\2\u0081\u008e\5\30\r\2\u0082\u008e\5\32\16\2\u0083\u008e\5\34\17\2\u0084"+
+		"\u008e\5\36\20\2\u0085\u008e\5 \21\2\u0086\u008e\5\"\22\2\u0087\u008e"+
+		"\5$\23\2\u0088\u008e\5\60\31\2\u0089\u008e\5&\24\2\u008a\u008e\5\62\32"+
+		"\2\u008b\u008e\5\64\33\2\u008c\u008e\5:\36\2\u008d~\3\2\2\2\u008d\177"+
+		"\3\2\2\2\u008d\u0080\3\2\2\2\u008d\u0081\3\2\2\2\u008d\u0082\3\2\2\2\u008d"+
+		"\u0083\3\2\2\2\u008d\u0084\3\2\2\2\u008d\u0085\3\2\2\2\u008d\u0086\3\2"+
+		"\2\2\u008d\u0087\3\2\2\2\u008d\u0088\3\2\2\2\u008d\u0089\3\2\2\2\u008d"+
+		"\u008a\3\2\2\2\u008d\u008b\3\2\2\2\u008d\u008c\3\2\2\2\u008e\t\3\2\2\2"+
+		"\u008f\u0091\7\t\2\2\u0090\u0092\5\f\7\2\u0091\u0090\3\2\2\2\u0091\u0092"+
+		"\3\2\2\2\u0092\u0093\3\2\2\2\u0093\u0094\7\n\2\2\u0094\13\3\2\2\2\u0095"+
+		"\u0097\5\b\5\2\u0096\u0095\3\2\2\2\u0097\u0098\3\2\2\2\u0098\u0096\3\2"+
+		"\2\2\u0098\u0099\3\2\2\2\u0099\r\3\2\2\2\u009a\u009b\7A\2\2\u009b\u009c"+
+		"\5\20\t\2\u009c\u009d\5l\67\2\u009d\17\3\2\2\2\u009e\u00a3\5\22\n\2\u009f"+
+		"\u00a0\7\f\2\2\u00a0\u00a2\5\22\n\2\u00a1\u009f\3\2\2\2\u00a2\u00a5\3"+
+		"\2\2\2\u00a3\u00a1\3\2\2\2\u00a3\u00a4\3\2\2\2\u00a4\21\3\2\2\2\u00a5"+
+		"\u00a3\3\2\2\2\u00a6\u00a8\7d\2\2\u00a7\u00a9\5\24\13\2\u00a8\u00a7\3"+
+		"\2\2\2\u00a8\u00a9\3\2\2\2\u00a9\23\3\2\2\2\u00aa\u00ab\7\r\2\2\u00ab"+
+		"\u00ac\5X-\2\u00ac\25\3\2\2\2\u00ad\u00ae\7\13\2\2\u00ae\27\3\2\2\2\u00af"+
+		"\u00b0\5V,\2\u00b0\31\3\2\2\2\u00b1\u00b2\7O\2\2\u00b2\u00b3\7\7\2\2\u00b3"+
+		"\u00b4\5V,\2\u00b4\u00b5\7\b\2\2\u00b5\u00b8\5\b\5\2\u00b6\u00b7\7?\2"+
+		"\2\u00b7\u00b9\5\b\5\2\u00b8\u00b6\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\33"+
+		"\3\2\2\2\u00ba\u00bb\7;\2\2\u00bb\u00bc\5\b\5\2\u00bc\u00bd\7I\2\2\u00bd"+
+		"\u00be\7\7\2\2\u00be\u00bf\5V,\2\u00bf\u00c0\7\b\2\2\u00c0\u00c1\5l\67"+
+		"\2\u00c1\u00f8\3\2\2\2\u00c2\u00c3\7I\2\2\u00c3\u00c4\7\7\2\2\u00c4\u00c5"+
+		"\5V,\2\u00c5\u00c6\7\b\2\2\u00c6\u00c7\5\b\5\2\u00c7\u00f8\3\2\2\2\u00c8"+
+		"\u00c9\7G\2\2\u00c9\u00cb\7\7\2\2\u00ca\u00cc\5V,\2\u00cb\u00ca\3\2\2"+
+		"\2\u00cb\u00cc\3\2\2\2\u00cc\u00cd\3\2\2\2\u00cd\u00cf\7\13\2\2\u00ce"+
+		"\u00d0\5V,\2\u00cf\u00ce\3\2\2\2\u00cf\u00d0\3\2\2\2\u00d0\u00d1\3\2\2"+
+		"\2\u00d1\u00d3\7\13\2\2\u00d2\u00d4\5V,\2\u00d3\u00d2\3\2\2\2\u00d3\u00d4"+
+		"\3\2\2\2\u00d4\u00d5\3\2\2\2\u00d5\u00d6\7\b\2\2\u00d6\u00f8\5\b\5\2\u00d7"+
+		"\u00d8\7G\2\2\u00d8\u00d9\7\7\2\2\u00d9\u00da\7A\2\2\u00da\u00db\5\20"+
+		"\t\2\u00db\u00dd\7\13\2\2\u00dc\u00de\5V,\2\u00dd\u00dc\3\2\2\2\u00dd"+
+		"\u00de\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e1\7\13\2\2\u00e0\u00e2\5"+
+		"V,\2\u00e1\u00e0\3\2\2\2\u00e1\u00e2\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3"+
+		"\u00e4\7\b\2\2\u00e4\u00e5\5\b\5\2\u00e5\u00f8\3\2\2\2\u00e6\u00e7\7G"+
+		"\2\2\u00e7\u00e8\7\7\2\2\u00e8\u00e9\5X-\2\u00e9\u00ea\7R\2\2\u00ea\u00eb"+
+		"\5V,\2\u00eb\u00ec\7\b\2\2\u00ec\u00ed\5\b\5\2\u00ed\u00f8\3\2\2\2\u00ee"+
+		"\u00ef\7G\2\2\u00ef\u00f0\7\7\2\2\u00f0\u00f1\7A\2\2\u00f1\u00f2\5\22"+
+		"\n\2\u00f2\u00f3\7R\2\2\u00f3\u00f4\5V,\2\u00f4\u00f5\7\b\2\2\u00f5\u00f6"+
+		"\5\b\5\2\u00f6\u00f8\3\2\2\2\u00f7\u00ba\3\2\2\2\u00f7\u00c2\3\2\2\2\u00f7"+
+		"\u00c8\3\2\2\2\u00f7\u00d7\3\2\2\2\u00f7\u00e6\3\2\2\2\u00f7\u00ee\3\2"+
+		"\2\2\u00f8\35\3\2\2\2\u00f9\u00fb\7F\2\2\u00fa\u00fc\7d\2\2\u00fb\u00fa"+
+		"\3\2\2\2\u00fb\u00fc\3\2\2\2\u00fc\u00fd\3\2\2\2\u00fd\u00fe\5l\67\2\u00fe"+
+		"\37\3\2\2\2\u00ff\u0101\7:\2\2\u0100\u0102\7d\2\2\u0101\u0100\3\2\2\2"+
+		"\u0101\u0102\3\2\2\2\u0102\u0103\3\2\2\2\u0103\u0104\5l\67\2\u0104!\3"+
+		"\2\2\2\u0105\u0107\7D\2\2\u0106\u0108\5V,\2\u0107\u0106\3\2\2\2\u0107"+
+		"\u0108\3\2\2\2\u0108\u0109\3\2\2\2\u0109\u010a\5l\67\2\u010a#\3\2\2\2"+
+		"\u010b\u010c\7M\2\2\u010c\u010d\7\7\2\2\u010d\u010e\5V,\2\u010e\u010f"+
+		"\7\b\2\2\u010f\u0110\5\b\5\2\u0110%\3\2\2\2\u0111\u0112\7H\2\2\u0112\u0113"+
+		"\7\7\2\2\u0113\u0114\5V,\2\u0114\u0115\7\b\2\2\u0115\u0116\5(\25\2\u0116"+
+		"\'\3\2\2\2\u0117\u0119\7\t\2\2\u0118\u011a\5*\26\2\u0119\u0118\3\2\2\2"+
+		"\u0119\u011a\3\2\2\2\u011a\u011f\3\2\2\2\u011b\u011d\5.\30\2\u011c\u011e"+
+		"\5*\26\2\u011d\u011c\3\2\2\2\u011d\u011e\3\2\2\2\u011e\u0120\3\2\2\2\u011f"+
+		"\u011b\3\2\2\2\u011f\u0120\3\2\2\2\u0120\u0121\3\2\2\2\u0121\u0122\7\n"+
+		"\2\2\u0122)\3\2\2\2\u0123\u0125\5,\27\2\u0124\u0123\3\2\2\2\u0125\u0126"+
+		"\3\2\2\2\u0126\u0124\3\2\2\2\u0126\u0127\3\2\2\2\u0127+\3\2\2\2\u0128"+
+		"\u0129\7>\2\2\u0129\u012a\5V,\2\u012a\u012c\7\17\2\2\u012b\u012d\5\f\7"+
+		"\2\u012c\u012b\3\2\2\2\u012c\u012d\3\2\2\2\u012d-\3\2\2\2\u012e\u012f"+
+		"\7N\2\2\u012f\u0131\7\17\2\2\u0130\u0132\5\f\7\2\u0131\u0130\3\2\2\2\u0131"+
+		"\u0132\3\2\2\2\u0132/\3\2\2\2\u0133\u0134\7d\2\2\u0134\u0135\7\17\2\2"+
+		"\u0135\u0136\5\b\5\2\u0136\61\3\2\2\2\u0137\u0138\7P\2\2\u0138\u0139\5"+
+		"V,\2\u0139\u013a\5l\67\2\u013a\63\3\2\2\2\u013b\u013c\7S\2\2\u013c\u013d"+
+		"\5\n\6\2\u013d\u013e\5\66\34\2\u013e\u0149\3\2\2\2\u013f\u0140\7S\2\2"+
+		"\u0140\u0141\5\n\6\2\u0141\u0142\58\35\2\u0142\u0149\3\2\2\2\u0143\u0144"+
+		"\7S\2\2\u0144\u0145\5\n\6\2\u0145\u0146\5\66\34\2\u0146\u0147\58\35\2"+
+		"\u0147\u0149\3\2\2\2\u0148\u013b\3\2\2\2\u0148\u013f\3\2\2\2\u0148\u0143"+
+		"\3\2\2\2\u0149\65\3\2\2\2\u014a\u014b\7B\2\2\u014b\u014c\7\7\2\2\u014c"+
+		"\u014d\7d\2\2\u014d\u014e\7\b\2\2\u014e\u014f\5\n\6\2\u014f\67\3\2\2\2"+
+		"\u0150\u0151\7C\2\2\u0151\u0152\5\n\6\2\u01529\3\2\2\2\u0153\u0154\7J"+
+		"\2\2\u0154\u0155\5l\67\2\u0155;\3\2\2\2\u0156\u0157\7K\2\2\u0157\u0158"+
+		"\7d\2\2\u0158\u015a\7\7\2\2\u0159\u015b\5> \2\u015a\u0159\3\2\2\2\u015a"+
+		"\u015b\3\2\2\2\u015b\u015c\3\2\2\2\u015c\u015d\7\b\2\2\u015d\u015e\7\t"+
+		"\2\2\u015e\u015f\5@!\2\u015f\u0160\7\n\2\2\u0160=\3\2\2\2\u0161\u0166"+
+		"\7d\2\2\u0162\u0163\7\f\2\2\u0163\u0165\7d\2\2\u0164\u0162\3\2\2\2\u0165"+
+		"\u0168\3\2\2\2\u0166\u0164\3\2\2\2\u0166\u0167\3\2\2\2\u0167?\3\2\2\2"+
+		"\u0168\u0166\3\2\2\2\u0169\u016b\5\4\3\2\u016a\u0169\3\2\2\2\u016a\u016b"+
+		"\3\2\2\2\u016bA\3\2\2\2\u016c\u016e\7\5\2\2\u016d\u016f\5D#\2\u016e\u016d"+
+		"\3\2\2\2\u016e\u016f\3\2\2\2\u016f\u0171\3\2\2\2\u0170\u0172\7\f\2\2\u0171"+
+		"\u0170\3\2\2\2\u0171\u0172\3\2\2\2\u0172\u0174\3\2\2\2\u0173\u0175\5F"+
+		"$\2\u0174\u0173\3\2\2\2\u0174\u0175\3\2\2\2\u0175\u0176\3\2\2\2\u0176"+
+		"\u0177\7\6\2\2\u0177C\3\2\2\2\u0178\u017a\5F$\2\u0179\u0178\3\2\2\2\u0179"+
+		"\u017a\3\2\2\2\u017a\u017b\3\2\2\2\u017b\u0183\5X-\2\u017c\u017e\7\f\2"+
+		"\2\u017d\u017f\5F$\2\u017e\u017d\3\2\2\2\u017e\u017f\3\2\2\2\u017f\u0180"+
+		"\3\2\2\2\u0180\u0182\5X-\2\u0181\u017c\3\2\2\2\u0182\u0185\3\2\2\2\u0183"+
+		"\u0181\3\2\2\2\u0183\u0184\3\2\2\2\u0184E\3\2\2\2\u0185\u0183\3\2\2\2"+
+		"\u0186\u0188\7\f\2\2\u0187\u0186\3\2\2\2\u0188\u0189\3\2\2\2\u0189\u0187"+
+		"\3\2\2\2\u0189\u018a\3\2\2\2\u018aG\3\2\2\2\u018b\u018d\7\t\2\2\u018c"+
+		"\u018e\5J&\2\u018d\u018c\3\2\2\2\u018d\u018e\3\2\2\2\u018e\u0190\3\2\2"+
+		"\2\u018f\u0191\7\f\2\2\u0190\u018f\3\2\2\2\u0190\u0191\3\2\2\2\u0191\u0192"+
+		"\3\2\2\2\u0192\u0193\7\n\2\2\u0193I\3\2\2\2\u0194\u0199\5L\'\2\u0195\u0196"+
+		"\7\f\2\2\u0196\u0198\5L\'\2\u0197\u0195\3\2\2\2\u0198\u019b\3\2\2\2\u0199"+
+		"\u0197\3\2\2\2\u0199\u019a\3\2\2\2\u019aK\3\2\2\2\u019b\u0199\3\2\2\2"+
+		"\u019c\u019d\5N(\2\u019d\u019e\7\17\2\2\u019e\u019f\5X-\2\u019f\u01b0"+
+		"\3\2\2\2\u01a0\u01a1\5h\65\2\u01a1\u01a2\7\7\2\2\u01a2\u01a3\7\b\2\2\u01a3"+
+		"\u01a4\7\t\2\2\u01a4\u01a5\5@!\2\u01a5\u01a6\7\n\2\2\u01a6\u01b0\3\2\2"+
+		"\2\u01a7\u01a8\5j\66\2\u01a8\u01a9\7\7\2\2\u01a9\u01aa\5P)\2\u01aa\u01ab"+
+		"\7\b\2\2\u01ab\u01ac\7\t\2\2\u01ac\u01ad\5@!\2\u01ad\u01ae\7\n\2\2\u01ae"+
+		"\u01b0\3\2\2\2\u01af\u019c\3\2\2\2\u01af\u01a0\3\2\2\2\u01af\u01a7\3\2"+
+		"\2\2\u01b0M\3\2\2\2\u01b1\u01b5\5`\61\2\u01b2\u01b5\7e\2\2\u01b3\u01b5"+
+		"\5^\60\2\u01b4\u01b1\3\2\2\2\u01b4\u01b2\3\2\2\2\u01b4\u01b3\3\2\2\2\u01b5"+
+		"O\3\2\2\2\u01b6\u01b7\7d\2\2\u01b7Q\3\2\2\2\u01b8\u01ba\7\7\2\2\u01b9"+
+		"\u01bb\5T+\2\u01ba\u01b9\3\2\2\2\u01ba\u01bb\3\2\2\2\u01bb\u01bc\3\2\2"+
+		"\2\u01bc\u01bd\7\b\2\2\u01bdS\3\2\2\2\u01be\u01c3\5X-\2\u01bf\u01c0\7"+
+		"\f\2\2\u01c0\u01c2\5X-\2\u01c1\u01bf\3\2\2\2\u01c2\u01c5\3\2\2\2\u01c3"+
+		"\u01c1\3\2\2\2\u01c3\u01c4\3\2\2\2\u01c4U\3\2\2\2\u01c5\u01c3\3\2\2\2"+
+		"\u01c6\u01cb\5X-\2\u01c7\u01c8\7\f\2\2\u01c8\u01ca\5X-\2\u01c9\u01c7\3"+
+		"\2\2\2\u01ca\u01cd\3\2\2\2\u01cb\u01c9\3\2\2\2\u01cb\u01cc\3\2\2\2\u01cc"+
+		"W\3\2\2\2\u01cd\u01cb\3\2\2\2\u01ce\u01cf\b-\1\2\u01cf\u01d0\7Q\2\2\u01d0"+
+		"\u01fd\5X- \u01d1\u01d2\7E\2\2\u01d2\u01fd\5X-\37\u01d3\u01d4\7=\2\2\u01d4"+
+		"\u01fd\5X-\36\u01d5\u01d6\7\21\2\2\u01d6\u01fd\5X-\35\u01d7\u01d8\7\22"+
+		"\2\2\u01d8\u01fd\5X-\34\u01d9\u01da\7\23\2\2\u01da\u01fd\5X-\33\u01db"+
+		"\u01dc\7\24\2\2\u01dc\u01fd\5X-\32\u01dd\u01de\7\25\2\2\u01de\u01fd\5"+
+		"X-\31\u01df\u01e0\7\26\2\2\u01e0\u01fd\5X-\30\u01e1\u01e3\7K\2\2\u01e2"+
+		"\u01e4\7d\2\2\u01e3\u01e2\3\2\2\2\u01e3\u01e4\3\2\2\2\u01e4\u01e5\3\2"+
+		"\2\2\u01e5\u01e7\7\7\2\2\u01e6\u01e8\5> \2\u01e7\u01e6\3\2\2\2\u01e7\u01e8"+
+		"\3\2\2\2\u01e8\u01e9\3\2\2\2\u01e9\u01ea\7\b\2\2\u01ea\u01eb\7\t\2\2\u01eb"+
+		"\u01ec\5@!\2\u01ec\u01ed\7\n\2\2\u01ed\u01fd\3\2\2\2\u01ee\u01ef\7@\2"+
+		"\2\u01ef\u01f1\5X-\2\u01f0\u01f2\5R*\2\u01f1\u01f0\3\2\2\2\u01f1\u01f2"+
+		"\3\2\2\2\u01f2\u01fd\3\2\2\2\u01f3\u01fd\7L\2\2\u01f4\u01fd\7d\2\2\u01f5"+
+		"\u01fd\5\\/\2\u01f6\u01fd\5B\"\2\u01f7\u01fd\5H%\2\u01f8\u01f9\7\7\2\2"+
+		"\u01f9\u01fa\5V,\2\u01fa\u01fb\7\b\2\2\u01fb\u01fd\3\2\2\2\u01fc\u01ce"+
+		"\3\2\2\2\u01fc\u01d1\3\2\2\2\u01fc\u01d3\3\2\2\2\u01fc\u01d5\3\2\2\2\u01fc"+
+		"\u01d7\3\2\2\2\u01fc\u01d9\3\2\2\2\u01fc\u01db\3\2\2\2\u01fc\u01dd\3\2"+
+		"\2\2\u01fc\u01df\3\2\2\2\u01fc\u01e1\3\2\2\2\u01fc\u01ee\3\2\2\2\u01fc"+
+		"\u01f3\3\2\2\2\u01fc\u01f4\3\2\2\2\u01fc\u01f5\3\2\2\2\u01fc\u01f6\3\2"+
+		"\2\2\u01fc\u01f7\3\2\2\2\u01fc\u01f8\3\2\2\2\u01fd\u0241\3\2\2\2\u01fe"+
+		"\u01ff\f\27\2\2\u01ff\u0200\t\2\2\2\u0200\u0240\5X-\30\u0201\u0202\f\26"+
+		"\2\2\u0202\u0203\t\3\2\2\u0203\u0240\5X-\27\u0204\u0205\f\25\2\2\u0205"+
+		"\u0206\t\4\2\2\u0206\u0240\5X-\26\u0207\u0208\f\24\2\2\u0208\u0209\t\5"+
+		"\2\2\u0209\u0240\5X-\25\u020a\u020b\f\23\2\2\u020b\u020c\7<\2\2\u020c"+
+		"\u0240\5X-\24\u020d\u020e\f\22\2\2\u020e\u020f\7R\2\2\u020f\u0240\5X-"+
+		"\23\u0210\u0211\f\21\2\2\u0211\u0212\t\6\2\2\u0212\u0240\5X-\22\u0213"+
+		"\u0214\f\20\2\2\u0214\u0215\7%\2\2\u0215\u0240\5X-\21\u0216\u0217\f\17"+
+		"\2\2\u0217\u0218\7&\2\2\u0218\u0240\5X-\20\u0219\u021a\f\16\2\2\u021a"+
+		"\u021b\7\'\2\2\u021b\u0240\5X-\17\u021c\u021d\f\r\2\2\u021d\u021e\7(\2"+
+		"\2\u021e\u0240\5X-\16\u021f\u0220\f\f\2\2\u0220\u0221\7)\2\2\u0221\u0240"+
+		"\5X-\r\u0222\u0223\f\13\2\2\u0223\u0224\7\16\2\2\u0224\u0225\5X-\2\u0225"+
+		"\u0226\7\17\2\2\u0226\u0227\5X-\f\u0227\u0240\3\2\2\2\u0228\u0229\f&\2"+
+		"\2\u0229\u022a\7\5\2\2\u022a\u022b\5V,\2\u022b\u022c\7\6\2\2\u022c\u0240"+
+		"\3\2\2\2\u022d\u022e\f%\2\2\u022e\u022f\7\20\2\2\u022f\u0240\5`\61\2\u0230"+
+		"\u0231\f$\2\2\u0231\u0240\5R*\2\u0232\u0233\f\"\2\2\u0233\u0234\6-\23"+
+		"\2\u0234\u0240\7\21\2\2\u0235\u0236\f!\2\2\u0236\u0237\6-\25\2\u0237\u0240"+
+		"\7\22\2\2\u0238\u0239\f\n\2\2\u0239\u023a\7\r\2\2\u023a\u0240\5V,\2\u023b"+
+		"\u023c\f\t\2\2\u023c\u023d\5Z.\2\u023d\u023e\5V,\2\u023e\u0240\3\2\2\2"+
+		"\u023f\u01fe\3\2\2\2\u023f\u0201\3\2\2\2\u023f\u0204\3\2\2\2\u023f\u0207"+
+		"\3\2\2\2\u023f\u020a\3\2\2\2\u023f\u020d\3\2\2\2\u023f\u0210\3\2\2\2\u023f"+
+		"\u0213\3\2\2\2\u023f\u0216\3\2\2\2\u023f\u0219\3\2\2\2\u023f\u021c\3\2"+
+		"\2\2\u023f\u021f\3\2\2\2\u023f\u0222\3\2\2\2\u023f\u0228\3\2\2\2\u023f"+
+		"\u022d\3\2\2\2\u023f\u0230\3\2\2\2\u023f\u0232\3\2\2\2\u023f\u0235\3\2"+
+		"\2\2\u023f\u0238\3\2\2\2\u023f\u023b\3\2\2\2\u0240\u0243\3\2\2\2\u0241"+
+		"\u023f\3\2\2\2\u0241\u0242\3\2\2\2\u0242Y\3\2\2\2\u0243\u0241\3\2\2\2"+
+		"\u0244\u0245\t\7\2\2\u0245[\3\2\2\2\u0246\u0249\t\b\2\2\u0247\u0249\5"+
+		"^\60\2\u0248\u0246\3\2\2\2\u0248\u0247\3\2\2\2\u0249]\3\2\2\2\u024a\u024b"+
+		"\t\t\2\2\u024b_\3\2\2\2\u024c\u024f\7d\2\2\u024d\u024f\5b\62\2\u024e\u024c"+
+		"\3\2\2\2\u024e\u024d\3\2\2\2\u024fa\3\2\2\2\u0250\u0254\5d\63\2\u0251"+
+		"\u0254\5f\64\2\u0252\u0254\t\n\2\2\u0253\u0250\3\2\2\2\u0253\u0251\3\2"+
+		"\2\2\u0253\u0252\3\2\2\2\u0254c\3\2\2\2\u0255\u0256\t\13\2\2\u0256e\3"+
+		"\2\2\2\u0257\u0258\t\f\2\2\u0258g\3\2\2\2\u0259\u025a\6\65\30\2\u025a"+
+		"\u025b\7d\2\2\u025bi\3\2\2\2\u025c\u025d\6\66\31\2\u025d\u025e\7d\2\2"+
+		"\u025ek\3\2\2\2\u025f\u0264\7\13\2\2\u0260\u0264\7\2\2\3\u0261\u0264\6"+
+		"\67\32\2\u0262\u0264\6\67\33\2\u0263\u025f\3\2\2\2\u0263\u0260\3\2\2\2"+
+		"\u0263\u0261\3\2\2\2\u0263\u0262\3\2\2\2\u0264m\3\2\2\2\u0265\u0266\7"+
+		"\2\2\3\u0266o\3\2\2\2\67qx|\u008d\u0091\u0098\u00a3\u00a8\u00b8\u00cb"+
+		"\u00cf\u00d3\u00dd\u00e1\u00f7\u00fb\u0101\u0107\u0119\u011d\u011f\u0126"+
+		"\u012c\u0131\u0148\u015a\u0166\u016a\u016e\u0171\u0174\u0179\u017e\u0183"+
+		"\u0189\u018d\u0190\u0199\u01af\u01b4\u01ba\u01c3\u01cb\u01e3\u01e7\u01f1"+
+		"\u01fc\u023f\u0241\u0248\u024e\u0253\u0263";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

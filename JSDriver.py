@@ -282,53 +282,79 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
     skip_list = []
 
     if createFragPool:
+        codeFragPool=[]
+
+        def finalize():
+            codeFrags2=defaultdict(list)
+            print (datetime.datetime.now())
+            print ("Finalizing: Grouping Common Frags")
+            for codeFrags in codeFragPool:
+                keys=codeFrags2.keys()
+                for key in codeFrags.keys():
+                    if key in keys:
+                        codeFrags2[key] = codeFrags2.get(key)+codeFrags.get(key)
+                    else:
+                        codeFrags2[key]=codeFrags.get(key)
+            print (datetime.datetime.now())
+            print ("Finalizing: Writing to file")
+            for key in codeFrags2.keys():
+                print (key)
+                fileName = "database" + "/" + key
+                temp=[]
+                print (datetime.datetime.now())
+                if isfile(fileName):
+                    f2 = open(fileName, 'rb')
+                    temp=load(f2)
+                    f2.close()
+                print (datetime.datetime.now())
+                if temp is None:
+                    temp = list(codeFrags2.get(key))
+                else:
+                    temp = temp+list(codeFrags2.get(key))
+                print (datetime.datetime.now())
+                f1 = open(fileName, 'wb')
+                dump(temp, f1)
+                f1.close()
+                print (datetime.datetime.now())
+            
+
     	fileList = manifest.fileList
     	print("Considering " + str(len(fileList)) + " files for learning code fragments")
         if not os.path.exists("database"):
             makedirs("database")
-        codeFragPool=[]
-        codeFrags2=defaultdict(list)
+        
+        count=0
         totalFileList=fileList
+
         for f in fileList:
                 que=Queue.Queue()
                 a=AntlrParser(que)
-                t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f })
+                t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f})
                 t.start()
                 t.join(90)
+                timeout=False
                 if t.isAlive():
                     try:
+                        timeout=True
                         raise TimeLimitExpired()
                     except:
                         #print "killed"
                         continue
-                t=que.get()
-                if t is not None:
-                    codeFragPool.append(t)
+                if not timeout:
+                    t=que.get()
+                    if t is not None:
+                        codeFragPool.append(t)
+                        count+=1
                 
-        print (datetime.datetime.now())
-        print ("Finalizing: Grouping Common Frags")
-        for codeFrags in codeFragPool:
-            keys=codeFrags2.keys()
-            for key in codeFrags.keys():
-                if key in keys:
-                    codeFrags2[key] = codeFrags2.get(key)+codeFrags.get(key)
-                else:
-                    codeFrags2[key]=codeFrags.get(key)
-        print (datetime.datetime.now())
-        print ("Finalizing: Writing to file")
-        for key in codeFrags2.keys():
-            fileName = "database" + "/" + key
-            temp=[]
-            if isfile(fileName):
-                f2 = open(fileName, 'rb')
-                temp=load(f2)
-                f2.close()
-            temp = temp + codeFrags2.get(key)
-            f1 = open(fileName, 'wb')
-            dump(temp, f1)
-            f1.close()
+                if count % 200 == 0:
+                    finalize()
+                    codeFragPool=[]
+
+        finalize()
         print (datetime.datetime.now())
         print ("Finished; Code generation and testing begins")
+        
+
     
     
     if options.make_manifests:

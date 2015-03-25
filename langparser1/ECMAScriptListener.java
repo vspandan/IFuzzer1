@@ -1,4 +1,4 @@
-// Generated from antlr4/nl/bigo/ecmascriptparser/ECMAScript.g4 by ANTLR 4.5
+// Generated from ECMAScript.g4 by ANTLR 4.5
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -380,6 +380,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitFormalParameterList(@NotNull ECMAScriptParser.FormalParameterListContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#functionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#functionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#functionBody}.
 	 * @param ctx the parse tree
 	 */
@@ -694,6 +704,18 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitIdentifierExpression(@NotNull ECMAScriptParser.IdentifierExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code FnExpression}
+	 * labeled alternative in {@link ECMAScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFnExpression(@NotNull ECMAScriptParser.FnExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FnExpression}
+	 * labeled alternative in {@link ECMAScriptParser#singleExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFnExpression(@NotNull ECMAScriptParser.FnExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code BitAndExpression}
 	 * labeled alternative in {@link ECMAScriptParser#singleExpression}.
 	 * @param ctx the parse tree
@@ -729,18 +751,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPreIncrementExpression(@NotNull ECMAScriptParser.PreIncrementExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link ECMAScriptParser#singleExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code FunctionExpression}
-	 * labeled alternative in {@link ECMAScriptParser#singleExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code BitShiftExpression}
 	 * labeled alternative in {@link ECMAScriptParser#singleExpression}.
@@ -1079,4 +1089,34 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEof(@NotNull ECMAScriptParser.EofContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#nullLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterNullLiteral(@NotNull ECMAScriptParser.NullLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#nullLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitNullLiteral(@NotNull ECMAScriptParser.NullLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#booleanLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterBooleanLiteral(@NotNull ECMAScriptParser.BooleanLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#booleanLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitBooleanLiteral(@NotNull ECMAScriptParser.BooleanLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#identifier}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx);
 }

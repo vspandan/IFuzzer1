@@ -82,22 +82,6 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                         f=open(newFile,'w')
                         f.write(generatedPrg)
                         f.close
-                        """
-                        a=AntlrParser()
-                        codeFrags2 = a.extractCodeFrag_(generatedPrg)
-                        for key in codeFrags2.keys():
-                        	if key != 'arguments':
-        						fileN = "database" + "/" + key
-        						temp=[]
-        						if isfile(fileN):
-            						f2 = open(fileN, 'r')
-            						temp=load(f2)
-            						f2.close()
-        						temp = temp + codeFrags2.get(key)
-        						f1 = open(fileN, 'wb')
-        						dump(temp, f1)
-        						f1.close()
-                        """
             
         #count=0
         TestCases1=TestCases
@@ -115,6 +99,8 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
             p.join(120)
             if p.is_alive():
                 p.terminate()
+            # import sys
+            # sys.exit()
 
 
         for subDir in TestCaseSubDirs :

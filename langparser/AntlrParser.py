@@ -1,3 +1,4 @@
+from py4j.java_collections import SetConverter, MapConverter, ListConverter
 from py4j.java_gateway import JavaGateway  
 from os import remove, getcwd, kill, chdir
 
@@ -53,7 +54,7 @@ class AntlrParser(object):
                 
         
 
-    def genCodeFrag(self, input, population_size,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST =None, count=1):
+    def genCodeFrag(self, input, population_size,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST =None, count=1, ind = False):
         population = []
         identiferList=[]            
         selectedNTList={}
@@ -97,6 +98,8 @@ class AntlrParser(object):
                     identiferList.append(self.identifiers)
 
         if population_size == 1: 
+            if ind:
+                return self.out, self.identifiers
             if not subTree:
                 return self.out,selectedNTList
             if subTree: 
@@ -139,11 +142,9 @@ class AntlrParser(object):
         if len(input)>0:
             try:
                 gateway = JavaGateway()
-                parser = gateway.entry_point.getParser()
-                output = parser.parseTree(input,ind)
-                gateway.entry_point.nullify()
+                parser = gateway.entry_point.getXMLIRGeneratorObject()
+                output = parser.XMLIRGenerator(input,ind)
                 gateway.close()
-                parser=None
                 return output
             except:
                 print "Check Java Gateway connection; Doesn't seem to be started"
@@ -151,45 +152,24 @@ class AntlrParser(object):
                 
     def extractCodeFrag(self, fileName):
         print fileName
-        try:
-            root = ElementTree.fromstring(self.parseTree(fileName))
-            self.extractNTandText(root)
-            d = defaultdict(list)
-            for position in range(len(self.nonTerminals)):
-                nt=self.nonTerminals[position]
-                d1 = []
-                code = self.values[position]
-                if len(code) > 0:
-                    if d.has_key(nt):
-                        d.get(nt).append(code)
-                    else:
-                        d1.append(code)
-                        d[str(nt)] = d1
-        except :
-            d=None
+        d = defaultdict(list)
+        gateway = JavaGateway()
+        parser = gateway.entry_point.getCodeFragmentExtractor()
+        temp = (parser.extractFrags(fileName,True))
+        gateway.close()
+        
+        for key in temp.keys():
+            temp2=temp.get(key)
+            l=[]
+            for t in temp2:
+                l.append(t)
+            d[key]=l
+
         if self.que is not None:
             self.que.put(d)
         if self.que is None:
             return d
     
-    def extractCodeFrag_(self, fileName):
-            root = ElementTree.fromstring(self.parseTree(fileName,True))
-            self.extractNTandText(root)
-            d = defaultdict(list)
-            for position in range(len(self.nonTerminals)):
-                nt=self.nonTerminals[position]
-                d1 = []
-                code = self.values[position]
-                if len(code) > 0:
-                    if d.has_key(nt):
-                        d.get(nt).append(code)
-                    else:
-                        d1.append(code)
-                        d[str(nt)] = d1
-            if self.que is not None:
-                self.que.put(d)
-            if self.que is None:
-                return d
     def init(self):
         self.aCount=0
         self.bCount=0
@@ -246,4 +226,4 @@ class AntlrParser(object):
     
 if __name__=='__main__':
     a= AntlrParser()
-    print a.parseTree("/home/spandan/Desktop/test.js")
+    print a.extractCodeFrag("/home/spandan/Desktop/test.js")
