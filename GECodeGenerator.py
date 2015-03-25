@@ -46,6 +46,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
                 ges.set_fitness_fail(float(1000))
                 
                 ges.set_mutation_rate(float(0.5))
+                ges.set_multiple_m_c_rate(float(0.4))
                 
                 ges.set_fitness_selections(
                     FitnessElites(ges.fitness_list, .05),
@@ -102,24 +103,7 @@ def runFuzzer(testCasesDir,targetDirectory,interpreter,options,excludeFiles,nTIn
             # import sys
             # sys.exit()
 
-
-        for subDir in TestCaseSubDirs :
-            for f in listdir(subDir) :
-                fi=join(subDir,f)
-                if isfile(fi) and f.endswith(".js") and f not in excludeFiles :
-                    from multiprocessing import Process
-                    f111=open("spandan.l","a+")
-                    f111.write("\n\n\n\n\n"+f+"\n")
-                    f111.close()
-                    #count+=1
-                    p=Process(target=process, kwargs={'fil':fi})
-                    p.start()
-                    p.join(120)
-                    if p.is_alive():
-                        p.terminate()
-                #if count==3:
-                    #sys.exit()
-                    #print fi
+        
     initialize()
     
 
@@ -129,4 +113,5 @@ def listAllTestCasesDir(testCasesDir):
             if not isfile(fi):
                 TestCaseSubDirs.append(fi)
                 listAllTestCasesDir(fi)
-            TestCases.append(fi)
+            else:
+                TestCases.append(fi)

@@ -60,6 +60,10 @@ class GrammaticalEvolution(object):
 
         self.mutationCount = 1
         self.crossoverCount = 1
+        self.multiple_m_c_rate = 0
+
+	def set_multiple_m_c_rate(self, rate):
+		self.multiple_m_c_rate = rate
 
     def set_crossover_count(self, count):
         self.crossoverCount=count
@@ -95,15 +99,17 @@ class GrammaticalEvolution(object):
             self.initial_Population=[]
             count=0
             for fileName in fileList:
-                temp=""
-                temp1=[]
-                self.parseRepr=self.parser.parseTree(path.abspath(fileName))
-                if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
-                    #Generates incomplete code fragment
-                    temp,temp1 = self.parser.genCodeFrag(self.parseRepr,1,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,self.mutationCount,True)
-                self.initial_Population.append(temp)
-                self.identifiers.append(temp1)
-                count+=1
+                # temp=""
+                # temp1=[]
+                # self.parseRepr=self.parser.parseTree(path.abspath(fileName))
+                # if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
+                #     #Generates incomplete code fragment
+                #     temp,temp1 = self.parser.genCodeFrag(self.parseRepr,1,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,self.mutationCount,True)
+                # self.initial_Population.append(temp)
+                # self.identifiers.append(temp1)
+                # count+=1
+                f=open(path.abspath(fileName),"r")
+                self.initial_Population.append(f.read())
 
     def set_population_size(self, size):
         size = long(size)
@@ -127,23 +133,6 @@ class GrammaticalEvolution(object):
 
         start_gene_length = long(start_gene_length)
         max_gene_length = long(max_gene_length)
-        if not isinstance(start_gene_length, long):
-            raise ValueError("start_gene_length, %s, must be a long" % (
-                                                    start_gene_length))
-        if start_gene_length < 0:
-            raise ValueError("start_gene_length, %s, must be above 0" % (
-                                                    start_gene_length))
-        if not isinstance(max_gene_length, long):
-            raise ValueError("max_gene_length, %s, must be a long" % (
-                                                    max_gene_length))
-        if max_gene_length < 0:
-            raise ValueError("max_gene_length, %s, must be above 0" % (
-                                                    max_gene_length))
-        if start_gene_length > max_gene_length:
-            raise ValueError("""max_gene_length, %s, cannot be smaller
-                than start_gene_length%s""" % (
-                    max_gene_length, start_gene_length))
-
         self._start_gene_length = start_gene_length
         self._max_gene_length = max_gene_length
 
@@ -151,19 +140,13 @@ class GrammaticalEvolution(object):
         return (self._start_gene_length, self._max_gene_length)
 
     def set_extend_genotype(self, true_false):
-        if isinstance(true_false, bool):
             self._extend_genotype = true_false
-        else:
-            raise ValueError("Extend genotype must be True or False")
 
     def get_extend_genotype(self):
         return self._extend_genotype
 
     def set_wrap(self, true_false):
-        if isinstance(true_false, bool):
             self._wrap = true_false
-        else:
-            raise ValueError("Wrap must be True or False")
 
     def get_wrap(self):
         return self._wrap
@@ -196,37 +179,20 @@ class GrammaticalEvolution(object):
         return self._bnf
 
     def set_maintain_history(self, true_false):
-        if isinstance(true_false, bool):
             self._maintain_history = true_false
-        else:
-            raise ValueError("Maintain history must be True or False")
 
     def get_maintain_history(self):
         return self._maintain_history
 
     def set_max_program_length(self, max_program_length):
-        errmsg1 = """The maximum program length, %s must be an long value
-                    """ % (max_program_length)
-        errmsg2 = """The maximum program length, %s must be greater than 0
-                    """ % (max_program_length)
         max_program_length = long(max_program_length)
-        if not isinstance(max_program_length, long):
-            raise ValueError(errmsg1)
-        if max_program_length < 0:
-            raise ValueError(errmsg2)
-
         self._max_program_length = max_program_length
 
     def get_max_program_length(self):
         return self._max_program_length
 
     def set_fitness_fail(self, fitness_fail):
-        errmsg = """The fitness_fail, %s must be a float value
-                    """ % (fitness_fail)
         fitness_fail = float(fitness_fail)
-        if not isinstance(fitness_fail, float):
-            raise ValueError(errmsg)
-
         self._fitness_fail = fitness_fail
 
     def get_fitness_fail(self):
@@ -246,11 +212,8 @@ class GrammaticalEvolution(object):
     def set_mutation_rate(self, mutation_rate):
         errmsg = """The mutation rate, %s must be a float value
                     from 0.0 to 1.0""" % (mutation_rate)
-        if not isinstance(mutation_rate, float):
-            raise ValueError(errmsg)
         if not (0.0 <= mutation_rate <= 1.0):
             raise ValueError(errmsg)
-
         self._mutation_rate = mutation_rate
 
     def get_mutation_rate(self):
@@ -259,8 +222,6 @@ class GrammaticalEvolution(object):
     def set_crossover_rate(self, crossover_rate):
         errmsg = """The crossover rate, %s must be a float value
                     from 0.0 to 1.0""" % (crossover_rate)
-        if not isinstance(crossover_rate, float):
-            raise ValueError(errmsg)
         if not (0.0 <= crossover_rate <= 1.0):
             raise ValueError(errmsg)
 
@@ -279,12 +240,7 @@ class GrammaticalEvolution(object):
         return self._children_per_crossover
 
     def set_max_generations(self, generations):
-        if isinstance(generations, int) and generations >= 0:
             self.stopping_criteria[STOPPING_MAX_GEN] = generations
-        else:
-            raise ValueError("""
-                generations, %s, must be an int 0 or greater""" % (
-                                                                generations))
 
     def get_max_generations(self):
         return self.stopping_criteria[STOPPING_MAX_GEN]
@@ -299,8 +255,6 @@ class GrammaticalEvolution(object):
     def set_max_fitness_rate(self, max_fitness_rate):
         errmsg = """The max fitness rate, %s must be a float value
                     from 0.0 to 1.0""" % (max_fitness_rate)
-        if not isinstance(max_fitness_rate, float):
-            raise ValueError(errmsg)
         if not (0.0 <= max_fitness_rate <= 1.0):
             raise ValueError(errmsg)
 
@@ -336,17 +290,8 @@ class GrammaticalEvolution(object):
         return self.population[self.fitness_list.worst_member()]
 
     def set_timeouts(self, preprogram, program):
-        if isinstance(preprogram, int) and preprogram >= 0:
             self._timeouts[0] = preprogram
-        else:
-            raise ValueError("""
-                timeout, %s, must be an int 0 or above""" % (preprogram))
-
-        if isinstance(program, int) and program >= 0:
             self._timeouts[1] = program
-        else:
-            raise ValueError("""
-                timeout, %s, must be an int 0 or above""" % (program))
 
     def get_timeouts(self):
         return self._timeouts
@@ -402,10 +347,11 @@ class GrammaticalEvolution(object):
             gene._wrap = self._wrap
             self.population.append(gene)
             member_no += 1
-            gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
-            gene.tracePrg2File("i::: \t"+gene.local_bnf['CodeFrag']);
-            gene._identifiers=self.identifiers[member_no-1]
-            gene.nTInvlvdGenProcess=nTInvlvdGenProcess
+            # gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
+            # gene.tracePrg2File("i::: \t"+gene.local_bnf['CodeFrag']);
+            # gene._identifiers=self.identifiers[member_no-1]
+            # gene.nTInvlvdGenProcess=nTInvlvdGenProcess
+            gene.local_bnf["program"]=self.initial_Population[gene.member_no]
         return True;  
 
     def _perform_endcycle(self):
@@ -489,11 +435,7 @@ class GrammaticalEvolution(object):
         return child_list
 
     def _crossover(self, parent1, parent2):
-        if not isinstance(parent1, Genotype):
-            raise ValueError("Parent1 is not a genotype")
-        if not isinstance(parent2, Genotype):
-            raise ValueError("Parent2 is not a genotype")
-        
+
         if randint(0, 1):
                 child1 = deepcopy(parent1)
                 child2 = deepcopy(parent2)
@@ -638,6 +580,8 @@ class GrammaticalEvolution(object):
         fitl = self.fitness_list
         print "fitness values:"
         print fitl
+        import sys
+        sys.exit()
 
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:

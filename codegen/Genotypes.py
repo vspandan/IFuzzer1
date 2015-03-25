@@ -275,14 +275,6 @@ class Genotype(object):
     def _update_genotype(self):
         self.set_binary_gene(self._dec2bin_gene(self.decimal_gene))
 
-    def compute_fitness(self):
-        self._reset_gene_position()
-        self._map_gene()
-        if self._extend_genotype:
-            self._update_genotype()
-
-        return self._fitness
-
     def tracePrg2File(self,program):
         pass
         """
@@ -315,15 +307,19 @@ class Genotype(object):
         return score
 
     def _map_gene(self):
+        self._reset_gene_position()
+        if self._extend_genotype:
+            self._update_genotype()
         self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
-        self.calculateFitness(program)
+        program = sub(r'\s+', ' ', program)
+        self.local_bnf[BNF_PROGRAM] = program  
+        self.compute_fitness(program)
 
-    def calculateFitness(self,program):
+    def compute_fitness(self):
+        program=self.local_bnf[BNF_PROGRAM]
         self.tracePrg2File("c::::\t"+program)
         count=0
-        program = sub(r'\s+', ' ', program)
-        self.local_bnf[BNF_PROGRAM] = program    
         self.tracePrg2File(program)
         if len(program) == 0:
             return 0
