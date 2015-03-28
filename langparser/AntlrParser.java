@@ -4,7 +4,6 @@ import py4j.Py4JNetworkException;
 class AntlrParser {
 
 	CodeFragmentExtractor c=null;
-	XMLIRGeneratorClass x=null;
 	static GatewayServer gatewayServer = null;
 
 	public void nullify(){
@@ -32,19 +31,11 @@ class AntlrParser {
 		return c;
 	}
 
-	public XMLIRGeneratorClass getXMLIRGeneratorObject(){
-		//XMLIRGenerator
-		if (x!=null)
-			x=null;
-		x= new XMLIRGeneratorClass();
-		return x;
-	}
-
 	public static void main(String[] args) {
 		AntlrParser a = new AntlrParser();
 		try {
     		gatewayServer = new GatewayServer(a); 
-    		gatewayServer.start(true);
+    		gatewayServer.start();
 			//System.out.println(a.parseTree(args[0],true));	
     	}
     	catch(Py4JNetworkException e){

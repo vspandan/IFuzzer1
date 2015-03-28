@@ -1,28 +1,3 @@
-"""
-
-   Copyright (C) 2012  Don Smiley  ds@sidorof.com
-
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-   See the LICENSE file included in this archive
-
-
-
-This module implements the fitness components for grammatical evolution.
-
-"""
-
 import math
 from random import random, randint
 
@@ -115,6 +90,7 @@ class FitnessList(list):
         """
 
         values = [value for value in self]
+        values.sort()
         return min(values)[0]
 
     def max_value(self):
@@ -417,7 +393,7 @@ class Tournament(Selection):
             tourn_list = FitnessList(self._minmax)
             while choice < self._tournament_size:
                 rand_position = randint(0, population_size - 1)
-
+                
                 #   Lookup the fitness value
                 tourn_list.append([self._selection_list[rand_position],
                                    rand_position])
@@ -890,57 +866,6 @@ class Replacement(Fitness):
     def __init__(self, fitness_list):
         Fitness.__init__(self, fitness_list)
         self._replacement_count = 0
-
-
-class ReplacementDeleteWorst(Replacement):
-    """
-    This class is the mirror image of FitnessElite.  The worst members are
-    returned.
-
-    """
-
-    def __init__(self, fitness_list, replacement_count):
-        """
-        This function initializes Replacement and then adds a replacement
-        count for handling the number of members that will be replaced each
-        time.
-
-        """
-
-        Replacement.__init__(self, fitness_list)
-
-        self.set_replacement_count(replacement_count)
-        self.set_selection_type(MIN)
-
-    def set_replacement_count(self, replacement_count):
-        """
-        This function accepts the number of members to be replaced.
-
-        """
-        length = len(self._selection_list)
-
-        if not isinstance(replacement_count, int):
-            raise ValueError(
-                "Replacement count, %s should an int between 0 and %s" % (
-                  replacement_count, length))
-        if not (0 < replacement_count <= length):
-            raise ValueError(
-                "Replacement count, %s should between 0 and %s" % (
-                  replacement_count, length))
-        self._replacement_count = replacement_count
-
-    def select(self):
-        """
-        select is a generator that yields the members for
-        replacement sorted from worst to best. It halts when the replacemnt
-        count has been reached.
-
-        """
-        self._scale_list()
-        sort_list = self._make_sort_list()
-        sort_list.sort(reverse=True)
-        for item in sort_list[:self._replacement_count]:
-            yield item[1]
 
 
 class ReplacementTournament(Replacement, Tournament):

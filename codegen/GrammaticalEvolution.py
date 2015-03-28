@@ -16,7 +16,6 @@ from codegen.Genotypes import Genotype
 
 
 STOPPING_MAX_GEN = 'max_generations'
-STOPPING_FITNESS_LANDSCAPE = 'fitness_landscape'
 
 class GrammaticalEvolution(object):
 
@@ -28,9 +27,8 @@ class GrammaticalEvolution(object):
         self.identifiers = []
         self.non_Terminals=[]
         self.stopping_criteria = {
-                STOPPING_MAX_GEN: None,
-                STOPPING_FITNESS_LANDSCAPE: None}
-        self.current_g = None
+                STOPPING_MAX_GEN: None
+                }
         self.fitness_selections = []
         self.replacement_selections = []        
         
@@ -61,6 +59,7 @@ class GrammaticalEvolution(object):
         self.mutationCount = 1
         self.crossoverCount = 1
         self.multiple_rate = 0
+        self.fitness_list_history = []
 
 
 	def set_multiple_rate(self, rate):
@@ -72,9 +71,11 @@ class GrammaticalEvolution(object):
     def set_mutation_count(self, count):
         self.mutationCount=count
 
+    def set_execution_timeout(self, timeout):
+        self.execution_timeout = timeout
+
     def dynamic_mutation_rate(self, ind ):
         self.dynamic_mutation = ind
-        self._mutation_rate=0.02
     
     def dynamic_crossover_rate(self, ind):
         self.dynamic_crossover = ind
@@ -92,8 +93,14 @@ class GrammaticalEvolution(object):
         self.set_bnf(bnf)
     
     def parseCode(self,codeFragment):
-        codeFragment= codeFragment.replace('\n', ' ')
-        return self.parser.parseTree(codeFragment,True)
+        from time import time
+        fi="/tmp/"+str(int(time()*1000))
+        f=open(fi,"a")
+        f.write(codeFragment)
+        f.close()
+        output=self.parser.parseTree(codeFragment,True)
+        remove(fi)
+        return output
     
     def _prepareInitial_Population (self,fileList):
             self.identifiers=[]
@@ -303,26 +310,26 @@ class GrammaticalEvolution(object):
             gene._generation = self._generation
             gene.starttime = starttime
             gene.set_keys (self.non_Terminals)
-            self.current_g = gene
-            gene.compute_fitness()
+            if self._generation == 0 :
+                gene.compute_fitness()
             self.population[gene.member_no]=gene
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
 
     def run(self, starting_generation=0):
         self._generation = starting_generation
+        self._compute_fitness()
         while True:
-            self._compute_fitness()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
             if self._continue_processing() and self.fitness_list.best_value() != self._fitness_fail:
                 self._perform_endcycle()
+                self._compute_fitness()
                 gene = self.population[self.fitness_list.best_member()]
                 program = gene.get_program()
                 self._generation += 1
             else:
                 break
         print "best fitness value:"
-        print self.fitness_list.best_member()
         return self.fitness_list.best_member()
 
     def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess):
@@ -352,13 +359,13 @@ class GrammaticalEvolution(object):
             # gene._identifiers=self.identifiers[member_no-1]
             # gene.nTInvlvdGenProcess=nTInvlvdGenProcess
             gene.local_bnf["program"]=self.initial_Population[gene.member_no]
+            gene.execution_timeout = self.execution_timeout
         return True;  
 
     def _perform_endcycle(self):
         childList= self._evaluate_fitness(True)
         while len(childList) < self._population_size:
             ch=choice([0,1])
-            ch=0
             fitness_pool = self._evaluate_fitness()
             if ch == 1:
                 child_list = self._perform_crossovers(fitness_pool)
@@ -370,8 +377,8 @@ class GrammaticalEvolution(object):
                 child_list = self._perform_mutations(fitness_pool)
                 if child_list is not None:
                     childList.extend(child_list)
-                # child_list = self._perform_crossovers(fitness_pool)
-                # childList.extend(child_list)
+                child_list = self._perform_crossovers(fitness_pool)
+                childList.extend(child_list)
         self._perform_replacements(childList)
 
     """
@@ -381,40 +388,31 @@ class GrammaticalEvolution(object):
         m+(n-m) = n (new offspring are generated which represents next generations)
     """
     def _evaluate_fitness(self,ind=False):
-        if ind:
-            flist = []
-            total = int(round(
-                self._max_fitness_rate * float(self._population_size)))        
-            count = 0
-            for fsel in self.fitness_selections:
-                fsel.set_fitness_list(self.fitness_list)
-                for i in fsel.select():
-                    flist.append(i)
-                    count += 1
-                    if count == total:
-                        break
-            flist1 = []
-            for member_no in flist:
-                flist1.append(deepcopy(self.population[member_no]))
-            return flist1
+        flist = []
+        if self._generation==0:
+            total = 0
         else:
-            flist3=[]
             total = int(round(
-                self._max_fitness_rate * float(self._population_size)))        
+            self._max_fitness_rate * float(self._population_size)))        
+        if not ind:
             total=self._population_size-total
-            count = 0
-            for fsel in self.fitness_selections:
-                fsel.set_fitness_list(self.fitness_list)
-                for i in fsel.select():
-                    flist3.append(i)
-                    count += 1
-                    if count == total:
-                        break
-            flist2 = []
-            for member_no in flist3:
-                flist2.append(deepcopy(self.population[member_no]))
-
-            return flist2
+        count = 0
+        for fsel in self.fitness_selections:
+            fsel.set_fitness_list(self.fitness_list)
+            for i in fsel.select():
+                if count == total:
+                    break
+                flist.append(i)
+                count += 1
+        flist1 = []
+        for member_no in flist:
+            gene=self.population[member_no]
+            if gene.get_fitness() != self._fitness_fail :
+                gene.prev_program_history[self._generation]=gene.local_bnf['program']
+                gene.local_bnf['CodeFrag']= ""
+                gene.prog_generated=0
+                flist1.append(gene)
+        return flist1
 
     def _perform_crossovers(self, flist):
         child_list = []
@@ -431,98 +429,99 @@ class GrammaticalEvolution(object):
                 parent1 = flist[i]
                 parent2 = flist[i + 1]
 
-                child1, child2 = self._crossover(parent1, parent2)
-                if self._children_per_crossover == 2:
-                    child_list.append(child1)
-                    child_list.append(child2)
+                if randint(0, 1):
+                        child1 = (parent1)
+                        child2 = (parent2)
                 else:
-                    child_list.append(child1)
+                        child1 = (parent2)
+                        child2 = (parent1)
+                
+                child1_binary = child1.binary_gene
+                child2_binary = child2.binary_gene
+                
+                child1Prg=child1.get_program()
+                child2Prg=child2.get_program()
+                
+                child1ParseTree=self.parseCode(child1Prg)
+                non_term1=self.parser.extractNonTerminal(child1ParseTree)
+                child2ParseTree=self.parseCode(child2Prg)
+                non_term2=self.parser.extractNonTerminal(child2ParseTree)
+
+                if self.nT_Invld_Gen_Process is not None:
+                    commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
+                else:
+                    commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
+
+                count=1
+                if random() < self.multiple_rate:
+                    count=int(self.crossoverCount*random())+1        
+                selectedNt=[]
+                if len(commonNonTerm) > 0:
+                    for i in range(count):
+                        selectedNt.append(choice(commonNonTerm))
+                else:
+                    return child_list
+
+                #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
+
+                subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,non_term1,True,selectedNt,None,len(selectedNt))
+                subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,non_term2,True,selectedNt,None,len(selectedNt))
+                
+                """
+                if child1Prg.find(selectedNt) <0 or child2Prg.find(selectedNt) <0:
+                    return [] 
+                """
+
+                try:
+                    for k in selected2NTList:
+                        s1 = s1.replace(selected2NTList[k],subString2[k])
+                    for k in selected1NTList:
+                        s2 = s2.replace(selected1NTList[k],subString1[k])
+                    child1Prg_=s1
+                    child2Prg_=s2
+                
+                except:
+                    return child_list
+                        
+                """
+                #Alternate Impl
+                child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
+                child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
+                """
+
+                """
+                #Losing track of genes
+                #TODOcheck the binary string against child and also parent
+                child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
+                child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
+                child1.set_binary_gene(child1_binary)
+                child2.set_binary_gene(child2_binary)
+                #what is purpose of gene incomplete code fragment
+                incompl1=self.parseCode(child1Prg_)
+                incompl2=self.parseCode(child2Prg_)
+                child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,self.parser.extractNonTerminal(incompl1),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
+                child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,self.parser.extractNonTerminal(incompl2),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
+                """
+
+                child1.local_bnf['program']=child1Prg_
+                child1.generate_decimal_gene()
+                child1.compute_fitness()
+                child2.local_bnf['program']=child2Prg_
+                child2.generate_decimal_gene()
+                child2.compute_fitness()
+                if child1.get_fitness()!= self._fitness_fail and child1.get_fitness()!= self._fitness_fail:
+                    child1.prog_generated = 1
+                    child2.prog_generated = 1
+                    child1.local_bnf['CodeFrag']=""
+                    child2.local_bnf['CodeFrag']=""
+                    if self._children_per_crossover == 2:
+                        child_list.append(child1)
+                        child_list.append(child2)
+                    else:
+                        child_list.append(child1)
 
         return child_list
 
-    def _crossover(self, parent1, parent2):
-
-        if randint(0, 1):
-                child1 = deepcopy(parent1)
-                child2 = deepcopy(parent2)
-        else:
-                child1 = deepcopy(parent2)
-                child2 = deepcopy(parent1)
-        
-        child1_binary = child1.binary_gene
-        child2_binary = child2.binary_gene
-        
-        child1Prg=child1.get_program()
-        child2Prg=child2.get_program()
-        
-        child1ParseTree=self.parseCode(child1Prg)
-        non_term1=self.parser.extractNonTerminal(child1ParseTree)
-        child2ParseTree=self.parseCode(child2Prg)
-        non_term2=self.parser.extractNonTerminal(child2ParseTree)
-
-        if self.nT_Invld_Gen_Process is not None:
-            commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
-        else:
-            commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
-
-        count=1
-        if random() < self.multiple_rate:
-            count=int(self.crossoverCount*random())+1        
-        selectedNt=[]
-        if len(commonNonTerm) > 0:
-            for i in range(count):
-                selectedNt.append(choice(commonNonTerm))
-        else:
-            return (child1, child2)
-
-        #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
-
-        subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,non_term1,True,selectedNt,None,len(selectedNt))
-        subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,non_term2,True,selectedNt,None,len(selectedNt))
-        
-        """
-        if child1Prg.find(selectedNt) <0 or child2Prg.find(selectedNt) <0:
-            return (child1, child2) 
-        """
-
-        try:
-            for k in selected2NTList:
-                s1 = s1.replace(selected2NTList[k],subString2[k])
-            for k in selected1NTList:
-                s2 = s2.replace(selected1NTList[k],subString1[k])
-            child1Prg_=s1
-            child2Prg_=s2
-        
-        except:
-            return (child1, child2) 
-                
-        """
-        #Alternate Impl
-        child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
-        child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
-        """
-
-        """
-        #Losing track of genes
-        #TODOcheck the binary string against child and also parent
-        child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
-        child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
-		child1.set_binary_gene(child1_binary)
-		child2.set_binary_gene(child2_binary)
-		#what is purpose of gene incomplete code fragment
-        incompl1=self.parseCode(child1Prg_)
-        incompl2=self.parseCode(child2Prg_)
-        child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,self.parser.extractNonTerminal(incompl1),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
-        child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,self.parser.extractNonTerminal(incompl2),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
-        """
-        child1.local_bnf['program']=child1Prg_
-        child1.generate_decimal_gene()
-        child1.compute_fitness()
-        child2.local_bnf['program']=child2Prg_
-        child2.generate_decimal_gene()
-        child2.compute_fitness()
-        
-        return (child1, child2) 
         
     def _mutatebinarygene(self, gene, position1, position2):
         newRandBGene = ""
@@ -544,6 +543,7 @@ class GrammaticalEvolution(object):
         for gene in mlist:
             if random() < self._mutation_rate :
                 incompl=self.parseCode(gene.get_program())
+
                 non_TerminalsList=self.parser.extractNonTerminal(incompl)
                 gene.set_identifiers(self.identifiers)
                 if len(non_TerminalsList) >0:
@@ -566,27 +566,47 @@ class GrammaticalEvolution(object):
                         gene.generate_decimal_gene()
                     """
                     if gene.get_fitness() != gene.get_fitness_fail() :
+                        gene.local_bnf['CodeFrag']=""
+                        gene.prog_generated = 1
                         mutatedList.append(gene)
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
+        #as of now replacing offspring with parents
         position = 0
-        for rsel in self.replacement_selections:
-            rsel.set_fitness_list(self.fitness_list)
 
-            for i in rsel.select():
-                replaced_g = self.population[i]
-                if position < len(fitness_pool):
-                    newGene = fitness_pool[position]
-                    newGene.member_no = replaced_g.member_no
-                    newGene._generation = self._generation + 1
-                    newGene.local_bnf['<member_no>'] = [newGene.member_no]
-                    self.population[newGene.member_no] = newGene
-                    position += 1
-                else:
-                    break
+        if len(fitness_pool) < self._population_size:
+            r = len(fitness_pool)
+
+        if len(fitness_pool) >= self._population_size:
+            r = self._population_size
+
+        for i in range(r):
+            fitness_pool[i].member_no=i
+            fitness_pool[i]._generation =self._generation+1
+            self.population[i]=fitness_pool[i]
+            self.fitness_list[i][0] = fitness_pool[i].get_fitness()
+            
+        
+        # for rsel in self.replacement_selections:
+        #     rsel.set_fitness_list(self.fitness_list)
+
+        #     for i in rsel.select():
+        #         replaced_g = self.population[i]
+        #         if position < len(fitness_pool):
+        #             newGene = fitness_pool[position]
+        #             newGene.member_no = replaced_g.member_no
+        #             newGene._generation = self._generation + 1
+        #             newGene.local_bnf['<member_no>'] = [newGene.member_no]
+        #             self.population[newGene.member_no] = newGene
+        #             position += 1
+        #         else:
+        #             break
 
     def _continue_processing(self):
+        """
+        This method analyzes the fitness list against the stopping_criteria defined over target_value and max generations
+        """
         status = True
         fitl = self.fitness_list
         print "fitness values:"
@@ -595,7 +615,6 @@ class GrammaticalEvolution(object):
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:
                 return False
-
         if fitl.get_target_value() is not None:
             if fitl.get_fitness_type() == MAX:
                 if fitl.best_value() >= fitl.get_target_value():
@@ -606,9 +625,5 @@ class GrammaticalEvolution(object):
             elif fitl.get_fitness_type() == CENTER:
                 if fitl.best_value() <= fitl.get_target_value():
                     return False
-
-        if self.stopping_criteria[STOPPING_FITNESS_LANDSCAPE] is not None:
-            status = self.stopping_criteria[STOPPING_FITNESS_LANDSCAPE](
-                                                        self.fitness_list)
 
         return status

@@ -49,6 +49,9 @@ class Genotype(object):
         self.interpreter_options=interpreter_options
         self.score=0
         self.nTInvlvdGenProcess=[]
+        self.prev_program_history={}
+        self.prog_generated=0
+        self.execution_timeout = 30
 
     
     def set_keys(self, keys):
@@ -306,7 +309,23 @@ class Genotype(object):
         self.local_bnf[BNF_PROGRAM] = program  
         self.compute_fitness()
 
+    def de_EscapeText(self, string):
+
+        string.replace("&lt;","<")
+        string.replace("&gt;",">")
+        string.replace("&quot;","\"")
+        string.replace("&amp;","&")
+        string.replace("&apos;","\\")
+        string.replace("#pipe;",'|')
+              #       default:
+              #             if(c>0x7e) {
+              #                   sb.append("&#"+((int)c)+";");
+              #             }else
+              #                   sb.append(c);
+        return string
+
     def compute_fitness(self):
+
         program=self.local_bnf[BNF_PROGRAM]
         count=0
         if len(program) == 0:
@@ -323,7 +342,7 @@ class Genotype(object):
                 l=[None,None]        
                 t=Thread(target=self.run_cmd,kwargs={'fi':fi,'l':l,'option':option})
                 t.start()
-                t.join(10)
+                t.join(self.execution_timeout)
                 if t.isAlive():
                     if l[0] is not None:
                         try:

@@ -19,6 +19,9 @@ class AntlrParser(object):
         self.nonTerminals=[]
         self.values=[]
         self.subcode ={}
+        gateway = JavaGateway()
+        self.parser = gateway.entry_point.getCodeFragmentExtractor()
+        
 
     def subCodeGen(self,root,pos):
         for child in root:
@@ -103,23 +106,14 @@ class AntlrParser(object):
 
     def parseTree(self,input,ind=False):
         if len(input)>0:
-            try:
-                gateway = JavaGateway()
-                parser = gateway.entry_point.getXMLIRGeneratorObject()
-                output = parser.XMLIRGenerator(input,ind)
-                gateway.close()
-                return output
-            except:
-                print "Check Java Gateway connection; Doesn't seem to be started"
+            output = self.parser.XMLIRGenerator(input,ind)
+            return output
         return ""
                 
     def extractCodeFrag(self, fileName):
         print fileName
         d = defaultdict(list)
-        gateway = JavaGateway()
-        parser = gateway.entry_point.getCodeFragmentExtractor()
-        temp = (parser.extractFrags(fileName,True))
-        gateway.close()
+        temp = (self.parser.extractFrags(fileName,True))
         
         for key in temp.keys():
             temp2=temp.get(key)
