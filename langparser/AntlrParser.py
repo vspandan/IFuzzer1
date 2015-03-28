@@ -176,3 +176,7 @@ class AntlrParser(object):
 		except:
 			pass
 		return (self.a,self.b,self.c,self.d)                 
+
+if __name__ == '__main__':
+    a= AntlrParser()
+    a.parseTree("/home/spandan/Desktop/test.js",False)

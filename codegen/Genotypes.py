@@ -137,6 +137,7 @@ class Genotype(object):
             while position < len(prg_list):
                 #TODO check this process
                 item = prg_list[position]
+                
                 if item in self.keywords:
                     prg_list[position]=lower(item)
                     position += 1
@@ -154,16 +155,6 @@ class Genotype(object):
                     prg_list[position]=t
                     position += 1
                     continue
-                elif item in ['StringLiteral','RegularExpressionLiteral']:
-                    prg_list[position] = self._converge('literal')
-                    position += 1
-                    continue
-                
-                elif item in ['HexIntegerLiteral' , 'DecimalLiteral' , 'OctalIntegerLiteral']:
-                    prg_list[position] = self._converge('numericLiteral')
-                    position += 1
-                    continue
-        
                 elif item in self._keys:
                     if check_stoplist and position >= 0:
                         if item in self.nTInvlvdGenProcess:
@@ -195,7 +186,7 @@ class Genotype(object):
                             idMapping={}
                             temp_list = split(VARIABLE_FORMAT, self._converge(item))
                             for t in temp_list:
-                                if t == "Ident" or "__id__" in t:
+                                if t == "__id__" in t:
                                     t=t.replace("__id__","")
                                     if idMapping.has_key(t):
                                         t=idMapping[t]

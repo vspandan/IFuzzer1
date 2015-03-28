@@ -107,15 +107,6 @@ class GrammaticalEvolution(object):
             self.initial_Population=[]
             count=0
             for fileName in fileList:
-                # temp=""
-                # temp1=[]
-                # self.parseRepr=self.parser.parseTree(path.abspath(fileName))
-                # if self.parseRepr is not None and len(self.parseRepr)>0 and 'missing' not in self.parseRepr:
-                #     #Generates incomplete code fragment
-                #     temp,temp1 = self.parser.genCodeFrag(self.parseRepr,self.parser.extractNonTerminal(self.parseRepr),None,None,self.nT_Invld_Gen_Process,self.mutationCount,True)
-                # self.initial_Population.append(temp)
-                # self.identifiers.append(temp1)
-                # count+=1
                 f=open(path.abspath(fileName),"r")
                 self.initial_Population.append(f.read())
 
@@ -355,9 +346,6 @@ class GrammaticalEvolution(object):
             gene._wrap = self._wrap
             self.population.append(gene)
             member_no += 1
-            # gene.local_bnf['CodeFrag'] =  self.initial_Population[member_no-1]
-            # gene._identifiers=self.identifiers[member_no-1]
-            # gene.nTInvlvdGenProcess=nTInvlvdGenProcess
             gene.local_bnf["program"]=self.initial_Population[gene.member_no]
             gene.execution_timeout = self.execution_timeout
         return True;  
@@ -442,10 +430,14 @@ class GrammaticalEvolution(object):
                 child1Prg=child1.get_program()
                 child2Prg=child2.get_program()
                 
-                child1ParseTree=self.parseCode(child1Prg)
-                non_term1=self.parser.extractNonTerminal(child1ParseTree)
-                child2ParseTree=self.parseCode(child2Prg)
-                non_term2=self.parser.extractNonTerminal(child2ParseTree)
+                output=self.parseCode(child1Prg)
+                child1ParseTree=output['parsecode']
+                non_term1=output['nonTerminals']
+                child1._identifiers=output['identifiers']
+                output=self.parseCode(child2Prg)
+                child2ParseTree=output['parsecode']
+                non_term2=output['nonTerminals']
+                child2._identifiers=output['identifiers']
 
                 if self.nT_Invld_Gen_Process is not None:
                     commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
@@ -462,16 +454,9 @@ class GrammaticalEvolution(object):
                 else:
                     return child_list
 
-                #retrieves substring under selected non-terminal from both the childs and these are used in crossover 
-
                 subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,non_term1,True,selectedNt,None,len(selectedNt))
                 subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,non_term2,True,selectedNt,None,len(selectedNt))
                 
-                """
-                if child1Prg.find(selectedNt) <0 or child2Prg.find(selectedNt) <0:
-                    return [] 
-                """
-
                 try:
                     for k in selected2NTList:
                         s1 = s1.replace(selected2NTList[k],subString2[k])
@@ -483,26 +468,6 @@ class GrammaticalEvolution(object):
                 except:
                     return child_list
                         
-                """
-                #Alternate Impl
-                child1Prg_ = child1Prg[0:startPoint1]+subString2 +child1Prg[startPoint1+len(subString1):]
-                child2Prg_ = child2Prg[0:startPoint2]+subString1 +child2Prg[startPoint2+len(subString2):]
-                """
-
-                """
-                #Losing track of genes
-                #TODOcheck the binary string against child and also parent
-                child1PrgBinay_ = child1_binary[0:startPoint1*8]+ child2_binary[(startPoint2)*8:(startPoint2+len(subString2))*8] +child1Prg[(startPoint1+len(subString1))*8:]
-                child2PrgBinay_ = child2_binary[0:startPoint2*8]+ child1_binary[(startPoint1)*8:(startPoint1+len(subString1))*8] +child2Prg[(startPoint2+len(subString2))*8:]
-                child1.set_binary_gene(child1_binary)
-                child2.set_binary_gene(child2_binary)
-                #what is purpose of gene incomplete code fragment
-                incompl1=self.parseCode(child1Prg_)
-                incompl2=self.parseCode(child2Prg_)
-                child1.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl1,self.parser.extractNonTerminal(incompl1),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
-                child2.local_bnf['CodeFrag'],dummy =  self.parser.genCodeFrag(incompl2,self.parser.extractNonTerminal(incompl2),None,None,self.nT_Invld_Gen_Process,self.mutationCount)
-                """
-
                 child1.local_bnf['program']=child1Prg_
                 child1.generate_decimal_gene()
                 child1.compute_fitness()
@@ -542,10 +507,10 @@ class GrammaticalEvolution(object):
         
         for gene in mlist:
             if random() < self._mutation_rate :
-                incompl=self.parseCode(gene.get_program())
-
-                non_TerminalsList=self.parser.extractNonTerminal(incompl)
-                gene.set_identifiers(self.identifiers)
+                output=self.parseCode(gene.get_program())
+                incompl=output['parsecode']
+                non_TerminalsList=output['nonTerminals']
+                gene._identifiers=output['identifiers']
                 if len(non_TerminalsList) >0:
                     count=1
                     if random() < self.multiple_rate:
@@ -554,17 +519,6 @@ class GrammaticalEvolution(object):
                     if len(selectedNt) <=0 :
                         continue
                     gene._map_gene()
-                    """
-                    #losing track of gene
-                    position1=gene.local_bnf['CodeFrag'].find(selectedNt)
-                    position2=position1+len(selectedNt)  
-                    if position1 is not None and position2 is not None:
-                        subCode = gene.local_bnf['CodeFrag'][position2:]
-                        replCode = gene._map_variables(gene.local_bnf['CodeFrag'], True)
-                        gene.local_bnf['program']=(gene.local_bnf['CodeFrag'][0:position1]+" "+ replCode +" "+gene.local_bnf['CodeFrag'][position2:]).replace("__id__","")
-                        #gene.set_binary_gene(self._mutatebinarygene(gene.binary_gene, position1, position2))
-                        gene.generate_decimal_gene()
-                    """
                     if gene.get_fitness() != gene.get_fitness_fail() :
                         gene.local_bnf['CodeFrag']=""
                         gene.prog_generated = 1
@@ -586,22 +540,6 @@ class GrammaticalEvolution(object):
             fitness_pool[i]._generation =self._generation+1
             self.population[i]=fitness_pool[i]
             self.fitness_list[i][0] = fitness_pool[i].get_fitness()
-            
-        
-        # for rsel in self.replacement_selections:
-        #     rsel.set_fitness_list(self.fitness_list)
-
-        #     for i in rsel.select():
-        #         replaced_g = self.population[i]
-        #         if position < len(fitness_pool):
-        #             newGene = fitness_pool[position]
-        #             newGene.member_no = replaced_g.member_no
-        #             newGene._generation = self._generation + 1
-        #             newGene.local_bnf['<member_no>'] = [newGene.member_no]
-        #             self.population[newGene.member_no] = newGene
-        #             position += 1
-        #         else:
-        #             break
 
     def _continue_processing(self):
         """

@@ -1,4 +1,4 @@
-// Generated from antlr4/nl/bigo/ecmascriptparser/ECMAScript.g4 by ANTLR 4.5
+// Generated from ECMAScript.g4 by ANTLR 4.5
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -33,7 +33,7 @@ public class ECMAScriptLexer extends Lexer {
 		Default=76, If=77, Throw=78, Delete=79, In=80, Try=81, Class=82, Enum=83, 
 		Extends=84, Super=85, Const=86, Export=87, Import=88, Implements=89, Let=90, 
 		Private=91, Public=92, Interface=93, Package=94, Protected=95, Static=96, 
-		Yield=97, Identifier=98, StringLiteral=99, WhiteSpaces=100, MultiLineComment=101, 
+		Yield=97, Identifiers=98, StringLiteral=99, WhiteSpaces=100, MultiLineComment=101, 
 		SingleLineComment=102, UnexpectedCharacter=103;
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
@@ -56,7 +56,7 @@ public class ECMAScriptLexer extends Lexer {
 		"This", "With", "Default", "If", "Throw", "Delete", "In", "Try", "Class", 
 		"Enum", "Extends", "Super", "Const", "Export", "Import", "Implements", 
 		"Let", "Private", "Public", "Interface", "Package", "Protected", "Static", 
-		"Yield", "Identifier", "StringLiteral", "WhiteSpaces", "MultiLineComment", 
+		"Yield", "Identifiers", "StringLiteral", "WhiteSpaces", "MultiLineComment", 
 		"SingleLineComment", "UnexpectedCharacter", "DoubleStringCharacter", "SingleStringCharacter", 
 		"EscapeSequence", "CharacterEscapeSequence", "HexEscapeSequence", "UnicodeEscapeSequence", 
 		"SingleEscapeCharacter", "NonEscapeCharacter", "EscapeCharacter", "LineContinuation", 
@@ -98,7 +98,7 @@ public class ECMAScriptLexer extends Lexer {
 		"This", "With", "Default", "If", "Throw", "Delete", "In", "Try", "Class", 
 		"Enum", "Extends", "Super", "Const", "Export", "Import", "Implements", 
 		"Let", "Private", "Public", "Interface", "Package", "Protected", "Static", 
-		"Yield", "Identifier", "StringLiteral", "WhiteSpaces", "MultiLineComment", 
+		"Yield", "Identifiers", "StringLiteral", "WhiteSpaces", "MultiLineComment", 
 		"SingleLineComment", "UnexpectedCharacter"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
@@ -199,7 +199,7 @@ public class ECMAScriptLexer extends Lexer {
 	        }
 	        
 	        switch (this.lastToken.getType()) {
-	            case Identifier:
+	            case Identifiers:
 	            case NullLiteral:
 	            case BooleanLiteral:
 	            case This:

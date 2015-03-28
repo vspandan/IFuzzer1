@@ -9,10 +9,11 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class CodeFragmentExtractor {
 
-    public String XMLIRGenerator(String script, boolean isPrg) throws IOException {
+    public HashMap XMLIRGenerator(String script, boolean isPrg) throws IOException {
         
         ECMAScriptParser parser = null;
         if (isPrg){
@@ -26,6 +27,9 @@ public class CodeFragmentExtractor {
         final TokenStream tokens = parser.getTokenStream();
         final String[] ruleNames = parser.ruleNames;
         final StringBuffer sb = new StringBuffer();
+        final HashMap hm = new HashMap();
+        final HashSet identifiers = new HashSet();
+        final ArrayList nonTerminals = new ArrayList();
         ParseTreeWalker.DEFAULT.walk(new ECMAScriptBaseListener(){
             
 
@@ -908,7 +912,7 @@ public class CodeFragmentExtractor {
             
             @Override 
             public void enterLiteral(@NotNull ECMAScriptParser.LiteralContext ctx) {
-                if(ctx != null) {}
+
             }
             
             @Override 
@@ -918,9 +922,7 @@ public class CodeFragmentExtractor {
             
             @Override 
             public void enterNumericLiteral(@NotNull ECMAScriptParser.NumericLiteralContext ctx) {
-                if(ctx != null) {    ;   
-                    
-                }
+
             }
             
             @Override 
@@ -930,7 +932,6 @@ public class CodeFragmentExtractor {
             
             @Override 
             public void enterIdentifierName(@NotNull ECMAScriptParser.IdentifierNameContext ctx) {
-                if(ctx != null) {}
             }
             
             @Override 
@@ -1008,6 +1009,7 @@ public class CodeFragmentExtractor {
                     String Stmt = null;
                     Stmt = tokens.getText(ctx);
                     String key=ruleNames[ctx.getRuleIndex()];
+                    nonTerminals.add(key);
                     sb.append("<"+key+">");
                 }
             }
@@ -1043,16 +1045,28 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                 }
             }            
+            @Override 
+            public void enterIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx) { 
+                  if (ctx != null){
+                    identifiers.add(ctx.getText());
+                  }
+            }
+            @Override 
+            public void exitIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx) { 
+            }
 
         }, parser.program());
-        
-        return sb.toString();
+        hm.put("parsecode",sb.toString());
+        hm.put("identifiers",new ArrayList(identifiers));
+        hm.put("nonTerminals",nonTerminals);
+        return hm;
     }
 
     public static void main(String[] args) throws Exception {
         CodeFragmentExtractor c=new CodeFragmentExtractor();
         String script = "/home/spandan/Desktop/test.js";
-        System.out.println(c.XMLIRGenerator(script,false));
+        HashMap hm=c.XMLIRGenerator(script,false);
+        System.out.println(hm.get("identifiers"));
     }
 
     public HashMap<String,ArrayList> extractFrags(String script, boolean isFile) throws IOException {

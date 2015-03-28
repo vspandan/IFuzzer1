@@ -1,4 +1,4 @@
-// Generated from antlr4/nl/bigo/ecmascriptparser/ECMAScript.g4 by ANTLR 4.5
+// Generated from ECMAScript.g4 by ANTLR 4.5
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -1187,6 +1187,18 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEof(@NotNull ECMAScriptParser.EofContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
@@ -1212,4 +1224,5 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void visitErrorNode(@NotNull ErrorNode node) { }
+	
 }

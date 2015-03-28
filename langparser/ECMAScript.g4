@@ -153,7 +153,7 @@ grammar ECMAScript;
         }
         
         switch (this.lastToken.getType()) {
-            case Identifier:
+            case Identifiers:
             case NullLiteral:
             case BooleanLiteral:
             case This:
@@ -254,9 +254,9 @@ variableDeclarationList
  ;
 
 /// VariableDeclaration :
-///     Identifier Initialiser?
+///     identifier Initialiser?
 variableDeclaration
- : Identifier initialiser?
+ : identifier initialiser?
  ;
 
 /// Initialiser :
@@ -302,16 +302,16 @@ iterationStatement
 
 /// ContinueStatement :
 ///     continue ;
-///     continue [no LineTerminator here] Identifier ;
+///     continue [no LineTerminator here] identifier ;
 continueStatement
- : Continue Identifier? eos
+ : Continue identifier? eos
  ;
 
 /// BreakStatement :
 ///     break ;
-///     break [no LineTerminator here] Identifier ;
+///     break [no LineTerminator here] identifier ;
 breakStatement
- : Break Identifier? eos
+ : Break identifier? eos
  ;
 
 /// ReturnStatement :
@@ -360,9 +360,9 @@ defaultClause
  ;
 
 /// LabelledStatement :
-///     Identifier ':' Statement
+///     identifier ':' Statement
 labelledStatement
- : Identifier ':' statement
+ : identifier ':' statement
  ;
 
 /// ThrowStatement :
@@ -382,9 +382,9 @@ tryStatement
  ;
 
 /// Catch :
-///     catch ( Identifier ) Block
+///     catch ( identifier ) Block
 catchProduction
- : Catch '(' Identifier ')' block
+ : Catch '(' identifier ')' block
  ;
 
 /// Finally :
@@ -400,16 +400,16 @@ debuggerStatement
  ;
 
 /// FunctionDeclaration :
-///     function Identifier ( FormalParameterList? ) { FunctionBody }
+///     function identifier ( FormalParameterList? ) { FunctionBody }
 functionDeclaration
- : Function Identifier '(' formalParameterList? ')' '{' functionBody '}'
+ : Function identifier '(' formalParameterList? ')' '{' functionBody '}'
  ;
 
 /// FormalParameterList :
-///     Identifier
-///     FormalParameterList , Identifier
+///     identifier
+///     FormalParameterList , identifier
 formalParameterList
- : Identifier ( ',' Identifier )*
+ : identifier ( ',' identifier )*
  ;
 
 /// FunctionBody :
@@ -476,9 +476,9 @@ propertyName
  ;
     
 /// PropertySetParameterList :
-///     Identifier
+///     identifier
 propertySetParameterList
- : Identifier
+ : identifier
  ;
 
 /// Arguments :
@@ -600,11 +600,11 @@ argumentList
 ///     new MemberExpression Arguments
 ///
 /// FunctionExpression :
-///     function Identifier? ( FormalParameterList? ) { FunctionBody }
+///     function identifier? ( FormalParameterList? ) { FunctionBody }
 ///
 /// PrimaryExpression :
 ///     this
-///     Identifier
+///     identifier
 ///     Literal
 ///     ArrayLiteral
 ///     ObjectLiteral
@@ -615,7 +615,7 @@ expressionSequence
  ;
 
 singleExpression
- : Function Identifier? '(' formalParameterList? ')' '{' functionBody '}' # FunctionExpression
+ : Function identifier? '(' formalParameterList? ')' '{' functionBody '}' # FunctionExpression
  | singleExpression '[' expressionSequence ']'                            # MemberIndexExpression
  | singleExpression '.' identifierName                                    # MemberDotExpression
  | singleExpression arguments                                             # ArgumentsExpression
@@ -647,7 +647,7 @@ singleExpression
  | singleExpression '=' expressionSequence                                # AssignmentExpression
  | singleExpression assignmentOperator expressionSequence                 # AssignmentOperatorExpression
  | This                                                                   # ThisExpression
- | Identifier                                                             # IdentifierExpression
+ | identifier                                                             # IdentifierExpression
  | literal                                                                # LiteralExpression
  | arrayLiteral                                                           # ArrayLiteralExpression
  | objectLiteral                                                          # ObjectLiteralExpression
@@ -686,7 +686,7 @@ numericLiteral
  ;
 
 identifierName
- : Identifier
+ : identifier
  | reservedWord
  ;
 
@@ -747,11 +747,11 @@ futureReservedWord
  ;
 
 getter
- : {_input.LT(1).getText().startsWith("get")}? Identifier
+ : {_input.LT(1).getText().startsWith("get")}? identifier
  ;
 
 setter
- : {_input.LT(1).getText().startsWith("set")}? Identifier
+ : {_input.LT(1).getText().startsWith("set")}? identifier
  ;
 
 eos
@@ -901,8 +901,12 @@ Protected  : {strictMode}? 'protected';
 Static     : {strictMode}? 'static';
 Yield      : {strictMode}? 'yield';
 
-/// 7.6 Identifier Names and Identifiers
-Identifier
+
+identifier:
+    Identifiers;
+
+/// 7.6 identifier Names and Identifiers
+Identifiers
  : IdentifierStart IdentifierPart*
  ;
 
