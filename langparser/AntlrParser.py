@@ -11,6 +11,9 @@ from time import sleep, time
 
 import xml.etree.ElementTree as ElementTree
 
+
+globalobj=['Infinity', 'NaN', 'undefined', 'null ', 'eval', 'uneval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'Object', 'Function', 'Boolean', 'Symbol', 'Error', 'EvalError', 'InternalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError', 'Number', 'Math', 'Date', 'String', 'RegExp', 'Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'Map', 'Set', 'WeakMap', 'WeakSet', 'Promise', 'Generator', 'GeneratorFunction', 'ArrayBuffer', 'DataView', 'JSON', 'Reflect', 'Proxy', 'Iterator', 'ParallelArray', 'StopIteration']
+
 class AntlrParser(object):
 
     def __init__(self,que=None):
@@ -27,7 +30,10 @@ class AntlrParser(object):
         for child in root:
             self.position+=1
             if child.text is not None:
-                self.subcode[pos] = self.subcode[pos]+child.text
+                if child.tag == 'identifier' and child.text not in globalobj:
+                    self.subcode[pos] = self.subcode[pos]+" __id__ "
+                else:
+                    self.subcode[pos] = self.subcode[pos]+child.text
             self.subCodeGen(child,pos)
             if child.tail is not None:
                 self.subcode[pos]=self.subcode[pos]+child.tail
@@ -45,8 +51,6 @@ class AntlrParser(object):
                             self.subcode[self.position-1]=child.text
                         self.subCodeGen(child,self.position-1)
                         continue
-                if child.tag =='identifier':
-                    self.identifiers.append(child.text)
                 if child.text is not None:
                     self.out+=child.text
                 self.printChild(child,nTList)   
@@ -88,21 +92,6 @@ class AntlrParser(object):
             return self.out,selectedNTList
         if subTree: 
             return self.subcode,self.out,selectedNTList
-
-    def extractNT(self,root):
-        for child in root:
-            self.nonTerminals.append(child.tag)
-            self.extractNT(child)        
-     
-    def extractNonTerminal(self,input):        
-        if len(input)>0:
-            self.nonTerminals=[]
-            try:
-                root =ElementTree.fromstring(input)
-                self.extractNT(root)
-            except:
-                pass
-        return self.nonTerminals
 
     def parseTree(self,input,ind=False):
         if len(input)>0:

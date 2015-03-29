@@ -30,7 +30,9 @@ EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
-INCLUDE_NT=['block','ifStatement','iterationStatement','continueStatement','withStatement','switchStatement','throwStatement','tryStatement','catchProduction','initialiser','functionDeclaration','functionExpression','assignmentOperator','booleanLiteral','numericLiteral','literal','caseClause','expressionSequence','singleExpression']
+INCLUDE_NT=['block','ifStatement','iterationStatement','withStatement','labelledStatement','initialiser','expressionSequence','switchStatement','throwStatement','tryStatement','catchProduction','functionDeclaration','arrayLiteral','objectLiteral','propertyNameAndValueList','functionExpression','assignmentOperator','propertyName','numericLiteral','literal','singleExpression']
+
+Global_Objects=['Infinity', 'NaN', 'undefined', 'null ', 'eval', 'uneval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'Object', 'Function', 'Boolean', 'Symbol', 'Error', 'EvalError', 'InternalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError', 'Number', 'Math', 'Date', 'String', 'RegExp', 'Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'Map', 'Set', 'WeakMap', 'WeakSet', 'Promise', 'Generator', 'GeneratorFunction', 'ArrayBuffer', 'DataView', 'JSON', 'Reflect', 'Proxy', 'Iterator', 'ParallelArray', 'StopIteration']
 
 def options(choice):
     if choice == 1:

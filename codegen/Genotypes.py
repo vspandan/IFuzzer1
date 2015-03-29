@@ -143,68 +143,13 @@ class Genotype(object):
                     position += 1
                     continue
         
-                elif "__id__" in item or item == "Ident":
-                    t= item.replace("__id__","")
-                    if t in self._keys:
-                    	l=len(self._identifiers)
-                    	if l>0:
-                    		ident=str(self._identifiers[randint(0,l-1)])
-                    		t= ident.replace("__id__","")
-                    	else:
-                    		t="id"
-                    prg_list[position]=t
-                    position += 1
-                    continue
                 elif item in self._keys:
                     if check_stoplist and position >= 0:
-                        if item in self.nTInvlvdGenProcess:
-                            temp=""
-                            idMapping={}
-                            temp_list = split(VARIABLE_FORMAT, self._converge(item))
-                            for t in temp_list:
-                                if t == "Ident" or "__id__" in t:
-                                    t=t.replace("__id__","")
-                                    if idMapping.has_key(t):
-                                        t=idMapping[t]
-                                    else:
-                                        l=len(self._identifiers)
-                                        if l>0:
-                                            ident=str(self._identifiers[randint(0,l-1)])
-                                            t1= ident.replace("__id__","")
-                                            if t1 in self._keys:
-                                                t1="id"
-                                        else:
-                                            t1="id"
-                                        idMapping[t]=t1
-                                        t=t1
-                                temp=temp+" "+t
-                            prg_list[position] = temp
-                        elif initialMapping < 2:
+                        if initialMapping < 2:
                             prg_list[position] = self.resolve_variable(item)
                         else:
-                            temp=""
-                            idMapping={}
-                            temp_list = split(VARIABLE_FORMAT, self._converge(item))
-                            for t in temp_list:
-                                if t == "__id__" in t:
-                                    t=t.replace("__id__","")
-                                    if idMapping.has_key(t):
-                                        t=idMapping[t]
-                                    else:
-                                        l=len(self._identifiers)
-                                        if l>0:
-                                            ident=str(self._identifiers[randint(0,l-1)])
-                                            t1= ident.replace("__id__","")
-                                            if t1 in self._keys:
-                                                t1="id"
-                                        else:
-                                            t1="id"
-                                        idMapping[t]=t1
-                                        t=t1
-                                temp=temp+" "+t
-                            prg_list[position] = temp
+                            prg_list[position] = self._converge(item)
                         continue_map = True
-                        #print prg_list[position]
                 position += 1
                 
             initialMapping += 1
@@ -302,12 +247,19 @@ class Genotype(object):
 
     def de_EscapeText(self, string):
 
-        string.replace("&lt;","<")
-        string.replace("&gt;",">")
-        string.replace("&quot;","\"")
-        string.replace("&amp;","&")
-        string.replace("&apos;","\\")
-        string.replace("#pipe;",'|')
+        string=string.replace("&lt;","<")
+        string=string.replace("&gt;",">")
+        string=string.replace("&quot;","\"")
+        string=string.replace("&amp;","&")
+        string=string.replace("&apos;","\\")
+        string=string.replace("#pipe;",'|')
+        if len(self._identifiers) > 0:
+            string=string.replace("__id__",choice(self._identifiers))
+            string=string.replace("Ident",choice(self._identifiers))
+        else:
+            string=string.replace("__id__","a")
+            string=string.replace("Ident","a")
+                
               #       default:
               #             if(c>0x7e) {
               #                   sb.append("&#"+((int)c)+";");
@@ -318,6 +270,8 @@ class Genotype(object):
     def compute_fitness(self):
 
         program=self.local_bnf[BNF_PROGRAM]
+        program=self.de_EscapeText(program)
+        self.local_bnf[BNF_PROGRAM]=program
         count=0
         if len(program) == 0:
             return 0
