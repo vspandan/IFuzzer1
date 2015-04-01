@@ -8,7 +8,7 @@ from marshal import load
 from os import path,remove,kill,rename,listdir
 from threading import Thread
 from codegen.Utilities import base10tobase2, base2tobase10
-from random import randint, choice
+from random import choice
 from os.path import abspath
 from time import time,sleep
 
@@ -52,7 +52,7 @@ class Genotype(object):
         self.prev_program_history={}
         self.prog_generated=0
         self.execution_timeout = 30
-
+        self._max_depth = 0
     
     def set_keys(self, keys):
         self._keys = keys
@@ -61,7 +61,7 @@ class Genotype(object):
         geno = []
         count = 0
         while count < length * 8:
-            geno.append(str(randint(0, 1)))
+            geno.append(str(choice([0, 1])))
             count += 1
         self.binary_gene = ''.join(geno)
 
@@ -113,13 +113,13 @@ class Genotype(object):
             f = open(fileName,'r')
             d = load(f)
             f.close()
-            return d[randint(0, len(d) - 1)]
+            return choice(d)
         else:
             return self.resolve_variable(item)
             
     
     def _map_variables(self, program, check_stoplist):
-        initialMapping = 0
+        depth = 0
         def on_stoplist(item):
             status = False
             for stopitem in STOPLIST:
@@ -145,14 +145,14 @@ class Genotype(object):
         
                 elif item in self._keys:
                     if check_stoplist and position >= 0:
-                        if initialMapping < 2:
+                        if depth < self._max_depth:
                             prg_list[position] = self.resolve_variable(item)
                         else:
                             prg_list[position] = self._converge(item)
                         continue_map = True
                 position += 1
                 
-            initialMapping += 1
+            depth += 1
             program = ''.join(prg_list)
             
             prg_list = split(VARIABLE_FORMAT, str(program))
@@ -218,18 +218,12 @@ class Genotype(object):
         parser=AntlrParser()
         a,b,c,d=parser.CountNestedStructures(program)
         for temp in a:
-            if temp > 1:
                 score += temp*15
         for temp in b:
-            if temp > 1:
                 score += temp*10
         for temp in c:
-            if temp > 1:
                 score += temp*10
         for temp in d:
-            if temp > 1:
-
-
                 score += temp*5
         if "warning" in err:
             score+=300
@@ -239,40 +233,44 @@ class Genotype(object):
         self._reset_gene_position()
         if self._extend_genotype:
             self._update_genotype()
-        self.local_bnf['<fitness>'] = [str(self._fitness_fail)]
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program  
         self.compute_fitness()
 
     def de_EscapeText(self, string):
+    	indicator=False
+        if len(self._identifiers)> 0:
+            indicator=True
+    	wordList=split(VARIABLE_FORMAT, string)
+        modifiedWordList=[]
+        for word in wordList:
+    		if "&lt" in word:
+    			word=word.replace("&lt;","<")
+    		elif "&gt" in word:
+    			word=word.replace("&lt;",">")
+    		elif "&quot" in word:
+    			word=word.replace("&lt;","\"")
+    		elif "&amp" in word:
+    			word=word.replace("&lt;","&")
+    		elif "&apos" in word:
+    			word=word.replace("&apos;","\\")
+    		elif "&pipe" in word:
+    			word=word.replace("#pipe;","|")
+    		elif "_id_" in word:
+    			if indicator:
+    				word=choice(self._identifiers)
+    			else:
+    				word="a"
+    		modifiedWordList.append(word)
+        return ''.join(modifiedWordList)
 
-        string=string.replace("&lt;","<")
-        string=string.replace("&gt;",">")
-        string=string.replace("&quot;","\"")
-        string=string.replace("&amp;","&")
-        string=string.replace("&apos;","\\")
-        string=string.replace("#pipe;",'|')
-        if len(self._identifiers) > 0:
-            string=string.replace("__id__",choice(self._identifiers))
-            string=string.replace("Ident",choice(self._identifiers))
-        else:
-            string=string.replace("__id__","a")
-            string=string.replace("Ident","a")
-                
-              #       default:
-              #             if(c>0x7e) {
-              #                   sb.append("&#"+((int)c)+";");
-              #             }else
-              #                   sb.append(c);
-        return string
-
-    def compute_fitness(self):
-
+    def compute_fitness(self,firstGen=False):
+        self._fitness=self._fitness_fail
         program=self.local_bnf[BNF_PROGRAM]
-        program=self.de_EscapeText(program)
-        self.local_bnf[BNF_PROGRAM]=program
-        count=0
+        if not firstGen:
+            program=self.de_EscapeText(program)
+            self.local_bnf[BNF_PROGRAM]=program
         if len(program) == 0:
             return 0
         else:                
@@ -282,7 +280,6 @@ class Genotype(object):
                 f.write(program)
                 f.close()
                 option = choice(self.interpreter_options)
-                count+=1
                 timedout=False
                 l=[None,None]        
                 t=Thread(target=self.run_cmd,kwargs={'fi':fi,'l':l,'option':option})
@@ -308,7 +305,7 @@ class Genotype(object):
                         f.write(program)
                         f.close
                     else:
-                        if rc != 3 and count == 1:
+                        if rc != 3 or (rc == 3 and 'Syntax' not in err):
                             self._fitness = self.computeSubScore(program,err)*-1
             except Exception as ex: 
                 print ex

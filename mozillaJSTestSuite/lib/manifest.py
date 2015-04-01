@@ -324,7 +324,9 @@ def _apply_external_manifests(filename, testcase, entries, xul_tester):
             testcase.comment = entry["comment"]
             _parse_one(testcase, xul_tester)
 
-def load(location, requested_paths, excluded_paths, xul_tester, reldir='', ind=False):
+def load(location, requested_paths, excluded_paths, xul_tester, reldir=''):
+    fileList=[]
+    externalManifestEntries=None
     """
     Locates all tests by walking the filesystem starting at |location|.
     Uses xul_tester to evaluate any test conditions in the test header.
@@ -343,14 +345,13 @@ def load(location, requested_paths, excluded_paths, xul_tester, reldir='', ind=F
                     'test402-browser.js', 'test402-shell.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js'))
-
     manifestFile = os.path.join(location, 'jstests.list')
     if os.path.exists(manifestFile):
         externalManifestEntries = _parse_external_manifest(manifestFile, '')
 
     for root, basename in _find_all_js_files(location, location):
         # Skip js files in the root test directory.
-        if not ind:
+        if externalManifestEntries:
             if not root:
                 continue
 
@@ -375,15 +376,12 @@ def load(location, requested_paths, excluded_paths, xul_tester, reldir='', ind=F
         statbuf = os.stat(fullpath)
         if statbuf.st_size == 0:
             continue
-        if not ind:
-            testcase = TestCase(os.path.join("mozillaJSTestSuite", reldir, filename))
-            fileList.append(os.path.abspath("mozillaJSTestSuite/"+reldir+"/"+filename))
+        testcase = TestCase(os.path.join(location, reldir, filename))
+        fileList.append(os.path.abspath(location+"/"+reldir+"/"+filename))
+        if externalManifestEntries is not None:
             _apply_external_manifests(filename, testcase, externalManifestEntries,
-                                  xul_tester)
+                              xul_tester)
             _parse_test_header(fullpath, testcase, xul_tester)
-            tests.append(testcase)
-        else:
-            testcase = TestCase(os.path.join("generatedTestCases", reldir, filename))
-            _parse_test_header(fullpath, testcase, xul_tester)
-            tests.append(testcase)
-    return tests
+        
+        tests.append(testcase)
+    return tests,fileList

@@ -17,6 +17,8 @@ import java.util.Arrays;
 public class CodeFragmentExtractor {
 
     public HashMap XMLIRGenerator(String script, boolean isPrg) throws IOException {
+
+        final List<String> global_Objects=  Arrays.asList("Infinity", "NaN", "undefined", "null ", "eval", "uneval", "isFinite", "isNaN", "parseFloat", "parseInt", "decodeURI", "decodeURIComponent", "encodeURI", "encodeURIComponent", "escape", "unescape", "Object", "Function", "Boolean", "Symbol", "Error", "EvalError", "InternalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError", "Number", "Math", "Date", "String", "RegExp", "Array", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array", "Uint32Array", "Float32Array", "Float64Array", "Map", "Set", "WeakMap", "WeakSet", "Promise", "Generator", "GeneratorFunction", "ArrayBuffer", "DataView", "JSON", "Reflect", "Proxy", "Iterator", "ParallelArray", "StopIteration");
         
         ECMAScriptParser parser = null;
         if (isPrg){
@@ -34,7 +36,7 @@ public class CodeFragmentExtractor {
         final HashSet identifiers = new HashSet();
         final ArrayList nonTerminals = new ArrayList();
         ParseTreeWalker.DEFAULT.walk(new ECMAScriptBaseListener(){
-            
+            private boolean eosInd=false;            
 
             @Override 
             
@@ -1013,6 +1015,8 @@ public class CodeFragmentExtractor {
                     Stmt = tokens.getText(ctx);
                     String key=ruleNames[ctx.getRuleIndex()];
                     nonTerminals.add(key);
+                    if(key.equals("eos"))
+                        eosInd=true;
                     sb.append("<"+key+">");
                 }
             }
@@ -1024,6 +1028,13 @@ public class CodeFragmentExtractor {
                     String Stmt = null;
                     Stmt = tokens.getText(ctx);
                     String key=ruleNames[ctx.getRuleIndex()];
+                    
+                    if(key.equals("eos")){
+                        String s =sb.toString().trim();
+                        if (s.charAt(s.length()-1)!=';')
+                              sb.append(";");
+                        eosInd=false;
+                    }
                     sb.append("</"+key+">");
                 }
             }
@@ -1034,7 +1045,9 @@ public class CodeFragmentExtractor {
                   try{
                     String token=ctx.getText();
                     if(!token.equals("<EOF>"))
-                        sb.append(xmlEscapeText(token)+" ");
+                        sb.append(xmlEscapeText(token) + " ");
+
+
                   }
                   catch (Exception e){
                         System.out.println(e.getMessage());
@@ -1051,7 +1064,9 @@ public class CodeFragmentExtractor {
             @Override 
             public void enterIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx) { 
                   if (ctx != null){
-                    identifiers.add(ctx.getText());
+                        String id=ctx.getText();
+                        if (!global_Objects.contains(id))
+                              identifiers.add(id);
                   }
             }
             @Override 
@@ -1067,9 +1082,11 @@ public class CodeFragmentExtractor {
 
     public static void main(String[] args) throws Exception {
         CodeFragmentExtractor c=new CodeFragmentExtractor();
-        String script = "/home/spandan/Desktop/test.js";
+        String script = "/home/spandan/test.js";
         HashMap hm=c.XMLIRGenerator(script,false);
-        System.out.println(hm.get("identifiers"));
+        System.out.println(hm);
+        hm=c.extractFrags(script,false);
+        System.out.println(hm);
     }
 
     public HashMap<String,ArrayList> extractFrags(String script, boolean isFile) throws IOException {
@@ -1681,29 +1698,36 @@ public class CodeFragmentExtractor {
             
             @Override 
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
-                  if(ctx != null) {
-                    
-                    String Stmt = "";
-                    //Stmt = tokens.getText(ctx);
-                    for (int i = ctx.start.getTokenIndex(); i <= ctx.stop.getTokenIndex(); i++) {
-                        
-                        String tokenText=tokens.get(i).getText();
-                        if (tokens.get(i).getType()==98 && !global_Objects.contains(tokenText))
-                              tokenText = "__id__";
-                        Stmt += tokenText;
-                    }
-                    //System.out.println(ctx.start);
-                    String key=ruleNames[ctx.getRuleIndex()];
-                    ArrayList<String> aL = null;
-                    if (!hm.containsKey(key)){
-                        aL = new ArrayList<String>();
-                        aL.add(Stmt);
-                    }
-                    else{
-                        aL=hm.get(key);
-                        aL.add(Stmt);
-                    }
-                    hm.put(key,aL);
+                  try{
+                      if(ctx != null) {
+                          
+                          String Stmt = "";
+                          //Stmt = tokens.getText(ctx);
+                          int start = ctx.start.getTokenIndex();
+                          int stop = ctx.stop.getTokenIndex();
+                          for (int i = start; i <= stop; i++) {
+                              String tokenText=tokens.get(i).getText();
+                              if (tokens.get(i).getType()==98 && !global_Objects.contains(tokenText))
+                                    tokenText = "_id_"+tokenText;
+                              Stmt += tokenText;
+                          }
+                          //System.out.println(ctx.start);
+                          String key=ruleNames[ctx.getRuleIndex()];
+                          ArrayList<String> aL = null;
+                          if (!hm.containsKey(key)){
+                              aL = new ArrayList<String>();
+                              aL.add(Stmt);
+                          }
+                          else{
+                              aL=hm.get(key);
+                              aL.add(Stmt);
+                          }
+                          hm.put(key,aL);
+                      }
+
+                  }
+                catch(Exception e){
+
                 }
             }
             

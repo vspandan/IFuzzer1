@@ -17,9 +17,6 @@ CrashListFile2="CrashList2"
 TypeErrorList2="TypeErrorList2"
 
 
-TargetDirectory =  "generatedTestCases"
-TestCasesDirectory= "testsamples"
-
 CREATE_FRAG_POOL=False
 GEN_PRGS=True
 GUI=False
@@ -30,7 +27,7 @@ EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js',
                     'testBuiltInObject.js', 'testIntl.js',
                     'js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','os.js'))
 
-INCLUDE_NT=['block','ifStatement','iterationStatement','withStatement','labelledStatement','initialiser','expressionSequence','switchStatement','throwStatement','tryStatement','catchProduction','functionDeclaration','arrayLiteral','objectLiteral','propertyNameAndValueList','functionExpression','assignmentOperator','propertyName','numericLiteral','literal','singleExpression']
+INCLUDE_NT=['block','ifStatement','iterationStatement','withStatement','labelledStatement','expressionSequence','switchStatement','throwStatement','tryStatement','catchProduction','functionDeclaration','arrayLiteral','objectLiteral','propertyNameAndValueList','functionExpression','assignmentOperator','propertyName','numericLiteral','literal','singleExpression']
 
 Global_Objects=['Infinity', 'NaN', 'undefined', 'null ', 'eval', 'uneval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'Object', 'Function', 'Boolean', 'Symbol', 'Error', 'EvalError', 'InternalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError', 'Number', 'Math', 'Date', 'String', 'RegExp', 'Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'Map', 'Set', 'WeakMap', 'WeakSet', 'Promise', 'Generator', 'GeneratorFunction', 'ArrayBuffer', 'DataView', 'JSON', 'Reflect', 'Proxy', 'Iterator', 'ParallelArray', 'StopIteration']
 
@@ -41,16 +38,9 @@ def options(choice):
         return lower(raw_input("Do you want to create fragment pool ? Y/N : "))
 
 if __name__ == "__main__":
-    try:
         sys.setrecursionlimit(100000)
         print datetime.now()
-        if not os.path.isdir(TargetDirectory):
-            os.mkdir(TargetDirectory)
-        if not os.path.isdir("database"):
-            os.mkdir("database")
-        if not os.path.exists(TargetDirectory+"/shell.js"):
-            f=open(TargetDirectory+"/shell.js","a+")
-            f.close()
+        
         while True:
             input=options(0)
             if input in ['y','n']:
@@ -83,8 +73,6 @@ if __name__ == "__main__":
 
 
         JS_SHELL_OPTIONS=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
-        main(TestCasesDirectory,TargetDirectory,CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
+        main(CrashListFile2,TypeErrorList2,JS_SHELL_OPTIONS,JS_SHELL_PATH2,GUI,GEN_PRGS,CREATE_FRAG_POOL,EXCLUDE_FILES,INCLUDE_NT)
         
         print datetime.now()
-    except:
-        pass       

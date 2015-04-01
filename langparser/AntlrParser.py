@@ -22,8 +22,11 @@ class AntlrParser(object):
         self.nonTerminals=[]
         self.values=[]
         self.subcode ={}
-        gateway = JavaGateway()
-        self.parser = gateway.entry_point.getCodeFragmentExtractor()
+        self.gateway = JavaGateway()
+        self.parser = self.gateway.entry_point.getCodeFragmentExtractor()
+
+    def shutdown(self):
+        self.gateway.shutdown()
         
 
     def subCodeGen(self,root,pos):
@@ -31,7 +34,7 @@ class AntlrParser(object):
             self.position+=1
             if child.text is not None:
                 if child.tag == 'identifier' and child.text not in globalobj:
-                    self.subcode[pos] = self.subcode[pos]+" __id__ "
+                    self.subcode[pos] = self.subcode[pos]+" _id_"+child.text
                 else:
                     self.subcode[pos] = self.subcode[pos]+child.text
             self.subCodeGen(child,pos)
@@ -57,11 +60,26 @@ class AntlrParser(object):
                 if child.tail is not None:
                     self.out+=child.tail
 
+    def extractNT(self,root):
+        for child in root:
+            self.nonTerminals.append(child.tag)
+            self.extractNT(child)        
+     
+    def extractNonTerminal(self,input):        
+        if len(input)>0:
+            self.nonTerminals=[]
+            try:
+                root =ElementTree.fromstring(input)
+                self.extractNT(root)
+            except:
+                pass
+        return self.nonTerminals
+
     def genCodeFrag(self, input,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
         selectedNTList={}
         self.subcode={}
         self.out=""
-        self.position=0
+        
         try: 
             if len(input) > 0 and len(nT) != 0:
                 root=None
@@ -80,11 +98,13 @@ class AntlrParser(object):
                         selectedNt=nonTerminal[internalCount]
                         indices = [i for i, x in enumerate(nT) if x == nonTerminal[internalCount]]
                         selected=choice(indices)
+
                     internalCount+=1
                     selectedNTList[selected]=selectedNt
                     root = ElementTree.fromstring(input)
                     if root.text is not None:
                         self.out=root.text
+                self.position=0
                 self.printChild(root,selectedNTList)
         except:
             pass
@@ -96,7 +116,11 @@ class AntlrParser(object):
     def parseTree(self,input,ind=False):
         if len(input)>0:
             output = self.parser.XMLIRGenerator(input,ind)
-            return output
+            identifiers_JavaObj=output['identifiers']
+            identifiers=[]
+            for id in identifiers_JavaObj:
+                identifiers.append(id)
+            return output,identifiers
         return ""
                 
     def extractCodeFrag(self, fileName):

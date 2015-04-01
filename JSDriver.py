@@ -19,6 +19,7 @@ from mozillaJSTestSuite.lib.progressbar import ProgressBar
 
 import mozillaJSTestSuite.lib.manifest as manifest
 
+from DD import deltaDebuger
 
 from langparser.AntlrParser import AntlrParser
 import datetime
@@ -256,7 +257,7 @@ def parse_args(js_shell_path=None):
 
     return (options, requested_paths, excluded_paths)
 
-def load_tests(options, requested_paths, excluded_paths, createFragPool):
+def load_tests(options, requested_paths, excluded_paths, createFragPool,test_dir):
     """
     Returns a tuple: (skipped_tests, test_list)
         skip_list: [iterable<Test>] Tests found but skipped.
@@ -275,9 +276,8 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
             xul_info = manifest.XULInfo(xul_abi, xul_os, xul_debug)
         xul_tester = manifest.XULInfoTester(xul_info, options.js_shell)
 
-    test_dir = dirname(abspath(__file__))
-    test_dir = test_dir + "/mozillaJSTestSuite"
-    test_list = manifest.load(test_dir, requested_paths, excluded_paths,
+    
+    test_list,fileList = manifest.load(test_dir, requested_paths, excluded_paths,
                               xul_tester)
     skip_list = []
 
@@ -318,17 +318,17 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
                 print (datetime.datetime.now())
             
 
-    	fileList = manifest.fileList
-    	print("Considering " + str(len(fileList)) + " files for learning code fragments")
+        
+        print("Considering " + str(len(fileList)) + " files for learning code fragments")
         if not os.path.exists("database"):
             makedirs("database")
         
         count=0
         totalFileList=fileList
-
+        a=AntlrParser(que)
         for f in fileList:
                 que=Queue.Queue()
-                a=AntlrParser(que)
+                a.que=que
                 t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f})
                 t.start()
                 t.join(90)
@@ -341,9 +341,9 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
                         #print "killed"
                         continue
                 if not timeout:
-                    t=que.get()
-                    if t is not None:
-                        codeFragPool.append(t)
+                    res=que.get()
+                    if res is not None:
+                        codeFragPool.append(res)
                         count+=1
                 
                 if count % 200 == 0:
@@ -402,14 +402,19 @@ def load_tests(options, requested_paths, excluded_paths, createFragPool):
         skip_list = [_ for _ in test_list if not _.enable]
         test_list = [_ for _ in test_list if _.enable]
 
-    return skip_list, test_list
+    return skip_list, test_list, fileList
 
-def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shell_options,js_shell_path, gui=False, genProgs=True,createFragPool=False,excludeFiles=[],nTInvlvdGenProcess=[]): 
+def main(crashListFile,typeErrorFlist,js_shell_options,js_shell_path, gui=False, genProgs=True,createFragPool=False,excludeFiles=[],nTInvlvdGenProcess=[]): 
     options, requested_paths, excluded_paths = parse_args(js_shell_path)
     if options.js_shell is not None and not isfile(options.js_shell):
         print('Could not find shell at given path.')
         return 1
-    skip_list, test_list = load_tests(options, requested_paths, excluded_paths,createFragPool)
+    
+    targetDirectoryName="generatedTestCases"
+    test_dir = "mozillaJSTestSuite"
+    # test_dir = targetDirectory          
+
+    skip_list, test_list, startfileList = load_tests(options, requested_paths, excluded_paths,createFragPool,test_dir)
 
     if not test_list:
         print('no tests selected')
@@ -441,26 +446,34 @@ def main(testCasesDirectory,targetDirectory,crashListFile,typeErrorFlist,js_shel
     os.environ['TZ'] = 'PST8PDT'
     # Force date strings to English.
     os.environ['LC_TIME'] = 'en_US.UTF-8'
-
-    results = None
+    # results = ResultsSink(options, len(skip_list) + len(test_list) , crashListFile, typeErrorFlist) 
+    # for t in skip_list:
+    #     results.push(NullTestOutput(t))
+    # run_tests(options, test_list, results)
+    iteration=0
+    targetDirectory=targetDirectoryName
+    inputfileList=[]
     try:
         while True:
-            location = os.path.join(os.path.dirname(__file__), targetDirectory)
+            if not os.path.isdir(targetDirectory):
+                os.mkdir(targetDirectory)
+            if not os.path.exists(targetDirectory+"/shell.js"):
+                f=open(targetDirectory+"/shell.js","a+")
+                f.close()
             if gui:
                 from GECodeGeneratorGUI import runFuzzer 
             else:
                 from GECodeGenerator import runFuzzer 
             if genProgs:
-                runFuzzer(testCasesDirectory,targetDirectory,js_shell_path,js_shell_options,excludeFiles,nTInvlvdGenProcess)
-            if os.path.exists(location):
-                test_list1=manifest.load(location,  requested_paths, excluded_paths, xul_tester,'',True)
-                results = ResultsSink(options, len(skip_list) + len(test_list) + len(test_list1), crashListFile, typeErrorFlist)
-                for t in skip_list:
-                    results.push(NullTestOutput(t))
-                #results = ResultsSink(options, len(test_list1), crashListFile, typeErrorFlist)
-                run_tests(options, test_list, results)
-                run_tests(options, test_list1, results)
-            break
+                inputfileList.extend(startfileList)
+                inputfileList=runFuzzer(inputfileList,targetDirectory,js_shell_path,js_shell_options,excludeFiles,nTInvlvdGenProcess)
+            targetDirectory=deltaDebuger(targetDirectory)
+            skip_list, test_list, fileList = load_tests(options, requested_paths, excluded_paths,False,targetDirectory)
+            results = ResultsSink(options, len(test_list) , crashListFile, typeErrorFlist) 
+            run_tests(options, test_list, results)
+            
+            targetDirectory=targetDirectoryName+str(iteration)
+            iteration+=1
     finally:
         os.chdir(curdir) 
 
