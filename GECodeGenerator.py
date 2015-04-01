@@ -17,9 +17,9 @@ from random import randint
 
 FILECOUNT = 0
 
-Population_size=10
+Population_size=100
 Timeout = 5
-Generations=3
+Generations=1000
 
 
 #Author: Spandan Veggalam
