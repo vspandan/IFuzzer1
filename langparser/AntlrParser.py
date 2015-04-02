@@ -120,7 +120,7 @@ class AntlrParser(object):
             identifiers=[]
             for id in identifiers_JavaObj:
                 identifiers.append(id)
-            return output,identifiers
+            return output['parsecode'],identifiers
         return ""
                 
     def extractCodeFrag(self, fileName):
@@ -142,53 +142,54 @@ class AntlrParser(object):
     
     def Analayse(self,root,aInd=False,bInd=False,cInd=False,dInd=False):
         if root is not None:
-            if root.tag == 'iterationStatement':
-                self.aCount+=1
-                aInd=True
-            elif root.tag == 'functionExpression':
-            #if root.tag == 'caseClauses':
-                self.bCount+=1
-                aInd=True
-            elif root.tag == 'ifStatement':
-                self.cCount+=1
-                aInd=True
-            elif root.tag == 'functionDeclaration':
-                self.dCount+=1
-                dInd=True
-            for child in root:
-                self.Analayse(child,aInd,bInd,cInd,dInd)
-            if root.tag == 'iterationStatement':
-                self.a.append(self.aCount)
-                self.aCount=0
-                aInd=False
-            elif root.tag == 'functionExpression':
-                self.b.append(self.bCount)
-                self.bCount=0
-                bInd=False
-            elif root.tag == 'ifStatement':
-                self.c.append(self.cCount)
-                self.cCount=0
-                cInd=False
-            elif root.tag == 'functionDeclaration':
-                self.d.append(self.dCount)
-                self.dCount=0
-                dInd=False
+			if root.tag == 'iterationStatement':
+				self.aCount+=1
+				aInd=True
+			elif root.tag == 'functionExpression':
+			#if root.tag == 'caseClauses':
+				self.bCount+=1
+				aInd=True
+			elif root.tag == 'ifStatement':
+				self.cCount+=1
+				aInd=True
+			elif root.tag == 'functionDeclaration':
+				self.dCount+=1
+				dInd=True
+			for child in root:
+				self.Analayse(child,aInd,bInd,cInd,dInd)
+			if root.tag == 'iterationStatement':
+				self.a.append(self.aCount)
+				self.aCount=0
+				aInd=False
+			elif root.tag == 'functionExpression':
+				self.b.append(self.bCount)
+				self.bCount=0
+				bInd=False
+			elif root.tag == 'ifStatement':
+				self.c.append(self.cCount)
+				self.cCount=0
+				cInd=False
+			elif root.tag == 'functionDeclaration':
+				self.d.append(self.dCount)
+				self.dCount=0
+				dInd=False
 
     def CountNestedStructures(self,input):
-		self.aCount=0
-		self.bCount=0
-		self.cCount=0
-		self.dCount=0
-		self.a=[]
-		self.b=[]
-		self.c=[]
-		self.d=[]
-		try:
-			root = ElementTree.fromstring(self.parseTree(input,True))
-			self.Analayse(root)
-		except:
-			pass
-		return (self.a,self.b,self.c,self.d)                 
+    	self.aCount=0
+    	self.bCount=0
+    	self.cCount=0
+    	self.dCount=0
+    	self.a=[]
+    	self.b=[]
+    	self.c=[]
+    	self.d=[]
+    	try:
+    		output, ident = self.parseTree(input,True)
+    		root = ElementTree.fromstring(output)
+    		self.Analayse(root)
+    	except:
+    		pass
+    	return (self.a,self.b,self.c,self.d)                 
 
 if __name__ == '__main__':
     a= AntlrParser()

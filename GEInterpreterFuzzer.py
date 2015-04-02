@@ -11,7 +11,7 @@ from os.path import isfile, join, isdir, exists, abspath
 JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
 
-JS_SHELL_OPTIONS1=[' -f ', ' -Z 1 -f',' -Z 0 -f', ' -j -f',' -m -f',' -p -f',' -m -a -f']
+JS_SHELL_OPTIONS1=[' -w -f ', ' -w -Z 1 -f',' -w -Z 0 -f', ' -w -j -f',' -w -m -f',' -w -p -f',' -w -m -a -f']
 JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f',         ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
 
 targetDirectory="testsamples/tests_67eac0234f15"
@@ -122,7 +122,7 @@ def main(fileList):
                 from GECodeGeneratorGUI import runFuzzer 
             else:
                 from GECodeGenerator import runFuzzer 
-            generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH2,JS_SHELL_OPTIONS,EXCLUDE_FILES,INCLUDE_NT)
+            generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
             fileList=generatedFileList
             targetDirectory=targetDirectoryName+str(iteration)
             iteration+=1
@@ -137,7 +137,6 @@ if __name__ == "__main__":
     while True:
         input=options(0)
         if input in ['y','n']:
-            print input
             if input=='y':
                 fileList=os.listdir("database")
                 if len(fileList):

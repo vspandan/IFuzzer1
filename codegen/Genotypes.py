@@ -26,6 +26,7 @@ class Genotype(object):
                         max_gene_length,
                         member_no,interpreter_Shell,interpreter_options):
         self._keys = []        
+        self._generation=0
         self.member_no = member_no
         self.local_bnf = {}
         self._max_program_length = None
@@ -53,6 +54,7 @@ class Genotype(object):
         self.prog_generated=0
         self.execution_timeout = 30
         self._max_depth = 0
+        self.err = ""
     
     def set_keys(self, keys):
         self._keys = keys
@@ -119,67 +121,71 @@ class Genotype(object):
             
     
     def _map_variables(self, program, check_stoplist):
-        depth = 0
-        def on_stoplist(item):
-            status = False
-            for stopitem in STOPLIST:
-                if item.find(stopitem) > -1:
-                    status = True
+        try:
+            depth = 0
+            def on_stoplist(item):
+                status = False
+                for stopitem in STOPLIST:
+                    if item.find(stopitem) > -1:
+                        status = True
 
-            return status
+                return status
 
-        self.errors = []
-        prg_list = split(VARIABLE_FORMAT, str(program))
-        while True:
-
-            position = 0
-            continue_map = False
-            while position < len(prg_list):
-                #TODO check this process
-                item = prg_list[position]
-                
-                if item in self.keywords:
-                    prg_list[position]=lower(item)
-                    position += 1
-                    continue
-        
-                elif item in self._keys:
-                    if check_stoplist and position >= 0:
-                        if depth < self._max_depth:
-                            prg_list[position] = self.resolve_variable(item)
-                        else:
-                            prg_list[position] = self._converge(item)
-                        continue_map = True
-                position += 1
-                
-            depth += 1
-            program = ''.join(prg_list)
-            
+            self.errors = []
             prg_list = split(VARIABLE_FORMAT, str(program))
-            elapsed = datetime.now() - self.starttime
+            while True:
 
-            #TIMEOUT PARAMETER
-            """
-            if check_stoplist:
-                if elapsed.seconds > self._timeouts[TIMEOUT_PROG_EXECUTE]:
-                    msg = "elapsed time greater than program timeout"
-                    self.errors.append(msg)
-                    raise StandardError(msg)
-            else:
-                if elapsed.seconds > self._timeouts[TIMEOUT_PROG_BUILD]:
-                    msg = "elapsed time greater than preprogram timeout"
-                    self.errors.append(msg)
-                    raise StandardError(msg)
+                position = 0
+                continue_map = False
+                while position < len(prg_list):
+                    #TODO check this process
+                    item = prg_list[position]
+                    
+                    if item in self.keywords:
+                        prg_list[position]=lower(item)
+                        position += 1
+                        continue
+            
+                    elif item in self._keys:
+                        if check_stoplist and position >= 0:
+                            if depth < self._max_depth:
+                                prg_list[position] = self.resolve_variable(item)
+                            else:
+                                prg_list[position] = self._converge(item)
+                            continue_map = True
+                    position += 1
+                    
+                depth += 1
+                program = ''.join(prg_list)
+                
+                prg_list = split(VARIABLE_FORMAT, str(program))
+                elapsed = datetime.now() - self.starttime
 
-            if len(program) > self._max_program_length:
-                msg = "program length, %s is beyond max program length: %s" % (
-                            len(program), self._max_program_length)
-                self.errors.append(msg)
-                self._fitness = self._fitness_fail
-                continue_map = False;
-            """
-            if continue_map is False:
-                return program
+                #TIMEOUT PARAMETER
+                """
+                if check_stoplist:
+                    if elapsed.seconds > self._timeouts[TIMEOUT_PROG_EXECUTE]:
+                        msg = "elapsed time greater than program timeout"
+                        self.errors.append(msg)
+                        raise StandardError(msg)
+                else:
+                    if elapsed.seconds > self._timeouts[TIMEOUT_PROG_BUILD]:
+                        msg = "elapsed time greater than preprogram timeout"
+                        self.errors.append(msg)
+                        raise StandardError(msg)
+
+                if len(program) > self._max_program_length:
+                    msg = "program length, %s is beyond max program length: %s" % (
+                                len(program), self._max_program_length)
+                    self.errors.append(msg)
+                    self._fitness = self._fitness_fail
+                    continue_map = False;
+                """
+                if continue_map is False:
+                    return program
+
+        except:
+            return ""
 
     def _get_codon(self):
         position, sequence_no = self._position
@@ -226,6 +232,7 @@ class Genotype(object):
         for temp in d:
                 score += temp*5
         if "warning" in err:
+            print err
             score+=300
         return score
 
@@ -296,14 +303,17 @@ class Genotype(object):
                             pass
                 else:
                     (out,err,rc)=l[1]
+                    if "timeout" in err or "terminating" in err:
+                        return
                     if rc and rc not in [0,1,2,3,4] :
-                        self._fitness=self._fitness+self._fitness_fail*-1
-                        FILECOUNT = len(listdir("generatedTestCases"))+1 
-                        newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
-                        program+="\n//"+option
-                        f=open(newFile,'w')
-                        f.write(program)
-                        f.close
+                        if self._generation != 0:
+                            self._fitness=self._fitness+self._fitness_fail*-1
+                            FILECOUNT = len(listdir("generatedTestCases"))+1 
+                            newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                            program+="\n//"+option
+                            f=open(newFile,'w')
+                            f.write(program)
+                            f.close
                     else:
                         if rc != 3 or (rc == 3 and 'Syntax' not in err):
                             self._fitness = self.computeSubScore(program,err)*-1

@@ -1076,7 +1076,6 @@ public class CodeFragmentExtractor {
         }, parser.program());
         hm.put("parsecode",sb.toString());
         hm.put("identifiers",new ArrayList(identifiers));
-        hm.put("nonTerminals",nonTerminals);
         return hm;
     }
 

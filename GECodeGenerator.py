@@ -18,8 +18,8 @@ from random import randint
 FILECOUNT = 0
 
 Population_size=100
-Timeout = 5
-Generations=1000
+Timeout = 2
+Generations=500
 
 
 #Author: Spandan Veggalam
@@ -49,7 +49,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_execution_timeout(Timeout)
                 
                 ges.set_fitness_selections(
-                    FitnessElites(ges.fitness_list, 0.4))
+                    FitnessElites(ges.fitness_list, 0.1))
                 
                 ges.set_crossover_rate(float(0.4))
                 ges.set_mutation_rate(float(0.8))
@@ -81,13 +81,10 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
 
                 if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
                     ges.run()
-                    # index=ges.run()
-                    # print index
-                    # gene = ges.population[index]
                     for gene in ges.population:
-                        print gene.get_program()
                         if gene.get_fitness() != gene.get_fitness_fail() :
                             generatedPrg= gene.get_program()
+                            print generatedPrg
                             newFile=targetDirectory+"/"+str(filecount)+".js"
                             filecount+=1
                             FileList.append(newFile)
@@ -100,9 +97,6 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
         while True:
             tempList=[]
             FILECOUNT = len(listdir(targetDirectory))+1 
-            if FILECOUNT > 2000:
-                print FileList
-                return FileList
             while len(tempList)<Population_size:
                 t=TestCases[randint(0,total)]
                 if t not in tempList:
@@ -112,7 +106,9 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             count+=1
             p=Process(target=process, kwargs={'fil':tempList,'filecount':FILECOUNT})
             p.start()
-            p.join(Timeout * Generations * Population_size / 2)
+            p.join( Population_size * Generations )
             if p.is_alive():
                 p.terminate()
+            import sys
+            sys.exit()
     return initialize()
