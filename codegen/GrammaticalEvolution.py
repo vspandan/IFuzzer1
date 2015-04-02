@@ -423,8 +423,10 @@ class GrammaticalEvolution(object):
             length -= 1
         if length >= 2:
             for i in xrange(0, length, 2):
-                parent1 = flist[i]
-                parent2 = flist[i + 1]
+                parent1 = choice(flist)
+                flist.remove(parent1)
+                parent2 = choice(flist)
+                flist.remove(parent2)
 
                 if randint(0, 1):
                         child1 = deepcopy(parent1)
