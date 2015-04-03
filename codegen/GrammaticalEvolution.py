@@ -101,12 +101,6 @@ class GrammaticalEvolution(object):
         self.set_bnf(bnf)
     
     def parseCode(self,codeFragment):
-        from time import time
-        fi="/tmp/"+str(int(time()*1000))
-        f=open(fi,"a")
-        f.write(codeFragment)
-        f.close()
-        remove(fi)
         return self.parser.parseTree(codeFragment,True)
     
     def _prepareInitial_Population (self,fileList):
@@ -322,9 +316,12 @@ class GrammaticalEvolution(object):
 
     def run(self, starting_generation=0):
         self._generation = starting_generation
+        starttime=time()
         self._compute_fitness()
+        print "completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds"
         # self.preselect()
         while True:
+            starttime=time()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
             if self._continue_processing() and self.fitness_list.best_value() != self._fitness_fail:
@@ -333,6 +330,7 @@ class GrammaticalEvolution(object):
                 self._compute_fitness()
             else:
                 break
+            print "completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds"
       
     def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess):
         self.nT_Invld_Gen_Process=nTInvlvdGenProcess
@@ -366,7 +364,6 @@ class GrammaticalEvolution(object):
 
         childList=[]
         while len(childList) + len(self._pre_selected) < self._population_size:
-            print len(childList)
             ch=choice([0,1])
             fitness_pool = self._evaluate_fitness()
             if ch == 1:
@@ -413,87 +410,91 @@ class GrammaticalEvolution(object):
 
     def _perform_crossovers(self, flist):
         child_list = []
-        length = int(round(self._crossover_rate * float(self._population_size)))
-        """
-        If no of fitness selections is less than no of indv undergoing crossover, than only no equal to no of fitness selections are allowed to undergo process.
-        """
-        if len(flist) < length:
-            length=len(flist)
-        if length % 2 == 1:
-            length -= 1
-        if length >= 2:
-            for i in xrange(0, length, 2):
-                parent1 = choice(flist)
-                flist.remove(parent1)
-                parent2 = choice(flist)
-                flist.remove(parent2)
+        try:
+            
+            length = int(round(self._crossover_rate * float(self._population_size)))
+            """
+            If no of fitness selections is less than no of indv undergoing crossover, than only no equal to no of fitness selections are allowed to undergo process.
+            """
+            if len(flist) < length:
+                length=len(flist)
+            if length % 2 == 1:
+                length -= 1
+            if length >= 2:
+                for i in xrange(0, length, 2):
+                    parent1 = choice(flist)
+                    flist.remove(parent1)
+                    parent2 = choice(flist)
+                    flist.remove(parent2)
 
-                if randint(0, 1):
-                        child1 = deepcopy(parent1)
-                        child2 = deepcopy(parent2)
-                else:
-                        child1 = deepcopy(parent2)
-                        child2 = deepcopy(parent1)
-                
-                child1_binary = child1.binary_gene
-                child2_binary = child2.binary_gene
-                
-                child1Prg=child1.get_program()
-                child2Prg=child2.get_program()
-                
-                child1ParseTree,child1._identifiers=self.parseCode(child1Prg)
-                non_term1=self.parser.extractNonTerminal(child1ParseTree)
-
-                child2ParseTree,child2._identifiers=self.parseCode(child2Prg)
-                non_term2=self.parser.extractNonTerminal(child2ParseTree)
-
-                if self.nT_Invld_Gen_Process is not None:
-                    commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
-                else:
-                    commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
-
-                count=1
-                if round(random(),1) < self.multiple_rate:
-                    count=int(self.crossoverCount*(round(random(),1)))+1        
-                selectedNt=[]
-                if len(commonNonTerm) > 0:
-                    for i in range(count):
-                        selectedNt.append(choice(commonNonTerm))
-                else:
-                    return child_list
-
-                subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,non_term1,True,selectedNt,None,len(selectedNt))
-                subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,non_term2,True,selectedNt,None,len(selectedNt))
-                
-                try:
-                    for k in selected2NTList:
-                        s1 = s1.replace(selected2NTList[k],subString2[k])
-                    for k in selected1NTList:
-                        s2 = s2.replace(selected1NTList[k],subString1[k])
-                    child1Prg_=s1
-                    child2Prg_=s2
-                
-                except:
-                    return child_list
-                        
-                child1.local_bnf['program']=child1Prg_
-                child1.generate_decimal_gene()
-                child1.compute_fitness()
-                child2.local_bnf['program']=child2Prg_
-                child2.generate_decimal_gene()
-                child2.compute_fitness()
-                if child1.get_fitness()!= self._fitness_fail or child1.get_fitness()!= self._fitness_fail:
-                    child1.prog_generated = 1
-                    child2.prog_generated = 1
-                    child1.local_bnf['CodeFrag']=""
-                    child2.local_bnf['CodeFrag']=""
-                    if self._children_per_crossover == 2:
-                        child_list.append(child1)
-                        child_list.append(child2)
+                    if randint(0, 1):
+                            child1 = deepcopy(parent1)
+                            child2 = deepcopy(parent2)
                     else:
-                        child_list.append(child1)
-                
-        return child_list
+                            child1 = deepcopy(parent2)
+                            child2 = deepcopy(parent1)
+                    
+                    child1_binary = child1.binary_gene
+                    child2_binary = child2.binary_gene
+                    
+                    child1Prg=child1.get_program()
+                    child2Prg=child2.get_program()
+                    
+                    child1ParseTree,child1._identifiers=self.parseCode(child1Prg)
+                    non_term1=self.parser.extractNonTerminal(child1ParseTree)
+
+                    child2ParseTree,child2._identifiers=self.parseCode(child2Prg)
+                    non_term2=self.parser.extractNonTerminal(child2ParseTree)
+
+                    if self.nT_Invld_Gen_Process is not None:
+                        commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
+                    else:
+                        commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
+
+                    count=1
+                    if round(random(),1) < self.multiple_rate:
+                        count=int(self.crossoverCount*(round(random(),1)))+1        
+                    selectedNt=[]
+                    if len(commonNonTerm) > 0:
+                        for i in range(count):
+                            selectedNt.append(choice(commonNonTerm))
+                    else:
+                        return child_list
+
+                    subString1,s1,selected1NTList=self.parser.genCodeFrag(child1ParseTree,non_term1,True,selectedNt,None,len(selectedNt))
+                    subString2,s2,selected2NTList=self.parser.genCodeFrag(child2ParseTree,non_term2,True,selectedNt,None,len(selectedNt))
+                    
+                    try:
+                        for k in selected2NTList:
+                            s1 = s1.replace(selected2NTList[k],subString2[k])
+                        for k in selected1NTList:
+                            s2 = s2.replace(selected1NTList[k],subString1[k])
+                        child1Prg_=s1
+                        child2Prg_=s2
+                    
+                    except:
+                        return child_list
+                            
+                    child1.local_bnf['program']=child1Prg_
+                    child1.generate_decimal_gene()
+                    child1.compute_fitness()
+                    child2.local_bnf['program']=child2Prg_
+                    child2.generate_decimal_gene()
+                    child2.compute_fitness()
+                    if child1.get_fitness()!= self._fitness_fail or child1.get_fitness()!= self._fitness_fail:
+                        child1.prog_generated = 1
+                        child2.prog_generated = 1
+                        child1.local_bnf['CodeFrag']=""
+                        child2.local_bnf['CodeFrag']=""
+                        if self._children_per_crossover == 2:
+                            child_list.append(child1)
+                            child_list.append(child2)
+                        else:
+                            child_list.append(child1)
+                    
+            return child_list
+        except:
+            return child_list
 
         
     def _mutatebinarygene(self, gene, position1, position2):
@@ -572,8 +573,6 @@ class GrammaticalEvolution(object):
         for gene in self.population:
             self.fitness_list[gene.member_no][0]=gene.get_fitness()
 
-        print self.fitness_list_new
-        print self.fitness_list
 
     def _continue_processing(self):
         """

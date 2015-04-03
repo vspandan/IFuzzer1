@@ -84,7 +84,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                     for gene in ges.population:
                         if gene.get_fitness() != gene.get_fitness_fail() :
                             generatedPrg= gene.get_program()
-                            print generatedPrg
+                            # print generatedPrg
                             newFile=targetDirectory+"/"+str(filecount)+".js"
                             filecount+=1
                             FileList.append(newFile)
@@ -94,8 +94,9 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             
         count=0
         total=len(TestCases)-1
+        tempList=[]
         while True:
-            tempList=[]
+            
             FILECOUNT = len(listdir(targetDirectory))+1 
             while len(tempList)<Population_size:
                 t=TestCases[randint(0,total)]
@@ -109,6 +110,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             p.join( Population_size * Generations )
             if p.is_alive():
                 p.terminate()
-            import sys
-            sys.exit()
+            # import sys
+            # sys.exit()
+            tempList=FileList
     return initialize()

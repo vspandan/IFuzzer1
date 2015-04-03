@@ -7,6 +7,7 @@ from subprocess import Popen,PIPE
 from marshal import load
 from os import path,remove,kill,rename,listdir
 from threading import Thread
+from multiprocessing import Process, Queue
 from codegen.Utilities import base10tobase2, base2tobase10
 from random import choice
 from os.path import abspath
@@ -48,7 +49,6 @@ class Genotype(object):
         self.errors = []
         self.interpreter_Shell=interpreter_Shell
         self.interpreter_options=interpreter_options
-        self.score=0
         self.nTInvlvdGenProcess=[]
         self.prev_program_history={}
         self.prog_generated=0
@@ -219,31 +219,32 @@ class Genotype(object):
         self.set_binary_gene(self._dec2bin_gene(self.decimal_gene))
 
     def computeSubScore (self, program,err):
-        score=0
         from langparser.AntlrParser import AntlrParser
         parser=AntlrParser()
         a,b,c,d=parser.CountNestedStructures(program)
         for temp in a:
-                score += temp*15
+                self.score += temp*15
         for temp in b:
-                score += temp*10
+                self.score += temp*10
         for temp in c:
-                score += temp*10
+                self.score += temp*10
         for temp in d:
-                score += temp*5
+                self.score += temp*5
         if "warning" in err:
             print err
-            score+=300
-        return score
+            self.score+=300
+        return self.score
 
     def _map_gene(self):
+        self.score=0
         self._reset_gene_position()
         if self._extend_genotype:
             self._update_genotype()
         program = self._map_variables(self.local_bnf['CodeFrag'], True)
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program  
-        self.compute_fitness()
+        #True-Mutation
+        self.compute_fitness(False,True)
 
     def de_EscapeText(self, string):
     	indicator=False
@@ -272,73 +273,80 @@ class Genotype(object):
     		modifiedWordList.append(word)
         return ''.join(modifiedWordList)
 
-    def compute_fitness(self,firstGen=False):
+    def compute_fitness(self,firstGen=False,mutation=False):
+        if not mutation:
+            self.score=0
         self._fitness=self._fitness_fail
         program=self.local_bnf[BNF_PROGRAM]
         if not firstGen:
             program=self.de_EscapeText(program)
             self.local_bnf[BNF_PROGRAM]=program
+
         if len(program) == 0:
             return 0
-        else:                
+        else:   
             try:
-                fi=str(int(time()*1000))
-                f=open("/tmp/"+fi,"a+")
-                f.write(program)
-                f.close()
+                queue=Queue()
                 option = choice(self.interpreter_options)
+                pr=Process(target=self.run_cmd,kwargs={'option':option,'program':program,'queue':queue})
                 timedout=False
-                l=[None,None]        
-                t=Thread(target=self.run_cmd,kwargs={'fi':fi,'l':l,'option':option})
-                t.start()
-                t.join(self.execution_timeout)
-                if t.isAlive():
-                    if l[0] is not None:
-                        try:
-                            if sys.platform != 'win32':
-                                kill(l[0].pid, 9)
-                                timedout=True
-                            sleep(.1)
-                        except:
-                            pass
-                else:
-                    (out,err,rc)=l[1]
-                    if "timeout" in err or "terminating" in err:
-                        return
-                    if rc and rc not in [0,1,2,3,4] :
-                        if self._generation != 0:
-                            self._fitness=self._fitness+self._fitness_fail*-1
-                            FILECOUNT = len(listdir("generatedTestCases"))+1 
-                            newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
-                            program+="\n//"+option
-                            f=open(newFile,'w')
-                            f.write(program)
-                            f.close
-                    else:
-                        if rc != 3 or (rc == 3 and 'Syntax' not in err):
-                            self._fitness = self.computeSubScore(program,err)*-1
-            except Exception as ex: 
-                print ex
-            finally:
-                remove("/tmp/"+fi)
-
-
-    def run_cmd(self, fi,l,option):
-        def set_limits():
-            # resource module not supported on all platforms
-            try:
-                import resource
-                GB = 1**30
-                resource.setrlimit(resource.RLIMIT_AS, (1*GB, 1*GB))
+                pr.start()
+                pr.join(self.execution_timeout)
+                p=queue.get(False)
+                if pr.is_alive():
+                    if p is not None:
+                        p.terminate()
+                        sleep(.1)
+                    timedout=True
+                    pr.terminate()                                
+                if not timedout:
+                    fitness=queue.get(False)
+                    if fitness is not None:
+                        self._fitness=fitness
+                    if p is not None:
+                        p.terminate()
+                        sleep(.1)
+                queue.close()
             except:
+                pass            
+    def run_cmd(self, option, program,queue):
+        try:
+
+            
+            fitness=None
+            fi=str(int(time()*1000))
+            f=open("/tmp/"+fi,"a+")
+            f.write(program)
+            f.close()
+            exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
+            p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            queue.put(p)
+            out, err = p.communicate()
+            rc=p.returncode
+            
+            if "timeout" in err or "terminating" in err:
                 return
-        exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
-        p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
-        l[0]=p
-        out, err = p.communicate()
-        l[1]=(out,err,p.returncode)
-    
-              
+            if rc and rc not in [0,1,2,3,4] :
+                if self._generation != 0:
+                    fitness=self._fitness+self._fitness_fail*-1
+                    FILECOUNT = len(listdir("generatedTestCases"))+1 
+                    newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                    program+="\n//"+option
+                    f=open(newFile,'w')
+                    f.write(program)
+                    f.close
+            else:
+                if rc != 3 or (rc == 3 and 'Syntax' not in err and 'Reference' not in err):
+                    tt=time()
+                    self.computeSubScore(program,err)
+                    fitness=(self.score * -1  )
+                else:
+                    fitness=(self._fitness_fail )
+            remove("/tmp/"+fi)
+            queue.put(fitness)
+                    
+        except Exception as ex: 
+            pass
 
     def get_binary_gene_length(self):
        return self._gene_length * 8

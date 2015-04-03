@@ -5,9 +5,10 @@ from os import remove, getcwd, kill, chdir
 from random import choice, randint
 from collections import defaultdict
 
-from threading import Thread
 from subprocess import PIPE, Popen
 from time import sleep, time
+
+from re import sub,split
 
 import xml.etree.ElementTree as ElementTree
 
@@ -120,7 +121,8 @@ class AntlrParser(object):
             identifiers=[]
             for id in identifiers_JavaObj:
                 identifiers.append(id)
-            return output['parsecode'],identifiers
+            xmlCode=''.join(split('(\W+)',output['parsecode']))
+            return xmlCode,identifiers
         return ""
                 
     def extractCodeFrag(self, fileName):
