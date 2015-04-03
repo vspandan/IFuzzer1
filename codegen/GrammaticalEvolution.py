@@ -321,6 +321,7 @@ class GrammaticalEvolution(object):
         print "completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds"
         # self.preselect()
         while True:
+            print "Starting "+str(self._generation)+" Generation - "+str(datetime.now())
             starttime=time()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
