@@ -6,8 +6,6 @@ from string import lower
 from subprocess import Popen,PIPE
 from marshal import load
 from os import path,remove,kill,rename,listdir
-from threading import Thread
-from multiprocessing import Process, Queue
 from codegen.Utilities import base10tobase2, base2tobase10
 from random import choice
 from os.path import abspath
@@ -55,6 +53,7 @@ class Genotype(object):
         self.execution_timeout = 30
         self._max_depth = 0
         self.err = ""
+        self.score=0
     
     def set_keys(self, keys):
         self._keys = keys
@@ -218,23 +217,7 @@ class Genotype(object):
     def _update_genotype(self):
         self.set_binary_gene(self._dec2bin_gene(self.decimal_gene))
 
-    def computeSubScore (self, program,err):
-        from langparser.AntlrParser import AntlrParser
-        parser=AntlrParser()
-        a,b,c,d=parser.CountNestedStructures(program)
-        for temp in a:
-                self.score += temp*15
-        for temp in b:
-                self.score += temp*10
-        for temp in c:
-                self.score += temp*10
-        for temp in d:
-                self.score += temp*5
-        if "warning" in err:
-            print err
-            self.score+=300
-        return self.score
-
+    
     def _map_gene(self):
         self.score=0
         self._reset_gene_position()
@@ -244,110 +227,9 @@ class Genotype(object):
         program = sub(r'\s+', ' ', program)
         self.local_bnf[BNF_PROGRAM] = program  
         #True-Mutation
-        self.compute_fitness(False,True)
 
-    def de_EscapeText(self, string):
-    	indicator=False
-        if len(self._identifiers)> 0:
-            indicator=True
-    	wordList=split(VARIABLE_FORMAT, string)
-        modifiedWordList=[]
-        for word in wordList:
-    		if "&lt" in word:
-    			word=word.replace("&lt;","<")
-    		elif "&gt" in word:
-    			word=word.replace("&lt;",">")
-    		elif "&quot" in word:
-    			word=word.replace("&lt;","\"")
-    		elif "&amp" in word:
-    			word=word.replace("&lt;","&")
-    		elif "&apos" in word:
-    			word=word.replace("&apos;","\\")
-    		elif "&pipe" in word:
-    			word=word.replace("#pipe;","|")
-    		elif "_id_" in word:
-    			if indicator:
-    				word=choice(self._identifiers)
-    			else:
-    				word="a"
-    		modifiedWordList.append(word)
-        return ''.join(modifiedWordList)
 
-    def compute_fitness(self,firstGen=False,mutation=False):
-        if not mutation:
-            self.score=0
-        self._fitness=self._fitness_fail
-        program=self.local_bnf[BNF_PROGRAM]
-        if not firstGen:
-            program=self.de_EscapeText(program)
-            self.local_bnf[BNF_PROGRAM]=program
-
-        if len(program) == 0:
-            return 0
-        else:   
-            try:
-                queue=Queue()
-                option = choice(self.interpreter_options)
-                pr=Process(target=self.run_cmd,kwargs={'option':option,'program':program,'queue':queue})
-                timedout=False
-                pr.start()
-                pr.join(self.execution_timeout)
-                p=queue.get(False)
-                if pr.is_alive():
-                    if p is not None:
-                        p.terminate()
-                        sleep(.1)
-                    timedout=True
-                    pr.terminate()                                
-                if not timedout:
-                    fitness=queue.get(False)
-                    if fitness is not None:
-                        self._fitness=fitness
-                    if p is not None:
-                        p.terminate()
-                        sleep(.1)
-                queue.close()
-            except:
-                pass            
-    def run_cmd(self, option, program,queue):
-        try:
-
-            
-            fitness=None
-            fi=str(int(time()*1000))
-            f=open("/tmp/"+fi,"a+")
-            f.write(program)
-            f.close()
-            exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
-            p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
-            queue.put(p)
-            out, err = p.communicate()
-            rc=p.returncode
-            
-            if "timeout" in err or "terminating" in err:
-                return
-            if rc and rc not in [0,1,2,3,4] :
-                if self._generation != 0:
-                    fitness=self._fitness+self._fitness_fail*-1
-                    FILECOUNT = len(listdir("generatedTestCases"))+1 
-                    newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
-                    program+="\n//"+option
-                    f=open(newFile,'w')
-                    f.write(program)
-                    f.close
-            else:
-                if rc != 3 or (rc == 3 and 'Syntax' not in err and 'Reference' not in err):
-                    tt=time()
-                    self.computeSubScore(program,err)
-                    fitness=(self.score * -1  )
-                else:
-                    fitness=(self._fitness_fail )
-            remove("/tmp/"+fi)
-            queue.put(fitness)
-                    
-        except Exception as ex: 
-            pass
-
+    
     def get_binary_gene_length(self):
        return self._gene_length * 8
     

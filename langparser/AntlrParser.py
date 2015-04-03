@@ -176,7 +176,7 @@ class AntlrParser(object):
 				self.dCount=0
 				dInd=False
 
-    def CountNestedStructures(self,input):
+    def CountNestedStructures(self,output):
     	self.aCount=0
     	self.bCount=0
     	self.cCount=0
@@ -186,7 +186,6 @@ class AntlrParser(object):
     	self.c=[]
     	self.d=[]
     	try:
-    		output, ident = self.parseTree(input,True)
     		root = ElementTree.fromstring(output)
     		self.Analayse(root)
     	except:

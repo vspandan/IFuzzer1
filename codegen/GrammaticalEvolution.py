@@ -14,7 +14,9 @@ from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype
 
+from multiprocessing import Process, Queue
 
+VARIABLE_FORMAT = '(\W+)'
 STOPPING_MAX_GEN = 'max_generations'
 
 class GrammaticalEvolution(object):
@@ -303,16 +305,9 @@ class GrammaticalEvolution(object):
             gene.starttime = starttime
             gene.set_keys (self.non_Terminals)
             if self._generation == 0 :
-                gene.compute_fitness(True)
+                self.compute_fitness(gene, True)
             self.population[gene.member_no]=gene
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
-
-    # def preselect(self):
-    #     for fsel in self.fitness_selections:
-    #         fsel.set_fitness_list(self.fitness_list)
-    #         selected=fsel.select()
-    #     for i in selected:
-    #         self._pre_selected.append(deepcopy(self.population[i]))
 
     def run(self, starting_generation=0):
         self._generation = starting_generation
@@ -359,6 +354,96 @@ class GrammaticalEvolution(object):
             gene.execution_timeout = self.execution_timeout
 
         return True;  
+    
+    def compute_fitness(self,gene,mutation=False):
+        if not mutation:
+            gene.score=0
+        gene._fitness=self._fitness_fail
+        program=gene.local_bnf['program']
+        if self._generation==0:
+            program=self.de_EscapeText(gene,program)
+            gene.local_bnf['program']=program
+
+        if len(program) == 0:
+            return 0
+        else:   
+            try:
+                queue=Queue()
+                option = choice(gene.interpreter_options)
+                pr=Process(target=self.run_cmd,kwargs={'gene':gene,'option':option,'program':program,'queue':queue})
+                timedout=False
+                pr.start()
+                pr.join(self.execution_timeout)
+                p=queue.get(False)
+                if pr.is_alive():
+                    if p is not None:
+                        p.terminate()
+                        sleep(.1)
+                    timedout=True
+                    pr.terminate()                                
+                if not timedout:
+                    fitness=queue.get(False)
+                    if fitness is not None:
+                        gene._fitness=fitness
+                    if p is not None:
+                        p.terminate()
+                        sleep(.1)
+                queue.close()
+            except:
+                pass 
+	    print gene._fitness           
+    
+    def run_cmd(self,gene, option, program,queue):
+        try:
+            fitness=None
+            fi=str(int(time()*1000))
+            f=open("/tmp/"+fi,"a+")
+            f.write(program)
+            f.close()
+            exec_cmd=gene.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
+            p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+            queue.put(p)
+            out, err = p.communicate()
+            rc=p.returncode
+            
+            if "timeout" in err or "terminating" in err:
+                return
+            if rc and rc not in [0,1,2,3,4] :
+                if self._generation != 0:
+                    fitness=gene._fitness+gene._fitness_fail*-1
+                    FILECOUNT = len(listdir("generatedTestCases"))+1 
+                    newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                    program+="\n//"+option
+                    f=open(newFile,'w')
+                    f.write(program)
+                    f.close
+            else:
+                if rc != 3 or (rc == 3 and 'Syntax' not in err and 'Reference' not in err):
+                    self.computeSubScore(gene,program,err)
+                    fitness=(gene.score * -1  )
+                else:
+                    fitness=(gene._fitness_fail )
+            remove("/tmp/"+fi)
+            queue.put(fitness)
+                    
+        finally: 
+            pass
+    
+    def computeSubScore (self, gene, program,err):
+        incompl,dummy=self.parseCode(program)
+        a,b,c,d=self.parser.CountNestedStructures(incompl)
+        for temp in a:
+                gene.score += temp*15
+        for temp in b:
+                gene.score += temp*10
+        for temp in c:
+                gene.score += temp*10
+        for temp in d:
+                gene.score += temp*5
+        if "warning" in err:
+            print err
+            gene.score+=300
+        return gene.score
 
     def _perform_endcycle(self):
         self._pre_selected = self._evaluate_fitness(True)
@@ -478,10 +563,10 @@ class GrammaticalEvolution(object):
                             
                     child1.local_bnf['program']=child1Prg_
                     child1.generate_decimal_gene()
-                    child1.compute_fitness()
+                    self.compute_fitness(child1)
                     child2.local_bnf['program']=child2Prg_
                     child2.generate_decimal_gene()
-                    child2.compute_fitness()
+                    self.compute_fitness(child2)
                     if child1.get_fitness()!= self._fitness_fail or child1.get_fitness()!= self._fitness_fail:
                         child1.prog_generated = 1
                         child2.prog_generated = 1
@@ -531,6 +616,7 @@ class GrammaticalEvolution(object):
                     if len(selectedNt) <=0 :
                         continue
                     gene._map_gene()
+                    self.compute_fitness(gene,True)
                     if gene.get_fitness() != self._fitness_fail :
                         gene.local_bnf['CodeFrag']=""
                         gene.prog_generated = 1
@@ -574,6 +660,32 @@ class GrammaticalEvolution(object):
         for gene in self.population:
             self.fitness_list[gene.member_no][0]=gene.get_fitness()
 
+    def de_EscapeText(self, gene, string):
+    	indicator=False
+        if len(gene._identifiers)> 0:
+            indicator=True
+    	wordList=split(VARIABLE_FORMAT, string)
+        modifiedWordList=[]
+        for word in wordList:
+    		if "&lt" in word:
+    			word=word.replace("&lt;","<")
+    		elif "&gt" in word:
+    			word=word.replace("&lt;",">")
+    		elif "&quot" in word:
+    			word=word.replace("&lt;","\"")
+    		elif "&amp" in word:
+    			word=word.replace("&lt;","&")
+    		elif "&apos" in word:
+    			word=word.replace("&apos;","\\")
+    		elif "&pipe" in word:
+    			word=word.replace("#pipe;","|")
+    		elif "_id_" in word:
+    			if indicator:
+    				word=choice(self._identifiers)
+    			else:
+    				word="a"
+    		modifiedWordList.append(word)
+        return ''.join(modifiedWordList)
 
     def _continue_processing(self):
         """
