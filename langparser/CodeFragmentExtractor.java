@@ -1045,7 +1045,7 @@ public class CodeFragmentExtractor {
                   try{
                     String token=ctx.getText();
                     if(!token.equals("<EOF>"))
-                        sb.append(xmlEscapeText(token) + " ");
+                        sb.append(xmlEscapeText(token));
 
 
                   }
@@ -1084,7 +1084,7 @@ public class CodeFragmentExtractor {
         String script = "/home/spandan/test.js";
         HashMap hm=c.XMLIRGenerator(script,false);
         System.out.println(hm);
-        hm=c.extractFrags(script,false);
+        hm=c.extractFrags(script,true);
         System.out.println(hm);
     }
 
