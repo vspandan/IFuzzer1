@@ -13,8 +13,9 @@ from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype
-
-from multiprocessing import Process, Queue
+from time import time
+from Queue import Queue
+from threading import Thread
 
 VARIABLE_FORMAT = '(\W+)'
 STOPPING_MAX_GEN = 'max_generations'
@@ -305,7 +306,9 @@ class GrammaticalEvolution(object):
             gene.starttime = starttime
             gene.set_keys (self.non_Terminals)
             if self._generation == 0 :
+                
                 self.compute_fitness(gene, True)
+
             self.population[gene.member_no]=gene
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
 
@@ -329,6 +332,8 @@ class GrammaticalEvolution(object):
             print "completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds"
       
     def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess):
+        self.interpreter_Shell=interpreter_Shell
+        self.interpreter_Options =interpreter_Options
         self.nT_Invld_Gen_Process=nTInvlvdGenProcess
         self._extractProductions()
         self._prepareInitial_Population(file)
@@ -355,79 +360,64 @@ class GrammaticalEvolution(object):
 
         return True;  
     
+           
+
     def compute_fitness(self,gene,mutation=False):
-        if not mutation:
-            gene.score=0
         gene._fitness=self._fitness_fail
         program=gene.local_bnf['program']
-        if self._generation==0:
-            program=self.de_EscapeText(gene,program)
+        if gene._generation > 0:
+            program=self.de_EscapeText(program)
             gene.local_bnf['program']=program
-
-        if len(program) == 0:
-            return 0
-        else:   
+        if len(program) > 0:
             try:
-                queue=Queue()
-                option = choice(gene.interpreter_options)
-                pr=Process(target=self.run_cmd,kwargs={'gene':gene,'option':option,'program':program,'queue':queue})
+                fi=str(int(time()*1000))
+                f=open("/tmp/"+fi,"a+")
+                f.write(program)
+                f.close()
+                option = choice(self.interpreter_Options)
                 timedout=False
-                pr.start()
-                pr.join(self.execution_timeout)
-                p=queue.get(False)
-                if pr.is_alive():
-                    if p is not None:
-                        p.terminate()
-                        sleep(.1)
-                    timedout=True
-                    pr.terminate()                                
-                if not timedout:
-                    fitness=queue.get(False)
-                    if fitness is not None:
-                        gene._fitness=fitness
-                    if p is not None:
-                        p.terminate()
-                        sleep(.1)
-                queue.close()
-            except:
-                pass 
-	    print gene._fitness           
-    
-    def run_cmd(self,gene, option, program,queue):
-        try:
-            fitness=None
-            fi=str(int(time()*1000))
-            f=open("/tmp/"+fi,"a+")
-            f.write(program)
-            f.close()
-            exec_cmd=gene.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
-            p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
-            queue.put(p)
-            out, err = p.communicate()
-            rc=p.returncode
-            
-            if "timeout" in err or "terminating" in err:
-                return
-            if rc and rc not in [0,1,2,3,4] :
-                if self._generation != 0:
-                    fitness=gene._fitness+gene._fitness_fail*-1
-                    FILECOUNT = len(listdir("generatedTestCases"))+1 
-                    newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
-                    program+="\n//"+option
-                    f=open(newFile,'w')
-                    f.write(program)
-                    f.close
-            else:
-                if rc != 3 or (rc == 3 and 'Syntax' not in err and 'Reference' not in err):
-                    self.computeSubScore(gene,program,err)
-                    fitness=(gene.score * -1  )
+                l=[None,None]        
+                t=Thread(target=self.run_cmd,kwargs={'fi':fi,'l':l,'option':option})
+                t.start()
+                t.join(self.execution_timeout)
+                if t.isAlive():
+                    if l[0] is not None:
+                        try:
+                            if sys.platform != 'win32':
+                                kill(l[0].pid, 9)
+                                timedout=True
+                            sleep(.1)
+                        except:
+                            pass
                 else:
-                    fitness=(gene._fitness_fail )
-            remove("/tmp/"+fi)
-            queue.put(fitness)
-                    
-        finally: 
-            pass
+                    (out,err,rc)=l[1]
+                    if "timeout" in err or "terminating" in err:
+                        return
+                    if rc and rc not in [0,1,2,3,4] :
+                        if gene._generation != 0:
+                            gene._fitness=gene._fitness+gene._fitness_fail*-1
+                            FILECOUNT = len(listdir("generatedTestCases"))+1 
+                            newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                            program+="\n//"+option
+                            f=open(newFile,'w')
+                            f.write(program)
+                            f.close
+                    else:
+                        if rc != 3 :
+                            
+                            gene._fitness = self.computeSubScore(gene,program,err)*-1
+
+                remove("/tmp/"+fi)
+            except Exception as ex: 
+                print ex
+        print gene.get_fitness()
+
+    def run_cmd(self, fi,l,option):
+        exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
+        p = Popen(exec_cmd.split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+        l[0]=p
+        out, err = p.communicate()
+        l[1]=(out,err,p.returncode)
     
     def computeSubScore (self, gene, program,err):
         incompl,dummy=self.parseCode(program)
@@ -446,9 +436,9 @@ class GrammaticalEvolution(object):
         return gene.score
 
     def _perform_endcycle(self):
-        self._pre_selected = self._evaluate_fitness(True)
 
-        childList=[]
+        childList = self._evaluate_fitness(True)
+
         while len(childList) + len(self._pre_selected) < self._population_size:
             ch=choice([0,1])
             fitness_pool = self._evaluate_fitness()
@@ -625,40 +615,21 @@ class GrammaticalEvolution(object):
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
-        position=0
-        self.new_pop=[]
-        self.fitness_list_new=FitnessList(CENTER)
+        position = 0
+        for rsel in self.replacement_selections:
+            rsel.set_fitness_list(self.fitness_list)
 
-        for gene in self._pre_selected:
-            
-            for gene1 in self.population:
-                if gene1.member_no == gene.member_no:
-                    self.population.remove(gene1)
+            for i in rsel.select():
+                replaced_g = self.population[i]
+                if position < len(fitness_pool):
+                    newGene = fitness_pool[position]
+                    newGene.member_no = replaced_g.member_no
+                    newGene._generation = self._generation + 1
+                    newGene.local_bnf['<member_no>'] = [newGene.member_no]
+                    self.population[newGene.member_no] = newGene
+                    position += 1
+                else:
                     break
-            gene.member_no=position
-            self.new_pop.append(gene)
-            position += 1
-        
-        length = len(self.population)
-        new_memNo=0
-
-        for i in range(len(fitness_pool)):
-            fitness_pool[i].member_no=new_memNo
-            self.fitness_list_new.append([fitness_pool[i].get_fitness(),new_memNo])
-            new_memNo+=1
-
-        self.fitness_list_new.sort()
-        for i in range(self._population_size-len(self._pre_selected)):
-            member=self.fitness_list_new[i]
-            gene=fitness_pool[member[1]]
-            gene.member_no=position
-            self.new_pop.append(gene)
-            position+=1
-
-        self.population=self.new_pop
-
-        for gene in self.population:
-            self.fitness_list[gene.member_no][0]=gene.get_fitness()
 
     def de_EscapeText(self, gene, string):
     	indicator=False
@@ -681,7 +652,7 @@ class GrammaticalEvolution(object):
     			word=word.replace("#pipe;","|")
     		elif "_id_" in word:
     			if indicator:
-    				word=choice(self._identifiers)
+    				word=choice(gene._identifiers)
     			else:
     				word="a"
     		modifiedWordList.append(word)
