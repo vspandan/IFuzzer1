@@ -383,9 +383,11 @@ class GrammaticalEvolution(object):
                 if t.isAlive():
                     if l[0] is not None:
                         try:
+
                             if sys.platform != 'win32':
                                 kill(l[0].pid, 9)
                                 timedout=True
+                            raise ThreadError("")
                             sleep(.1)
                         except:
                             pass
