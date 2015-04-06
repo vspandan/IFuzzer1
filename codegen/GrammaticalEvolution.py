@@ -366,7 +366,7 @@ class GrammaticalEvolution(object):
         gene._fitness=self._fitness_fail
         program=gene.local_bnf['program']
         if gene._generation > 0:
-            program=self.de_EscapeText(program)
+            program=self.de_EscapeText(gene,program)
             gene.local_bnf['program']=program
         if len(program) > 0:
             try:
@@ -410,7 +410,6 @@ class GrammaticalEvolution(object):
                 remove("/tmp/"+fi)
             except Exception as ex: 
                 print ex
-        print gene.get_fitness()
 
     def run_cmd(self, fi,l,option):
         exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
