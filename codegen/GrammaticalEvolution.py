@@ -3,7 +3,7 @@ from Tkconstants import INSERT
 from Tkinter import Button, Frame, Tk, Text
 from copy import deepcopy
 from datetime import datetime
-from os import path, system
+from os import path, system,listdir
 from random import choice, randint, random
 from re import sub
 from tkFileDialog import askopenfilename
