@@ -773,7 +773,7 @@ RegularExpressionLiteral
 
 /// 7.3 Line Terminators
 LineTerminator
- : [\r\n\u2028\u2029] 
+ : [\r\n\u2028\u2029]  -> channel(HIDDEN)
  ;
 
 OpenBracket                : '[';
