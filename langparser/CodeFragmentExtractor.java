@@ -1045,7 +1045,7 @@ public class CodeFragmentExtractor {
                   try{
                     String token=ctx.getText();
                     if(!token.equals("<EOF>"))
-                        sb.append(xmlEscapeText(token));
+                        sb.append(xmlEscapeText(token)+" ");
 
 
                   }

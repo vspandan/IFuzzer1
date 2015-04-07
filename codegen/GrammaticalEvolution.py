@@ -374,7 +374,10 @@ class GrammaticalEvolution(object):
                 f=open("/tmp/"+fi,"a+")
                 f.write(program)
                 f.close()
-                option = choice(self.interpreter_Options)
+                if self.interpreter_Options is not None:
+                    option = choice(self.interpreter_Options)
+                else:
+                    option=""
                 timedout=False
                 l=[None,None]        
                 t=Thread(target=self.run_cmd,kwargs={'fi':fi,'l':l,'option':option})
@@ -397,7 +400,7 @@ class GrammaticalEvolution(object):
                         return
                     if rc and rc not in [0,1,2,3,4] :
                         if gene._generation != 0:
-                            gene._fitness=gene._fitness+gene._fitness_fail*-1
+                            gene._fitness=gene._fitness+gene._fitness_fail*-10
                             FILECOUNT = len(listdir("generatedTestCases"))+1 
                             newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
                             program+="\n//"+option

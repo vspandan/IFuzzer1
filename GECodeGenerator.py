@@ -19,7 +19,7 @@ FILECOUNT = 0
 
 Population_size=100
 Timeout = 2
-Generations=500
+Generations=1000
 
 
 #Author: Spandan Veggalam
@@ -40,7 +40,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_population_size(Population_size)
                 ges.set_wrap(True)
                 ges.set_max_generations(Generations)
-                ges.set_fitness_type("min".lower(), float(-1000))
+                ges.set_fitness_type("min".lower(), float(-10000))
                 
                 ges.set_max_program_length(500)
                 ges.set_timeouts(20, 3600)
