@@ -19,8 +19,6 @@ public class CodeFragmentExtractor {
 
     public HashMap XMLIRGenerator(String script, boolean isPrg) throws IOException {
 
-      System.out.println("Started");
-
         final List<String> global_Objects=  Arrays.asList("Infinity", "NaN", "undefined", "null ", "eval", "uneval", "isFinite", "isNaN", "parseFloat", "parseInt", "decodeURI", "decodeURIComponent", "encodeURI", "encodeURIComponent", "escape", "unescape", "Object", "Function", "Boolean", "Symbol", "Error", "EvalError", "InternalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError", "Number", "Math", "Date", "String", "RegExp", "Array", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array", "Uint32Array", "Float32Array", "Float64Array", "Map", "Set", "WeakMap", "WeakSet", "Promise", "Generator", "GeneratorFunction", "ArrayBuffer", "DataView", "JSON", "Reflect", "Proxy", "Iterator", "ParallelArray", "StopIteration");
         
         ECMAScriptParser parser = null;
@@ -1077,7 +1075,6 @@ public class CodeFragmentExtractor {
         }, parser.program());
         hm.put("parsecode",sb.toString());
         hm.put("identifiers",new ArrayList(identifiers));
-        System.out.println("Completed");
         return hm;
     }
 

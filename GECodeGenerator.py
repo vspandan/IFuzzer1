@@ -91,22 +91,17 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             
         count=0
         total=len(TestCases)-1
-        tempList=[]
+        
         while True:
-            
+            tempList=[]    
             FILECOUNT = len(listdir(targetDirectory))+1 
             while len(tempList)<Population_size:
-                t=TestCases[randint(0,total)]
+                t=TestCases[randint(0,total-1)]
                 if t not in tempList:
                     tempList.append(t)
-            from multiprocessing import Process
             print "File Set - "+str(count)
             count+=1
-            p=Process(target=process, kwargs={'fil':tempList,'filecount':FILECOUNT})
-            p.start()
-            p.join( Population_size * Generations )
-            if p.is_alive():
-                p.terminate()
+            process(tempList,FILECOUNT)
             # import sys
             # sys.exit()
             tempList=FileList

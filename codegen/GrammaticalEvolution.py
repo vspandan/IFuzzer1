@@ -4,7 +4,7 @@ from datetime import datetime
 from os import path, system,listdir
 from random import choice, randint, random
 from re import sub
-
+from subprocess import Popen,PIPE
 from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
@@ -407,7 +407,7 @@ class GrammaticalEvolution(object):
 
                 remove("/tmp/"+fi)
             except: 
-                print ex
+                pass
 
     def run_cmd(self, fi,l,option):
         exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
@@ -567,8 +567,6 @@ class GrammaticalEvolution(object):
                         print "Crossover-Success"
                     else:
                         print "Crossover-Failed"
-                        print child1.err
-                        print child2.err
             return child_list
         except:
             return child_list

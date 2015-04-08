@@ -1,5 +1,7 @@
 cd langparser
 javac -cp "../lib/*" *.java
-java -cp ".:../lib/*" AntlrParser&
 cd ..
-python GEInterpreterFuzzer.py
+jar cvfm ECMAScript.jar langparser/Manifest.txt langparser/*.class
+mv ECMAScript.jar langparser/
+rm -rf langparser/*.class
+jython GEInterpreterFuzzer.py
