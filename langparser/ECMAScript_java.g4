@@ -230,7 +230,7 @@ statement
 /// Block :
 ///     { StatementList? }
 block
- : '{' statementList? '}'
+ : '{' statementList? '}' eos
  ;
 
 /// StatementList :

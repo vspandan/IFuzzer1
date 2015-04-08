@@ -76,6 +76,18 @@ class AntlrParser(object):
                 pass
         return self.nonTerminals
 
+    def extractNTandText(self,root):
+        if root is not None:
+            for child in root:
+                self.nonTerminals.append(child.tag)
+                if child.text is not None:
+                    self.out=child.text
+                else:
+                    self.out =""
+                #self.values.append(self.getText(child))
+                self.values.append(ElementTree.tostring(child,method="text"))
+                self.extractNTandText(child)       
+
     def genCodeFrag(self, input,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
         selectedNTList={}
         self.subcode={}
@@ -125,19 +137,26 @@ class AntlrParser(object):
             return output['parsecode'],identifiers
             # return xmlCode,identifiers
         return "",[]
-                
+    """
+    Restricting to accept only files;
+    """
     def extractCodeFrag(self, fileName):
         print fileName
-        d = defaultdict(list)
-        temp = (self.parser.extractFrags(fileName,True))
+        output,identifiers=self.parseTree(fileName,False)
         
-        for key in temp.keys():
-            temp2=temp.get(key)
-            l=[]
-            for t in temp2:
-                l.append(t)
-            d[key]=l
-
+        root = ElementTree.fromstring(output)
+        self.extractNTandText(root)
+        d = defaultdict(list)
+        for position in range(len(self.nonTerminals)):
+                nt=self.nonTerminals[position]
+                d1 = []
+                code = self.values[position]
+                if len(code) > 0:
+                    if d.has_key(nt):
+                        d.get(nt).append(code)
+                    else:
+                        d1.append(code)
+                        d[str(nt)] = d1
         if self.que is not None:
             self.que.put(d)
         if self.que is None:
@@ -195,4 +214,5 @@ class AntlrParser(object):
 
 if __name__ == '__main__':
     a= AntlrParser()
-    a.parseTree("/home/spandan/Desktop/test.js",False)
+    print a.parseTree("/home/spandan/test.js",False)
+    print a.extractCodeFrag("/home/spandan/test.js")
