@@ -1,13 +1,9 @@
 #!/usr/bin/env python
-from Tkconstants import INSERT
-from Tkinter import Button, Frame, Tk, Text
 from copy import deepcopy
 from datetime import datetime
 from os import path, system,listdir
 from random import choice, randint, random
 from re import sub
-from tkFileDialog import askopenfilename
-from tkMessageBox import askyesno, showwarning, showinfo, showerror
 
 from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
@@ -15,7 +11,7 @@ from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype
 from time import time
 from Queue import Queue
-from threading import Thread, ThreadError
+from threading import Thread
 
 VARIABLE_FORMAT = '(\W+)'
 STOPPING_MAX_GEN = 'max_generations'
@@ -390,7 +386,6 @@ class GrammaticalEvolution(object):
                     if l[0] is not None:
                         kill(l[0].pid, 9)
                         timedout=True
-                        raise ThreadError("")
                         sleep(.1)
                 else:
                     (out,err,rc)=l[1]
@@ -411,7 +406,7 @@ class GrammaticalEvolution(object):
                             gene._fitness = self.computeSubScore(gene,program,err)*-1
 
                 remove("/tmp/"+fi)
-            except Exception as ex: 
+            except: 
                 print ex
 
     def run_cmd(self, fi,l,option):

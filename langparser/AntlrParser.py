@@ -1,15 +1,13 @@
-from py4j.java_collections import SetConverter, MapConverter, ListConverter
-from py4j.java_gateway import JavaGateway  
-from os import remove, getcwd, kill, chdir
+from os import path
 
 from random import choice, randint
 from collections import defaultdict
 
-from subprocess import PIPE, Popen
-from time import sleep, time
-
-from re import sub,split
-
+from re import split
+import sys
+sys.path.append(path.dirname(path.abspath(__file__))+"/ECMAScript.jar")
+sys.path.append(path.dirname(path.abspath(__file__))+"/antlr-4.5-rc-2-complete.jar")
+from langparser import CodeFragmentExtractor
 import xml.etree.ElementTree as ElementTree
 
 
@@ -18,29 +16,24 @@ globalobj=['Infinity', 'NaN', 'undefined', 'null ', 'eval', 'uneval', 'isFinite'
 class AntlrParser(object):
 
     def __init__(self,que=None):
-        self.que=que
+    	self.que=que
         self.out=""
         self.nonTerminals=[]
         self.values=[]
         self.subcode ={}
-        self.gateway = JavaGateway()
-        self.parser = self.gateway.entry_point.getCodeFragmentExtractor()
-
-    def shutdown(self):
-        self.gateway.shutdown()
         
-
     def subCodeGen(self,root,pos):
-        for child in root:
-            self.position+=1
-            if child.text is not None:
-                if child.tag == 'identifier' and child.text not in globalobj:
-                    self.subcode[pos] = self.subcode[pos]+" _id_"+child.text
-                else:
-                    self.subcode[pos] = self.subcode[pos]+child.text
-            self.subCodeGen(child,pos)
-            if child.tail is not None:
-                self.subcode[pos]=self.subcode[pos]+child.tail
+        # self.parser = self.gateway.entry_point.getCodeFragmentExtractor()
+		for child in root:
+			self.position+=1
+			if child.text is not None:
+				if child.tag == 'identifier' and child.text not in globalobj:
+					self.subcode[pos] = self.subcode[pos]+" _id_"+child.text
+				else:
+					self.subcode[pos] = self.subcode[pos]+child.text
+			self.subCodeGen(child,pos)
+			if child.tail is not None:
+				self.subcode[pos]=self.subcode[pos]+child.tail
 
     def printChild(self,root,nTList):
         if root is not None:
@@ -80,12 +73,8 @@ class AntlrParser(object):
         if root is not None:
             for child in root:
                 self.nonTerminals.append(child.tag)
-                if child.text is not None:
-                    self.out=child.text
-                else:
-                    self.out =""
-                #self.values.append(self.getText(child))
-                self.values.append(ElementTree.tostring(child,method="text"))
+                txt=ElementTree.tostring(child,method="text")
+                self.values.append(txt)
                 self.extractNTandText(child)       
 
     def genCodeFrag(self, input,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
@@ -128,7 +117,8 @@ class AntlrParser(object):
 
     def parseTree(self,input,ind=False):
         if len(input)>0:
-            output = self.parser.XMLIRGenerator(input,ind)
+            c=CodeFragmentExtractor()
+            output = c.XMLIRGenerator(input,ind)
             identifiers_JavaObj=output['identifiers']
             identifiers=[]
             for id in identifiers_JavaObj:
@@ -161,6 +151,7 @@ class AntlrParser(object):
             self.que.put(d)
         if self.que is None:
             return d
+
     
     def Analayse(self,root,aInd=False,bInd=False,cInd=False,dInd=False):
         if root is not None:

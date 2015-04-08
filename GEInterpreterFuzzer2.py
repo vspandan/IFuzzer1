@@ -20,7 +20,7 @@ JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-o
 JS_SHELL_OPTIONS3=None
 
 targetDirectory="testsamples/tests_67eac0234f15"
-targetDirectoryName="generatedTestCases_js18_"
+targetDirectoryName="generatedTestCases_js31_"
 
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
@@ -75,7 +75,8 @@ def createFragmentPool():
             if temp is None:
                 temp = list(codeFrags2.get(key))
             else:
-                temp = temp+list(codeFrags2.get(key))
+                temp = set(temp+list(codeFrags2.get(key)))
+                temp=list(temp)
             f1 = open(fileName, 'wb')
             dump(temp, f1)
             f1.close()
@@ -85,17 +86,17 @@ def createFragmentPool():
     if not exists("database"):
         makedirs("database")
     count=0
-    a=AntlrParser()
+    
     for f in fileList:
-    	print f
-    	continue
+        print count
         try:
+            a=AntlrParser()
             que=Queue()
             a.que=que
             import threading
             t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f})
             t.start()
-            t.join(90)
+            t.join(30)
             timeout=False
             if t.isAlive():
                 try:

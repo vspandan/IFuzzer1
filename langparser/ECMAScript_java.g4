@@ -337,7 +337,7 @@ switchStatement
 ///     { CaseClauses? }
 ///     { CaseClauses? DefaultClause CaseClauses? }
 caseBlock
- : '{' caseClauses? ( defaultClause caseClauses? )? '}'
+ : '{' caseClauses? ( defaultClause caseClauses? )? '}' eos
  ;
 
 /// CaseClauses :
@@ -402,7 +402,7 @@ debuggerStatement
 /// FunctionDeclaration :
 ///     function identifier ( FormalParameterList? ) { FunctionBody }
 functionDeclaration
- : Function identifier '(' formalParameterList? ')' '{' functionBody '}'
+ : Function identifier '(' formalParameterList? ')' '{' functionBody '}' eos
  ;
 
 /// FormalParameterList :
@@ -445,7 +445,7 @@ elision
 ///     { PropertyNameAndValueList }
 ///     { PropertyNameAndValueList , }
 objectLiteral
- : '{' propertyNameAndValueList? ','? '}'
+ : '{' propertyNameAndValueList? ','? '}' 
  ;
 
 /// PropertyNameAndValueList :

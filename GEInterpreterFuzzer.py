@@ -19,8 +19,8 @@ JS_SHELL_OPTIONS1=[' -w -f ', ' -w -Z 1 -f',' -w -Z 0 -f', ' -w -j -f',' -w -m -
 JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f',         ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
 JS_SHELL_OPTIONS3=None
 
-targetDirectory="testsamples1/sputniktests"
-targetDirectoryName="generatedTestCases_js31_"
+targetDirectory="testsamples"
+targetDirectoryName="generatedTestCases_js18_"
 
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
@@ -75,7 +75,8 @@ def createFragmentPool():
             if temp is None:
                 temp = list(codeFrags2.get(key))
             else:
-                temp = temp+list(codeFrags2.get(key))
+                temp = set(temp+list(codeFrags2.get(key)))
+                temp=list(temp)
             f1 = open(fileName, 'wb')
             dump(temp, f1)
             f1.close()
@@ -85,17 +86,17 @@ def createFragmentPool():
     if not exists("database"):
         makedirs("database")
     count=0
-    a=AntlrParser()
+    
     for f in fileList:
-    	print f
-    	continue
+        print count
         try:
+            a=AntlrParser()
             que=Queue()
             a.que=que
             import threading
             t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f})
             t.start()
-            t.join(90)
+            t.join(30)
             timeout=False
             if t.isAlive():
                 try:
@@ -138,7 +139,7 @@ def main(fileList):
         pass
 
 if __name__ == "__main__":
-    sys.setrecursionlimit(100000)
+    sys.setrecursionlimit(300000)
     print "Starting Application "
     print datetime.now()
 
@@ -164,10 +165,7 @@ if __name__ == "__main__":
 
                         else:
                             print "Answer must be 'Y' or 'N'"
-                import multiprocessing
-                p=multiprocessing.Process(target=createFragmentPool)
-                p.start()
-                p.join()
+                createFragmentPool()
                 break;
             else:
                 break;

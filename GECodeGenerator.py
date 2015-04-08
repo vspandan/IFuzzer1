@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 
-from Tkconstants import DISABLED, NORMAL
-from Tkinter import BooleanVar, Checkbutton, IntVar, Button, Entry, Frame, Label, OptionMenu, Radiobutton, StringVar, Tk, W
 from os import listdir, system
-from os.path import isfile, join, abspath, sys
-from tkFileDialog import askdirectory, askopenfilename
-from tkMessageBox import showerror
+from os.path import isfile, join, abspath
 
 from codegen.fitness import FitnessElites, FitnessTournament
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
