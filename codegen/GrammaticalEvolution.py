@@ -15,7 +15,7 @@ from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype
 from time import time
 from Queue import Queue
-from threading import Thread
+from threading import Thread, ThreadError
 
 VARIABLE_FORMAT = '(\W+)'
 STOPPING_MAX_GEN = 'max_generations'
@@ -67,6 +67,8 @@ class GrammaticalEvolution(object):
         self.fitness_list_history = []
         self._max_depth = 0
         self._generative_mutation_rate=0.5
+        self.identifiers_mapping={}
+        self.targetDirectory=""
 
     def set_max_depth(self,depth):
         self._max_depth=depth
@@ -316,6 +318,7 @@ class GrammaticalEvolution(object):
         self._generation = starting_generation
         starttime=time()
         self._compute_fitness()
+        self._generation+=1
         print "completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds"
         # self.preselect()
         while True:
@@ -365,7 +368,7 @@ class GrammaticalEvolution(object):
     def compute_fitness(self,gene,mutation=False):
         gene._fitness=self._fitness_fail
         program=gene.local_bnf['program']
-        if gene._generation > 0:
+        if self._generation > 0:
             program=self.de_EscapeText(gene,program)
             gene.local_bnf['program']=program
         if len(program) > 0:
@@ -385,31 +388,26 @@ class GrammaticalEvolution(object):
                 t.join(self.execution_timeout)
                 if t.isAlive():
                     if l[0] is not None:
-                        try:
-
-                            if sys.platform != 'win32':
-                                kill(l[0].pid, 9)
-                                timedout=True
-                            raise ThreadError("")
-                            sleep(.1)
-                        except:
-                            pass
+                        kill(l[0].pid, 9)
+                        timedout=True
+                        raise ThreadError("")
+                        sleep(.1)
                 else:
                     (out,err,rc)=l[1]
+                    gene.err=err
                     if "timeout" in err or "terminating" in err:
                         return
                     if rc and rc not in [0,1,2,3,4] :
                         if gene._generation != 0:
                             gene._fitness=gene._fitness+gene._fitness_fail*-10
-                            FILECOUNT = len(listdir("generatedTestCases"))+1 
-                            newFile="generatedTestCases/"+str(FILECOUNT)+"_.js"
+                            FILECOUNT = len(listdir(self.targetDirectory))+1 
+                            newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
                             program+="\n//"+option
                             f=open(newFile,'w')
                             f.write(program)
                             f.close
                     else:
                         if rc != 3 :
-                            
                             gene._fitness = self.computeSubScore(gene,program,err)*-1
 
                 remove("/tmp/"+fi)
@@ -571,7 +569,11 @@ class GrammaticalEvolution(object):
                             child_list.append(child2)
                         else:
                             child_list.append(child1)
-                    
+                        print "Crossover-Success"
+                    else:
+                        print "Crossover-Failed"
+                        print child1.err
+                        print child2.err
             return child_list
         except:
             return child_list
@@ -603,6 +605,7 @@ class GrammaticalEvolution(object):
                     if round(random(),1) < self._generative_mutation_rate :
                         generative=True
                         gene._max_depth=self._max_depth
+                    self.multiple_rate=0
                     count=1
                     if round(random(),1) < self.multiple_rate:
                         count=int(self.mutationCount*round(random(),1))+1
@@ -615,6 +618,9 @@ class GrammaticalEvolution(object):
                         gene.local_bnf['CodeFrag']=""
                         gene.prog_generated = 1
                         mutatedList.append(gene)
+                        print "Mutation-Success"
+                    else:
+                        print "Mutation-Failed"
                     
         return mutatedList
 
@@ -636,6 +642,7 @@ class GrammaticalEvolution(object):
                     break
 
     def de_EscapeText(self, gene, string):
+        self.identifiers_mapping={}
     	indicator=False
         if len(gene._identifiers)> 0:
             indicator=True
@@ -655,10 +662,15 @@ class GrammaticalEvolution(object):
     		elif "&pipe" in word:
     			word=word.replace("#pipe;","|")
     		elif "_id_" in word:
-    			if indicator:
-    				word=choice(gene._identifiers)
-    			else:
-    				word="a"
+                    if indicator:
+                        if self.identifiers_mapping.has_key(word):
+                            word=self.identifiers_mapping[word]
+                        else:
+                            temp=choice(gene._identifiers).replace("_id_","")
+                            self.identifiers_mapping[word]=temp
+                            word=temp
+                    else:
+                        word='a'
     		modifiedWordList.append(word)
         return ''.join(modifiedWordList)
 

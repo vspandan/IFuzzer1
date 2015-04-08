@@ -75,6 +75,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 
                 ges.dynamic_mutation_rate(1)
                 ges.dynamic_crossover_rate(1)
+                ges.targetDirectory=targetDirectory
                 
                 # print fil
                 

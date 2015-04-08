@@ -1030,9 +1030,7 @@ public class CodeFragmentExtractor {
                     String key=ruleNames[ctx.getRuleIndex()];
                     
                     if(key.equals("eos")){
-                        String s =sb.toString().trim();
-                        if (s.charAt(s.length()-1)!=';')
-                              sb.append(";");
+                        sb.append(";");
                         eosInd=false;
                     }
                     sb.append("</"+key+">");
@@ -1043,11 +1041,11 @@ public class CodeFragmentExtractor {
             public void visitTerminal(@NotNull TerminalNode ctx) {
                 if(ctx != null) {
                   try{
-                    String token=ctx.getText();
-                    if(!token.equals("<EOF>"))
-                        sb.append(xmlEscapeText(token)+" ");
-
-
+                        if (!eosInd){
+                              String token=ctx.getText();
+                              if(!token.equals("<EOF>"))
+                                    sb.append(xmlEscapeText(token)+" ");
+                        }
                   }
                   catch (Exception e){
                         System.out.println(e.getMessage());

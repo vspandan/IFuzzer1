@@ -121,9 +121,10 @@ class AntlrParser(object):
             identifiers=[]
             for id in identifiers_JavaObj:
                 identifiers.append(id)
-            xmlCode=''.join(split('(\W+)',output['parsecode']))
-            return xmlCode,identifiers
-        return ""
+            # xmlCode=''.join(split('(\W+)',output['parsecode']))
+            return output['parsecode'],identifiers
+            # return xmlCode,identifiers
+        return "",[]
                 
     def extractCodeFrag(self, fileName):
         print fileName

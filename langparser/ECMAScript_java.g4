@@ -917,7 +917,7 @@ StringLiteral
  ;
 
 WhiteSpaces
- : [\t\u000B\u000C\u0020\u00A0]+ 
+ : [\t\u000B\u000C\u0020\u00A0]+ -> channel(HIDDEN)
  ;
 
 /// 7.4 Comments
