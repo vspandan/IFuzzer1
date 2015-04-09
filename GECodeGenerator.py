@@ -14,7 +14,7 @@ from random import randint
 FILECOUNT = 0
 
 Population_size=100
-Timeout = 2
+Timeout = 60
 Generations=1000
 
 

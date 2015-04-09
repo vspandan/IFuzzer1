@@ -110,11 +110,13 @@ class Genotype(object):
     
     def _converge(self, item):
         fileName = abspath("database" + "/" + item)
-        if  path.isfile(fileName): 
+        
+        if  path.isfile(fileName) and item in self.nTInvlvdGenProcess: 
             f = open(fileName,'r')
             d = load(f)
             f.close()
-            return choice(d)
+            s = choice(d)
+            return s
         else:
             return self.resolve_variable(item)
             

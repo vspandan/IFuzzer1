@@ -352,11 +352,11 @@ class GrammaticalEvolution(object):
             gene._extend_genotype = self._extend_genotype
             gene._timeouts = self._timeouts
             gene._wrap = self._wrap
-            self.population.append(gene)
+            gene.nTInvlvdGenProcess=nTInvlvdGenProcess
             member_no += 1
             gene.local_bnf["program"]=self.initial_Population[gene.member_no]
             gene.execution_timeout = self.execution_timeout
-
+            self.population.append(gene)
         return True;  
     
            
@@ -394,7 +394,7 @@ class GrammaticalEvolution(object):
                         return
                     if rc and rc not in [0,1,2,3,4] :
                         if gene._generation != 0:
-                            gene._fitness=gene._fitness+gene._fitness_fail*-10
+                            gene._fitness=gene._fitness_fail*-10
                             FILECOUNT = len(listdir(self.targetDirectory))+1 
                             newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
                             program+="\n//"+option
@@ -598,7 +598,6 @@ class GrammaticalEvolution(object):
                     if round(random(),1) < self._generative_mutation_rate :
                         generative=True
                         gene._max_depth=self._max_depth
-                    self.multiple_rate=0
                     count=1
                     if round(random(),1) < self.multiple_rate:
                         count=int(self.mutationCount*round(random(),1))+1
@@ -614,7 +613,7 @@ class GrammaticalEvolution(object):
                         print "Mutation-Success"
                     else:
                         print "Mutation-Failed"
-                    
+
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):

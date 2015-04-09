@@ -72,9 +72,10 @@ class AntlrParser(object):
     def extractNTandText(self,root):
         if root is not None:
             for child in root:
-                self.nonTerminals.append(child.tag)
-                txt=ElementTree.tostring(child,method="text")
-                self.values.append(txt)
+                if len(list(child))>1:
+                    self.nonTerminals.append(child.tag)
+                    txt=ElementTree.tostring(child,method="text")
+                    self.values.append(txt)
                 self.extractNTandText(child)       
 
     def genCodeFrag(self, input,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
