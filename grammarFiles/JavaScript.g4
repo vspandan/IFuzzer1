@@ -16,37 +16,37 @@ variableDeclarationList : variableDeclaration , variableDeclarationList | variab
 
 variableDeclaration : identifier initialiser |  identifier
 
-initialiser : = singleExpression
+initialiser : = assignmentExpression
 
-emptyStatement : ;
+emptyStatement :  ;
 
-expressionStatement : expressionSequence
+expressionStatement : expression
 
-ifStatement : if ( expressionSequence ) statement else statement | if ( expressionSequence ) statement 
+ifStatement : if ( expression ) statement else statement | if ( expression ) statement 
 
-iterationStatement : do statement while ( expressionSequence ) ; | while ( expressionSequence ) statement | for ( ; ; ) statement | for ( ; ; expressionSequence ) statement | for ( ; expressionSequence ; ) statement | for ( ; expressionSequence ; expressionSequence ) statement | for ( expressionSequence ; ; ) statement | for ( expressionSequence ; ; expressionSequence ) statement | for ( expressionSequence ; expressionSequence ; ) statement | for ( expressionSequence ; expressionSequence ; expressionSequence ) statement | for ( var variableDeclarationList ; ; ) statement | for ( var variableDeclarationList ; ; expressionSequence ) statement | for ( var variableDeclarationList ; expressionSequence ; ) statement | for ( var variableDeclarationList ; expressionSequence ; expressionSequence ) statement | for ( singleExpression In expressionSequence ) statement | for ( var variableDeclaration In expressionSequence ) statement
+iterationStatement : do statement while ( expression ) ; | while ( expression ) statement | for ( ; ; ) statement | for ( ; ; expression ) statement | for ( ; expression ; ) statement | for ( ; expression ; expression ) statement | for ( expression ; ; ) statement | for ( expression ; ; expression ) statement | for ( expression ; expression ; ) statement | for ( expression ; expression ; expression ) statement | for ( var variableDeclarationList ; ; ) statement | for ( var variableDeclarationList ; ; expression ) statement | for ( var variableDeclarationList ; expression ; ) statement | for ( var variableDeclarationList ; expression ; expression ) statement | for ( assignmentExpression In expression ) statement | for ( var variableDeclaration In expression ) statement
 
 continueStatement : continue identifier ; | continue ;
 
 breakStatement : break identifier ; | break ;
 
-returnStatement : return expressionSequence ; | return ;
+returnStatement : return expression ; | return ;
 
-withStatement : with ( expressionSequence ) statement
+withStatement : with ( expression ) statement
 
-switchStatement : switch ( expressionSequence ) caseBlock
+switchStatement : switch ( expression ) caseBlock
 
 caseBlock : { caseClauses defaultClause caseClauses } | { caseClauses defaultClause } | { caseClauses } | { defaultClause caseClauses } |{ defaultClause } | { } 
 
 caseClauses : caseClause | caseClause caseClauses
 
-caseClause : case expressionSequence : statementList |  case expressionSequence :
+caseClause : case expression : statementList |  case expression :
 
 defaultClause : default : statementList | default : 
 
 labelledStatement : identifier : statement
 
-throwStatement : throw expressionSequence ;
+throwStatement : throw expression ;
 
 tryStatement : try block catchProduction | try block finallyProduction | try block catchProduction finallyProduction
 
@@ -60,13 +60,12 @@ functionDeclaration : function identifier ( formalParameterList ) { functionBody
 
 formalParameterList : identifier , formalParameterList | identifier
 
-functionExpression	: function ( formalParameterList ) { functionBody }	| function  ( ) { functionBody }
-
 functionBody : sourceElements |
     
 arrayLiteral : [ elementList , elision ] | [ elementList , ] |[ elementList ] | [ , elision ] | [ , ] |[ elision ] | [] | [elementList elision]
- 
-elementList : elision singleExpression elementList | elision singleExpression | singleExpression |elision elementList
+
+
+elementList : elision assignmentExpression elementList | elision assignmentExpression | assignmentExpression |elision elementList
 
 elision : , | , elision
 
@@ -74,7 +73,7 @@ objectLiteral : { } | { propertyNameAndValueList } |{ propertyNameAndValueList ,
 
 propertyNameAndValueList : propertyAssignment , propertyNameAndValueList | propertyAssignment
     
-propertyAssignment : propertyName : singleExpression | get identifier ( ) { functionBody }| set identifier ( propertySetParameterList ) { functionBody }
+propertyAssignment : propertyName : assignmentExpression | get identifier ( ) { functionBody }| set identifier ( propertySetParameterList ) { functionBody }
     
 propertyName : identifierName | StringLiteral | numericLiteral
     
@@ -82,11 +81,50 @@ propertySetParameterList : identifier
 
 arguments : ( argumentList ) |  ( )
     
-argumentList : singleExpression , argumentList | singleExpression 
+argumentList : assignmentExpression , argumentList | assignmentExpression 
     
-expressionSequence : singleExpression expressionSequence | singleExpression
+expression : assignmentExpression expression | assignmentExpression   
+ 
+assignmentExpression : conditionalExpression | leftHandSideExpression  =  assignmentExpression | leftHandSideExpression assignmentOperator assignmentExpression
 
-singleExpression : functionExpression | singleExpression [ expressionSequence ] | singleExpression . identifierName | singleExpression arguments | new singleExpression arguments | new singleExpression | singleExpression ++ | singleExpression -- | delete singleExpression | void singleExpression | typeof singleExpression | ++ singleExpression | -- singleExpression | + singleExpression | - singleExpression | ~ singleExpression | ! singleExpression | singleExpression * singleExpression | singleExpression / singleExpression | singleExpression % singleExpression | singleExpression + singleExpression | singleExpression - singleExpression | singleExpression << singleExpression | singleExpression >> singleExpression | singleExpression >>> singleExpression | singleExpression < singleExpression | singleExpression > singleExpression | singleExpression <= singleExpression | singleExpression >= singleExpression | singleExpression instanceof singleExpression | singleExpression in singleExpression | singleExpression == singleExpression | singleExpression != singleExpression | singleExpression === singleExpression | singleExpression !== singleExpression | singleExpression & singleExpression | singleExpression ^ singleExpression | singleExpression #pipe; singleExpression | singleExpression && singleExpression | singleExpression #pipe;#pipe; singleExpression | singleExpression ? singleExpression : singleExpression | singleExpression = expressionSequence | singleExpression assignmentOperator expressionSequence | this | identifier | literal | arrayLiteral | objectLiteral | ( expressionSequence )
+conditionalExpression : logicalORExpression | logicalORExpression  ?  assignmentExpression  :  assignmentExpression
+
+logicalORExpression : logicalANDExpression | logicalORExpression  ##  logicalANDExpression
+
+logicalANDExpression : bitwiseORExpression | logicalANDExpression  &&  bitwiseORExpression
+
+bitwiseORExpression : bitwiseXORExpression | bitwiseORExpression  #  bitwiseXORExpression
+
+bitwiseXORExpression : bitwiseANDExpression | bitwiseXORExpression  ^  bitwiseANDExpression
+
+bitwiseANDExpression : equalityExpression | bitwiseANDExpression & equalityExpression
+
+equalityExpression  : relationalExpression | equalityExpression  ==  relationalExpression | equalityExpression  !=  relationalExpression | equalityExpression  ===  relationalExpression | equalityExpression  !==  relationalExpression
+
+relationalExpression  : shiftExpression | relationalExpression  <  shiftExpression | relationalExpression  >  shiftExpression | relationalExpression  <=  shiftExpression | relationalExpression  >=  shiftExpression | relationalExpression Instanceof shiftExpression  | relationalExpression In shiftExpression
+
+shiftExpression : additiveExpression | shiftExpression  <<  additiveExpression | shiftExpression  >>  additiveExpression | shiftExpression  >>>  additiveExpression
+ 
+additiveExpression :  multiplicativeExpression | additiveExpression  +  multiplicativeExpression | additiveExpression  -  multiplicativeExpression
+
+multiplicativeExpression :  unaryExpression | multiplicativeExpression  *  unaryExpression | multiplicativeExpression  /  unaryExpression | multiplicativeExpression  %  unaryExpression
+
+unaryExpression :  postfixExpression | Delete unaryExpression | Void unaryExpression | Typeof unaryExpression |  ++  unaryExpression |  --  unaryExpression | + unaryExpression |  -  unaryExpression |  ~  unaryExpression |  !  unaryExpression
+
+postfixExpression :  leftHandSideExpression | leftHandSideExpression {!here(LineTerminator)}? ++ | leftHandSideExpression {!here(LineTerminator)}? --
+
+leftHandSideExpression :  newExpression | callExpression
+
+callExpression :  memberExpression arguments | callExpression arguments | callExpression [  ] | callExpression . identifierName
+
+newExpression :  memberExpression | New newExpression
+
+memberExpression :  primaryExpression | functionExpression | memberExpression [  ] | memberExpression . identifierName | New memberExpression arguments
+
+functionExpression :  Function identifier? ( formalParameterList? ) { functionBody }
+
+primaryExpression :  This | identifier | literal | arrayLiteral | objectLiteral | (  )
+
 
 assignmentOperator : *= | /= | %= | += | -= | <<= | >>= | >>>= | &= | ^= | |=
 
@@ -107,4 +145,3 @@ NullLiteral : null
 BooleanLiteral : true | false
 
 identifier : Ident
-

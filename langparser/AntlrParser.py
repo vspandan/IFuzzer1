@@ -72,10 +72,13 @@ class AntlrParser(object):
     def extractNTandText(self,root):
         if root is not None:
             for child in root:
-                if len(list(child))>1:
-                    self.nonTerminals.append(child.tag)
-                    txt=ElementTree.tostring(child,method="text")
-                    self.values.append(txt)
+            	print child.tag
+            	self.nonTerminals.append(child.tag)
+                txt=ElementTree.tostring(child,method="text")
+                self.values.append(txt)
+                if len(list(child)) >1:
+            		print child.tag
+	                print txt
                 self.extractNTandText(child)       
 
     def genCodeFrag(self, input,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
@@ -133,21 +136,23 @@ class AntlrParser(object):
     """
     def extractCodeFrag(self, fileName):
         print fileName
-        output,identifiers=self.parseTree(fileName,False)
+        # output,identifiers=self.parseTree(fileName,False)
         
-        root = ElementTree.fromstring(output)
-        self.extractNTandText(root)
-        d = defaultdict(list)
-        for position in range(len(self.nonTerminals)):
-                nt=self.nonTerminals[position]
-                d1 = []
-                code = self.values[position]
-                if len(code) > 0:
-                    if d.has_key(nt):
-                        d.get(nt).append(code)
-                    else:
-                        d1.append(code)
-                        d[str(nt)] = d1
+        # root = ElementTree.fromstring(output)
+        # self.extractNTandText(root)
+        # d = defaultdict(list)
+        # for position in range(len(self.nonTerminals)):
+        #         nt=self.nonTerminals[position]
+        #         d1 = []
+        #         code = self.values[position]
+        #         if len(code) > 0:
+        #             if d.has_key(nt):
+        #                 d.get(nt).append(code)
+        #             else:
+        #                 d1.append(code)
+        #                 d[str(nt)] = d1
+        c=CodeFragmentExtractor()
+        d=c.extractFrags(fileName,True)
         if self.que is not None:
             self.que.put(d)
         if self.que is None:

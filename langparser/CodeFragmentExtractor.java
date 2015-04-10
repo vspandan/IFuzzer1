@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.antlr.v4.runtime.tree.ParseTree;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,30 +142,46 @@ public class CodeFragmentExtractor {
             @Override 
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
                   try{
-                      if(ctx != null) {
-                          
-                          String Stmt = "";
-                          //Stmt = tokens.getText(ctx);
-                          int start = ctx.start.getTokenIndex();
-                          int stop = ctx.stop.getTokenIndex();
-                          for (int i = start; i <= stop; i++) {
-                              String tokenText=tokens.get(i).getText();
-                              if (tokens.get(i).getType()==98 && !global_Objects.contains(tokenText))
-                                    tokenText = "_id_"+tokenText;
-                              Stmt += tokenText;
+                        if(ctx != null) {
+                          java.util.List<ParseTree> childs=ctx.children;
+                          boolean ind=false;
+                          if (childs.size()>0){
+                            for (ParseTree p : childs){
+                              if (p.getChildCount()==0){
+                                ind=true;
+                                break;
+                              }
+
+                            }
                           }
-                          //System.out.println(ctx.start);
-                          String key=ruleNames[ctx.getRuleIndex()];
-                          ArrayList<String> aL = null;
-                          if (!hm.containsKey(key)){
-                              aL = new ArrayList<String>();
-                              aL.add(Stmt);
+                          else if(childs.size()==0){
+                            //ind =true;
                           }
-                          else{
-                              aL=hm.get(key);
-                              aL.add(Stmt);
+                          if (ind){
+                            String Stmt = "";
+                            //Stmt = tokens.getText(ctx);
+                            int start = ctx.start.getTokenIndex();
+                            int stop = ctx.stop.getTokenIndex();
+                            for (int i = start; i <= stop; i++) {
+                                String tokenText=tokens.get(i).getText();
+                                if (tokens.get(i).getType()==98 && !global_Objects.contains(tokenText))
+                                      tokenText = "_id_"+tokenText;
+                                Stmt += tokenText;
+                            }
+                            //System.out.println(ctx.start);
+
+                            String key=ruleNames[ctx.getRuleIndex()];
+                            ArrayList<String> aL = null;
+                            if (!hm.containsKey(key)){
+                                aL = new ArrayList<String>();
+                                aL.add(Stmt);
+                            }
+                            else{
+                                aL=hm.get(key);
+                                aL.add(Stmt);
+                            }
+                            hm.put(key,aL);
                           }
-                          hm.put(key,aL);
                       }
 
                   }
@@ -185,7 +202,6 @@ public class CodeFragmentExtractor {
             
 
         }, parser.program());
-        ECMAScriptParser.ProgramContext prg = parser.program();
         return hm;
     }
     

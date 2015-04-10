@@ -517,16 +517,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitArgumentList(@NotNull ECMAScriptParser.ArgumentListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#functionExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#functionExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#expression}.
 	 * @param ctx the parse tree
 	 */
@@ -536,16 +526,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExpression(@NotNull ECMAScriptParser.ExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#expressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionNoIn(@NotNull ECMAScriptParser.ExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#expressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionNoIn(@NotNull ECMAScriptParser.ExpressionNoInContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#assignmentExpression}.
 	 * @param ctx the parse tree
@@ -557,126 +537,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitAssignmentExpression(@NotNull ECMAScriptParser.AssignmentExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#assignmentExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignmentExpressionNoIn(@NotNull ECMAScriptParser.AssignmentExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#assignmentExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignmentExpressionNoIn(@NotNull ECMAScriptParser.AssignmentExpressionNoInContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#newExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterNewExpression(@NotNull ECMAScriptParser.NewExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#newExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitNewExpression(@NotNull ECMAScriptParser.NewExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#memberExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#memberExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#memberExpression1}.
-	 * @param ctx the parse tree
-	 */
-	void enterMemberExpression1(@NotNull ECMAScriptParser.MemberExpression1Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#memberExpression1}.
-	 * @param ctx the parse tree
-	 */
-	void exitMemberExpression1(@NotNull ECMAScriptParser.MemberExpression1Context ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#memberExpressionSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void enterMemberExpressionSuffix(@NotNull ECMAScriptParser.MemberExpressionSuffixContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#memberExpressionSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void exitMemberExpressionSuffix(@NotNull ECMAScriptParser.MemberExpressionSuffixContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#callExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterCallExpression(@NotNull ECMAScriptParser.CallExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#callExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitCallExpression(@NotNull ECMAScriptParser.CallExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#callExpression1}.
-	 * @param ctx the parse tree
-	 */
-	void enterCallExpression1(@NotNull ECMAScriptParser.CallExpression1Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#callExpression1}.
-	 * @param ctx the parse tree
-	 */
-	void exitCallExpression1(@NotNull ECMAScriptParser.CallExpression1Context ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#callExpressionSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void enterCallExpressionSuffix(@NotNull ECMAScriptParser.CallExpressionSuffixContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#callExpressionSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void exitCallExpressionSuffix(@NotNull ECMAScriptParser.CallExpressionSuffixContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#indexSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void enterIndexSuffix(@NotNull ECMAScriptParser.IndexSuffixContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#indexSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void exitIndexSuffix(@NotNull ECMAScriptParser.IndexSuffixContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#propertyReferenceSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void enterPropertyReferenceSuffix(@NotNull ECMAScriptParser.PropertyReferenceSuffixContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#propertyReferenceSuffix}.
-	 * @param ctx the parse tree
-	 */
-	void exitPropertyReferenceSuffix(@NotNull ECMAScriptParser.PropertyReferenceSuffixContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#assignmentOperator}.
-	 * @param ctx the parse tree
-	 */
-	void enterAssignmentOperator(@NotNull ECMAScriptParser.AssignmentOperatorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#assignmentOperator}.
-	 * @param ctx the parse tree
-	 */
-	void exitAssignmentOperator(@NotNull ECMAScriptParser.AssignmentOperatorContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#conditionalExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -686,16 +546,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConditionalExpression(@NotNull ECMAScriptParser.ConditionalExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#conditionalExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterConditionalExpressionNoIn(@NotNull ECMAScriptParser.ConditionalExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#conditionalExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitConditionalExpressionNoIn(@NotNull ECMAScriptParser.ConditionalExpressionNoInContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#logicalORExpression}.
 	 * @param ctx the parse tree
@@ -707,16 +557,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitLogicalORExpression(@NotNull ECMAScriptParser.LogicalORExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#logicalORExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterLogicalORExpressionNoIn(@NotNull ECMAScriptParser.LogicalORExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#logicalORExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitLogicalORExpressionNoIn(@NotNull ECMAScriptParser.LogicalORExpressionNoInContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#logicalANDExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -726,16 +566,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLogicalANDExpression(@NotNull ECMAScriptParser.LogicalANDExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#logicalANDExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterLogicalANDExpressionNoIn(@NotNull ECMAScriptParser.LogicalANDExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#logicalANDExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitLogicalANDExpressionNoIn(@NotNull ECMAScriptParser.LogicalANDExpressionNoInContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseORExpression}.
 	 * @param ctx the parse tree
@@ -747,16 +577,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitBitwiseORExpression(@NotNull ECMAScriptParser.BitwiseORExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseORExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterBitwiseORExpressionNoIn(@NotNull ECMAScriptParser.BitwiseORExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#bitwiseORExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitBitwiseORExpressionNoIn(@NotNull ECMAScriptParser.BitwiseORExpressionNoInContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseXORExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -766,16 +586,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBitwiseXORExpression(@NotNull ECMAScriptParser.BitwiseXORExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseXORExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterBitwiseXORExpressionNoIn(@NotNull ECMAScriptParser.BitwiseXORExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#bitwiseXORExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitBitwiseXORExpressionNoIn(@NotNull ECMAScriptParser.BitwiseXORExpressionNoInContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseANDExpression}.
 	 * @param ctx the parse tree
@@ -787,16 +597,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitBitwiseANDExpression(@NotNull ECMAScriptParser.BitwiseANDExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseANDExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterBitwiseANDExpressionNoIn(@NotNull ECMAScriptParser.BitwiseANDExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#bitwiseANDExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitBitwiseANDExpressionNoIn(@NotNull ECMAScriptParser.BitwiseANDExpressionNoInContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#equalityExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -807,16 +607,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitEqualityExpression(@NotNull ECMAScriptParser.EqualityExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#equalityExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqualityExpressionNoIn(@NotNull ECMAScriptParser.EqualityExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#equalityExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqualityExpressionNoIn(@NotNull ECMAScriptParser.EqualityExpressionNoInContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#relationalExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -826,16 +616,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRelationalExpression(@NotNull ECMAScriptParser.RelationalExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#relationalExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void enterRelationalExpressionNoIn(@NotNull ECMAScriptParser.RelationalExpressionNoInContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#relationalExpressionNoIn}.
-	 * @param ctx the parse tree
-	 */
-	void exitRelationalExpressionNoIn(@NotNull ECMAScriptParser.RelationalExpressionNoInContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#shiftExpression}.
 	 * @param ctx the parse tree
@@ -887,6 +667,56 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitPostfixExpression(@NotNull ECMAScriptParser.PostfixExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#callExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterCallExpression(@NotNull ECMAScriptParser.CallExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#callExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitCallExpression(@NotNull ECMAScriptParser.CallExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#newExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewExpression(@NotNull ECMAScriptParser.NewExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#newExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewExpression(@NotNull ECMAScriptParser.NewExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#memberExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#memberExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#functionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#functionExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#primaryExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -896,6 +726,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPrimaryExpression(@NotNull ECMAScriptParser.PrimaryExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#assignmentOperator}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentOperator(@NotNull ECMAScriptParser.AssignmentOperatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#assignmentOperator}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentOperator(@NotNull ECMAScriptParser.AssignmentOperatorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#literal}.
 	 * @param ctx the parse tree
