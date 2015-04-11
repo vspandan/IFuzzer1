@@ -42,15 +42,31 @@ public class CodeFragmentExtractor {
 
             @Override 
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
-                if(ctx != null) {
-                    
+                   java.util.List<ParseTree> childs=ctx.children;
+                   boolean ind=false;
+                    if (childs!=null){
+                        
+                          if (childs.size()>0){
+                            for (ParseTree p : childs){
+                              if (p.getChildCount()==0){
+                                ind=true;
+                                break;
+                              }
+
+                            }
+                          }
+                      
+                      if (ind){
                     String Stmt = null;
                     Stmt = tokens.getText(ctx);
                     String key=ruleNames[ctx.getRuleIndex()];
-                    nonTerminals.add(key);
-                    if(key.equals("eos"))
-                        eosInd=true;
+                    
+                    if(key.equals("eos")){
+                        sb.append(";");
+                        eosInd=false;
+                    }
                     sb.append("<"+key+">");
+                  }
                 }
             }
             
@@ -58,6 +74,20 @@ public class CodeFragmentExtractor {
             public void exitEveryRule(@NotNull ParserRuleContext ctx) {
                 if(ctx != null) {
                     
+                    java.util.List<ParseTree> childs=ctx.children;
+                    boolean ind=false;
+                    if (childs!=null){
+                          if (childs.size()>0){
+                            for (ParseTree p : childs){
+                              if (p.getChildCount()==0){
+                                ind=true;
+                                break;
+                              }
+
+                            }
+                          }
+                      
+                      if (ind){
                     String Stmt = null;
                     Stmt = tokens.getText(ctx);
                     String key=ruleNames[ctx.getRuleIndex()];
@@ -67,6 +97,8 @@ public class CodeFragmentExtractor {
                         eosInd=false;
                     }
                     sb.append("</"+key+">");
+                }
+              }
                 }
             }
             
@@ -154,9 +186,7 @@ public class CodeFragmentExtractor {
 
                             }
                           }
-                          else if(childs.size()==0){
-                            //ind =true;
-                          }
+
                           if (ind){
                             String Stmt = "";
                             //Stmt = tokens.getText(ctx);

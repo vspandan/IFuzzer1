@@ -73,7 +73,7 @@ objectLiteral : { } | { propertyNameAndValueList } |{ propertyNameAndValueList ,
 
 propertyNameAndValueList : propertyAssignment , propertyNameAndValueList | propertyAssignment
     
-propertyAssignment : propertyName : assignmentExpression | get identifier ( ) { functionBody }| set identifier ( propertySetParameterList ) { functionBody }
+propertyAssignment : propertyName : assignmentExpression | get identifier ( ) { functionBody } | set identifier ( propertySetParameterList ) { functionBody }
     
 propertyName : identifierName | StringLiteral | numericLiteral
     
@@ -101,7 +101,7 @@ bitwiseANDExpression : equalityExpression | bitwiseANDExpression & equalityExpre
 
 equalityExpression  : relationalExpression | equalityExpression  ==  relationalExpression | equalityExpression  !=  relationalExpression | equalityExpression  ===  relationalExpression | equalityExpression  !==  relationalExpression
 
-relationalExpression  : shiftExpression | relationalExpression  <  shiftExpression | relationalExpression  >  shiftExpression | relationalExpression  <=  shiftExpression | relationalExpression  >=  shiftExpression | relationalExpression Instanceof shiftExpression  | relationalExpression In shiftExpression
+relationalExpression  : shiftExpression | relationalExpression  <  shiftExpression | relationalExpression  >  shiftExpression | relationalExpression  <=  shiftExpression | relationalExpression  >=  shiftExpression | relationalExpression instanceof shiftExpression  | relationalExpression in shiftExpression
 
 shiftExpression : additiveExpression | shiftExpression  <<  additiveExpression | shiftExpression  >>  additiveExpression | shiftExpression  >>>  additiveExpression
  
@@ -109,7 +109,7 @@ additiveExpression :  multiplicativeExpression | additiveExpression  +  multipli
 
 multiplicativeExpression :  unaryExpression | multiplicativeExpression  *  unaryExpression | multiplicativeExpression  /  unaryExpression | multiplicativeExpression  %  unaryExpression
 
-unaryExpression :  postfixExpression | Delete unaryExpression | Void unaryExpression | Typeof unaryExpression |  ++  unaryExpression |  --  unaryExpression | + unaryExpression |  -  unaryExpression |  ~  unaryExpression |  !  unaryExpression
+unaryExpression :  postfixExpression | delete unaryExpression | void unaryExpression | typeof unaryExpression |  ++  unaryExpression |  --  unaryExpression | + unaryExpression |  -  unaryExpression |  ~  unaryExpression |  !  unaryExpression
 
 postfixExpression :  leftHandSideExpression | leftHandSideExpression {!here(LineTerminator)}? ++ | leftHandSideExpression {!here(LineTerminator)}? --
 
@@ -117,20 +117,17 @@ leftHandSideExpression :  newExpression | callExpression
 
 callExpression :  memberExpression arguments | callExpression arguments | callExpression [  ] | callExpression . identifierName
 
-newExpression :  memberExpression | New newExpression
+newExpression :  memberExpression | new newExpression
 
-memberExpression :  primaryExpression | functionExpression | memberExpression [  ] | memberExpression . identifierName | New memberExpression arguments
+memberExpression :  primaryExpression | functionExpression | memberExpression [  ] | memberExpression . identifierName | new memberExpression arguments
 
-functionExpression :  Function identifier? ( formalParameterList? ) { functionBody }
+functionExpression :  function identifier? ( formalParameterList? ) { functionBody }
 
 primaryExpression :  This | identifier | literal | arrayLiteral | objectLiteral | (  )
-
 
 assignmentOperator : *= | /= | %= | += | -= | <<= | >>= | >>>= | &= | ^= | |=
 
 literal : NullLiteral | BooleanLiteral | StringLiteral | RegularExpressionLiteral | numericLiteral
-
-numericLiteral : DecimalLiteral | HexIntegerLiteral | OctalIntegerLiteral
 
 identifierName : identifier | reservedWord
 
@@ -144,4 +141,10 @@ NullLiteral : null
 
 BooleanLiteral : true | false
 
-identifier : Ident
+numericLiteral : DecimalLiteral | HexIntegerLiteral | OctalIntegerLiteral
+
+identifier : 
+
+StringLiteral :
+
+RegularExpressionLiteral: 

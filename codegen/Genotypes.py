@@ -3,15 +3,19 @@
 from datetime import datetime
 from re import sub,split
 from string import lower
-from subprocess import Popen,PIPE
 from marshal import load
-from os import path,remove,kill,rename,listdir
+from os import path
 from codegen.Utilities import base10tobase2, base2tobase10
 from random import choice
 from os.path import abspath
-from time import time,sleep
 
-import sys
+import logging
+
+LOG_FILENAME = 'CodegenLog.log'
+logging.basicConfig(filename=LOG_FILENAME,
+                    level=logging.INFO,
+                    )
+
 
 VARIABLE_FORMAT = '(\W+)'
 BNF_PROGRAM = 'program'
@@ -102,7 +106,7 @@ class Genotype(object):
             self.local_bnf[variable_name] = [str(value)]
 
     def resolve_variable(self, variable):
-        self.score+=100
+        self.score+=1
         values = self.local_bnf[variable]
         value = self._select_choice(self._get_codon(), values)
         #value = sub('[\'()]', '', value)
@@ -149,10 +153,17 @@ class Genotype(object):
             
                     elif item in self._keys:
                         if check_stoplist and position >= 0:
-                            if depth < self._max_depth:
-                                prg_list[position] = self.resolve_variable(item)
-                            else:
+                            if item in ['identifier']:
                                 prg_list[position] = self._converge(item)
+                            elif item in ['StringLiteral','RegularExpressionLiteral']:
+                                prg_list[position] = self._converge('literal')
+                            elif item in ['DecimalLiteral','HexIntegerLiteral','OctalIntegerLiteral']:
+                                prg_list[position] = self._converge('numericLiteral')
+                            else:
+                                if depth < self._max_depth:
+                                    prg_list[position] = self.resolve_variable(item)
+                                else:
+                                    prg_list[position] = self._converge(item)
                             continue_map = True
                     position += 1
                     

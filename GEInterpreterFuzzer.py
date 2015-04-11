@@ -4,19 +4,27 @@ from GECodeGenerator import runFuzzer
 from datetime import datetime
 from string import lower
 import sys
-from random import choice
 from os import listdir, mkdir, makedirs,remove
 from os.path import isfile, join, isdir, exists, abspath
 from langparser.AntlrParser import AntlrParser
 from Queue import Queue
 from collections import defaultdict
+import logging
+
+LOG_FILENAME = 'CodegenLog.log'
+logging.basicConfig(filename=LOG_FILENAME,
+                    level=logging.INFO,
+                    )
+
 
 JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH2="/home/spandan/firefox/js/src/dist/bin/js"
 JS_SHELL_PATH3="/home/spandan/google/v8/out/native/d8"
 
-JS_SHELL_OPTIONS1=[' -w -f ', ' -w -Z 1 -f',' -w -Z 0 -f', ' -w -j -f',' -w -m -f',' -w -p -f',' -w -m -a -f']
-JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f',         ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
+JS_SHELL_OPTIONS1=[' -w -f ']
+# JS_SHELL_OPTIONS1=[' -w -f ', ' -w -Z 1 -f',' -w -Z 0 -f', ' -w -j -f',' -w -m -f',' -w -p -f',' -w -m -a -f']
+JS_SHELL_OPTIONS2=[' -w --fuzzing-safe  -f']
+# JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f',         ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
 JS_SHELL_OPTIONS3=None
 
 targetDirectory="testsamples"
@@ -30,15 +38,9 @@ TypeErrorList2="TypeErrorList2"
 GUI=False
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js', 'user.js', 'sta.js','test262-browser.js', 'test262-shell.js','test402-browser.js', 'test402-shell.js', 'testBuiltInObject.js', 'testIntl.js','js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','js'))
 
-INCLUDE_NT=['block','ifStatement','iterationStatement','withStatement','labelledStatement','expressionSequence','switchStatement','throwStatement','tryStatement','catchProduction','functionDeclaration','arrayLiteral','objectLiteral','propertyNameAndValueList','functionExpression','assignmentOperator','propertyName','numericLiteral','literal','singleExpression']
+INCLUDE_NT=['variableStatement', 'variableDeclarationList', 'initialiser', 'ifStatement', 'iterationStatement', 'labelledStatement', 'functionDeclaration', 'arguments', 'elementList', 'arrayLiteral', 'objectLiteral', 'caseClause' 'propertyNameAndValueList', 'propertyAssignment', 'propertySetParameterList', 'arguments', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'postfixExpression', 'leftHandSideExpression', 'callExpression', 'newExpression', 'memberExpression', 'functionExpression', 'primaryExpression', 'assignmentOperator', 'literal', 'numericLiteral', 'propertyName']
 
 fileList = []
-
-def options(choice):
-    if choice == 1:
-        return lower(raw_input("Do you want to Append Fragment Pool ? Y/N : "))
-    else:
-        return lower(raw_input("Do you want to create fragment pool ? Y/N : "))
 
 def listAllTestCasesDir(testCasesDir):
         for f in listdir(testCasesDir):
@@ -53,8 +55,8 @@ def createFragmentPool():
     codeFragPool=[]
     def finalize():
         codeFrags2=defaultdict(list)
-        print (datetime.now())
-        print ("Finalizing: Grouping Common Frags")
+        logging.info (datetime.now())
+        logging.info ("Finalizing: Grouping Common Frags")
         for codeFrags in codeFragPool:
             keys=codeFrags2.keys()
             for key in codeFrags.keys():
@@ -62,10 +64,10 @@ def createFragmentPool():
                     codeFrags2[key] = codeFrags2.get(key)+codeFrags.get(key)
                 else:
                     codeFrags2[key]=codeFrags.get(key)
-        print (datetime.now())
-        print ("Finalizing: Writing to file")
+        logging.info (datetime.now())
+        logging.info ("Finalizing: Writing to file")
         for key in codeFrags2.keys():
-            print (key)
+            logging.info (key)
             fileName = abspath("database" + "/" + key)
             temp=[]
             if isfile(fileName):
@@ -80,15 +82,15 @@ def createFragmentPool():
             f1 = open(fileName, 'wb')
             dump(temp, f1)
             f1.close()
-            print (datetime.now())
+            logging.info (datetime.now())
         
-    print("Considering " + str(len(fileList)) + " files for learning code fragments")
+    logging.info("Considering " + str(len(fileList)) + " files for learning code fragments")
     if not exists("database"):
         makedirs("database")
     count=0
     
     for f in fileList:
-        print count
+        logging.info (count)
         try:
             a=AntlrParser()
             que=Queue()
@@ -108,6 +110,7 @@ def createFragmentPool():
                 if res is not None:
                     codeFragPool.append(res)
                     count+=1
+                    logging.debug(res)
             
             if count % 200 == 0:
                 finalize()
@@ -115,9 +118,9 @@ def createFragmentPool():
         except:
             pass
     
-    print ("Finished; Code generation and testing begins")
+    logging.info ("Finished; Code generation and testing begins")
 
-def main(fileList):
+def main(fileList,args):
     iteration=0
     targetDirectory=targetDirectoryName
     try:
@@ -131,7 +134,14 @@ def main(fileList):
                 from GECodeGeneratorGUI import runFuzzer 
             else:
                 from GECodeGenerator import runFuzzer 
-            generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
+            if args[0] == '1':
+                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
+            elif args[0] == '2':
+                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
+            elif args[0] == '3':
+                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
+            else:
+                print "Invalid Python Arguments"
             fileList=generatedFileList
             targetDirectory=targetDirectoryName+str(iteration)
             iteration+=1
@@ -139,37 +149,30 @@ def main(fileList):
         pass
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
     sys.setrecursionlimit(300000)
     print "Starting Application "
-    print datetime.now()
+    logging.info (datetime.now())
 
     listAllTestCasesDir(targetDirectory)
+    if args[0]=="0":
+        fileList1=listdir("database")
+        if len(fileList1):
+            while True:
+                input1=raw_input("Do you want to Append Fragment Pool ? Y/N : ")
+                if input1 in ['y','n']:
+                    if input1=='y':
+                        raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
+                        break;
+                    else:
+                        raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
+                        for f in fileList1:
+                            remove("database"+"/"+f)
+                        break;
 
-    while True:
-        input=options(0)
-        if input in ['y','n']:
-            if input=='y':
-                fileList1=listdir("database")
-                if len(fileList1):
-                    while True:
-                        input1=options(1)
-                        if input1 in ['y','n']:
-                            if input1=='y':
-                                raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
-                                break;
-                            else:
-                                raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
-                                for f in fileList1:
-                                    remove("database"+"/"+f)
-                                break;
-
-                        else:
-                            print "Answer must be 'Y' or 'N'"
-                createFragmentPool()
-                break;
-            else:
-                break;
-        else:
-             print "Answer must be 'Y' or 'N'"
-    main(fileList)
+                else:
+                    print "Answer must be 'Y' or 'N'"
+        createFragmentPool()
+    else:
+        main(fileList,args)
               

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from os import listdir, system
+from os import listdir
 from os.path import isfile, join, abspath
 
 from codegen.fitness import FitnessElites, FitnessTournament
@@ -8,13 +8,19 @@ from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 
 from langparser.AntlrParser import AntlrParser
-from marshal import load,dump
 from random import randint
+import logging
+
+LOG_FILENAME = 'CodegenLog.log'
+logging.basicConfig(filename=LOG_FILENAME,
+                    level=logging.INFO,
+                    )
+
 
 FILECOUNT = 0
 
 Population_size=100
-Timeout = 60
+Timeout = 15
 Generations=1000
 
 
@@ -99,10 +105,11 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 t=TestCases[randint(0,total-1)]
                 if t not in tempList:
                     tempList.append(t)
-            print "File Set - "+str(count)
+            logging.info("File Set - "+str(count))
+            logging.debug(tempList)
             count+=1
             process(tempList,FILECOUNT)
             # import sys
             # sys.exit()
-            tempList=FileList
+            # tempList=FileList
     return initialize()

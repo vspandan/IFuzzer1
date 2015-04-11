@@ -9,7 +9,11 @@ sys.path.append(path.dirname(path.abspath(__file__))+"/ECMAScript.jar")
 sys.path.append(path.dirname(path.abspath(__file__))+"/antlr-4.5-rc-2-complete.jar")
 from langparser import CodeFragmentExtractor
 import xml.etree.ElementTree as ElementTree
-
+import logging
+LOG_FILENAME = 'CodegenLog.log'
+logging.basicConfig(filename=LOG_FILENAME,
+                    level=logging.INFO,
+                    )
 
 globalobj=['Infinity', 'NaN', 'undefined', 'null ', 'eval', 'uneval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'Object', 'Function', 'Boolean', 'Symbol', 'Error', 'EvalError', 'InternalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError', 'Number', 'Math', 'Date', 'String', 'RegExp', 'Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'Map', 'Set', 'WeakMap', 'WeakSet', 'Promise', 'Generator', 'GeneratorFunction', 'ArrayBuffer', 'DataView', 'JSON', 'Reflect', 'Proxy', 'Iterator', 'ParallelArray', 'StopIteration']
 
@@ -47,12 +51,15 @@ class AntlrParser(object):
                         else:
                             self.subcode[self.position-1]=child.text
                         self.subCodeGen(child,self.position-1)
+                        if child.tail is not None:
+                            self.out+=child.tail
                         continue
                 if child.text is not None:
                     self.out+=child.text
                 self.printChild(child,nTList)   
                 if child.tail is not None:
                     self.out+=child.tail
+            
 
     def extractNT(self,root):
         for child in root:
@@ -72,16 +79,12 @@ class AntlrParser(object):
     def extractNTandText(self,root):
         if root is not None:
             for child in root:
-            	print child.tag
             	self.nonTerminals.append(child.tag)
                 txt=ElementTree.tostring(child,method="text")
                 self.values.append(txt)
-                if len(list(child)) >1:
-            		print child.tag
-	                print txt
                 self.extractNTandText(child)       
 
-    def genCodeFrag(self, input,nT,subTree = False,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
+    def genCodeFrag(self, input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
         selectedNTList={}
         self.subcode={}
         self.out=""
@@ -114,10 +117,7 @@ class AntlrParser(object):
                 self.printChild(root,selectedNTList)
         except:
             pass
-        if not subTree:
-            return self.out,selectedNTList
-        if subTree: 
-            return self.subcode,self.out,selectedNTList
+        return self.subcode,self.out,selectedNTList
 
     def parseTree(self,input,ind=False):
         if len(input)>0:
@@ -135,7 +135,7 @@ class AntlrParser(object):
     Restricting to accept only files;
     """
     def extractCodeFrag(self, fileName):
-        print fileName
+        logging.info(fileName)
         # output,identifiers=self.parseTree(fileName,False)
         
         # root = ElementTree.fromstring(output)
