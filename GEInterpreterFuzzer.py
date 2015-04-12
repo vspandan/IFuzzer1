@@ -28,7 +28,9 @@ JS_SHELL_OPTIONS2=[' -w --fuzzing-safe  -f']
 JS_SHELL_OPTIONS3=None
 
 targetDirectory="testsamples"
-targetDirectoryName="generatedTestCases_js18_"
+targetDirectoryName1="generatedTestCases_js18_"
+targetDirectoryName3="generatedTestCases_v8_"
+targetDirectoryName2="generatedTestCases_js31_"
 
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
@@ -38,7 +40,7 @@ TypeErrorList2="TypeErrorList2"
 GUI=False
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js', 'user.js', 'sta.js','test262-browser.js', 'test262-shell.js','test402-browser.js', 'test402-shell.js', 'testBuiltInObject.js', 'testIntl.js','js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','js'))
 
-INCLUDE_NT=['variableStatement', 'variableDeclarationList', 'initialiser', 'ifStatement', 'iterationStatement', 'labelledStatement', 'functionDeclaration', 'arguments', 'elementList', 'arrayLiteral', 'objectLiteral', 'caseClause' 'propertyNameAndValueList', 'propertyAssignment', 'propertySetParameterList', 'arguments', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'postfixExpression', 'leftHandSideExpression', 'callExpression', 'newExpression', 'memberExpression', 'functionExpression', 'primaryExpression', 'assignmentOperator', 'literal', 'numericLiteral', 'propertyName']
+INCLUDE_NT=['variableStatement', 'variableDeclarationList', 'initialiser', 'ifStatement', 'iterationStatement', 'labelledStatement', 'functionDeclaration', 'arguments', 'elementList', 'arrayLiteral', 'objectLiteral', 'caseClause' 'propertyNameAndValueList', 'propertyAssignment', 'propertySetParameterList', 'arguments', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'postfixExpression', 'leftHandSideExpression', 'callExpression', 'newExpression', 'memberExpression', 'functionExpression', 'assignmentOperator', 'literal', 'numericLiteral', 'propertyName']
 
 fileList = []
 
@@ -122,28 +124,34 @@ def createFragmentPool():
 
 def main(fileList,args):
     iteration=0
-    targetDirectory=targetDirectoryName
     try:
         while True:
-            if not isdir(targetDirectory):
-                mkdir(targetDirectory)
-            if not exists(targetDirectory+"/shell.js"):
-                f=open(targetDirectory+"/shell.js","a+")
-                f.close()
             if GUI:
                 from GECodeGeneratorGUI import runFuzzer 
             else:
                 from GECodeGenerator import runFuzzer 
             if args[0] == '1':
+                targetDirectory=targetDirectoryName1+str(iteration)
+                if not isdir(targetDirectory):
+                    mkdir(targetDirectory)
+                # if not exists(targetDirectory+"/shell.js"):
+                #     f=open(targetDirectory+"/shell.js","a+")
+                #     f.close()
                 generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
             elif args[0] == '2':
-                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
+                targetDirectory=targetDirectoryName2+str(iteration)
+                if not isdir(targetDirectory):
+                    mkdir(targetDirectory)
+                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH2,JS_SHELL_OPTIONS2,EXCLUDE_FILES,INCLUDE_NT)
             elif args[0] == '3':
-                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT)
+                targetDirectory=targetDirectoryName3+str(iteration)
+                if not isdir(targetDirectory):
+                    mkdir(targetDirectory)
+                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH3,JS_SHELL_OPTIONS3,EXCLUDE_FILES,INCLUDE_NT)
             else:
                 print "Invalid Python Arguments"
             fileList=generatedFileList
-            targetDirectory=targetDirectoryName+str(iteration)
+            
             iteration+=1
     except:
         pass

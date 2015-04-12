@@ -7,3 +7,4 @@
 
 
 //should return syntax error
+//seg fault

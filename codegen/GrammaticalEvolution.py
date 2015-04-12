@@ -67,7 +67,7 @@ class GrammaticalEvolution(object):
 
         self.mutationCount = 1
         self.crossoverCount = 1
-        self.multiple_rate = 0
+        self._multiple_rate = 0
         self.fitness_list_history = []
         self._max_depth = 0
         self._generative_mutation_rate=0.5
@@ -81,7 +81,7 @@ class GrammaticalEvolution(object):
         self._generative_mutation_rate=rate
 
 	def set_multiple_rate(self, rate):
-		self.multiple_rate = rate
+		self._multiple_rate = rate
 
     def set_crossover_count(self, count):
         self.crossoverCount=count
@@ -433,13 +433,16 @@ class GrammaticalEvolution(object):
                 pass
 
     def run_cmd(self, fi,l,option):
-        exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
-        p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
-        l[0]=p
-        out, err = p.communicate()
-        l[1]=(out,err,p.returncode)
-        sys.stdout.flush()
-        sys.stderr.flush()
+        try:
+            exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
+            p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+            l[0]=p
+            out, err = p.communicate()
+            l[1]=(out,err,p.returncode)
+            sys.stdout.flush()
+            sys.stderr.flush()
+        except:
+            pass
     
     def computeSubScore (self, gene, program,err):
         incompl,dummy=self.parseCode(program)
@@ -559,7 +562,7 @@ class GrammaticalEvolution(object):
                         commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
 
                     count=1
-                    if round(random(),1) < self.multiple_rate:
+                    if round(random(),1) < self._multiple_rate:
                         count=int(self.crossoverCount*(round(random(),1)))+1        
                     selectedNt=[]
                     if len(commonNonTerm) > 0:
@@ -641,7 +644,7 @@ class GrammaticalEvolution(object):
                         generative=True
                         gene._max_depth=self._max_depth
                     count=1
-                    if round(random(),1) < self.multiple_rate:
+                    if round(random(),1) < self._multiple_rate:
                         count=int(self.mutationCount*round(random(),1))+1
                     parser = AntlrParser()
                     dummy,gene.local_bnf['CodeFrag'],selectedNt=parser.genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
@@ -736,7 +739,8 @@ class GrammaticalEvolution(object):
         """
         status = True
         fitl = self.fitness_list
-        logging.info("fitness values : Generation " + str(self._generation+1))
+        logging.info("fitness values : After Generation " + str(self._generation))
+        logging.info(self.interpreter_Shell)
         logging.info(fitl)
 
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:

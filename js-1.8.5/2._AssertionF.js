@@ -10,3 +10,4 @@ if ( Proxy. fix) {
 	new p( ) ; 
 } 
 //Assertion failure
+//Assertion failure: !vp->isPrimitive() && callee != &vp[0].toObject(), at jscntxtinlines.h:741

@@ -65,7 +65,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
 
                 ges.set_mutation_count(1);
                 ges.set_crossover_count(1);
-                #ges.set_multiple_rate(float(0.4))
+                ges._multiple_rate=(0.5)
 
                 ges.set_max_fitness_rate(float(1.0))
                 

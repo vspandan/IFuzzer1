@@ -62,3 +62,4 @@ function test() {
         a[i] = s;
     }
 }
+//Assertion failure: !cursor->isMarked(), at jsgc.cpp:196
