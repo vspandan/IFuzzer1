@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from copy import deepcopy
 from datetime import datetime
-from os import path,listdir
+from os import path,listdir,remove
 from random import choice, randint, random
 from re import sub
 from subprocess import Popen,PIPE
@@ -12,6 +12,7 @@ from codegen.Genotypes import Genotype
 from time import time
 from threading import Thread
 from jsbeautifier import beautify
+from tempfile import NamedTemporaryFile
 
 import logging
 
@@ -386,8 +387,7 @@ class GrammaticalEvolution(object):
             gene.local_bnf['program']=program
         if len(program) > 0:
             try:
-                fi=str(int(time()*1000))
-                f=open("/tmp/"+fi,"a+")
+            	f=NamedTemporaryFile(delete=False)
                 f.write(program)
                 f.close()
                 if self.interpreter_Options is not None:
@@ -396,7 +396,7 @@ class GrammaticalEvolution(object):
                     option=""
                 timedout=False
                 l=[None,None]        
-                t=Thread(target=self.run_cmd,kwargs={'fi':fi,'l':l,'option':option})
+                t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option})
                 t.start()
                 t.join(self.execution_timeout)
                 if t.isAlive():
@@ -409,32 +409,38 @@ class GrammaticalEvolution(object):
                 else:
                     (out,err,rc)=l[1]
                     gene.err=err
-                    if "timeout" in err or "terminating" in err:
+                    if "timeout" in err or "terminating" in err or "out of memory" in err:
                         return
                     if rc and rc not in [0,1,2,3,4] :
                         if gene._generation != 0:
-                            gene._fitness=gene._fitness_fail*-10
-                            FILECOUNT = len(listdir(self.targetDirectory))+1 
-                            newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
-                            program+="\n//"+option
                             logging.info("Crash:")
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
                             logging.info(program)
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
+                            logging.info("error:"+err)
+                            logging.info("interpreter:"+self.interpreter_Shell)
+                            gene._fitness=gene._fitness_fail*-10
+                            FILECOUNT = len(listdir(self.targetDirectory))+1 
+                            newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
+                            program+="\n//"+option
+                           
                             f=open(newFile,'w')
                             f.write(program)
                             f.close
                     else:
                         if rc != 3 :
                             gene._fitness = self.computeSubScore(gene,program,err)*-1
-
-                remove("/tmp/"+fi)
             except: 
                 pass
+            finally:
+                try:
+                    remove(f.name)
+                except:
+                    pass
 
     def run_cmd(self, fi,l,option):
         try:
-            exec_cmd=self.interpreter_Shell+" "+option+" shell.js /tmp/"+ fi
+            exec_cmd=self.interpreter_Shell+" "+option+" shell.js "+ fi
             p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
@@ -658,6 +664,10 @@ class GrammaticalEvolution(object):
                         gene.prog_generated = 1
                         mutatedList.append(gene)
                         logging.info("Mutation-Success" )
+                        logging.debug(pr)
+                        logging.debug(selectedNt)
+                        logging.debug(gene.local_bnf['CodeFrag'])
+                        logging.debug(gene.local_bnf['program'])
                     else:
 
                         logging.info("Mutation-Failed" )

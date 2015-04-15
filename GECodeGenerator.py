@@ -33,7 +33,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
     #Author: Spandan Veggalam
     def initialize():
         FileList=[]
-        def process(fil,filecount):
+        def process(fil):
                 bnf=""
                 ges = GrammaticalEvolution()
                 ges.setGrammarFile(abspath("grammarFiles/JavaScript.g4"))
@@ -53,8 +53,8 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_fitness_selections(
                     FitnessElites(ges.fitness_list, 0.1))
                 
-                ges.set_crossover_rate(float(0.4))
-                ges.set_mutation_rate(float(0.8))
+                ges.set_crossover_rate(float(0.6))
+                ges.set_mutation_rate(float(0.4))
 
                 ges.set_max_depth(2)
                 ges.set_generative_mutation_rate(0.2)
@@ -65,7 +65,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
 
                 ges.set_mutation_count(1);
                 ges.set_crossover_count(1);
-                ges._multiple_rate=(0.5)
+                ges._multiple_rate=(0.2)
 
                 ges.set_max_fitness_rate(float(1.0))
                 
@@ -88,8 +88,9 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                         if gene.get_fitness() != gene.get_fitness_fail() :
                             generatedPrg= gene.get_program()
                             # print generatedPrg
-                            newFile=targetDirectory+"/"+str(filecount)+".js"
-                            filecount+=1
+                            FILECOUNT = len(listdir(targetDirectory))+1 
+                            newFile=targetDirectory+"/"+str(FILECOUNT)+".js"
+                            
                             FileList.append(newFile)
                             f=open(newFile,'w')
                             f.write(generatedPrg)
@@ -100,7 +101,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
         
         while True:
             tempList=[]    
-            FILECOUNT = len(listdir(targetDirectory))+1 
+            
             while len(tempList)<Population_size:
                 t=TestCases[randint(0,total-1)]
                 if t not in tempList:
@@ -108,7 +109,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             logging.info("File Set - "+str(count))
             logging.debug(tempList)
             count+=1
-            process(tempList,FILECOUNT)
+            process(tempList)
             # import sys
             # sys.exit()
             # tempList=FileList
