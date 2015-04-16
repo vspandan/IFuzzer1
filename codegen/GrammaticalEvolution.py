@@ -13,13 +13,16 @@ from time import time
 from threading import Thread
 from jsbeautifier import beautify
 from tempfile import NamedTemporaryFile
+import ConfigParser
+config = ConfigParser.RawConfigParser()
+config.read('ConfigFile.properties')
 
+LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
 import logging
 
-LOG_FILENAME = 'CodegenLog.log'
 logging.basicConfig(filename=LOG_FILENAME,
                     level=logging.INFO,
-                    )
+                   )
 
 
 VARIABLE_FORMAT = '(\W+)'
@@ -93,7 +96,7 @@ class GrammaticalEvolution(object):
     def set_execution_timeout(self, timeout):
         self.execution_timeout = timeout
 
-    def dynamic_mutation_rate(self, ind ):
+    def dynamic_mutation_rate(self, ind):
         self.dynamic_mutation = ind
     
     def dynamic_crossover_rate(self, ind):
@@ -342,9 +345,10 @@ class GrammaticalEvolution(object):
                 break
             logging.info("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess):
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess,interpreterInd):
         self.interpreter_Shell=interpreter_Shell
         self.interpreter_Options =interpreter_Options
+        self.interpreterInd=interpreterInd
         self.nT_Invld_Gen_Process=nTInvlvdGenProcess
         self._extractProductions()
         self._prepareInitial_Population(file)
@@ -413,7 +417,9 @@ class GrammaticalEvolution(object):
                         return
                     if rc and rc not in [0,1,2,3,4] :
                         if gene._generation != 0:
+                            program+="\n//"+option
                             logging.info("Crash:")
+                            logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
                             logging.info(program)
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
@@ -422,13 +428,11 @@ class GrammaticalEvolution(object):
                             gene._fitness=gene._fitness_fail*-10
                             FILECOUNT = len(listdir(self.targetDirectory))+1 
                             newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
-                            program+="\n//"+option
-                           
                             f=open(newFile,'w')
                             f.write(program)
                             f.close
                     else:
-                        if rc != 3 :
+                        if rc != 3 and rc != 1 :
                             gene._fitness = self.computeSubScore(gene,program,err)*-1
             except: 
                 pass
@@ -440,7 +444,10 @@ class GrammaticalEvolution(object):
 
     def run_cmd(self, fi,l,option):
         try:
-            exec_cmd=self.interpreter_Shell+" "+option+" shell.js "+ fi
+            if self.interpreterInd!=3:
+                exec_cmd=self.interpreter_Shell+" "+option+" shell.js "+ fi
+            else:
+                exec_cmd=self.interpreter_Shell+" "+ fi
             p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
@@ -464,7 +471,7 @@ class GrammaticalEvolution(object):
         for temp in d:
                 gene.score += temp*0.5
         if "warning" in err:
-            logging.info("warning found: "+err )
+            logging.info("warning found: "+err)
             gene.score+=3
         return gene.score
 
@@ -610,9 +617,9 @@ class GrammaticalEvolution(object):
                             child_list.append(child1)
                         logging.info("Crossover-Success")
                     else:
-                        logging.info("Crossover-Failed" )
-                        logging.debug(child1.err )
-                        logging.debug(child2.err )
+                        logging.info("Crossover-Failed")
+                        logging.debug(child1.err)
+                        logging.debug(child2.err)
             return child_list
         except:
             return child_list
@@ -657,25 +664,20 @@ class GrammaticalEvolution(object):
                     parser = None
                     if len(selectedNt) <=0 :
                         continue
-                    gene._map_gene()
+                    gene._map_gene(selectedNt)
                     self.compute_fitness(gene,True)
                     if gene.get_fitness() != self._fitness_fail :
                         gene.local_bnf['CodeFrag']=""
                         gene.prog_generated = 1
                         mutatedList.append(gene)
-                        logging.info("Mutation-Success" )
-                        logging.debug(pr)
-                        logging.debug(selectedNt)
-                        logging.debug(gene.local_bnf['CodeFrag'])
-                        logging.debug(gene.local_bnf['program'])
+                        logging.info("Mutation-Success")
                     else:
-
-                        logging.info("Mutation-Failed" )
+                        logging.info("Mutation-Failed")
                         logging.debug(gene.err)
                         logging.debug(selectedNt)
                         logging.debug(dummy)
-                        logging.debug(pr)
                         logging.debug(gene.local_bnf['CodeFrag'])
+                        logging.debug(pr)
                         logging.debug(gene.local_bnf['program'])
                         
 
@@ -749,6 +751,7 @@ class GrammaticalEvolution(object):
         """
         status = True
         fitl = self.fitness_list
+        logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
         logging.info("fitness values : After Generation " + str(self._generation))
         logging.info(self.interpreter_Shell)
         logging.info(fitl)

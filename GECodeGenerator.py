@@ -9,9 +9,12 @@ from codegen.GrammaticalEvolution import GrammaticalEvolution
 
 from langparser.AntlrParser import AntlrParser
 from random import randint
-import logging
+import ConfigParser
+config = ConfigParser.RawConfigParser()
+config.read('ConfigFile.properties')
 
-LOG_FILENAME = 'CodegenLog.log'
+LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+import logging
 logging.basicConfig(filename=LOG_FILENAME,
                     level=logging.INFO,
                     )
@@ -21,11 +24,11 @@ FILECOUNT = 0
 
 Population_size=100
 Timeout = 15
-Generations=1000
+Generations=500
 
 
 #Author: Spandan Veggalam
-def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess):
+def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess, interpreterInd):
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
@@ -53,11 +56,11 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_fitness_selections(
                     FitnessElites(ges.fitness_list, 0.1))
                 
-                ges.set_crossover_rate(float(0.6))
-                ges.set_mutation_rate(float(0.4))
+                ges.set_crossover_rate(float(0.2))
+                ges.set_mutation_rate(float(0.8))
 
                 ges.set_max_depth(2)
-                ges.set_generative_mutation_rate(0.2)
+                ges.set_generative_mutation_rate(0.5)
 
                 ges.set_children_per_crossover(2)
                 
@@ -82,7 +85,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 # print fil
                 
 
-                if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
+                if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess,interpreterInd):
                     ges.run()
                     for gene in ges.population:
                         if gene.get_fitness() != gene.get_fitness_fail() :

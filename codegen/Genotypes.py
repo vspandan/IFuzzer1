@@ -9,9 +9,13 @@ from codegen.Utilities import base10tobase2, base2tobase10
 from random import choice
 from os.path import abspath
 
+import ConfigParser
+config = ConfigParser.RawConfigParser()
+config.read('ConfigFile.properties')
+
+LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
 import logging
 
-LOG_FILENAME = 'CodegenLog.log'
 logging.basicConfig(filename=LOG_FILENAME,
                     level=logging.INFO,
                     )
@@ -125,67 +129,37 @@ class Genotype(object):
             return self.resolve_variable(item)
             
     
-    def _map_variables(self, program, check_stoplist):
+    def _map_variables(self, program):
         try:
             depth = 0
-            def on_stoplist(item):
-                status = False
-                for stopitem in STOPLIST:
-                    if item.find(stopitem) > -1:
-                        status = True
-
-                return status
-
-            self.errors = []
-            prg_list = split(VARIABLE_FORMAT, str(program))
+            prg_list = program.split()
             while True:
-
                 position = 0
                 continue_map = False
                 while position < len(prg_list):
-                    #TODO check this process
                     item = prg_list[position]
-                    
                     if item in self.keywords:
                         prg_list[position]=lower(item)
-                        position += 1
-                        continue
-            
+                    elif item in ['identifier']:
+                        prg_list[position] = self._converge(item)
+                    elif item in ['StringLiteral','RegularExpressionLiteral']:
+                        prg_list[position] = self._converge('literal')
+                    elif item in ['DecimalLiteral','HexIntegerLiteral','OctalIntegerLiteral']:
+                        prg_list[position] = self._converge('numericLiteral')
                     elif item in self._keys:
-                        if check_stoplist and position >= 0:
-                            if item in ['identifier']:
-                                prg_list[position] = self._converge(item)
-                            elif item in ['StringLiteral','RegularExpressionLiteral']:
-                                prg_list[position] = self._converge('literal')
-                            elif item in ['DecimalLiteral','HexIntegerLiteral','OctalIntegerLiteral']:
-                                prg_list[position] = self._converge('numericLiteral')
-                            else:
-                                if depth < self._max_depth:
-                                    prg_list[position] = self.resolve_variable(item)
-                                else:
-                                    prg_list[position] = self._converge(item)
-                            continue_map = True
+                        if depth < self._max_depth:
+                            prg_list[position] = self.resolve_variable(item)
+                        else:
+                            prg_list[position] = self._converge(item)
+                        continue_map = True
                     position += 1
                     
                 depth += 1
-                program = ''.join(prg_list)
+                program = ' '.join(prg_list)
                 
-                prg_list = split(VARIABLE_FORMAT, str(program))
-                elapsed = datetime.now() - self.starttime
+                prg_list = program.split()
 
-                #TIMEOUT PARAMETER
                 """
-                if check_stoplist:
-                    if elapsed.seconds > self._timeouts[TIMEOUT_PROG_EXECUTE]:
-                        msg = "elapsed time greater than program timeout"
-                        self.errors.append(msg)
-                        raise StandardError(msg)
-                else:
-                    if elapsed.seconds > self._timeouts[TIMEOUT_PROG_BUILD]:
-                        msg = "elapsed time greater than preprogram timeout"
-                        self.errors.append(msg)
-                        raise StandardError(msg)
-
                 if len(program) > self._max_program_length:
                     msg = "program length, %s is beyond max program length: %s" % (
                                 len(program), self._max_program_length)
@@ -231,14 +205,17 @@ class Genotype(object):
         self.set_binary_gene(self._dec2bin_gene(self.decimal_gene))
 
     
-    def _map_gene(self):
+    def _map_gene(self,selectedNTList):
         self.score=0
         self._reset_gene_position()
         if self._extend_genotype:
             self._update_genotype()
-        program = self._map_variables(self.local_bnf['CodeFrag'], True)
-        program = sub(r'\s+', ' ', program)
+        program=self.local_bnf['CodeFrag']
+        logging.debug("Before mutation incomplete CodeFrag:"+program)
+        for nonTerminal in selectedNTList.values():
+            program = program.replace(nonTerminal,self._map_variables(nonTerminal))
         self.local_bnf[BNF_PROGRAM] = program  
+        logging.debug("After mutation complete CodeFrag:"+program)
         #True-Mutation
 
 

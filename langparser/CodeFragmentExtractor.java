@@ -62,7 +62,6 @@ public class CodeFragmentExtractor {
                     String key=ruleNames[ctx.getRuleIndex()];
                     
                     if(key.equals("eos")){
-                        sb.append(";");
                         eosInd=false;
                     }
                     sb.append("<"+key+">");
@@ -93,7 +92,6 @@ public class CodeFragmentExtractor {
                     String key=ruleNames[ctx.getRuleIndex()];
                     
                     if(key.equals("eos")){
-                        sb.append(";");
                         eosInd=false;
                     }
                     sb.append("</"+key+">");
@@ -110,6 +108,12 @@ public class CodeFragmentExtractor {
                               String token=ctx.getText();
                               if(!token.equals("<EOF>"))
                                     sb.append(xmlEscapeText(token)+" ");
+                        }
+                        else{
+                          String token=ctx.getText();
+                          if (!token.trim().equals(";"))
+                            sb.append(";");
+
                         }
                   }
                   catch (Exception e){

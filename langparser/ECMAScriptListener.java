@@ -39,6 +39,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitSourceElement(@NotNull ECMAScriptParser.SourceElementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#functionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDeclaration(@NotNull ECMAScriptParser.FunctionDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#functionDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDeclaration(@NotNull ECMAScriptParser.FunctionDeclarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#statement}.
 	 * @param ctx the parse tree
 	 */
@@ -360,16 +370,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDebuggerStatement(@NotNull ECMAScriptParser.DebuggerStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#functionDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionDeclaration(@NotNull ECMAScriptParser.FunctionDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#functionDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionDeclaration(@NotNull ECMAScriptParser.FunctionDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#formalParameterList}.
 	 * @param ctx the parse tree

@@ -9,8 +9,12 @@ sys.path.append(path.dirname(path.abspath(__file__))+"/ECMAScript.jar")
 sys.path.append(path.dirname(path.abspath(__file__))+"/antlr-4.5-rc-2-complete.jar")
 from langparser import CodeFragmentExtractor
 import xml.etree.ElementTree as ElementTree
+import ConfigParser
+config = ConfigParser.RawConfigParser()
+config.read('ConfigFile.properties')
+
+LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
 import logging
-LOG_FILENAME = 'CodegenLog.log'
 logging.basicConfig(filename=LOG_FILENAME,
                     level=logging.INFO,
                     )
