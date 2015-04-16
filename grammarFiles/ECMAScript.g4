@@ -193,6 +193,12 @@ sourceElement
  | functionDeclaration
  ;
 
+/// FunctionDeclaration :
+///     function Identifier ( FormalParameterList? ) { FunctionBody }
+functionDeclaration
+ : Function identifier '(' formalParameterList? ')' '{' functionBody '}'
+ ;
+
 /// Statement :
 ///     Block
 ///     VariableStatement
@@ -397,12 +403,6 @@ finallyProduction
 ///     debugger ;
 debuggerStatement
  : Debugger eos
- ;
-
-/// FunctionDeclaration :
-///     function Identifier ( FormalParameterList? ) { FunctionBody }
-functionDeclaration
- : Function identifier '(' formalParameterList? ')' '{' functionBody '}'
  ;
 
 /// FormalParameterList :
@@ -617,7 +617,7 @@ argumentList
  ;
  assignmentExpression
  :     conditionalExpression
- |     leftHandSideExpression '=' assignmentExpression
+ |     leftHandSideExpression '=' assignmentExpression 
  |     leftHandSideExpression assignmentOperator assignmentExpression
  ;
  conditionalExpression
@@ -696,7 +696,7 @@ argumentList
  ;
  leftHandSideExpression  
  :     newExpression
- |     callExpression
+ |     callExpression eos
  ;
  callExpression  
  :     memberExpression arguments
@@ -716,7 +716,7 @@ argumentList
  |     New memberExpression arguments
  ;
  functionExpression  
- :     Function identifier? '(' formalParameterList? ')' '{' functionBody '}'
+ :     Function '(' formalParameterList? ')' '{' functionBody '}'
  ;
  primaryExpression  
  :     This
