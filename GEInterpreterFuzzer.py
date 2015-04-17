@@ -43,7 +43,7 @@ TypeErrorList2="TypeErrorList2"
 GUI=False
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js', 'user.js', 'sta.js','test262-browser.js', 'test262-shell.js','test402-browser.js', 'test402-shell.js', 'testBuiltInObject.js', 'testIntl.js','js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','js'))
 
-INCLUDE_NT=['primaryExpression','ifStatement', 'iterationStatement', 'labelledStatement', 'throwStatement', 'functionDeclaration', 'arrayLiteral', 'propertyAssignment', 'propertyName', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'postfixExpression', 'callExpression', 'functionExpression', 'assignmentOperator', 'literal', 'numericLiteral']
+INCLUDE_NT=['ifStatement', 'iterationStatement', 'labelledStatement', 'throwStatement', 'functionDeclaration', 'arrayLiteral', 'propertyAssignment', 'propertyName', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'postfixExpression', 'callExpression', 'functionExpression', 'assignmentOperator', 'literal', 'numericLiteral']
 
 fileList = []
 
@@ -157,10 +157,10 @@ def main(fileList,args):
                 generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH3,JS_SHELL_OPTIONS3,EXCLUDE_FILES,INCLUDE_NT,3)
             else:
                 print "Invalid Python Arguments"
-            fileList=generatedFileList
+            listAllTestCasesDir(targetDirectory)
             
             iteration+=1
-    except:
+    finally:
         pass
 
 if __name__ == "__main__":

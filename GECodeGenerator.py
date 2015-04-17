@@ -8,7 +8,7 @@ from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 
 from langparser.AntlrParser import AntlrParser
-from random import randint
+from random import choice
 import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
@@ -60,7 +60,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_mutation_rate(float(0.8))
 
                 ges.set_max_depth(2)
-                ges.set_generative_mutation_rate(0.5)
+                ges.set_generative_mutation_rate(0.0)
 
                 ges.set_children_per_crossover(2)
                 
@@ -100,15 +100,15 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                             f.close
             
         count=0
-        total=len(TestCases)-1
-        
         while True:
             tempList=[]    
-            
             while len(tempList)<Population_size:
-                t=TestCases[randint(0,total-1)]
-                if t not in tempList:
-                    tempList.append(t)
+                t=choice(TestCases)
+                tempList.append(t)
+                TestCases.remove(t)
+            if len(TestCases) < Population_size:
+                print "breaking"
+                break
             logging.info("File Set - "+str(count))
             logging.debug(tempList)
             count+=1
@@ -116,4 +116,5 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             # import sys
             # sys.exit()
             # tempList=FileList
+        
     return initialize()

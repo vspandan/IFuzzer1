@@ -61,7 +61,6 @@ class GrammaticalEvolution(object):
         self._generation = 0
         self._fitness_fail = -1000
         self._maintain_history = True
-        self._timeouts = [20,3600]
 
         self._bnf = {}
         self._population_size = 0
@@ -72,7 +71,6 @@ class GrammaticalEvolution(object):
         self.mutationCount = 1
         self.crossoverCount = 1
         self._multiple_rate = 0
-        self.fitness_list_history = []
         self._max_depth = 0
         self._generative_mutation_rate=0.5
         self.identifiers_mapping={}
@@ -215,41 +213,24 @@ class GrammaticalEvolution(object):
         return self._fitness_fail
 
     def set_mutation_type(self, mutation_type):
-        errmsg = "The mutation type must be either '%s' or '%s'." % (
-                                                    's', 'm')
-        if mutation_type not in ['m', 's']:
-            raise ValueError(errmsg)
-
         self._mutation_type = mutation_type
 
     def get_mutation_type(self):
         return self._mutation_type
 
     def set_mutation_rate(self, mutation_rate):
-        errmsg = """The mutation rate, %s must be a float value
-                    from 0.0 to 1.0""" % (mutation_rate)
-        if not (0.0 <= mutation_rate <= 1.0):
-            raise ValueError(errmsg)
         self._mutation_rate = mutation_rate
 
     def get_mutation_rate(self):
         return self._mutation_rate
 
     def set_crossover_rate(self, crossover_rate):
-        errmsg = """The crossover rate, %s must be a float value
-                    from 0.0 to 1.0""" % (crossover_rate)
-        if not (0.0 <= crossover_rate <= 1.0):
-            raise ValueError(errmsg)
-
         self._crossover_rate = crossover_rate
 
     def get_crossover_rate(self):
         return self._crossover_rate
 
     def set_children_per_crossover(self, children_per_crossover):
-        if children_per_crossover not in [1, 2]:
-            raise ValueError(
-                "The children per crossovermust be either 1 or 2.")
         self._children_per_crossover = children_per_crossover
 
     def get_children_per_crossover(self):
@@ -269,11 +250,6 @@ class GrammaticalEvolution(object):
         return self.fitness_list.get_fitness_type()
 
     def set_max_fitness_rate(self, max_fitness_rate):
-        errmsg = """The max fitness rate, %s must be a float value
-                    from 0.0 to 1.0""" % (max_fitness_rate)
-        if not (0.0 <= max_fitness_rate <= 1.0):
-            raise ValueError(errmsg)
-
         self._max_fitness_rate = max_fitness_rate
 
     def get_max_fitness_rate(self):
@@ -305,13 +281,6 @@ class GrammaticalEvolution(object):
     def get_worst_member(self):
         return self.population[self.fitness_list.worst_member()]
 
-    def set_timeouts(self, preprogram, program):
-            self._timeouts[0] = preprogram
-            self._timeouts[1] = program
-
-    def get_timeouts(self):
-        return self._timeouts
-
     def _compute_fitness(self):
         for gene in self.population:
             starttime = datetime.now()
@@ -321,6 +290,7 @@ class GrammaticalEvolution(object):
             if self._generation == 0 :
                 logging.debug("evaluating" + str(gene.member_no))
                 logging.debug(gene.local_bnf["program"])
+                gene.score=0
                 self.compute_fitness(gene, True)
 
             self.population[gene.member_no]=gene
@@ -359,19 +329,15 @@ class GrammaticalEvolution(object):
         while member_no < self._population_size:
             gene = Genotype(self._start_gene_length,
                         self._max_gene_length,
-                        member_no,interpreter_Shell,interpreter_Options)
+                        member_no)
             gene.local_bnf = deepcopy(self._bnf)
             gene.local_bnf['<member_no>'] = [gene.member_no]
             gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
-            gene._max_program_length = self._max_program_length
-            gene._fitness_fail = self._fitness_fail
             gene._extend_genotype = self._extend_genotype
-            gene._timeouts = self._timeouts
             gene._wrap = self._wrap
             gene.nTInvlvdGenProcess=nTInvlvdGenProcess
             member_no += 1
             gene.local_bnf["program"]=self.initial_Population[gene.member_no]
-            gene.execution_timeout = self.execution_timeout
             self.population.append(gene)
         return True;  
     
@@ -427,7 +393,7 @@ class GrammaticalEvolution(object):
                                 logging.info("++++++++++++++++++++++++++++++++++++++++")
                                 logging.info("error:"+err)
                                 logging.info("interpreter:"+self.interpreter_Shell)
-                                gene._fitness=gene._fitness_fail*-10
+                                gene._fitness=self._fitness_fail*-10
                                 FILECOUNT = len(listdir(self.targetDirectory))+1 
                                 newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
                                 f=open(newFile,'w')
@@ -450,7 +416,7 @@ class GrammaticalEvolution(object):
                                 logging.info("++++++++++++++++++++++++++++++++++++++++")
                                 logging.info("error:"+err)
                                 logging.info("interpreter:"+self.interpreter_Shell)
-                                gene._fitness=gene._fitness_fail*-10
+                                gene._fitness=self._fitness_fail*-10
                                 FILECOUNT = len(listdir(self.targetDirectory))+1 
                                 newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
                                 f=open(newFile,'w')
@@ -626,11 +592,15 @@ class GrammaticalEvolution(object):
                             
                     child1.local_bnf['program']=child1Prg_
                     child1.generate_decimal_gene()
+                    child1._update_genotype()
+                    child1.score=0
                     self.compute_fitness(child1)
                     child2.local_bnf['program']=child2Prg_
                     child2.generate_decimal_gene()
+                    child2._update_genotype()
+                    child2.score=0
                     self.compute_fitness(child2)
-                    if child1.get_fitness()!= self._fitness_fail or child1.get_fitness()!= self._fitness_fail:
+                    if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
                         child1.prog_generated = 1
                         child2.prog_generated = 1
                         child1.local_bnf['CodeFrag']=""
@@ -641,6 +611,14 @@ class GrammaticalEvolution(object):
                         else:
                             child_list.append(child1)
                         logging.info("Crossover-Success")
+                    elif child1.get_fitness()!= self._fitness_fail:
+                        child1.prog_generated = 1
+                        child1.local_bnf['CodeFrag']=""
+                        child_list.append(child1)
+                    elif child2.get_fitness()!= self._fitness_fail:
+                        child2.prog_generated = 1
+                        child2.local_bnf['CodeFrag']=""
+                        child_list.append(child2)
                     else:
                         logging.info("Crossover-Failed")
                         logging.debug(child1.err)
@@ -663,7 +641,6 @@ class GrammaticalEvolution(object):
         
         return gene
 
-    #Author: Spandan Veggalam
     def _perform_mutations(self, mlist):
         mutatedList=[]
         
@@ -689,6 +666,8 @@ class GrammaticalEvolution(object):
                     parser = None
                     if len(selectedNt) <=0 :
                         continue
+                    # reseting score before mutation
+                    gene.score=0
                     gene._map_gene(selectedNt)
                     self.compute_fitness(gene,True)
                     if gene.get_fitness() != self._fitness_fail :

@@ -31,18 +31,14 @@ class Genotype(object):
 
     def __init__(self, start_gene_length,
                         max_gene_length,
-                        member_no,interpreter_Shell,interpreter_options):
+                        member_no):
         self._keys = []        
         self._generation=0
         self.member_no = member_no
         self.local_bnf = {}
-        self._max_program_length = None
         self._fitness = None
-        self._fitness_fail = None
         self._wrap = True
         self._extend_genotype = True
-        self.starttime = None
-        self._timeouts = (0, 0)
         self._gene_length = start_gene_length
         self._max_gene_length = max_gene_length
         self.binary_gene = None
@@ -52,13 +48,7 @@ class Genotype(object):
         self._position = (0, 0)
         self.keywords = None
         self._identifiers=[]
-        self.errors = []
-        self.interpreter_Shell=interpreter_Shell
-        self.interpreter_options=interpreter_options
         self.nTInvlvdGenProcess=[]
-        self.prev_program_history={}
-        self.prog_generated=0
-        self.execution_timeout = 30
         self._max_depth = 0
         self.err = ""
         self.score=0
@@ -95,19 +85,12 @@ class Genotype(object):
         self.decimal_gene = dec_geno
         self._position = (0, 0)
 
-    @staticmethod
-    def _dec2bin_gene(dec_gene):
+    def _dec2bin_gene(self,dec_gene):
        
         bin_gene = []
         for item in dec_gene:
             bin_gene.append(base10tobase2(item, zfill=8))
         return ''.join(bin_gene)
-
-    def set_bnf_variable(self, variable_name, value):
-        if isinstance(value, list):
-            self.local_bnf[variable_name] = value
-        else:
-            self.local_bnf[variable_name] = [str(value)]
 
     def resolve_variable(self, variable):
         self.score+=1
@@ -159,14 +142,6 @@ class Genotype(object):
                 
                 prg_list = program.split()
 
-                """
-                if len(program) > self._max_program_length:
-                    msg = "program length, %s is beyond max program length: %s" % (
-                                len(program), self._max_program_length)
-                    self.errors.append(msg)
-                    self._fitness = self._fitness_fail
-                    continue_map = False;
-                """
                 if continue_map is False:
                     return program
 
@@ -206,7 +181,6 @@ class Genotype(object):
 
     
     def _map_gene(self,selectedNTList):
-        self.score=0
         self._reset_gene_position()
         if self._extend_genotype:
             self._update_genotype()
@@ -216,15 +190,11 @@ class Genotype(object):
             program = program.replace(nonTerminal,self._map_variables(nonTerminal))
         self.local_bnf[BNF_PROGRAM] = program  
         logging.debug("After mutation complete CodeFrag:"+program)
-        #True-Mutation
-
-
     
     def get_binary_gene_length(self):
        return self._gene_length * 8
     
-    @staticmethod
-    def _select_choice(codon, selection):
+    def _select_choice(self, codon, selection):
         if isinstance(selection, list):
             return selection[codon % len(selection)]
         else:
@@ -235,9 +205,6 @@ class Genotype(object):
 
     def get_fitness(self):
         return self._fitness
-
-    def get_fitness_fail(self):
-        return self._fitness_fail
 
     def set_identifiers(self,idenfifiers):
         self._identifiers=idenfifiers
