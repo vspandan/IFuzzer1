@@ -31,7 +31,6 @@ JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-o
 JS_SHELL_OPTIONS3=None
 
 testsuite="testsamples"
-testsuite1="/home/spandan/repo/sputniktests"
 targetDirectoryName1="generatedTestCases_js18_"
 targetDirectoryName3="generatedTestCases_v8_"
 targetDirectoryName2="generatedTestCases_js31_"
@@ -152,7 +151,6 @@ def main(fileList,args):
                     mkdir(targetDirectory)
                 generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH2,JS_SHELL_OPTIONS2,EXCLUDE_FILES,INCLUDE_NT,2)
             elif args[0] == '3':
-                listAllTestCasesDir(testsuite1)
                 targetDirectory=targetDirectoryName3+str(iteration)
                 if not isdir(targetDirectory):
                     mkdir(targetDirectory)

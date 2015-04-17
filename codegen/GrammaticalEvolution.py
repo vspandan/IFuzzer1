@@ -415,25 +415,50 @@ class GrammaticalEvolution(object):
                     gene.err=err
                     if "timeout" in err or "terminating" in err or "out of memory" in err:
                         return
-                    if rc and rc not in [0,1,2,3,4] :
-                        if gene._generation != 0:
-                            program+="\n//"+option
-                            logging.info("Crash:")
-                            logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
-                            logging.info("++++++++++++++++++++++++++++++++++++++++")
-                            logging.info(program)
-                            logging.info("++++++++++++++++++++++++++++++++++++++++")
-                            logging.info("error:"+err)
-                            logging.info("interpreter:"+self.interpreter_Shell)
-                            gene._fitness=gene._fitness_fail*-10
-                            FILECOUNT = len(listdir(self.targetDirectory))+1 
-                            newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
-                            f=open(newFile,'w')
-                            f.write(program)
-                            f.close
+                    if self.interpreterInd==3:
+
+                        if rc < 0 and rc != -6 :
+                            if gene._generation != 0:
+                                program+="\n//"+option
+                                logging.info("Crash:")
+                                logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
+                                logging.info("++++++++++++++++++++++++++++++++++++++++")
+                                logging.info(program)
+                                logging.info("++++++++++++++++++++++++++++++++++++++++")
+                                logging.info("error:"+err)
+                                logging.info("interpreter:"+self.interpreter_Shell)
+                                gene._fitness=gene._fitness_fail*-10
+                                FILECOUNT = len(listdir(self.targetDirectory))+1 
+                                newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
+                                f=open(newFile,'w')
+                                f.write(program)
+                                f.close
+                        else:
+                            if rc == 0 :
+                                gene._fitness = self.computeSubScore(gene,program,err)*-1
+                            else:
+                                print err
+                                print rc
                     else:
-                        if rc != 3 and rc != 1 :
-                            gene._fitness = self.computeSubScore(gene,program,err)*-1
+                        if rc and rc not in [0,1,2,3,4] :
+                            if gene._generation != 0:
+                                program+="\n//"+option
+                                logging.info("Crash:")
+                                logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
+                                logging.info("++++++++++++++++++++++++++++++++++++++++")
+                                logging.info(program)
+                                logging.info("++++++++++++++++++++++++++++++++++++++++")
+                                logging.info("error:"+err)
+                                logging.info("interpreter:"+self.interpreter_Shell)
+                                gene._fitness=gene._fitness_fail*-10
+                                FILECOUNT = len(listdir(self.targetDirectory))+1 
+                                newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
+                                f=open(newFile,'w')
+                                f.write(program)
+                                f.close
+                        else:
+                            if rc != 3 :
+                                gene._fitness = self.computeSubScore(gene,program,err)*-1
             except: 
                 pass
             finally:

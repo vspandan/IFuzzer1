@@ -140,7 +140,7 @@ public class CodeFragmentExtractor {
                       String id=ctx.getText();
                       if (!global_Objects.contains(id))
                         identifiers.add(id);  
-                      System.out.println(id);
+                      //System.out.println(id);
                     }
                     
                 }
