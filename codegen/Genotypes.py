@@ -187,8 +187,10 @@ class Genotype(object):
         program=self.local_bnf['CodeFrag']
         logging.debug("Before mutation incomplete CodeFrag:"+program)
         for nonTerminal in selectedNTList.values():
+            logging.info("Mutation: "+nonTerminal)
             program = program.replace(nonTerminal,self._map_variables(nonTerminal))
         self.local_bnf[BNF_PROGRAM] = program  
+        logging.debug("Completed mutation:"+program)
         logging.debug("After mutation complete CodeFrag:"+program)
     
     def get_binary_gene_length(self):

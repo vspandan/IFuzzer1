@@ -8,11 +8,21 @@ if [ "$1" == "-c" ]; then
 	rm -rf langparser/*.class
 elif [ "$1" == "-r" ]; then
 	if [ "$2" == "js18" ]; then
-		jython GEInterpreterFuzzer.py 1
+		while true
+		do
+			jython -J-Xmx2048m GEInterpreterFuzzer.py 1
+			echo "Spidermonkey"
+		done
 	elif [ "$2" == "js31" ]; then
-		jython GEInterpreterFuzzer.py 2
+		while true
+		do
+			jython -J-Xmx2048m GEInterpreterFuzzer.py 2
+		done
 	elif [ "$2" == "v8" ]; then
-		jython GEInterpreterFuzzer.py 3
+		while true
+		do
+			jython -J-Xmx2048m GEInterpreterFuzzer.py 3
+		done
 	elif [ "$2" == "gen" ]; then
 		jython GEInterpreterFuzzer.py 0
 	else

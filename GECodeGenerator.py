@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
-from os import listdir
+from os import listdir,remove
 from os.path import isfile, join, abspath
 
 from codegen.fitness import FitnessElites, FitnessTournament
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 
-from langparser.AntlrParser import AntlrParser
 from random import choice
 import ConfigParser
 config = ConfigParser.RawConfigParser()
@@ -24,7 +23,7 @@ FILECOUNT = 0
 
 Population_size=100
 Timeout = 15
-Generations=500
+Generations=100
 
 
 #Author: Spandan Veggalam
@@ -48,7 +47,6 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_fitness_type("min".lower(), float(-10000))
                 
                 ges.set_max_program_length(500)
-                ges.set_timeouts(20, 3600)
                 ges.set_fitness_fail(float(1000))
                 
                 ges.set_execution_timeout(Timeout)
@@ -75,7 +73,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_replacement_selections(
                         ReplacementTournament(ges.fitness_list, tournament_size=3))
                 
-                ges.set_maintain_history(True)
+                ges.set_maintain_history(False)
                 ges.set_extend_genotype(True)
                 
                 ges.dynamic_mutation_rate(1)
@@ -88,7 +86,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess,interpreterInd):
                     ges.run()
                     for gene in ges.population:
-                        if gene.get_fitness() != gene.get_fitness_fail() :
+                        if gene.get_fitness() != ges._fitness_fail :
                             generatedPrg= gene.get_program()
                             # print generatedPrg
                             FILECOUNT = len(listdir(targetDirectory))+1 
@@ -98,21 +96,46 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                             f=open(newFile,'w')
                             f.write(generatedPrg)
                             f.close
+                ges=None
+                import gc
+                gc.collect()
             
         count=0
+        threadList=[]
         while True:
+            if len(TestCases) < Population_size:
+                for f in TestCases:
+                    try:
+                        remove(f)
+                    except:
+                        print "Error deleting file"
+                print "breaking"
+                return True
             tempList=[]    
             while len(tempList)<Population_size:
                 t=choice(TestCases)
                 tempList.append(t)
                 TestCases.remove(t)
-            if len(TestCases) < Population_size:
-                print "breaking"
-                break
             logging.info("File Set - "+str(count))
             logging.debug(tempList)
+            # process(tempList)
             count+=1
-            process(tempList)
+            for f in tempList:
+                try:
+                    remove(f)
+                except:
+                    print "Error deleting file"
+            return False
+            # import threading
+            # th=threading.Thread(target=process,kwargs={'fil':tempList})
+            # threadList.append(th)
+            
+            # if len(threadList)==3:
+            #     for thrd in threadList:
+            #         thrd.start()
+            #     for thrd in threadList:
+            #         thrd.join()
+            #     threadList=[]
             # import sys
             # sys.exit()
             # tempList=FileList

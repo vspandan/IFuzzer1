@@ -6,9 +6,10 @@ from string import lower
 import sys
 from os import listdir, mkdir, makedirs,remove
 from os.path import isfile, join, isdir, exists, abspath
-from langparser.AntlrParser import AntlrParser
+from langparser.AntlrParser import *
 from Queue import Queue
 from collections import defaultdict
+from shutil import copyfile
 import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
@@ -34,6 +35,9 @@ testsuite="testsamples"
 targetDirectoryName1="generatedTestCases_js18_"
 targetDirectoryName3="generatedTestCases_v8_"
 targetDirectoryName2="generatedTestCases_js31_"
+
+
+tempDirectoryName="tmp"
 
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
@@ -98,11 +102,10 @@ def createFragmentPool():
         logging.info (count)
         if count > -1 :
             try:
-                a=AntlrParser()
                 que=Queue()
-                a.que=que
+                
                 import threading
-                t=threading.Thread(target=a.extractCodeFrag,kwargs={'fileName':f})
+                t=threading.Thread(target=extractCodeFrag,kwargs={'fileName':f,'que':que})
                 t.start()
                 t.join(10)
                 timeout=False
@@ -115,7 +118,9 @@ def createFragmentPool():
                         a=None
                 if not timeout:
                     res=que.get(False)
+                    print res
                     if res is not None:
+                        print res
                         codeFragPool.append(res)
                         logging.debug(res)
                 
@@ -130,47 +135,96 @@ def createFragmentPool():
     logging.info ("Finished; Code generation and testing begins")
 
 def main(fileList,args):
-    iteration=0
+    status=False
+    if args[0]=='1':
+        iteration=int(config.get('Mappings','iteration1'))
+        if iteration==0:
+            listAllTestCasesDir(testsuite)
+        else:
+            listAllTestCasesDir(targetDirectoryName1+str(iteration-1))
+    if args[0]=='2':
+        iteration=int(config.get('Mappings','iteration2'))
+        if iteration==0:
+            listAllTestCasesDir(testsuite)
+        else:
+            listAllTestCasesDir(targetDirectoryName2+str(iteration-1))
+    if args[0]=='3':
+        iteration=int(config.get('Mappings','iteration2'))
+        if iteration==0:
+            listAllTestCasesDir(testsuite)
+        else:
+            listAllTestCasesDir(targetDirectoryName3+str(iteration-1))
     try:
         while True:
+
             if GUI:
                 from GECodeGeneratorGUI import runFuzzer 
             else:
                 from GECodeGenerator import runFuzzer 
+            fileList2=[]
+            if not exists(tempDirectoryName):
+                makedirs(tempDirectoryName)
+            if len(listdir(tempDirectoryName)) == 0:
+                logging.info("Moving files that has to be processed to temporary location")
+                count=0
+                for file in fileList:
+                    count+=1
+                    newfname=tempDirectoryName+"/"+str(count)+".js"
+                    copyfile(file, newfname)
+                    fileList2.append(newfname)
+            else:
+                logging.info("Loading file list")
+                fileList[:] = []
+                listAllTestCasesDir(tempDirectoryName)
+                fileList2=fileList[:]
+            raw_input()
+            
             if args[0] == '1':
                 targetDirectory=targetDirectoryName1+str(iteration)
                 if not isdir(targetDirectory):
                     mkdir(targetDirectory)
-                # if not exists(targetDirectory+"/shell.js"):
-                #     f=open(targetDirectory+"/shell.js","a+")
-                #     f.close()
-                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT,1)
+                status=generatedFileList=runFuzzer(fileList2,targetDirectory, JS_SHELL_PATH1,JS_SHELL_OPTIONS1,EXCLUDE_FILES,INCLUDE_NT,1)
+                config.set('Mappings', 'iteration1',iteration+1);
+                if status:
+                    status=False
+                    config.set('Mappings', 'iteration1',iteration+1);
+                    with open('ConfigFile.properties','wb') as f:
+                        config.write(f)
+                
             elif args[0] == '2':
                 targetDirectory=targetDirectoryName2+str(iteration)
                 if not isdir(targetDirectory):
                     mkdir(targetDirectory)
-                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH2,JS_SHELL_OPTIONS2,EXCLUDE_FILES,INCLUDE_NT,2)
+                status=generatedFileList=runFuzzer(fileList2,targetDirectory, JS_SHELL_PATH2,JS_SHELL_OPTIONS2,EXCLUDE_FILES,INCLUDE_NT,2)
+                if status:
+                    status=False
+                    config.set('Mappings', 'iteration1',iteration+1);
+                    with open('ConfigFile.properties','wb') as f:
+                        config.write(f)
             elif args[0] == '3':
                 targetDirectory=targetDirectoryName3+str(iteration)
                 if not isdir(targetDirectory):
                     mkdir(targetDirectory)
-                generatedFileList=runFuzzer(fileList,targetDirectory, JS_SHELL_PATH3,JS_SHELL_OPTIONS3,EXCLUDE_FILES,INCLUDE_NT,3)
+                status=generatedFileList=runFuzzer(fileList2,targetDirectory, JS_SHELL_PATH3,JS_SHELL_OPTIONS3,EXCLUDE_FILES,INCLUDE_NT,3)
+                if status:
+                    status=False
+                    config.set('Mappings', 'iteration1',iteration+1);
+                    with open('ConfigFile.properties','wb') as f:
+                        config.write(f)
             else:
                 print "Invalid Python Arguments"
-            listAllTestCasesDir(targetDirectory)
             
-            iteration+=1
+
+            break
+            
     finally:
         pass
 
 if __name__ == "__main__":
     args = sys.argv[1:]
     sys.setrecursionlimit(300000)
-    print "Starting Application "
-    logging.info (datetime.now())
-
-    listAllTestCasesDir(testsuite)
     if args[0]=="0":
+        listAllTestCasesDir(testsuite)
         fileList1=listdir("database")
         if len(fileList1):
             while True:

@@ -34,9 +34,7 @@ class GrammaticalEvolution(object):
         self._pre_selected = []
         self.history = []
         self.population = []
-        parser = None
         self.initial_Population = []
-        self.identifiers = []
         self.non_Terminals=[]
         self.stopping_criteria = {
                 STOPPING_MAX_GEN: None
@@ -111,14 +109,7 @@ class GrammaticalEvolution(object):
         f.close()        
         self.set_bnf(bnf)
     
-    def parseCode(self,codeFragment):
-    	parser = AntlrParser()
-    	parseCode,identifiers=parser.parseTree(codeFragment,True)
-    	parser = None
-        return parseCode,identifiers
-    
     def _prepareInitial_Population (self,fileList):
-            self.identifiers=[]
             self.initial_Population=[]
             count=0
             for fileName in fileList:
@@ -291,7 +282,7 @@ class GrammaticalEvolution(object):
                 logging.debug("evaluating" + str(gene.member_no))
                 logging.debug(gene.local_bnf["program"])
                 gene.score=0
-                self.compute_fitness(gene, True)
+                self.compute_fitness(gene)
 
             self.population[gene.member_no]=gene
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
@@ -339,11 +330,13 @@ class GrammaticalEvolution(object):
             member_no += 1
             gene.local_bnf["program"]=self.initial_Population[gene.member_no]
             self.population.append(gene)
+        self.initial_Population=None
         return True;  
     
            
 
-    def compute_fitness(self,gene,mutation=False):
+    def compute_fitness(self,gene):
+        logging.info("Calculating Fitness - started" +str(datetime.now()))
         gene._fitness=self._fitness_fail
         program=gene.local_bnf['program']
         if self._generation > 0:
@@ -387,7 +380,6 @@ class GrammaticalEvolution(object):
                             if gene._generation != 0:
                                 program+="\n//"+option
                                 logging.info("Crash:")
-                                logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
                                 logging.info("++++++++++++++++++++++++++++++++++++++++")
                                 logging.info(program)
                                 logging.info("++++++++++++++++++++++++++++++++++++++++")
@@ -410,7 +402,6 @@ class GrammaticalEvolution(object):
                             if gene._generation != 0:
                                 program+="\n//"+option
                                 logging.info("Crash:")
-                                logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
                                 logging.info("++++++++++++++++++++++++++++++++++++++++")
                                 logging.info(program)
                                 logging.info("++++++++++++++++++++++++++++++++++++++++")
@@ -429,6 +420,7 @@ class GrammaticalEvolution(object):
                 pass
             finally:
                 try:
+                    logging.info("Calculating Fitness -Done " +str(datetime.now()))
                     remove(f.name)
                 except:
                     pass
@@ -449,10 +441,13 @@ class GrammaticalEvolution(object):
             pass
     
     def computeSubScore (self, gene, program,err):
-        incompl,dummy=self.parseCode(program)
-        parser = AntlrParser()
-        a,b,c,d=parser.CountNestedStructures(incompl)
-        parser = None
+        
+        logging.info("Invoking Parser - Pasring - Score Calc " +str(datetime.now()))
+        incompl,dummy=parseTree(program,True)
+        logging.info("Calculating " +str(datetime.now()))
+        a,b,c,d=CountNestedStructures(incompl)
+        logging.info("Completed - Score Calc " +str(datetime.now()))
+        
         for temp in a:
                 gene.score += temp*1.5
         for temp in b:
@@ -550,16 +545,20 @@ class GrammaticalEvolution(object):
                     
                     child1Prg=child1.get_program()
                     child2Prg=child2.get_program()
+        
                     
-                    child1ParseTree,child1._identifiers=self.parseCode(child1Prg)
-                    parser = AntlrParser()
-                    non_term1=parser.extractNonTerminal(child1ParseTree)
-                    parser = None
+                    logging.info("Invoking Parser - Parsing Crossover-1 " +str(datetime.now()))
+                    child1ParseTree,child1._identifiers=parseTree(child1Prg,True)
+                    non_term1=extractNonTerminal(child1ParseTree)
+                    logging.info("Completed - Crossover-1 " +str(datetime.now()))
+                    
 
-                    child2ParseTree,child2._identifiers=self.parseCode(child2Prg)
-                    parser = AntlrParser()
-                    non_term2=parser.extractNonTerminal(child2ParseTree)
-                    parser = None
+                    
+                    logging.info("Invoking Parser - Parsing Crossover-2 " +str(datetime.now()))
+                    child2ParseTree,child2._identifiers=sparseTree(child2Prg,True)
+                    non_term2=extractNonTerminal(child2ParseTree)
+                    logging.info("Completed - Crossover-2 " +str(datetime.now()))
+                    
                     if self.nT_Invld_Gen_Process is not None:
                         commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
                     else:
@@ -574,10 +573,10 @@ class GrammaticalEvolution(object):
                             selectedNt.append(choice(commonNonTerm))
                     else:
                         return child_list
-                    parser = AntlrParser()
-                    subString1,s1,selected1NTList=parser.genCodeFrag(child1ParseTree,non_term1,selectedNt,None,len(selectedNt))
-                    subString2,s2,selected2NTList=parser.genCodeFrag(child2ParseTree,non_term2,selectedNt,None,len(selectedNt))
-                    parser = None
+                    logging.info("Invoking Parser - Crossover-3 ")
+                    subString1,s1,selected1NTList=genCodeFrag(child1ParseTree,non_term1,selectedNt,None,len(selectedNt))
+                    subString2,s2,selected2NTList=genCodeFrag(child2ParseTree,non_term2,selectedNt,None,len(selectedNt))
+                    logging.info("Completed - Crossover-3 " +str(datetime.now()))
                     
                     try:
                         for k in selected2NTList:
@@ -649,10 +648,13 @@ class GrammaticalEvolution(object):
             if round(random(),1) < self._mutation_rate :
                 logging.debug("mutation started")
                 generative=False
-                incompl, gene._identifiers = self.parseCode(gene.get_program())
-                parser = AntlrParser()
-                non_TerminalsList=parser.extractNonTerminal(incompl)
-                parser = None
+                
+                
+                logging.info("Invoking Parser - Parsing Mutation-1 " +str(datetime.now()))
+                incompl, gene._identifiers = parseTree(gene.get_program(),True)
+                non_TerminalsList=extractNonTerminal(incompl)
+                logging.info("Completed - Mutation-1 " +str(datetime.now()))
+                
                 if len(non_TerminalsList) >1:
 
                     if round(random(),1) < self._generative_mutation_rate :
@@ -661,15 +663,19 @@ class GrammaticalEvolution(object):
                     count=1
                     if round(random(),1) < self._multiple_rate:
                         count=int(self.mutationCount*round(random(),1))+1
-                    parser = AntlrParser()
-                    dummy,gene.local_bnf['CodeFrag'],selectedNt=parser.genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
-                    parser = None
+                    logging.info("Invoking Parser - Mutation-2 " +str(datetime.now()))
+                    dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
+                    logging.info("Completed - Mutation-2 " +str(datetime.now()))
+                    
                     if len(selectedNt) <=0 :
+                        logging.info("Mutation-Failed")
                         continue
                     # reseting score before mutation
                     gene.score=0
+                    logging.info("Mutation started " +str(datetime.now()))
                     gene._map_gene(selectedNt)
-                    self.compute_fitness(gene,True)
+                    logging.info("Mutation completed " +str(datetime.now()))
+                    self.compute_fitness(gene)
                     if gene.get_fitness() != self._fitness_fail :
                         gene.local_bnf['CodeFrag']=""
                         gene.prog_generated = 1
@@ -693,6 +699,7 @@ class GrammaticalEvolution(object):
             gene.member_no=position
             self.population[position]=gene
             position+=1
+        self._pre_selected
         for gene in fitness_pool:
             if position<self._population_size:
                 gene.member_no=position
