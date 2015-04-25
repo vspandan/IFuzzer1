@@ -118,7 +118,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 TestCases.remove(t)
             logging.info("File Set - "+str(count))
             logging.debug(tempList)
-            # process(tempList)
+            process(tempList)
             count+=1
             for f in tempList:
                 try:

@@ -13,7 +13,10 @@ from time import time
 from threading import Thread
 from jsbeautifier import beautify
 from tempfile import NamedTemporaryFile
+
+import signal 
 import ConfigParser
+
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
@@ -515,6 +518,9 @@ class GrammaticalEvolution(object):
         return flist1
 
     def _perform_crossovers(self, flist):
+
+        signal.signal(signal.SIGALRM, handler)
+        signal.alarm(len(flist)*5)
         child_list = []
         try:
             logging.debug("crossover started")
@@ -640,57 +646,62 @@ class GrammaticalEvolution(object):
         
         return gene
 
+    def mutate(self,gene):
+        signal.signal(signal.SIGALRM, handler)
+        signal.alarm(4)
+        pr=gene.local_bnf['program']
+        if round(random(),1) < self._mutation_rate :
+            logging.debug("mutation started")
+            generative=False
+            
+            
+            logging.info("Invoking Parser - Parsing Mutation-1 " +str(datetime.now()))
+            incompl, gene._identifiers = parseTree(gene.get_program(),True)
+            non_TerminalsList=extractNonTerminal(incompl)
+            logging.info("Completed - Mutation-1 " +str(datetime.now()))
+            
+            if len(non_TerminalsList) >1:
+
+                if round(random(),1) < self._generative_mutation_rate :
+                    generative=True
+                    gene._max_depth=self._max_depth
+                count=1
+                if round(random(),1) < self._multiple_rate:
+                    count=int(self.mutationCount*round(random(),1))+1
+                logging.info("Invoking Parser - Mutation-2 " +str(datetime.now()))
+                dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
+                logging.info("Completed - Mutation-2 " +str(datetime.now()))
+                
+                if len(selectedNt) <=0 :
+                    logging.info("Mutation-Failed")
+                    return None
+                # reseting score before mutation
+                gene.score=0
+                logging.info("Mutation started " +str(datetime.now()))
+                gene._map_gene(selectedNt)
+                logging.info("Mutation completed " +str(datetime.now()))
+                self.compute_fitness(gene)
+                if gene.get_fitness() != self._fitness_fail :
+                    gene.local_bnf['CodeFrag']=""
+                    gene.prog_generated = 1
+                    logging.info("Mutation-Success")
+                    return gene
+                else:
+                    logging.info("Mutation-Failed")
+                    logging.debug(gene.err)
+                    logging.debug(selectedNt)
+                    logging.debug(dummy)
+                    logging.debug(gene.local_bnf['CodeFrag'])
+                    logging.debug(pr)
+                    logging.debug(gene.local_bnf['program'])
+                    return None
+
     def _perform_mutations(self, mlist):
         mutatedList=[]
-        
         for gene in mlist:
-            pr=gene.local_bnf['program']
-            if round(random(),1) < self._mutation_rate :
-                logging.debug("mutation started")
-                generative=False
-                
-                
-                logging.info("Invoking Parser - Parsing Mutation-1 " +str(datetime.now()))
-                incompl, gene._identifiers = parseTree(gene.get_program(),True)
-                non_TerminalsList=extractNonTerminal(incompl)
-                logging.info("Completed - Mutation-1 " +str(datetime.now()))
-                
-                if len(non_TerminalsList) >1:
-
-                    if round(random(),1) < self._generative_mutation_rate :
-                        generative=True
-                        gene._max_depth=self._max_depth
-                    count=1
-                    if round(random(),1) < self._multiple_rate:
-                        count=int(self.mutationCount*round(random(),1))+1
-                    logging.info("Invoking Parser - Mutation-2 " +str(datetime.now()))
-                    dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
-                    logging.info("Completed - Mutation-2 " +str(datetime.now()))
-                    
-                    if len(selectedNt) <=0 :
-                        logging.info("Mutation-Failed")
-                        continue
-                    # reseting score before mutation
-                    gene.score=0
-                    logging.info("Mutation started " +str(datetime.now()))
-                    gene._map_gene(selectedNt)
-                    logging.info("Mutation completed " +str(datetime.now()))
-                    self.compute_fitness(gene)
-                    if gene.get_fitness() != self._fitness_fail :
-                        gene.local_bnf['CodeFrag']=""
-                        gene.prog_generated = 1
-                        mutatedList.append(gene)
-                        logging.info("Mutation-Success")
-                    else:
-                        logging.info("Mutation-Failed")
-                        logging.debug(gene.err)
-                        logging.debug(selectedNt)
-                        logging.debug(dummy)
-                        logging.debug(gene.local_bnf['CodeFrag'])
-                        logging.debug(pr)
-                        logging.debug(gene.local_bnf['program'])
-                        
-
+            result=self.mutate(gene)
+            if result is not None:
+                mutatedList.append(result)
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
@@ -782,3 +793,6 @@ class GrammaticalEvolution(object):
                     return False
 
         return status
+
+    def handler(signum, frame):
+        raise Exception("Function execution timeout")

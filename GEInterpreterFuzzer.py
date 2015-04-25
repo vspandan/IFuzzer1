@@ -165,6 +165,7 @@ def main(fileList,args):
             if not exists(tempDirectoryName):
                 makedirs(tempDirectoryName)
             if len(listdir(tempDirectoryName)) == 0:
+                logging.info(datetime.now())
                 logging.info("Moving files that has to be processed to temporary location")
                 count=0
                 for file in fileList:
@@ -177,7 +178,6 @@ def main(fileList,args):
                 fileList[:] = []
                 listAllTestCasesDir(tempDirectoryName)
                 fileList2=fileList[:]
-            raw_input()
             
             if args[0] == '1':
                 targetDirectory=targetDirectoryName1+str(iteration)
