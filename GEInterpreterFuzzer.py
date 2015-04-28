@@ -14,11 +14,11 @@ import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
-LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
-import logging
-logging.basicConfig(filename=LOG_FILENAME,
-                    level=logging.INFO,
-                    )
+# LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+# import logging
+# logging.basicConfig(filename=LOG_FILENAME,
+#                     level=logging.INFO,
+#                     )
 
 
 JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
@@ -37,7 +37,7 @@ targetDirectoryName3="generatedTestCases_v8_"
 targetDirectoryName2="generatedTestCases_js31_"
 
 
-tempDirectoryName="tmp"
+tmpDirectoryName="tmp"
 
 CrashListFile1="CrashList1"
 TypeErrorList1="TypeErrorList1"
@@ -64,8 +64,8 @@ def createFragmentPool():
     codeFragPool=[]
     def finalize():
         codeFrags2=defaultdict(list)
-        logging.info (datetime.now())
-        logging.info ("Finalizing: Grouping Common Frags")
+        print (datetime.now())
+        print ("Finalizing: Grouping Common Frags")
         for codeFrags in codeFragPool:
             keys=codeFrags2.keys()
             for key in codeFrags.keys():
@@ -73,10 +73,10 @@ def createFragmentPool():
                     codeFrags2[key] = codeFrags2.get(key)+codeFrags.get(key)
                 else:
                     codeFrags2[key]=codeFrags.get(key)
-        logging.info (datetime.now())
-        logging.info ("Finalizing: Writing to file")
+        print (datetime.now())
+        print ("Finalizing: Writing to file")
         for key in codeFrags2.keys():
-            logging.info (key)
+            print (key)
             fileName = abspath("database" + "/" + key)
             temp=[]
             if isfile(fileName):
@@ -91,15 +91,15 @@ def createFragmentPool():
             f1 = open(fileName, 'wb')
             dump(temp, f1)
             f1.close()
-            logging.info (datetime.now())
+            print (datetime.now())
         
-    logging.info("Considering " + str(len(fileList)) + " files for learning code fragments")
+    print("Considering " + str(len(fileList)) + " files for learning code fragments")
     if not exists("database"):
         makedirs("database")
     count=0
     ind=True
     for f in fileList:
-        logging.info (count)
+        print (count)
         if count > -1 :
             try:
                 que=Queue()
@@ -132,7 +132,7 @@ def createFragmentPool():
         count+=1
     finalize()
     
-    logging.info ("Finished; Code generation and testing begins")
+    print ("Finished; Code generation and testing begins")
 
 def main(fileList,args):
     status=False
@@ -140,20 +140,41 @@ def main(fileList,args):
         iteration=int(config.get('Mappings','iteration1'))
         if iteration==0:
             listAllTestCasesDir(testsuite)
+            tempDirectoryName=tmpDirectoryName
+            config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
         else:
             listAllTestCasesDir(targetDirectoryName1+str(iteration-1))
+            tempDirectoryName=tmpDirectoryName+str(iteration)
+            config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
     if args[0]=='2':
         iteration=int(config.get('Mappings','iteration2'))
         if iteration==0:
             listAllTestCasesDir(testsuite)
+            tempDirectoryName=tmpDirectoryName
+            config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
         else:
             listAllTestCasesDir(targetDirectoryName2+str(iteration-1))
+            tempDirectoryName=tmpDirectoryName+str(iteration)
+            config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
     if args[0]=='3':
         iteration=int(config.get('Mappings','iteration2'))
         if iteration==0:
             listAllTestCasesDir(testsuite)
+            tempDirectoryName=tmpDirectoryName
+            config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
         else:
             listAllTestCasesDir(targetDirectoryName3+str(iteration-1))
+            tempDirectoryName=tmpDirectoryName+str(iteration)
+            config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
+    with open('ConfigFile.properties','wb') as f:
+                        config.write(f)
+    config.read('ConfigFile.properties')
+    LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+    import logging
+    logging.basicConfig(filename=LOG_FILENAME,
+                    level=logging.INFO,
+                    )
+
     try:
         while True:
 

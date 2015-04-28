@@ -97,11 +97,15 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                             f.write(generatedPrg)
                             f.close
                 ges=None
-                import gc
-                gc.collect()
+                for f in fil:
+                    try:
+                        remove(f)
+                    except:
+                        print "Error deleting file"
+                return False
             
-        count=0
         threadList=[]
+        totalTempList=[]
         while True:
             if len(TestCases) < Population_size:
                 for f in TestCases:
@@ -114,30 +118,26 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             tempList=[]    
             while len(tempList)<Population_size:
                 t=choice(TestCases)
+                # if t in totalTempList:
+                #     continue
                 tempList.append(t)
                 TestCases.remove(t)
-            logging.info("File Set - "+str(count))
             logging.debug(tempList)
             process(tempList)
-            count+=1
             for f in tempList:
                 try:
                     remove(f)
                 except:
                     print "Error deleting file"
             return False
-            # import threading
-            # th=threading.Thread(target=process,kwargs={'fil':tempList})
-            # threadList.append(th)
-            
-            # if len(threadList)==3:
-            #     for thrd in threadList:
-            #         thrd.start()
-            #     for thrd in threadList:
-            #         thrd.join()
-            #     threadList=[]
-            # import sys
-            # sys.exit()
-            # tempList=FileList
-        
+            import threading
+            th=threading.Thread(target=process,kwargs={'fil':tempList})
+            threadList.append(th)
+            totalTempList += tempList
+            if len(threadList)==2:
+                for thrd in threadList:
+                    thrd.start()
+                for thrd in threadList:
+                    thrd.join()
+                return False
     return initialize()

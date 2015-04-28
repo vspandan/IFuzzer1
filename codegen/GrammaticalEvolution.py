@@ -34,6 +34,7 @@ STOPPING_MAX_GEN = 'max_generations'
 class GrammaticalEvolution(object):
 
     def __init__(self):
+        self.FUNCTION_EXEC_TIMEOUT=10
         self._pre_selected = []
         self.history = []
         self.population = []
@@ -401,21 +402,20 @@ class GrammaticalEvolution(object):
                                 print err
                                 print rc
                     else:
-                        if rc and rc not in [0,1,2,3,4] :
-                            if gene._generation != 0:
-                                program+="\n//"+option
-                                logging.info("Crash:")
-                                logging.info("++++++++++++++++++++++++++++++++++++++++")
-                                logging.info(program)
-                                logging.info("++++++++++++++++++++++++++++++++++++++++")
-                                logging.info("error:"+err)
-                                logging.info("interpreter:"+self.interpreter_Shell)
-                                gene._fitness=self._fitness_fail*-10
-                                FILECOUNT = len(listdir(self.targetDirectory))+1 
-                                newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
-                                f=open(newFile,'w')
-                                f.write(program)
-                                f.close
+                        if rc not in [0,1,2,3,4] :
+                            program+="\n//"+option
+                            logging.info("Crash:")
+                            logging.info("++++++++++++++++++++++++++++++++++++++++")
+                            logging.info(program)
+                            logging.info("++++++++++++++++++++++++++++++++++++++++")
+                            logging.info("error:"+err)
+                            logging.info("interpreter:"+self.interpreter_Shell)
+                            gene._fitness=self._fitness_fail*-10
+                            FILECOUNT = len(listdir(self.targetDirectory))+1 
+                            newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
+                            f=open(newFile,'w')
+                            f.write(program)
+                            f.close
                         else:
                             if rc != 3 :
                                 gene._fitness = self.computeSubScore(gene,program,err)*-1
@@ -438,12 +438,18 @@ class GrammaticalEvolution(object):
             l[0]=p
             out, err = p.communicate()
             l[1]=(out,err,p.returncode)
+            print p.returncode
             sys.stdout.flush()
             sys.stderr.flush()
         except:
             pass
     
     def computeSubScore (self, gene, program,err):
+        def handler(signum, frame):
+                raise Exception("Function execution timeout")
+
+        signal.signal(signal.SIGALRM, handler)
+        signal.alarm(3*self.FUNCTION_EXEC_TIMEOUT)
         
         logging.info("Invoking Parser - Pasring - Score Calc " +str(datetime.now()))
         incompl,dummy=parseTree(program,True)
@@ -518,11 +524,15 @@ class GrammaticalEvolution(object):
         return flist1
 
     def _perform_crossovers(self, flist):
-
-        signal.signal(signal.SIGALRM, handler)
-        signal.alarm(len(flist)*5)
         child_list = []
         try:
+            #this kills entire crossover process; hope it doesnt have much impact
+            def handler(signum, frame):
+                raise Exception("Function execution timeout")
+
+            signal.signal(signal.SIGALRM, handler)
+            signal.alarm(len(flist)*self.FUNCTION_EXEC_TIMEOUT)
+
             logging.debug("crossover started")
             length = int(round(self._crossover_rate * float(self._population_size)))
             """
@@ -647,9 +657,15 @@ class GrammaticalEvolution(object):
         return gene
 
     def mutate(self,gene):
+    
+        def handler(signum, frame):
+            raise Exception("Function execution timeout")
+        
         signal.signal(signal.SIGALRM, handler)
-        signal.alarm(4)
+        signal.alarm(self.FUNCTION_EXEC_TIMEOUT)
+        
         pr=gene.local_bnf['program']
+        
         if round(random(),1) < self._mutation_rate :
             logging.debug("mutation started")
             generative=False
@@ -695,13 +711,17 @@ class GrammaticalEvolution(object):
                     logging.debug(pr)
                     logging.debug(gene.local_bnf['program'])
                     return None
-
+    
     def _perform_mutations(self, mlist):
         mutatedList=[]
         for gene in mlist:
-            result=self.mutate(gene)
-            if result is not None:
-                mutatedList.append(result)
+            try:
+                result=self.mutate(gene)
+                if result is not None:
+                    mutatedList.append(result)
+            except:
+                logging.info("Function execution timeout")
+                pass
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
@@ -793,6 +813,3 @@ class GrammaticalEvolution(object):
                     return False
 
         return status
-
-    def handler(signum, frame):
-        raise Exception("Function execution timeout")
