@@ -52,6 +52,7 @@ class Genotype(object):
         self._max_depth = 0
         self.err = ""
         self.score=0
+        self.prgLength=0
     
     def set_keys(self, keys):
         self._keys = keys

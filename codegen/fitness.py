@@ -665,7 +665,7 @@ class FitnessElites(Fitness):
         Fitness.__init__(self, fitness_list)
         self._rate = None
         self.set_rate(rate)
-        self.set_selection_type(MIN)
+        self.set_selection_type(fitness_list._fitness_type)
 
     def set_rate(self, rate):
         """
@@ -690,7 +690,10 @@ class FitnessElites(Fitness):
 
         self._scale_list()
         sort_list = self._make_sort_list()
-        sort_list.sort()
+        if self._fitness_list._fitness_type == MAX:
+            sort_list.sort(reverse=True)
+        else:
+            sort_list.sort()
         elites = int(round(self._rate * float(len(sort_list))))
         for item in sort_list[:elites]:
             yield item[1]

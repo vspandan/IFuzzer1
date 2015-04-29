@@ -44,10 +44,10 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_population_size(Population_size)
                 ges.set_wrap(True)
                 ges.set_max_generations(Generations)
-                ges.set_fitness_type("min".lower(), float(-10000))
+                ges.set_fitness_type('max', float(10000))
                 
                 ges.set_max_program_length(500)
-                ges.set_fitness_fail(float(1000))
+                ges.set_fitness_fail(float(-1000))
                 
                 ges.set_execution_timeout(Timeout)
                 
@@ -68,7 +68,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_crossover_count(1);
                 ges._multiple_rate=(0.2)
 
-                ges.set_max_fitness_rate(float(1.0))
+                ges.set_max_fitness_rate(float(0.1))
                 
                 ges.set_replacement_selections(
                         ReplacementTournament(ges.fitness_list, tournament_size=3))
@@ -97,9 +97,9 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                             f.write(generatedPrg)
                             f.close
                 ges=None
-                for f in fil:
+                for fl in fil:
                     try:
-                        remove(f)
+                        remove(fl)
                     except:
                         print "Error deleting file"
                 return False
@@ -124,11 +124,6 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 TestCases.remove(t)
             logging.debug(tempList)
             process(tempList)
-            for f in tempList:
-                try:
-                    remove(f)
-                except:
-                    print "Error deleting file"
             return False
             import threading
             th=threading.Thread(target=process,kwargs={'fil':tempList})

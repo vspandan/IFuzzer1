@@ -77,6 +77,8 @@ class GrammaticalEvolution(object):
         self._generative_mutation_rate=0.5
         self.identifiers_mapping={}
         self.targetDirectory=""
+        self.parsimony_constant=0
+        self.meanLength=1
 
     def set_max_depth(self,depth):
         self._max_depth=depth
@@ -277,6 +279,21 @@ class GrammaticalEvolution(object):
         return self.population[self.fitness_list.worst_member()]
 
     def _compute_fitness(self):
+        self.meanLength=1
+        def calculateCovariance(meanFitness):
+            value=0
+            for gene in self.population:
+                value += ( gene.get_fitness() - meanFitness ) * ( gene.prgLength - self.meanLength )
+            return value
+
+        def variance():
+            value=0
+            for gene in self.population:
+                value += ( gene.prgLength - self.meanLength ) ** 2 
+            return value
+        
+        totalLength=0
+        totalFitness=0.0
         for gene in self.population:
             starttime = datetime.now()
             gene._generation = self._generation
@@ -287,9 +304,21 @@ class GrammaticalEvolution(object):
                 logging.debug(gene.local_bnf["program"])
                 gene.score=0
                 self.compute_fitness(gene)
-
             self.population[gene.member_no]=gene
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
+            totalLength += gene.prgLength
+            totalFitness += gene.get_fitness()
+
+        self.meanLength=totalLength/self._population_size
+        meanFitness=totalFitness/self._population_size
+
+        print meanFitness
+        print self.meanLength
+        
+        self.parsimony_constant=calculateCovariance(meanFitness)/variance()
+        print self.parsimony_constant
+
+    
 
     def run(self, starting_generation=0):
         self._generation = starting_generation
@@ -380,29 +409,8 @@ class GrammaticalEvolution(object):
                         return
                     if self.interpreterInd==3:
 
-                        if rc < 0 and rc != -6 :
-                            if gene._generation != 0:
-                                program+="\n//"+option
-                                logging.info("Crash:")
-                                logging.info("++++++++++++++++++++++++++++++++++++++++")
-                                logging.info(program)
-                                logging.info("++++++++++++++++++++++++++++++++++++++++")
-                                logging.info("error:"+err)
-                                logging.info("interpreter:"+self.interpreter_Shell)
-                                gene._fitness=self._fitness_fail*-10
-                                FILECOUNT = len(listdir(self.targetDirectory))+1 
-                                newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
-                                f=open(newFile,'w')
-                                f.write(program)
-                                f.close
-                        else:
-                            if rc == 0 :
-                                gene._fitness = self.computeSubScore(gene,program,err)*-1
-                            else:
-                                print err
-                                print rc
-                    else:
-                        if rc not in [0,1,2,3,4] :
+                        if (rc < 0 or rc > 1) and rc != -6 :
+                            gene._fitness=self._fitness_fail * (-1)
                             program+="\n//"+option
                             logging.info("Crash:")
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
@@ -410,15 +418,37 @@ class GrammaticalEvolution(object):
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
                             logging.info("error:"+err)
                             logging.info("interpreter:"+self.interpreter_Shell)
-                            gene._fitness=self._fitness_fail*-10
                             FILECOUNT = len(listdir(self.targetDirectory))+1 
+                            if gene._generation!=0:
+                                gene._fitness=self._fitness_fail*(-10)
                             newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
-                            f=open(newFile,'w')
-                            f.write(program)
-                            f.close
+                            f1=open(newFile,'w')
+                            f1.write(program)
+                            f1.close
+                        else:
+                            if rc == 0 :
+                                gene._fitness = self.computeSubScore(gene,program,err) - (self.parsimony_constant * gene.prgLength )
+
+                    else:
+                        if rc not in [0,1,2,3,4] :
+                            gene._fitness=self._fitness_fail * (-1)
+                            program+="\n//"+option
+                            logging.info("Crash:")
+                            logging.info("++++++++++++++++++++++++++++++++++++++++")
+                            logging.info(program)
+                            logging.info("++++++++++++++++++++++++++++++++++++++++")
+                            logging.info("error:"+err)
+                            logging.info("interpreter:"+self.interpreter_Shell)
+                            FILECOUNT = len(listdir(self.targetDirectory))+1 
+                            if gene._generation!=0:
+                                gene._fitness=self._fitness_fail*(-10)
+                            newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
+                            f1=open(newFile,'w')
+                            f1.write(program)
+                            f1.close
                         else:
                             if rc != 3 :
-                                gene._fitness = self.computeSubScore(gene,program,err)*-1
+                                gene._fitness = self.computeSubScore(gene,program,err) - (self.parsimony_constant * gene.prgLength )
             except: 
                 pass
             finally:
@@ -430,15 +460,11 @@ class GrammaticalEvolution(object):
 
     def run_cmd(self, fi,l,option):
         try:
-            if self.interpreterInd!=3:
-                exec_cmd=self.interpreter_Shell+" "+option+" shell.js "+ fi
-            else:
-                exec_cmd=self.interpreter_Shell+" "+ fi
+            exec_cmd=self.interpreter_Shell+" "+option+" shell.js "+ fi
             p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
             l[1]=(out,err,p.returncode)
-            print p.returncode
             sys.stdout.flush()
             sys.stderr.flush()
         except:
@@ -449,25 +475,37 @@ class GrammaticalEvolution(object):
                 raise Exception("Function execution timeout")
 
         signal.signal(signal.SIGALRM, handler)
-        signal.alarm(3*self.FUNCTION_EXEC_TIMEOUT)
-        
+        if self._generation == 0:
+            signal.alarm(6*self.FUNCTION_EXEC_TIMEOUT)
+        else:
+            signal.alarm(3*self.FUNCTION_EXEC_TIMEOUT)
         logging.info("Invoking Parser - Pasring - Score Calc " +str(datetime.now()))
         incompl,dummy=parseTree(program,True)
         logging.info("Calculating " +str(datetime.now()))
+        if self._generation==0:
+            gene.prgLength=len(extractNonTerminal(incompl))
         a,b,c,d=CountNestedStructures(incompl)
         logging.info("Completed - Score Calc " +str(datetime.now()))
         
         for temp in a:
-                gene.score += temp*1.5
+            if temp>0:
+                temp=temp-1
+            gene.score += temp*1.5
         for temp in b:
-                gene.score += temp*1.0
+            if temp>0:
+                temp=temp-1
+            gene.score += temp*2.5
         for temp in c:
-                gene.score += temp*1.0
+            if temp>0:
+                temp=temp-1
+            gene.score += temp*1.0
         for temp in d:
-                gene.score += temp*0.5
+            if temp>0:
+                temp=temp-1
+            gene.score += temp*3
         if "warning" in err:
             logging.info("warning found: "+err)
-            gene.score+=3
+            gene.score+=10
         return gene.score
 
     def _perform_endcycle(self):
@@ -476,23 +514,14 @@ class GrammaticalEvolution(object):
         childList=[]
         for gene in self._pre_selected:
             childList.append(deepcopy(gene))
-
-
-        while len(childList) + len(self._pre_selected) < self._population_size:
-            ch=choice([0,1])
-            fitness_pool = self._evaluate_fitness()
-            if ch == 1:
-                child_list = self._perform_crossovers(fitness_pool)
-                childList.extend(child_list)
+        fitness_pool = self._evaluate_fitness()
+        child_list = self._perform_crossovers(fitness_pool)
+        childList.extend(child_list)
+        while len(childList) < self._population_size:
+                fitness_pool = self._evaluate_fitness()
                 child_list = self._perform_mutations(fitness_pool)
                 if child_list is not None:
                     childList.extend(child_list)
-            else:
-                child_list = self._perform_mutations(fitness_pool)
-                if child_list is not None:
-                    childList.extend(child_list)
-                child_list = self._perform_crossovers(fitness_pool)
-                childList.extend(child_list)
         self._perform_replacements(childList)
 
     """
@@ -506,21 +535,23 @@ class GrammaticalEvolution(object):
         flist1 = []
         if ind:
             total = int(round(self._max_fitness_rate * float(self._population_size)))
-            count = 0
-            for fsel in self.fitness_selections:
-                fsel.set_fitness_list(self.fitness_list)
-                selected=fsel.select()
-                for i in selected:
-                    if count == total:
-                        break
-                    flist.append(i)
-                    count += 1
-            for member_no in flist:
-                flist1.append(deepcopy(self.population[member_no]))
-        else:
-            for gene in self.population:
-                if gene.get_fitness()!=self._fitness_fail:
-                    flist1.append(deepcopy(gene))
+        else: 
+            total = len(self.population)
+        count = 0
+        for fsel in self.fitness_selections:
+            fsel.set_fitness_list(self.fitness_list)
+            selected=fsel.select()
+            for i in selected:
+                if count == total:
+                    break
+                flist.append(i)
+                count += 1
+        for member_no in flist:
+            flist1.append(deepcopy(self.population[member_no]))
+        # else:
+        #     for gene in self.population:
+        #         if gene.get_fitness()!=self._fitness_fail:
+        #             flist1.append(deepcopy(gene))
         return flist1
 
     def _perform_crossovers(self, flist):
@@ -567,77 +598,78 @@ class GrammaticalEvolution(object):
                     child1ParseTree,child1._identifiers=parseTree(child1Prg,True)
                     non_term1=extractNonTerminal(child1ParseTree)
                     logging.info("Completed - Crossover-1 " +str(datetime.now()))
-                    
+                    child1.prgLength=len(non_term1)
 
                     
                     logging.info("Invoking Parser - Parsing Crossover-2 " +str(datetime.now()))
                     child2ParseTree,child2._identifiers=sparseTree(child2Prg,True)
                     non_term2=extractNonTerminal(child2ParseTree)
+                    child2.prgLength=len(non_term2)
                     logging.info("Completed - Crossover-2 " +str(datetime.now()))
                     
                     if self.nT_Invld_Gen_Process is not None:
                         commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
                     else:
                         commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
-
-                    count=1
-                    if round(random(),1) < self._multiple_rate:
-                        count=int(self.crossoverCount*(round(random(),1)))+1        
-                    selectedNt=[]
-                    if len(commonNonTerm) > 0:
-                        for i in range(count):
-                            selectedNt.append(choice(commonNonTerm))
-                    else:
-                        return child_list
-                    logging.info("Invoking Parser - Crossover-3 ")
-                    subString1,s1,selected1NTList=genCodeFrag(child1ParseTree,non_term1,selectedNt,None,len(selectedNt))
-                    subString2,s2,selected2NTList=genCodeFrag(child2ParseTree,non_term2,selectedNt,None,len(selectedNt))
-                    logging.info("Completed - Crossover-3 " +str(datetime.now()))
-                    
-                    try:
-                        for k in selected2NTList:
-                            s1 = s1.replace(selected2NTList[k],subString2[k])
-                        for k in selected1NTList:
-                            s2 = s2.replace(selected1NTList[k],subString1[k])
-                        child1Prg_=s1
-                        child2Prg_=s2
-                    
-                    except:
-                        return child_list
-                            
-                    child1.local_bnf['program']=child1Prg_
-                    child1.generate_decimal_gene()
-                    child1._update_genotype()
-                    child1.score=0
-                    self.compute_fitness(child1)
-                    child2.local_bnf['program']=child2Prg_
-                    child2.generate_decimal_gene()
-                    child2._update_genotype()
-                    child2.score=0
-                    self.compute_fitness(child2)
-                    if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
-                        child1.prog_generated = 1
-                        child2.prog_generated = 1
-                        child1.local_bnf['CodeFrag']=""
-                        child2.local_bnf['CodeFrag']=""
-                        if self._children_per_crossover == 2:
-                            child_list.append(child1)
-                            child_list.append(child2)
+                    trail=0
+                    while trail<3:
+                        trail += 1
+                        count=1
+                        if round(random(),1) < self._multiple_rate:
+                            count=int(self.crossoverCount*(round(random(),1)))+1        
+                        selectedNt=[]
+                        if len(commonNonTerm) > 0:
+                            for i in range(count):
+                                selectedNt.append(choice(commonNonTerm))
                         else:
-                            child_list.append(child1)
-                        logging.info("Crossover-Success")
-                    elif child1.get_fitness()!= self._fitness_fail:
-                        child1.prog_generated = 1
-                        child1.local_bnf['CodeFrag']=""
-                        child_list.append(child1)
-                    elif child2.get_fitness()!= self._fitness_fail:
-                        child2.prog_generated = 1
-                        child2.local_bnf['CodeFrag']=""
-                        child_list.append(child2)
-                    else:
-                        logging.info("Crossover-Failed")
-                        logging.debug(child1.err)
-                        logging.debug(child2.err)
+                            continue
+                        logging.info("Invoking Parser - Crossover-3 ")
+                        subString1,s1,selected1NTList=genCodeFrag(child1ParseTree,non_term1,selectedNt,None,len(selectedNt))
+                        subString2,s2,selected2NTList=genCodeFrag(child2ParseTree,non_term2,selectedNt,None,len(selectedNt))
+                        logging.info("Completed - Crossover-3 " +str(datetime.now()))
+                        
+                        try:
+                            for k in selected2NTList:
+                                s1 = s1.replace(selected2NTList[k],subString2[k])
+                            for k in selected1NTList:
+                                s2 = s2.replace(selected1NTList[k],subString1[k])
+                            child1Prg_=s1
+                            child2Prg_=s2
+                        
+                        except:
+                            continue
+
+                        child1.local_bnf['program']=child1Prg_
+                        child1.score=0
+                        self.compute_fitness(child1)
+                        child2.local_bnf['program']=child2Prg_
+                        child2.score=0
+                        self.compute_fitness(child2)
+
+                        if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
+                            
+                            child1.generate_decimal_gene()
+                            child1._update_genotype()
+                            child1.local_bnf['CodeFrag']=""
+
+                            child2.generate_decimal_gene()
+                            child2._update_genotype()
+                            child2.local_bnf['CodeFrag']=""
+
+                            if self._children_per_crossover == 2:
+                                child_list.append(child1)
+                                child_list.append(child2)
+                            else:
+                                ch=choice([0,1])
+                                if ch==0:
+                                    child_list.append(child1)
+                                else:
+                                    child_list.append(child2)
+                            logging.info("Crossover-Success")
+                        else:
+                            logging.info("Crossover-Failed")
+                            logging.debug(child1.err)
+                            logging.debug(child2.err)
             return child_list
         except:
             return child_list
@@ -685,6 +717,7 @@ class GrammaticalEvolution(object):
                 if round(random(),1) < self._multiple_rate:
                     count=int(self.mutationCount*round(random(),1))+1
                 logging.info("Invoking Parser - Mutation-2 " +str(datetime.now()))
+                gene.prgLength=len(non_TerminalsList)
                 dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
                 logging.info("Completed - Mutation-2 " +str(datetime.now()))
                 
@@ -692,25 +725,30 @@ class GrammaticalEvolution(object):
                     logging.info("Mutation-Failed")
                     return None
                 # reseting score before mutation
-                gene.score=0
-                logging.info("Mutation started " +str(datetime.now()))
-                gene._map_gene(selectedNt)
-                logging.info("Mutation completed " +str(datetime.now()))
-                self.compute_fitness(gene)
-                if gene.get_fitness() != self._fitness_fail :
-                    gene.local_bnf['CodeFrag']=""
-                    gene.prog_generated = 1
-                    logging.info("Mutation-Success")
-                    return gene
-                else:
-                    logging.info("Mutation-Failed")
-                    logging.debug(gene.err)
-                    logging.debug(selectedNt)
-                    logging.debug(dummy)
-                    logging.debug(gene.local_bnf['CodeFrag'])
-                    logging.debug(pr)
-                    logging.debug(gene.local_bnf['program'])
-                    return None
+                trail=0
+                tmp=gene.local_bnf['CodeFrag']
+                while trail < 3:
+                    trail+=1
+                    gene.local_bnf['CodeFrag']=tmp
+                    gene.score=0
+                    logging.info("Mutation started " +str(datetime.now()))
+                    gene._map_gene(selectedNt)
+                    logging.info("Mutation completed " +str(datetime.now()))
+                    self.compute_fitness(gene)
+                    if gene.get_fitness() != self._fitness_fail :
+                        gene.local_bnf['CodeFrag']=""
+                        gene.prog_generated = 1
+                        logging.info("Mutation-Success")
+                        return gene
+                    else:
+                        logging.info("Mutation-Failed")
+                        logging.debug(gene.err)
+                        logging.debug(selectedNt)
+                        logging.debug(dummy)
+                        logging.debug(gene.local_bnf['CodeFrag'])
+                        logging.debug(pr)
+                        logging.debug(gene.local_bnf['program'])
+                        
     
     def _perform_mutations(self, mlist):
         mutatedList=[]
