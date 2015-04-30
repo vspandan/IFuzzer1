@@ -13,7 +13,7 @@ import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
-LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+LOG_FILENAME= "/tmp/s";
 import logging
 logging.basicConfig(filename=LOG_FILENAME,
                     level=logging.INFO,

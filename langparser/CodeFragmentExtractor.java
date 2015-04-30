@@ -60,6 +60,7 @@ public class CodeFragmentExtractor {
                     }
                     
                     if (ind){
+                        ind=false;
                         String Stmt = null;
                         Stmt = tokens.getText(ctx);
                         String key=ruleNames[ctx.getRuleIndex()];
@@ -75,7 +76,6 @@ public class CodeFragmentExtractor {
             @Override
             public void exitEveryRule(@NotNull ParserRuleContext ctx) {
                 if(ctx != null) {
-                    
                     java.util.List<ParseTree> childs=ctx.children;
                     boolean ind=false;
                     if (childs!=null){
@@ -90,6 +90,7 @@ public class CodeFragmentExtractor {
                         }
                         
                         if (ind){
+                            ind=false;
                             String Stmt = null;
                             Stmt = tokens.getText(ctx);
                             String key=ruleNames[ctx.getRuleIndex()];
@@ -107,13 +108,12 @@ public class CodeFragmentExtractor {
             public void visitTerminal(@NotNull TerminalNode ctx) {
                 if(ctx != null) {
                     try{
+                        String token=ctx.getText();
                         if (!eosInd){
-                            String token=ctx.getText();
                             if(!token.equals("<EOF>"))
                             sb.append(xmlEscapeText(token)+" ");
                         }
                         else{
-                            String token=ctx.getText();
                             if (!token.trim().equals(";"))
                             sb.append(";");
                             
@@ -202,7 +202,7 @@ public class CodeFragmentExtractor {
                         
                         if (ind){
                             String Stmt = "";
-                            //Stmt = tokens.getText(ctx);
+                            /*Stmt = tokens.getText(ctx);*/
                             int start = ctx.start.getTokenIndex();
                             int stop = ctx.stop.getTokenIndex();
                             for (int i = start; i <= stop; i++) {

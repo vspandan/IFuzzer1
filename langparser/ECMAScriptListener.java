@@ -149,6 +149,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitIfStatement(@NotNull ECMAScriptParser.IfStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseStatement(@NotNull ECMAScriptParser.ElseStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#elseStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseStatement(@NotNull ECMAScriptParser.ElseStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code DoStatement}
 	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
 	 * @param ctx the parse tree
@@ -846,4 +856,14 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#var}.
+	 * @param ctx the parse tree
+	 */
+	void enterVar(@NotNull ECMAScriptParser.VarContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#var}.
+	 * @param ctx the parse tree
+	 */
+	void exitVar(@NotNull ECMAScriptParser.VarContext ctx);
 }
