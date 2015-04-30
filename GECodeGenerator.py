@@ -3,7 +3,7 @@
 from os import listdir,remove
 from os.path import isfile, join, abspath
 
-from codegen.fitness import FitnessElites, FitnessTournament
+from codegen.fitness import FitnessElites, FitnessTournament, FitnessProportionate
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 
@@ -52,7 +52,10 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_execution_timeout(Timeout)
                 
                 ges.set_fitness_selections(
-                    FitnessElites(ges.fitness_list, 0.1))
+                    FitnessElites(ges.fitness_list, 0.5))
+
+                # ges.set_fitness_selections(
+                #     FitnessProportionate(ges.fitness_list, 'linear'))
                 
                 ges.set_crossover_rate(float(0.2))
                 ges.set_mutation_rate(float(0.8))
