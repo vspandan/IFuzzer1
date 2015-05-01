@@ -34,7 +34,7 @@ STOPPING_MAX_GEN = 'max_generations'
 class GrammaticalEvolution(object):
 
     def __init__(self):
-        self.FUNCTION_EXEC_TIMEOUT=10
+        self.FUNCTION_EXEC_TIMEOUT=5
         self._pre_selected = []
         self.history = []
         self.population = []
@@ -79,6 +79,9 @@ class GrammaticalEvolution(object):
         self.targetDirectory=""
         self.parsimony_constant=0
         self.meanLength=1
+        self.crossover_break=False
+        self.mutation_break=False
+        self.function_break=False
 
     def set_max_depth(self,depth):
         self._max_depth=depth
@@ -311,8 +314,11 @@ class GrammaticalEvolution(object):
 
         self.meanLength=totalLength/self._population_size
         meanFitness=totalFitness/self._population_size
-
-        self.parsimony_constant=abs(calculateCovariance(meanFitness)/variance())
+        varianceValue=variance()
+        if varianceValue == 0:
+            self.parsimony_constant=0
+        else:
+            self.parsimony_constant=abs(calculateCovariance(meanFitness)/varianceValue)
 
     def run(self, starting_generation=0):
         self._generation = starting_generation
@@ -399,6 +405,7 @@ class GrammaticalEvolution(object):
                 else:
                     (out,err,rc)=l[1]
                     gene.err=err
+                    print err
                     if "timeout" in err or "terminating" in err or "out of memory" in err:
                         return
                     if self.interpreterInd==3:
@@ -474,13 +481,18 @@ class GrammaticalEvolution(object):
     def computeSubScore (self, gene, program,err):
         try:
             def handler(signum, frame):
-                    raise Exception("Function execution timeout")
+                    self.function_break=True
 
             signal.signal(signal.SIGALRM, handler)
             if self._generation == 0:
                 signal.alarm(6*self.FUNCTION_EXEC_TIMEOUT)
             else:
                 signal.alarm(3*self.FUNCTION_EXEC_TIMEOUT)
+
+            if self.function_break:
+                self.function_break=False
+                return None
+
             logging.info("Invoking Parser - Pasring - Score Calc " +str(datetime.now()))
             incompl,dummy=parseTree(program,True)
             logging.info("Calculating " +str(datetime.now()))
@@ -515,7 +527,6 @@ class GrammaticalEvolution(object):
 
     def _perform_endcycle(self):
         self._pre_selected = self._evaluate_fitness(True)
-
         childList=[]
         for gene in self._pre_selected:
             childList.append(deepcopy(gene))
@@ -564,10 +575,15 @@ class GrammaticalEvolution(object):
         try:
             #this kills entire crossover process; hope it doesnt have much impact
             def handler(signum, frame):
-                raise Exception("Function execution timeout")
+                self.crossover_break=True
 
             signal.signal(signal.SIGALRM, handler)
             signal.alarm(len(flist)*self.FUNCTION_EXEC_TIMEOUT)
+
+            if self.crossover_break:
+                self.crossover_break=False
+                return child_list
+
 
             logging.debug("crossover started")
             length = int(round(self._crossover_rate * float(self._population_size)))
@@ -607,7 +623,7 @@ class GrammaticalEvolution(object):
 
                     
                     logging.info("Invoking Parser - Parsing Crossover-2 " +str(datetime.now()))
-                    child2ParseTree,child2._identifiers=sparseTree(child2Prg,True)
+                    child2ParseTree,child2._identifiers=parseTree(child2Prg,True)
                     non_term2=extractNonTerminal(child2ParseTree,[])
                     child2.prgLength=len(non_term2)
                     logging.info("Completed - Crossover-2 " +str(datetime.now()))
@@ -643,7 +659,6 @@ class GrammaticalEvolution(object):
                         
                         except:
                             continue
-
                         child1.local_bnf['program']=child1Prg_
                         child1.score=0
                         self.compute_fitness(child1)
@@ -675,6 +690,8 @@ class GrammaticalEvolution(object):
                             logging.info("Crossover-Failed")
                             logging.debug(child1.err)
                             logging.debug(child2.err)
+                        print subString1
+                        print subString2
             return child_list
         except:
             return child_list
@@ -697,11 +714,15 @@ class GrammaticalEvolution(object):
         try:
     
             def handler(signum, frame):
-                raise Exception("Function execution timeout")
+                self.mutation_break=True
             
             signal.signal(signal.SIGALRM, handler)
             signal.alarm(self.FUNCTION_EXEC_TIMEOUT)
             
+            if (self.mutation_break):
+                self.mutation_break=False
+                return None
+
             pr=gene.local_bnf['program']
             
             if round(random(),1) < self._mutation_rate :
@@ -724,22 +745,24 @@ class GrammaticalEvolution(object):
                         count=int(self.mutationCount*round(random(),1))+1
                     logging.info("Invoking Parser - Mutation-2 " +str(datetime.now()))
                     gene.prgLength=len(non_TerminalsList)
-                    dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
-                    logging.info("Completed - Mutation-2 " +str(datetime.now()))
-                    
-                    if len(selectedNt) <=0 :
-                        logging.info("Mutation-Failed")
-                        return None
-                    # reseting score before mutation
                     trail=0
-                    tmp=gene.local_bnf['CodeFrag']
                     while trail < 3:
                         trail+=1
+                        dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
+                        logging.info("Completed - Mutation-2 " +str(datetime.now()))
+                        
+                        if len(selectedNt) <=0 :
+                            logging.info("Mutation-Failed")
+                            return None
+                        # reseting score before mutation
+                        
+                        tmp=gene.local_bnf['CodeFrag']
                         gene.local_bnf['CodeFrag']=tmp
                         gene.score=0
                         logging.info("Mutation started " +str(datetime.now()))
                         gene._map_gene(selectedNt)
                         logging.info("Mutation completed " +str(datetime.now()))
+                        print dummy
                         self.compute_fitness(gene)
                         if gene.get_fitness() != self._fitness_fail :
                             gene.local_bnf['CodeFrag']=""
@@ -748,12 +771,11 @@ class GrammaticalEvolution(object):
                             return gene
                         else:
                             logging.info("Mutation-Failed")
-                            logging.debug(gene.err)
                             logging.debug(selectedNt)
                             logging.debug(dummy)
                             logging.debug(gene.local_bnf['CodeFrag'])
                             logging.debug(pr)
-                            logging.debug(gene.local_bnf['program'])
+                            logging.debug (gene.err)
         except:
             return None                
     

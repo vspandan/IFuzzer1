@@ -118,9 +118,7 @@ def createFragmentPool():
                         a=None
                 if not timeout:
                     res=que.get(False)
-                    print res
                     if res is not None:
-                        print res
                         codeFragPool.append(res)
                         logging.debug(res)
                 

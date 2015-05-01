@@ -243,7 +243,8 @@ block
 ///     Statement
 ///     StatementList Statement
 statementList
- : statement+
+ : statement
+ | statementList statement
  ;
 
 /// VariableStatement :
@@ -256,7 +257,8 @@ variableStatement
 ///     VariableDeclaration
 ///     VariableDeclarationList , VariableDeclaration
 variableDeclarationList
- : variableDeclaration ( ',' variableDeclaration )*
+ : variableDeclaration 
+ | variableDeclarationList ',' variableDeclaration
  ;
 
 /// VariableDeclaration :
@@ -308,6 +310,7 @@ iterationStatement
  | For '(' var variableDeclarationList ';' expression? ';' expression? ')' statement # ForVarStatement
  | For '(' assignmentExpression In expression ')' statement                                      # ForInStatement
  | For '(' var variableDeclaration In expression ')' statement                               # ForVarInStatement
+ | For '(' var variableDeclaration Of expression ')' statement                               # ForVarOfStatement
  ;
 
 /// ContinueStatement :
@@ -452,14 +455,17 @@ elision
 ///     { PropertyNameAndValueList }
 ///     { PropertyNameAndValueList , }
 objectLiteral
- : '{' propertyNameAndValueList? ','? '}'
+ : '{'  '}'
+ | '{'  propertyNameAndValueList '}'
+ | '{'  propertyNameAndValueList ',' '}'
  ;
 
 /// PropertyNameAndValueList :
 ///     PropertyAssignment
 ///     PropertyNameAndValueList , PropertyAssignment
 propertyNameAndValueList
- : propertyAssignment ( ',' propertyAssignment )*
+ : propertyAssignment
+ | propertyNameAndValueList  ',' propertyAssignment 
  ;
     
 /// PropertyAssignment :
@@ -492,14 +498,16 @@ propertySetParameterList
 ///     ( )
 ///     ( ArgumentList )
 arguments
- : '(' argumentList? ')'
+ : '(' ')'
+ | '(' argumentList ')'
  ;
     
 /// ArgumentList :
 ///     AssignmentExpression
 ///     ArgumentList , AssignmentExpression
 argumentList
- : assignmentExpression ( ',' assignmentExpression )*
+ : assignmentExpression
+ | argumentList  ',' assignmentExpression 
  ;
     
 /// Expression :
@@ -624,7 +632,7 @@ argumentList
  ;
  assignmentExpression
  :     conditionalExpression
- |     leftHandSideExpression '=' assignmentExpression eos
+ |     leftHandSideExpression '=' assignmentExpression 
  |     leftHandSideExpression assignmentOperator assignmentExpression
  ;
  conditionalExpression
@@ -705,32 +713,34 @@ argumentList
  :     newExpression
  |     callExpression eos
  ;
- callExpression  
+callExpression  
  :     memberExpression arguments
  |     callExpression arguments
  |     callExpression '[' expression ']'
  |     callExpression '.' identifierName
  ;
- newExpression  
+newExpression  
  :     memberExpression
  |     New newExpression
  ;
- memberExpression  
+memberExpression  
  :     primaryExpression
  |     functionExpression
  |     memberExpression '[' expression ']'
  |     memberExpression '.' identifierName
  |     New memberExpression arguments
  ;
- functionExpression  
+functionExpression  
  :     Function '(' formalParameterList? ')' '{' functionBody '}'
  ;
- primaryExpression  
+ 
+primaryExpression  
  :     This
  |     identifier
  |     literal
  |     arrayLiteral
  |     objectLiteral
+ |     arguments
  ;
 
 /// AssignmentOperator : one of
@@ -804,6 +814,7 @@ keyword
  | Delete
  | In
  | Try
+ | Of
  ;
 
 futureReservedWord
@@ -965,6 +976,7 @@ Throw      : 'throw';
 Delete     : 'delete';
 In         : 'in';
 Try        : 'try';
+Of         : 'of';  
 
 /// 7.6.1.2 Future Reserved Words
 Class   : 'class';

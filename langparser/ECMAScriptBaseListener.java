@@ -269,6 +269,18 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterForVarOfStatement(@NotNull ECMAScriptParser.ForVarOfStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForVarOfStatement(@NotNull ECMAScriptParser.ForVarOfStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterContinueStatement(@NotNull ECMAScriptParser.ContinueStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
