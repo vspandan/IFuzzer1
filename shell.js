@@ -2468,7 +2468,7 @@ testPassesUnlessItThrows();
  */
 function $ERROR(msg)
 {
-  throw new Error("Test262 error: " + msg);
+  
 }
 
 /*

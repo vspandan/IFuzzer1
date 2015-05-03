@@ -12,7 +12,6 @@ elif [ "$1" == "-r" ]; then
 		do
 			jython -J-Xmx2048m GEInterpreterFuzzer.py 1
 			echo "Spidermonkey"
-			break
 		done
 	elif [ "$2" == "js31" ]; then
 		while true
