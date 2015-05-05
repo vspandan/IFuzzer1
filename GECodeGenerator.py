@@ -22,7 +22,7 @@ logging.basicConfig(filename=LOG_FILENAME,
 FILECOUNT = 0
 
 Population_size=100
-Timeout = 15
+Timeout = 45
 Generations=100
 
 
@@ -52,16 +52,16 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_execution_timeout(Timeout)
                 
                 ges.set_fitness_selections(
-                    FitnessElites(ges.fitness_list, 0.1))
+                    FitnessElites(ges.fitness_list, 0.5))
 
                 # ges.set_fitness_selections(
                 #     FitnessProportionate(ges.fitness_list, 'linear'))
                 
-                ges.set_crossover_rate(float(0.8))
-                ges.set_mutation_rate(float(1))
+                ges.set_crossover_rate(float(0.4))
+                ges.set_mutation_rate(float(1.0))
 
                 ges.set_max_depth(2)
-                ges.set_generative_mutation_rate(0.0)
+                ges.set_generative_mutation_rate(0.3)
 
                 ges.set_children_per_crossover(2)
                 

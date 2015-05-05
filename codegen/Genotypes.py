@@ -48,7 +48,7 @@ class Genotype(object):
         self._position = (0, 0)
         self.keywords = None
         self._identifiers=[]
-        self.nTInvlvdGenProcess=[]
+        self.preSelectedNonTerminals=[]
         self._max_depth = 0
         self.err = ""
         self.score=0
@@ -103,7 +103,7 @@ class Genotype(object):
     def _converge(self, item):
         fileName = abspath("database" + "/" + item)
         
-        if  path.isfile(fileName) and item in self.nTInvlvdGenProcess: 
+        if  path.isfile(fileName) and item in self.preSelectedNonTerminals: 
             f = open(fileName,'r')
             d = load(f)
             f.close()

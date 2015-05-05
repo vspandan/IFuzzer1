@@ -3,7 +3,7 @@ from copy import deepcopy
 from datetime import datetime
 from os import path,listdir,remove
 from random import choice, randint, random
-from re import sub
+from re import sub,split
 from subprocess import Popen,PIPE
 from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
@@ -29,6 +29,7 @@ logging.basicConfig(filename=LOG_FILENAME,
 
 
 VARIABLE_FORMAT = '(\W+)'
+VARIABLE_FORMAT1 = '([a-zA-Z0-9_$]+)'
 STOPPING_MAX_GEN = 'max_generations'
 
 class GrammaticalEvolution(object):
@@ -318,7 +319,8 @@ class GrammaticalEvolution(object):
         if varianceValue == 0:
             self.parsimony_constant=0
         else:
-            self.parsimony_constant=abs(calculateCovariance(meanFitness)/varianceValue)
+            # self.parsimony_constant=abs(calculateCovariance(meanFitness)/varianceValue)
+            self.parsimony_constant=calculateCovariance(meanFitness)/varianceValue
 
     def run(self, starting_generation=0):
         self._generation = starting_generation
@@ -339,11 +341,11 @@ class GrammaticalEvolution(object):
                 break
             logging.info("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,nTInvlvdGenProcess,interpreterInd):
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals,interpreterInd):
         self.interpreter_Shell=interpreter_Shell
         self.interpreter_Options =interpreter_Options
         self.interpreterInd=interpreterInd
-        self.nT_Invld_Gen_Process=nTInvlvdGenProcess
+        self.nT_Invld_Gen_Process=preSelectedNonTerminals
         self._extractProductions()
         self._prepareInitial_Population(file)
         if len(self.initial_Population)<=0:
@@ -359,7 +361,7 @@ class GrammaticalEvolution(object):
             gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
             gene._extend_genotype = self._extend_genotype
             gene._wrap = self._wrap
-            gene.nTInvlvdGenProcess=nTInvlvdGenProcess
+            gene.preSelectedNonTerminals=preSelectedNonTerminals
             member_no += 1
             gene.local_bnf["program"]=self.initial_Population[gene.member_no]
             self.population.append(gene)
@@ -369,6 +371,7 @@ class GrammaticalEvolution(object):
            
 
     def compute_fitness(self,gene):
+        logging.info("compute_fitness entered")
         ti=time()
         gene._fitness=self._fitness_fail
         program=gene.local_bnf['program']
@@ -379,9 +382,9 @@ class GrammaticalEvolution(object):
             	program=prg
             except:
             	pass
-            
             gene.local_bnf['program']=program
-        if len(program) > 0:
+        prglen=len(program)
+        if prglen > 0:
             try:
             	f=NamedTemporaryFile(delete=False)
                 f.close()
@@ -390,7 +393,8 @@ class GrammaticalEvolution(object):
                 else:
                     option=""
                 timedout=False
-                while True:
+                while prglen>0:
+                    prglen -= 1
                     tempFileObj=open(f.name,"w")
                     tempFileObj.write(program)
                     tempFileObj.close()
@@ -416,21 +420,28 @@ class GrammaticalEvolution(object):
                                 break
                             words=err.split()
                             nextword=words[words.index('ReferenceError:')+1]
-                            if nextword == 'invalid':
+                            if nextword == 'invalid' or nextword ==  'reference' :
                                 return 
-                            selected=choice(gene._identifiers)
-                            while nextword == selected :
+                            selected=None
+                            while nextword == selected or selected is None:
+                                if len(gene._identifiers)<0:
+                                    break
                                 selected=choice(gene._identifiers)
-
+                                gene._identifiers.remove(selected)
                             logging.info("Replacing "+nextword+" with "+selected)
+                            if nextword == selected or selected is None:
+                                break
+                            
                             newWordList=[]
-                            wordList=split(VARIABLE_FORMAT, program)
+                            wordList=split(VARIABLE_FORMAT1, program)
                             for word in wordList:
                                 if word == nextword:
-                                    word=selected
-                                newWordList.append(word)
-                            gene.local_bnf['program']= ''.join(newWordList)
-                            program=gene.local_bnf['program']
+                                    newWordList.append(selected)
+                                else:
+                                    newWordList.append(word)
+                            logging.info("Replaced "+nextword+" with "+selected)
+                            program=''.join(newWordList)
+                            gene.local_bnf['program'] = program
                         else:
                             break
                 if timedout:
@@ -461,8 +472,6 @@ class GrammaticalEvolution(object):
                                     gene._fitness =  score
                                 else:
                                     gene._fitness =  score - (self.parsimony_constant * gene.prgLength )
-                        else:
-                            print gene.err
 
                 else:
                     if rc not in [0,1,2,3,4] :
@@ -488,8 +497,6 @@ class GrammaticalEvolution(object):
                                     gene._fitness =  score
                                 else:
                                     gene._fitness =  score - (self.parsimony_constant * gene.prgLength )
-                        else:
-                            print gene.err
             except:
                 pass
             finally:
@@ -498,6 +505,7 @@ class GrammaticalEvolution(object):
                     remove(f.name)
                 except:
                     pass
+        logging.info("compute_fitness completed")
 
     def run_cmd(self, fi,l,option):
         try:
@@ -513,6 +521,7 @@ class GrammaticalEvolution(object):
     
     def computeSubScore (self, gene, program,err):
         try:
+            logging.info("Inside computeSubScore method")
             def handler(signum, frame):
                     self.function_break=True
 
@@ -536,11 +545,11 @@ class GrammaticalEvolution(object):
             for temp in a:
                 if temp>0:
                     temp=temp-1
-                gene.score += temp*1.5
+                gene.score += temp*1.0
             for temp in b:
                 if temp>0:
                     temp=temp-1
-                gene.score += temp*2.5
+                gene.score += temp*1.0
             for temp in c:
                 if temp>0:
                     temp=temp-1
@@ -548,10 +557,11 @@ class GrammaticalEvolution(object):
             for temp in d:
                 if temp>0:
                     temp=temp-1
-                gene.score += temp*3
+                gene.score += temp*1
             if "warning" in err:
                 logging.info("warning found: "+err)
                 gene.score+=10
+            logging.info("exiting computeSubScore method")
         except:
             return None
         finally:
@@ -562,14 +572,32 @@ class GrammaticalEvolution(object):
         childList=[]
         for gene in self._pre_selected:
             childList.append(deepcopy(gene))
-        fitness_pool = self._evaluate_fitness()
-        child_list = self._perform_crossovers(fitness_pool)
-        childList.extend(child_list)
-        while len(childList) < self._population_size:
+        remainingPopCount = self._population_size - len(self._pre_selected)
+        while len(childList) < remainingPopCount:
+            if round(random(),1) <= 0.7:
+                limitSelection=True
+            else:
+                limitSelection=False
+            ch=choice([0,1])
+            ch=0
+            if ch==0:
+                logging.info("performing crossover and mutation")
+                fitness_pool = self._evaluate_fitness(False,limitSelection)
+                child_list = self._perform_crossovers(fitness_pool)
+                childList.extend(child_list)    
                 fitness_pool = self._evaluate_fitness()
-                child_list = self._perform_mutations(fitness_pool)
+                child_list = self._perform_mutations(fitness_pool,(remainingPopCount-len(childList)))
                 if child_list is not None:
                     childList.extend(child_list)
+            else:
+                logging.info("performin mutation and crossover")
+                fitness_pool = self._evaluate_fitness()
+                child_list = self._perform_mutations(fitness_pool,(remainingPopCount-len(childList)))
+                if child_list is not None:
+                    childList.extend(child_list)
+                fitness_pool = self._evaluate_fitness(False,limitSelection)
+                child_list = self._perform_crossovers(fitness_pool)
+                childList.extend(child_list)    
         self._perform_replacements(childList)
 
     """
@@ -578,7 +606,7 @@ class GrammaticalEvolution(object):
         remianing individuals max_pop - m are selected which includes these m indiv undergo crossover and mutation
         m+(n-m) = n (new offspring are generated which represents next generations)
     """
-    def _evaluate_fitness(self,ind=False):
+    def _evaluate_fitness(self,ind=False,limitSelection=False): 
         flist = []
         flist1 = []
         if ind:
@@ -586,16 +614,23 @@ class GrammaticalEvolution(object):
         else: 
             total = len(self.population)
         count = 0
-        for fsel in self.fitness_selections:
-            fsel.set_fitness_list(self.fitness_list)
-            selected=fsel.select()
-            for i in selected:
-                if count == total:
-                    break
-                flist.append(i)
-                count += 1
-        for member_no in flist:
-            flist1.append(deepcopy(self.population[member_no]))
+        if limitSelection or ind:
+            for fsel in self.fitness_selections:
+                fsel.set_fitness_list(self.fitness_list)
+                selected=fsel.select()
+                for i in selected:
+                    if count == total:
+                        break
+                    flist.append(i)
+                    count += 1
+            for member_no in flist:
+                gene=self.population[member_no]
+                if gene._fitness!=self._fitness_fail:
+                    flist1.append(deepcopy(gene))
+        else:
+            for gene in self.population:
+                if gene._fitness!=self._fitness_fail:
+                    flist1.append(deepcopy(gene))
         # else:
         #     for gene in self.population:
         #         if gene.get_fitness()!=self._fitness_fail:
@@ -603,6 +638,7 @@ class GrammaticalEvolution(object):
         return flist1
 
     def _perform_crossovers(self, flist):
+        logging.info("Crossover: Started")
         ti=time()
         child_list = []
         try:
@@ -627,18 +663,24 @@ class GrammaticalEvolution(object):
             if length % 2 == 1:
                 length -= 1
             if length >= 2:
-                for i in xrange(0, length, 2):
-                    parent1 = flist[i]
-                    flist.remove(parent1)
-                    parent2 = flist[i+1]
-                    flist.remove(parent2)
+                while True:
+                # for i in xrange(0, length, 2):
+                    # parent1 = flist[i]
+                    # flist.remove(parent1)
+                    # parent2 = flist[i+1]
+                    # flist.remove(parent2)
+
+                    parent1 = choice(flist)
+                    parent2 = choice(flist)
+                    if (parent1 == parent2) or  (parent1._fitness == self._fitness_fail) or (parent2._fitness_fail==self._fitness_fail):
+                        continue
 
                     if randint(0, 1):
-                            child1 = deepcopy(parent1)
-                            child2 = deepcopy(parent2)
+                            child1 = (parent1)
+                            child2 = (parent2)
                     else:
-                            child1 = deepcopy(parent2)
-                            child2 = deepcopy(parent1)
+                            child1 = (parent2)
+                            child2 = (parent1)
                     
                     child1_binary = child1.binary_gene
                     child2_binary = child2.binary_gene
@@ -664,8 +706,9 @@ class GrammaticalEvolution(object):
                         commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
                     else:
                         commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
+                    
                     trail=0
-                    while trail<3:
+                    while trail<5:
                         trail += 1
                         count=1
                         if round(random(),1) < self._multiple_rate:
@@ -675,12 +718,11 @@ class GrammaticalEvolution(object):
                             for i in range(count):
                                 selectedNt.append(choice(commonNonTerm))
                         else:
-                            continue
+                            break
                         ti3=time()
                         subString1,s1,selected1NTList=genCodeFrag(child1ParseTree,non_term1,selectedNt,None,len(selectedNt))
                         subString2,s2,selected2NTList=genCodeFrag(child2ParseTree,non_term2,selectedNt,None,len(selectedNt))
                         logging.info("Invoked Parser - Crossover-SubCode for " +str(time()-ti3)+" seconds")
-                        
                         try:
                             for k in selected2NTList:
                                 s1 = s1.replace(selected2NTList[k],subString2[k])
@@ -720,16 +762,23 @@ class GrammaticalEvolution(object):
                             logging.info("Crossover-Success")
                             break;
                         else:
+                            print "Crossover"
+                            print child2.err
+                            print child1.err
                             logging.info("Crossover-Failed")
                             logging.debug(child1.err)
                             logging.debug(child2.err)
                         logging.debug(subString1)
                         logging.debug(subString2)
+                    if len(child_list) == length:
+                        return child_list
             
-        
+        except:
+            pass
         finally:
-            logging.info("Completed Crossover in "+str(time()-ti))
+            logging.info("Crossover Completed in "+str(time()-ti))
             return child_list
+
 
         
     def _mutatebinarygene(self, gene, position1, position2):
@@ -769,7 +818,7 @@ class GrammaticalEvolution(object):
                 non_TerminalsList=extractNonTerminal(incompl,[])
                 logging.info("Invoked parser - Mutation-1 for " +str(time()-ti1)+" seconds")
                 
-                if len(non_TerminalsList) >1:
+                if len(non_TerminalsList) > 1:
 
                     if round(random(),1) < self._generative_mutation_rate :
                         generative=True
@@ -782,6 +831,7 @@ class GrammaticalEvolution(object):
                     trail=0
                     while trail < 3:
                         trail+=1
+                        logging.info("Invoked parser - Mutation-SubCode for " +str(time()-ti2)+" seconds")
                         dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
                         logging.info("Invoked parser - Mutation-SubCode for " +str(time()-ti2)+" seconds")
                         
@@ -804,6 +854,8 @@ class GrammaticalEvolution(object):
                             logging.info("Mutation-Success")
                             return gene
                         else:
+                            print "Mutation"
+                            print gene.err
                             logging.info("Mutation-Failed")
                             logging.debug(selectedNt)
                             logging.debug(dummy)
@@ -813,13 +865,15 @@ class GrammaticalEvolution(object):
         except:
             return None                
     
-    def _perform_mutations(self, mlist):
+    def _perform_mutations(self, mlist, count):
         mutatedList=[]
         for gene in mlist:
             try:
                 result=self.mutate(gene)
                 if result is not None:
                     mutatedList.append(result)
+                if len(mutatedList) == count:
+                    return mutatedList
             except:
                 logging.info("Function execution timeout")
                 pass
@@ -898,7 +952,6 @@ class GrammaticalEvolution(object):
         logging.info("fitness values : After Generation " + str(self._generation))
         logging.info(self.interpreter_Shell)
         logging.info(fitl)
-
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:
                 return False
