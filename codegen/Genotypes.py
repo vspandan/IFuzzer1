@@ -14,10 +14,11 @@ config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
 LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+LOG_LEVEL= config.get('Mappings', 'loglevel');
 import logging
 
 logging.basicConfig(filename=LOG_FILENAME,
-                    level=logging.INFO,
+                    level=LOG_LEVEL,
                     )
 
 

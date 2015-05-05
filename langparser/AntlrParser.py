@@ -1,6 +1,6 @@
 from os import path
-
-from random import choice, randint
+from copy import deepcopy
+from random import choice
 from collections import defaultdict
 
 from re import split
@@ -14,9 +14,11 @@ config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
 LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+LOG_LEVEL= config.get('Mappings', 'loglevel');
 import logging
+
 logging.basicConfig(filename=LOG_FILENAME,
-                    level=logging.INFO,
+                    level=int(LOG_LEVEL),
                     )
 
 globalobj=['Infinity', 'NaN', 'undefined', 'null ', 'eval', 'uneval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'Object', 'Function', 'Boolean', 'Symbol', 'Error', 'EvalError', 'InternalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError', 'Number', 'Math', 'Date', 'String', 'RegExp', 'Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'Map', 'Set', 'WeakMap', 'WeakSet', 'Promise', 'Generator', 'GeneratorFunction', 'ArrayBuffer', 'DataView', 'JSON', 'Reflect', 'Proxy', 'Iterator', 'ParallelArray', 'StopIteration']
@@ -51,7 +53,6 @@ def genCodeFrag(input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
             self.subcode={}
 
         def subCodeGen(self,root,pos):
-            # parser = gateway.entry_point.getCodeFragmentExtractor()
             for child in root:
                 self.position+=1
                 if child.text is not None:
@@ -59,7 +60,7 @@ def genCodeFrag(input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
                         self.subcode[pos]=self.subcode[pos]+" _id_"+child.text
                     else:
                         self.subcode[pos]=self.subcode[pos]+child.text
-                    self.subCodeGen(child,pos)
+                self.subCodeGen(child,pos)
                 if child.tail is not None:
                     self.subcode[pos]=self.subcode[pos]+child.tail
             
@@ -73,7 +74,7 @@ def genCodeFrag(input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
                             if child.text is None:
                                 self.subcode[self.position-1] = ""
                             else:
-                                self.subcode[self.position-1]=child.text
+                                self.subcode[self.position-1] = child.text
                             self.subCodeGen(child,self.position-1)
                             if child.tail is not None:
                                 self.out+=child.tail
@@ -84,38 +85,49 @@ def genCodeFrag(input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
                     if child.tail is not None:
                         self.out+=child.tail
             return self.subcode,self.out
+    logging.info("GenCodeFrag method - Entered ")
     selectedNTList={}
     subcode={}
     out=""
     try: 
-        if len(input) > 0 and len(nT) != 0:
+        
+        if len(input) > 0 and len(nT) > 0:
+            proceed=True
             root=None
             internalCount=0
             while internalCount < count :
                 selectedNt=None
                 if nonTerminal is None:
+                    tempNT=deepcopy(nT)
                     while True:
-                        selected=randint(0,len(nT)-1)
-                        selectedNt=nT[selected]
                         if INCLUDE_NT_LIST is None:
                             break;
+                        selectedNt=choice(tempNT)
+                        tempNT.remove(selectedNt)
                         if selectedNt in INCLUDE_NT_LIST : 
+                            proceed=True
                             break
+                        if len(tempNT) <= 0:
+                            proceed=False
+                            break
+                        
                 else:
                     selectedNt=nonTerminal[internalCount]
-                    indices = [i for i, x in enumerate(nT) if x == nonTerminal[internalCount]]
-                    selected=choice(indices)
-
+                indices = [i for i, x in enumerate(nT) if x == selectedNt]
+                selected=choice(indices)
                 internalCount+=1
                 selectedNTList[selected]=selectedNt
                 root = ElementTree.fromstring(input)
                 t=Temp()
                 if root.text is not None:
                     t.out=root.text
-            subcode,out=t.printChild(root,selectedNTList)
+            if proceed:
+                subcode,out=t.printChild(root,selectedNTList)
     except:
         pass
-    return subcode,out,selectedNTList
+    finally:
+        logging.info("GenCodeFrag method - Completed ")
+        return subcode,out,selectedNTList
 
 def parseTree(input,ind=False):
     if len(input)>0:

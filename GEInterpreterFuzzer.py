@@ -14,12 +14,6 @@ import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
-# LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
-# import logging
-# logging.basicConfig(filename=LOG_FILENAME,
-#                     level=logging.INFO,
-#                     )
-
 
 JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
@@ -168,9 +162,10 @@ def main(fileList,args):
                         config.write(f)
     config.read('ConfigFile.properties')
     LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+    LOG_LEVEL= config.get('Mappings', 'loglevel');
     import logging
     logging.basicConfig(filename=LOG_FILENAME,
-                    level=logging.INFO,
+                    level=LOG_LEVEL,
                     )
 
     try:

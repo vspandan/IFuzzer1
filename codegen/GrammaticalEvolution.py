@@ -21,11 +21,12 @@ config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
 LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+LOG_LEVEL= config.get('Mappings', 'loglevel');
 import logging
 
 logging.basicConfig(filename=LOG_FILENAME,
-                    level=logging.INFO,
-                   )
+                    level=LOG_LEVEL,
+                    )
 
 
 VARIABLE_FORMAT = '(\W+)'
@@ -138,9 +139,6 @@ class GrammaticalEvolution(object):
             raise ValueError("""
                 population size, %s, must be a long above 0""" % (size))
 
-    def get_population_size(self):
-        return self._population_size
-
     def set_genotype_length(self, start_gene_length,
                                     max_gene_length=None):
         if max_gene_length is None:
@@ -157,15 +155,9 @@ class GrammaticalEvolution(object):
     def set_extend_genotype(self, true_false):
             self._extend_genotype = true_false
 
-    def get_extend_genotype(self):
-        return self._extend_genotype
-
     def set_wrap(self, true_false):
             self._wrap = true_false
 
-    def get_wrap(self):
-        return self._wrap
-    
     def set_bnf(self, bnf):
         def strip_spaces(key, values):
             values = [value.strip()
@@ -190,52 +182,28 @@ class GrammaticalEvolution(object):
         self.non_Terminals = non_Terminals        
         self._bnf = bnf_dict
 
-    def get_bnf(self):
-        return self._bnf
-
     def set_maintain_history(self, true_false):
             self._maintain_history = true_false
-
-    def get_maintain_history(self):
-        return self._maintain_history
 
     def set_max_program_length(self, max_program_length):
         max_program_length = long(max_program_length)
         self._max_program_length = max_program_length
 
-    def get_max_program_length(self):
-        return self._max_program_length
-
     def set_fitness_fail(self, fitness_fail):
         fitness_fail = float(fitness_fail)
         self._fitness_fail = fitness_fail
 
-    def get_fitness_fail(self):
-        return self._fitness_fail
-
     def set_mutation_type(self, mutation_type):
         self._mutation_type = mutation_type
-
-    def get_mutation_type(self):
-        return self._mutation_type
 
     def set_mutation_rate(self, mutation_rate):
         self._mutation_rate = mutation_rate
 
-    def get_mutation_rate(self):
-        return self._mutation_rate
-
     def set_crossover_rate(self, crossover_rate):
         self._crossover_rate = crossover_rate
 
-    def get_crossover_rate(self):
-        return self._crossover_rate
-
     def set_children_per_crossover(self, children_per_crossover):
         self._children_per_crossover = children_per_crossover
-
-    def get_children_per_crossover(self):
-        return self._children_per_crossover
 
     def set_max_generations(self, generations):
             self.stopping_criteria[STOPPING_MAX_GEN] = generations
@@ -252,9 +220,6 @@ class GrammaticalEvolution(object):
 
     def set_max_fitness_rate(self, max_fitness_rate):
         self._max_fitness_rate = max_fitness_rate
-
-    def get_max_fitness_rate(self):
-        return self._max_fitness_rate
 
     def set_fitness_selections(self, *params):
         for fitness_selection in params:
@@ -797,7 +762,8 @@ class GrammaticalEvolution(object):
     def mutate(self,gene):
         try:
             def handler(signum, frame):
-                self.mutation_break=True
+                raise Exception('Mutation Time out')
+
             
             signal.signal(signal.SIGALRM, handler)
             signal.alarm(self.FUNCTION_EXEC_TIMEOUT)
