@@ -54,7 +54,8 @@ class Genotype(object):
         self.err = ""
         self.score=0
         self.prgLength=0
-    
+        self._initial_member_no=-1
+
     def set_keys(self, keys):
         self._keys = keys
     
@@ -104,7 +105,7 @@ class Genotype(object):
     def _converge(self, item):
         fileName = abspath("database" + "/" + item)
         
-        if  path.isfile(fileName) and item in self.preSelectedNonTerminals: 
+        if  path.isfile(fileName): 
             f = open(fileName,'r')
             d = load(f)
             f.close()

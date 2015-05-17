@@ -86,6 +86,25 @@ grammar ECMAScript;
         return (type == MultiLineComment && (text.contains("\r") || text.contains("\n"))) ||
                 (type == LineTerminator);
     }                                
+    private boolean functionAhead() {
+
+        // Get the token ahead of the current index.
+        int possibleIndexEosToken = this.getCurrentToken().getTokenIndex() - 1;
+        Token ahead = _input.get(possibleIndexEosToken);
+
+        if (ahead.getChannel() != Lexer.HIDDEN) {
+            // We're only interested in tokens on the HIDDEN channel.
+            return false;
+        }
+
+        // Get the token's text and type.
+        String text = ahead.getText();
+        int type = ahead.getType();
+
+        // Check if the token is, or contains a line terminator.
+        return (type == Function);
+    }                                
+
 }
 
 @lexer::members {
@@ -196,7 +215,8 @@ sourceElement
 /// FunctionDeclaration :
 ///     function Identifier ( FormalParameterList? ) { FunctionBody }
 functionDeclaration
- : Function identifier '(' formalParameterList? ')' '{' functionBody '}' eos
+ : Function identifier '(' formalParameterList ')' '{' functionBody '}' eos
+ | Function identifier '(' ')' '{' functionBody '}' eos
  ;
 
 /// Statement :
@@ -282,7 +302,8 @@ emptyStatement
 /// ExpressionStatement :
 ///     [lookahead âˆ‰ {{, function}] Expression ;
 expressionStatement
- : expression
+ : {!here(OpenBrace)}? expression
+ | {!here(Function)}? expression
  ;
 
 /// IfStatement :
@@ -311,6 +332,7 @@ iterationStatement
  | For '(' assignmentExpression In expression ')' statement                                      # ForInStatement
  | For '(' var variableDeclaration In expression ')' statement                               # ForVarInStatement
  | For '(' var variableDeclaration Of expression ')' statement                               # ForVarOfStatement
+ | For 'each' '(' var identifier In arrayLiteral ')' statement                             #ForEachStatement
  ;
 
 /// ContinueStatement :
@@ -422,7 +444,7 @@ formalParameterList
 /// FunctionBody :
 ///     SourceElements?
 functionBody
- : sourceElements?
+ : sourceElement+
  ;
     
 /// ArrayLiteral :
@@ -716,8 +738,8 @@ argumentList
 callExpression  
  :     memberExpression arguments
  |     callExpression arguments
- |     callExpression '[' expression ']'
- |     callExpression '.' identifierName
+ |     callExpression {!here(LineTerminator)}? '[' expression ']'
+ |     callExpression {!here(LineTerminator)}? '.' identifierName
  ;
 newExpression  
  :     memberExpression

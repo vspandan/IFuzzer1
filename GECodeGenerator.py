@@ -23,7 +23,7 @@ logging.basicConfig(filename=LOG_FILENAME,
 FILECOUNT = 0
 
 Population_size=100
-Timeout = 45
+Timeout = 10
 Generations=100
 
 
@@ -83,6 +83,8 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.dynamic_mutation_rate(1)
                 ges.dynamic_crossover_rate(1)
                 ges.targetDirectory=targetDirectory
+
+                ges.set_crossover_bias_rate(115)
                 
                 # print fil
                 

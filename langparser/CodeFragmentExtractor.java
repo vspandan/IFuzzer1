@@ -49,16 +49,18 @@ public class CodeFragmentExtractor {
                 boolean ind=false;
                 if (childs!=null){
                     
-                    if (childs.size()>0){
-                        for (ParseTree p : childs){
-                            if (p.getChildCount()==0){
-                                ind=true;
-                                break;
-                            }
-                            
-                        }
+                    if (childs.size()>1){
+                            ind = true;
                     }
-                    
+                    else 
+                        if (childs.size()>0){
+                            for (ParseTree p : childs){
+                                if (p.getChildCount()==0){
+                                    ind=true;
+                                    break;
+                                }
+                            }
+                        }
                     if (ind){
                         ind=false;
                         String Stmt = null;
@@ -79,15 +81,19 @@ public class CodeFragmentExtractor {
                     java.util.List<ParseTree> childs=ctx.children;
                     boolean ind=false;
                     if (childs!=null){
-                        if (childs.size()>0){
-                            for (ParseTree p : childs){
-                                if (p.getChildCount()==0){
-                                    ind=true;
-                                    break;
-                                }
-                                
-                            }
+                        if (childs.size()>1){
+                            ind = true;
                         }
+                        else 
+                            if (childs.size()>0){
+                                for (ParseTree p : childs){
+                                    if (p.getChildCount()==0){
+                                        ind=true;
+                                        break;
+                                    }
+                                    
+                                }
+                            }
                         
                         if (ind){
                             ind=false;
@@ -190,15 +196,19 @@ public class CodeFragmentExtractor {
                     if(ctx != null) {
                         java.util.List<ParseTree> childs=ctx.children;
                         boolean ind=false;
-                        if (childs.size()>0){
-                            for (ParseTree p : childs){
-                                if (p.getChildCount()==0){
-                                    ind=true;
-                                    break;
-                                }
-                                
-                            }
+                        if (childs.size()>1){
+                            ind = true;
                         }
+                        else 
+                            if (childs.size()>0){
+                                for (ParseTree p : childs){
+                                    if (p.getChildCount()==0){
+                                        ind=true;
+                                        break;
+                                    }
+                                    
+                                }
+                            }
                         
                         if (ind){
                             String Stmt = "";
@@ -207,7 +217,7 @@ public class CodeFragmentExtractor {
                             int stop = ctx.stop.getTokenIndex();
                             for (int i = start; i <= stop; i++) {
                                 String tokenText=tokens.get(i).getText();
-                                if (tokens.get(i).getType()==98 && !global_Objects.contains(tokenText))
+                                if (tokens.get(i).getType()==100 && !global_Objects.contains(tokenText))
                                     tokenText = "_id_"+tokenText;
                                 Stmt += tokenText;
                             }

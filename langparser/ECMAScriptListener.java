@@ -243,6 +243,18 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitForVarOfStatement(@NotNull ECMAScriptParser.ForVarOfStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code ForEachStatement}
+	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterForEachStatement(@NotNull ECMAScriptParser.ForEachStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ForEachStatement}
+	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitForEachStatement(@NotNull ECMAScriptParser.ForEachStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#continueStatement}.
 	 * @param ctx the parse tree
 	 */

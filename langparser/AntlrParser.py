@@ -100,9 +100,9 @@ def genCodeFrag(input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
                 if nonTerminal is None:
                     tempNT=deepcopy(nT)
                     while True:
+                        selectedNt=choice(tempNT)
                         if INCLUDE_NT_LIST is None:
                             break;
-                        selectedNt=choice(tempNT)
                         tempNT.remove(selectedNt)
                         if selectedNt in INCLUDE_NT_LIST : 
                             proceed=True

@@ -42,6 +42,7 @@ GUI=False
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js', 'user.js', 'sta.js','test262-browser.js', 'test262-shell.js','test402-browser.js', 'test402-shell.js', 'testBuiltInObject.js', 'testIntl.js','js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','js'))
 
 INCLUDE_NT=['ifStatement', 'iterationStatement', 'labelledStatement', 'throwStatement', 'functionDeclaration', 'arrayLiteral', 'propertyAssignment', 'propertyName', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'callExpression', 'functionExpression', 'assignmentOperator']
+INCLUDE_NT=None
 
 fileList = []
 
@@ -94,6 +95,7 @@ def createFragmentPool():
     ind=True
     for f in fileList:
         print (count)
+        print (f)
         if count > -1 :
             try:
                 que=Queue()
@@ -127,49 +129,46 @@ def createFragmentPool():
     print ("Finished; Code generation and testing begins")
 
 def main(fileList,args):
-    status=False
-    if args[0]=='1':
-        iteration=int(config.get('Mappings','iteration1'))
-        if iteration==0:
-            listAllTestCasesDir(testsuite)
-            tempDirectoryName=tmpDirectoryName
-            config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
-        else:
-            listAllTestCasesDir(targetDirectoryName1+str(iteration-1))
-            tempDirectoryName=tmpDirectoryName+str(iteration)
-            config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
-    if args[0]=='2':
-        iteration=int(config.get('Mappings','iteration2'))
-        if iteration==0:
-            listAllTestCasesDir(testsuite)
-            tempDirectoryName=tmpDirectoryName
-            config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
-        else:
-            listAllTestCasesDir(targetDirectoryName2+str(iteration-1))
-            tempDirectoryName=tmpDirectoryName+str(iteration)
-            config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
-    if args[0]=='3':
-        iteration=int(config.get('Mappings','iteration2'))
-        if iteration==0:
-            listAllTestCasesDir(testsuite)
-            tempDirectoryName=tmpDirectoryName
-            config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
-        else:
-            listAllTestCasesDir(targetDirectoryName3+str(iteration-1))
-            tempDirectoryName=tmpDirectoryName+str(iteration)
-            config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
-    with open('ConfigFile.properties','wb') as f:
-                        config.write(f)
-    config.read('ConfigFile.properties')
-    LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
-    LOG_LEVEL= config.get('Mappings', 'loglevel');
-    import logging
-    logging.basicConfig(filename=LOG_FILENAME,
-                    level=LOG_LEVEL,
-                    )
-
     try:
         while True:
+            status=False
+            if args[0]=='1':
+                iteration=int(config.get('Mappings','iteration1'))
+                if iteration==0:
+                    listAllTestCasesDir(testsuite)
+                    tempDirectoryName=tmpDirectoryName
+                    config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
+                else:
+                    listAllTestCasesDir(targetDirectoryName1+str(iteration-1))
+                    tempDirectoryName=tmpDirectoryName+str(iteration)
+                    config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
+            if args[0]=='2':
+                iteration=int(config.get('Mappings','iteration2'))
+                if iteration==0:
+                    listAllTestCasesDir(testsuite)
+                    tempDirectoryName=tmpDirectoryName
+                    config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
+                else:
+                    listAllTestCasesDir(targetDirectoryName2+str(iteration-1))
+                    tempDirectoryName=tmpDirectoryName+str(iteration)
+                    config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
+            if args[0]=='3':
+                iteration=int(config.get('Mappings','iteration2'))
+                if iteration==0:
+                    listAllTestCasesDir(testsuite)
+                    tempDirectoryName=tmpDirectoryName
+                    config.set('Mappings', 'mappings.logfile','CodegenLog'+'0'+'.log');
+                else:
+                    listAllTestCasesDir(targetDirectoryName3+str(iteration-1))
+                    tempDirectoryName=tmpDirectoryName+str(iteration)
+                    config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
+            with open('ConfigFile.properties','wb') as f:
+                                config.write(f)
+            config.read('ConfigFile.properties')
+            LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+            LOG_LEVEL= config.get('Mappings', 'loglevel');
+            import logging
+            logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
             if GUI:
                 from GECodeGeneratorGUI import runFuzzer 
@@ -183,10 +182,22 @@ def main(fileList,args):
                 logging.info("Moving files that has to be processed to temporary location")
                 count=0
                 for file in fileList:
+                    from subprocess import Popen,PIPE
+                    exec_cmd="timeout 3 "+ JS_SHELL_PATH2 +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+file
+                    p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+                    (out,err)=p.communicate()
+                    if p.returncode not in [0,1,2,3,4] :
+                        newfname=tempDirectoryName+"/"+str(count)+"_.js"
+                    else:
+                        newfname=tempDirectoryName+"/"+str(count)+".js"
+                    if "SyntaxError:" in err or "No such file or directory" in err:
+                        continue
                     count+=1
-                    newfname=tempDirectoryName+"/"+str(count)+".js"
+                    
                     copyfile(file, newfname)
                     fileList2.append(newfname)
+
+                logging.info("Moved files that has to be processed to temporary location")
             else:
                 logging.info("Loading file list")
                 fileList[:] = []
@@ -212,7 +223,7 @@ def main(fileList,args):
                 status=generatedFileList=runFuzzer(fileList2,targetDirectory, JS_SHELL_PATH2,JS_SHELL_OPTIONS2,EXCLUDE_FILES,INCLUDE_NT,2)
                 if status:
                     status=False
-                    config.set('Mappings', 'iteration1',iteration+1);
+                    config.set('Mappings', 'iteration2',iteration+1);
                     with open('ConfigFile.properties','wb') as f:
                         config.write(f)
             elif args[0] == '3':
@@ -222,7 +233,7 @@ def main(fileList,args):
                 status=generatedFileList=runFuzzer(fileList2,targetDirectory, JS_SHELL_PATH3,JS_SHELL_OPTIONS3,EXCLUDE_FILES,INCLUDE_NT,3)
                 if status:
                     status=False
-                    config.set('Mappings', 'iteration1',iteration+1);
+                    config.set('Mappings', 'iteration3',iteration+1);
                     with open('ConfigFile.properties','wb') as f:
                         config.write(f)
             else:

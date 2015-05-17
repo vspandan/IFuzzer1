@@ -4,6 +4,8 @@ sourceElements : sourceElement | sourceElement sourceElements
 
 sourceElement : statement | functionDeclaration
 
+functionDeclaration : function identifier ( formalParameterList ) { functionBody } | function identifier ( ) { functionBody }
+
 statement : block | variableStatement | emptyStatement | expressionStatement | ifStatement | iterationStatement | continueStatement | breakStatement | returnStatement | withStatement | labelledStatement | switchStatement | throwStatement | tryStatement | debuggerStatement
 
 block : { statementList } |  { } 
@@ -12,7 +14,7 @@ statementList : statement | statement statementList
 
 variableStatement : var variableDeclarationList ;
 
-variableDeclarationList : variableDeclaration , variableDeclarationList | variableDeclaration
+variableDeclarationList : variableDeclarationList  , variableDeclaration | variableDeclaration
 
 variableDeclaration : identifier initialiser |  identifier
 
@@ -22,7 +24,9 @@ emptyStatement :  ;
 
 expressionStatement : expression
 
-ifStatement : if ( expression ) statement else statement | if ( expression ) statement 
+ifStatement : if ( expression ) statement elseStatement | if ( expression ) statement 
+
+elseStatement : else statement
 
 iterationStatement : do statement while ( expression ) ; | while ( expression ) statement | for ( ; ; ) statement | for ( ; ; expression ) statement | for ( ; expression ; ) statement | for ( ; expression ; expression ) statement | for ( expression ; ; ) statement | for ( expression ; ; expression ) statement | for ( expression ; expression ; ) statement | for ( expression ; expression ; expression ) statement | for ( var variableDeclarationList ; ; ) statement | for ( var variableDeclarationList ; ; expression ) statement | for ( var variableDeclarationList ; expression ; ) statement | for ( var variableDeclarationList ; expression ; expression ) statement | for ( assignmentExpression In expression ) statement | for ( var variableDeclaration In expression ) statement
 
@@ -40,8 +44,6 @@ caseBlock : { caseClauses defaultClause caseClauses } | { caseClauses defaultCla
 
 caseClauses : caseClause | caseClause caseClauses
 
-caseClause : case expression : statementList |  case expression :
-
 defaultClause : default : statementList | default : 
 
 labelledStatement : identifier : statement
@@ -56,14 +58,11 @@ finallyProduction : finally block
 
 debuggerStatement : debugger ;
 
-functionDeclaration : function identifier ( formalParameterList ) { functionBody } | function identifier ( ) { functionBody }
-
-formalParameterList : identifier , formalParameterList | identifier
+formalParameterList : formalParameterList , identifier | identifier
 
 functionBody : sourceElements |
     
 arrayLiteral : [ elementList , elision ] | [ elementList , ] |[ elementList ] | [ , elision ] | [ , ] |[ elision ] | [] | [elementList elision]
-
 
 elementList : elision assignmentExpression elementList | elision assignmentExpression | assignmentExpression |elision elementList
 
@@ -111,9 +110,9 @@ multiplicativeExpression :  unaryExpression | multiplicativeExpression  *  unary
 
 unaryExpression :  postfixExpression | delete unaryExpression | void unaryExpression | typeof unaryExpression |  ++  unaryExpression |  --  unaryExpression | + unaryExpression |  -  unaryExpression |  ~  unaryExpression |  !  unaryExpression
 
-postfixExpression :  leftHandSideExpression | leftHandSideExpression {!here(LineTerminator)}? ++ | leftHandSideExpression {!here(LineTerminator)}? --
+postfixExpression :  leftHandSideExpression | leftHandSideExpression ++ | leftHandSideExpression --
 
-leftHandSideExpression :  newExpression | callExpression
+leftHandSideExpression :  newExpression | callExpression ;
 
 callExpression :  memberExpression arguments | callExpression arguments | callExpression [  ] | callExpression . identifierName
 
@@ -121,11 +120,11 @@ newExpression :  memberExpression | new newExpression
 
 memberExpression :  primaryExpression | functionExpression | memberExpression [  ] | memberExpression . identifierName | new memberExpression arguments
 
-functionExpression :  function identifier? ( formalParameterList? ) { functionBody }
+functionExpression :  function ( formalParameterList ) { functionBody } | function ( ) { functionBody }
 
-primaryExpression :  This | identifier | literal | arrayLiteral | objectLiteral | (  )
+primaryExpression :  this | identifier | literal | arrayLiteral | objectLiteral | arguments
 
-assignmentOperator : *= | /= | %= | += | -= | <<= | >>= | >>>= | &= | ^= | |=
+assignmentOperator : *= | /= | %= | += | -= | <<= | >>= | >>>= | &= | ^= | #=
 
 literal : NullLiteral | BooleanLiteral | StringLiteral | RegularExpressionLiteral | numericLiteral
 

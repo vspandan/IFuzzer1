@@ -11,12 +11,12 @@ elif [ "$1" == "-r" ]; then
 		while true
 		do
 			jython -J-Xmx2048m GEInterpreterFuzzer.py 1
-			echo "Spidermonkey"
+			echo "Spidermonkey-1.8.5"
 		done
 	elif [ "$2" == "js31" ]; then
 		while true
 		do
-			jython -J-Xmx1024m GEInterpreterFuzzer.py 2
+			jython -J-Xmx2000m GEInterpreterFuzzer.py 2
 		done
 	elif [ "$2" == "v8" ]; then
 		while true
