@@ -145,8 +145,8 @@ def main(fileList,args):
         	print "Invalid Arguments"
         	return
 
-        tempDirectoryName=tmpDirectoryName+str(iteration)
-        config.set('Mappings', 'mappings.logfile','CodegenLog'+str(iteration)+'.log');
+        tempDirectoryName=tmpDirectoryName+"_"+str(args[0])+"_"+str(iteration)
+        config.set('Mappings', 'mappings.logfile','CodegenLog'+"_"+str(args[0])+"_"+str(iteration)+'.log');
 
         with open('ConfigFile.properties','wb') as f:
                     config.write(f)
