@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.Token;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +43,10 @@ public class CodeFragmentExtractor {
         final ArrayList nonTerminals = new ArrayList();
         ParseTreeWalker.DEFAULT.walk(new ECMAScriptBaseListener(){
             private boolean eosInd=false;
-            
+            private boolean isAssignmentExpression2Context = false;
             @Override
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
+                
                 java.util.List<ParseTree> childs=ctx.children;
                 boolean ind=false;
                 if (childs!=null){
@@ -100,8 +102,11 @@ public class CodeFragmentExtractor {
                             String Stmt = null;
                             Stmt = tokens.getText(ctx);
                             String key=ruleNames[ctx.getRuleIndex()];
-                            
-                            if(key.equals("eos")){
+/*                            if (ctx instanceof ECMAScriptParser.AssignmentExpression2Context && ctx.getParent().getParent().getRuleIndex() == ECMAScriptParser.RULE_expressionStatement ){
+                                System.out.println("append");
+                                sb.append(";");    
+                            }
+*/                            if(key.equals("eos")){
                                 eosInd=false;
                             }
                             sb.append("</"+key+">");
@@ -115,6 +120,9 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                     try{
                         String token=ctx.getText();
+                        if(ctx.getSymbol().getType()==ECMAScriptParser.Identifier && !global_Objects.contains(token)){
+                            identifiers.add(token);  
+                        }
                         if (!eosInd){
                             if(!token.equals("<EOF>"))
                             sb.append(xmlEscapeText(token)+" ");
@@ -137,23 +145,7 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                 }
             }
-            @Override
-            public void enterIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx) {
-                if (ctx != null){
-                    RuleContext parentCtx=ctx.parent;
-                    String key = ruleNames[parentCtx.getRuleIndex()];
-                    if(nonTermWithIdentifiers.contains(key)){
-                      String id=ctx.getText();
-                      if (!global_Objects.contains(id))
-                        identifiers.add(id);  
-                      //System.out.println(id);
-                    }
-                    
-                }
-            }
-            @Override
-            public void exitIdentifier(@NotNull ECMAScriptParser.IdentifierContext ctx) {
-            }
+            
             
         }, parser.program());
         hm.put("parsecode",sb.toString());
@@ -211,13 +203,14 @@ public class CodeFragmentExtractor {
                             }
                         
                         if (ind){
+                            ind=false;
                             String Stmt = "";
                             /*Stmt = tokens.getText(ctx);*/
                             int start = ctx.start.getTokenIndex();
                             int stop = ctx.stop.getTokenIndex();
                             for (int i = start; i <= stop; i++) {
                                 String tokenText=tokens.get(i).getText();
-                                if (tokens.get(i).getType()==100 && !global_Objects.contains(tokenText))
+                                if (tokens.get(i).getType()==ECMAScriptParser.Identifier && !global_Objects.contains(tokenText))
                                     tokenText = "_id_"+tokenText;
                                 Stmt += tokenText;
                             }

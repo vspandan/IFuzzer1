@@ -172,7 +172,7 @@ grammar ECMAScript;
         }
         
         switch (this.lastToken.getType()) {
-            case Identifiers:
+            case Identifier:
             case NullLiteral:
             case BooleanLiteral:
             case This:
@@ -208,15 +208,15 @@ sourceElements
 ///     Statement
 ///     FunctionDeclaration
 sourceElement
- : statement
- | functionDeclaration
+ : functionDeclaration
+ | statement
  ;
 
 /// FunctionDeclaration :
 ///     function Identifier ( FormalParameterList? ) { FunctionBody }
 functionDeclaration
- : Function identifier '(' formalParameterList ')' '{' functionBody '}' eos
- | Function identifier '(' ')' '{' functionBody '}' eos
+ : Function Identifier '(' formalParameterList ')' '{' functionBody '}' 
+ | Function Identifier '(' ')' '{' functionBody '}' 
  ;
 
 /// Statement :
@@ -236,7 +236,8 @@ functionDeclaration
 ///     TryStatement
 ///     DebuggerStatement
 statement
- : block
+ : labelledStatement
+ | block
  | variableStatement
  | emptyStatement
  | expressionStatement
@@ -246,11 +247,14 @@ statement
  | breakStatement
  | returnStatement
  | withStatement
- | labelledStatement
  | switchStatement
  | throwStatement
  | tryStatement
  | debuggerStatement
+ ;
+
+yieldExpression
+ : Yield expression? eos 
  ;
 
 /// Block :
@@ -284,7 +288,9 @@ variableDeclarationList
 /// VariableDeclaration :
 ///     Identifier Initialiser?
 variableDeclaration
- : identifier initialiser?
+ : Identifier initialiser?
+ | arrayLiteral initialiser?
+ | objectLiteral initialiser?
  ;
 
 /// Initialiser :
@@ -329,24 +335,34 @@ iterationStatement
  | While '(' expression ')' statement                                                        # WhileStatement
  | For '(' expression? ';' expression? ';' expression? ')' statement         # ForStatement
  | For '(' var variableDeclarationList ';' expression? ';' expression? ')' statement # ForVarStatement
- | For '(' assignmentExpression In expression ')' statement                                      # ForInStatement
- | For '(' var variableDeclaration In expression ')' statement                               # ForVarInStatement
- | For '(' var variableDeclaration Of expression ')' statement                               # ForVarOfStatement
- | For 'each' '(' var identifier In arrayLiteral ')' statement                             #ForEachStatement
+ | For '(' assignmentExpression In expression ')' statement?                                      # ForInStatement
+ | For '(' var Identifier In expression ')' statement?                               # ForVarInStatement
+ | For '(' var arrayLiteral In expression ')' statement?                               # ForVarInStatement2
+ | For '(' var objectLiteral In expression ')' statement?                               # ForVarInStatement3
+ | For '(' var Identifier Of expression ')' statement?                               # ForVarOfStatement
+ | For '(' var arrayLiteral Of expression ')' statement?                               # ForVarOfStatement2
+ | For '(' var objectLiteral Of expression ')' statement?                               # ForVarOfStatement3
+ | For '(' Identifier Of expression ')' statement?                               # ForVarOfStatement4
+ | For '(' arrayLiteral Of expression ')' statement?                               # ForVarOfStatement5
+ | For '(' objectLiteral Of expression ')' statement?                               # ForVarOfStatement6
+ | For 'each' '(' var Identifier In expression ')' statement?                             #ForEachStatement
+ | For 'each' '(' var arrayLiteral In expression ')' statement?                             #ForEachStatement2
+ | For 'each' '(' var objectLiteral In expression ')' statement?                             #ForEachStatement3
+ | For 'each' '(' assignmentExpression In expression ')' statement?                            #ForEachStatement7
  ;
 
 /// ContinueStatement :
 ///     continue ;
 ///     continue [no LineTerminator here] Identifier ;
 continueStatement
- : Continue {!here(LineTerminator)}? identifier? eos
+ : Continue {!here(LineTerminator)}? Identifier? eos
  ;
 
 /// BreakStatement :
 ///     break ;
 ///     break [no LineTerminator here] Identifier ;
 breakStatement
- : Break {!here(LineTerminator)}? identifier? eos
+ : Break {!here(LineTerminator)}? Identifier? eos
  ;
 
 /// ReturnStatement :
@@ -395,9 +411,9 @@ defaultClause
  ;
 
 /// LabelledStatement :
-///     Identifier ':' Statement
+///     identifier ':' Statement
 labelledStatement
- : identifier ':' statement
+ : identifierName ':' statement
  ;
 
 /// ThrowStatement :
@@ -411,15 +427,17 @@ throwStatement
 ///     try Block Finally
 ///     try Block Catch Finally
 tryStatement
- : Try block catchProduction
+ : Try block catchProduction*
  | Try block finallyProduction
- | Try block catchProduction finallyProduction
+ | Try block catchProduction* finallyProduction
  ;
 
 /// Catch :
 ///     catch ( Identifier ) Block
 catchProduction
- : Catch '(' identifier ')' block
+ : Catch '(' Identifier (If expression)? ')' block
+ | Catch '(' objectLiteral (If expression)? ')' block
+ | Catch '(' arrayLiteral (If expression)? ')' block
  ;
 
 /// Finally :
@@ -438,13 +456,19 @@ debuggerStatement
 ///     Identifier
 ///     FormalParameterList , Identifier
 formalParameterList
- : identifier ( ',' identifier )*
+ : formalParameter ( ',' formalParameter )*
+ ;
+
+formalParameter
+ : Identifier
+ | arrayLiteral
+ | objectLiteral
  ;
 
 /// FunctionBody :
 ///     SourceElements?
 functionBody
- : sourceElement+
+ : sourceElements?
  ;
     
 /// ArrayLiteral :
@@ -461,8 +485,8 @@ arrayLiteral
 ///     Elision? AssignmentExpression
 ///     ElementList , Elision? AssignmentExpression
 elementList
- : elision? assignmentExpression 
- | elementList ',' elision? assignmentExpression 
+ : elision? expression 
+ | elementList ',' elision? expression 
  ;
 
 /// Elision :
@@ -495,9 +519,10 @@ propertyNameAndValueList
 ///     get PropertyName ( ) { FunctionBody }
 ///     set PropertyName ( PropertySetParameterList ) { FunctionBody }
 propertyAssignment
- : propertyName ':' assignmentExpression                            # PropertyExpressionAssignment
- | getter '(' ')' '{' functionBody '}'                          # PropertyGetter
- | setter '(' propertySetParameterList ')' '{' functionBody '}' # PropertySetter
+ : propertyName                                                 # PropertyExpressionAssignment1
+ | propertyName ':' assignmentExpression                            # PropertyExpressionAssignment
+ | Get propertyName '(' ')' '{' functionBody '}'                          # PropertyGetter
+ | Set propertyName '(' propertySetParameterList ')' '{' functionBody '}' # PropertySetter
  ;           
     
 /// PropertyName :
@@ -513,7 +538,7 @@ propertyName
 /// PropertySetParameterList :
 ///     Identifier
 propertySetParameterList
- : identifier
+ : Identifier
  ;
 
 /// Arguments :
@@ -528,8 +553,8 @@ arguments
 ///     AssignmentExpression
 ///     ArgumentList , AssignmentExpression
 argumentList
- : assignmentExpression
- | argumentList  ',' assignmentExpression 
+ : expression
+ | argumentList  ',' expression 
  ;
     
 /// Expression :
@@ -651,15 +676,26 @@ argumentList
  expression
  :     assignmentExpression
  |     expression ',' assignmentExpression
+ | assignmentExpression For '(' Identifier In expression ')' statement?
+ | assignmentExpression For '(' Identifier Of expression ')' statement?
+ | assignmentExpression For 'each' '(' Identifier In expression ')' statement?
+ | assignmentExpression For 'each' '(' Identifier Of expression ')' statement?
+ | yieldExpression
+ | expression If '(' expression ')'
+ | '(' formalParameterList? ')' '=>' statement
+ | '(' formalParameterList? ')' '=>' expression
+ | Identifier '=>' '{' statement '}'
+ | Identifier '=>' expression
+ | Let '(' expression ')' statement
  ;
  assignmentExpression
- :     conditionalExpression
- |     leftHandSideExpression '=' assignmentExpression 
- |     leftHandSideExpression assignmentOperator assignmentExpression
+ :     conditionalExpression                                                # AssignmentExpression1
+ |     leftHandSideExpression '=' assignmentExpression                      # AssignmentExpression2
+ |     leftHandSideExpression assignmentOperator assignmentExpression       # AssignmentExpression3
  ;
  conditionalExpression
  :     logicalORExpression
- |     logicalORExpression '?' assignmentExpression ':' assignmentExpression
+ |     logicalORExpression '?' assignmentExpression ':' assignmentExpression 
  ;
  logicalORExpression
  :     logicalANDExpression
@@ -732,8 +768,8 @@ argumentList
  |     leftHandSideExpression {!here(LineTerminator)}? '--'
  ;
  leftHandSideExpression  
- :     newExpression
- |     callExpression eos
+ :     callExpression
+ |     newExpression
  ;
 callExpression  
  :     memberExpression arguments
@@ -753,16 +789,17 @@ memberExpression
  |     New memberExpression arguments
  ;
 functionExpression  
- :     Function '(' formalParameterList? ')' '{' functionBody '}'
+ :     Function Identifier? '(' formalParameterList? ')' '{' functionBody '}'
+ |     Function Identifier? '(' formalParameterList? ')' statement
  ;
  
 primaryExpression  
  :     This
- |     identifier
+ |     Identifier
  |     literal
- |     arrayLiteral
  |     objectLiteral
- |     arguments
+ |     '(' expression ')'
+ |     arrayLiteral
  ;
 
 /// AssignmentOperator : one of
@@ -794,10 +831,11 @@ numericLiteral
  : DecimalLiteral
  | HexIntegerLiteral
  | OctalIntegerLiteral
+ | BinaryLiteral
  ;
 
 identifierName
- : identifier
+ : Identifier
  | reservedWord
  ;
 
@@ -837,6 +875,8 @@ keyword
  | In
  | Try
  | Of
+ | Get
+ | Set
  ;
 
 futureReservedWord
@@ -858,14 +898,6 @@ futureReservedWord
  | Yield
  ;
 
-getter
- : {_input.LT(1).getText().startsWith("get")}? identifier
- ;
-
-setter
- : {_input.LT(1).getText().startsWith("set")}? identifier
- ;
-
 eos
  : SemiColon
  | EOF
@@ -877,11 +909,10 @@ eof
  : EOF
  ;
 
-identifier : Identifiers ;
-
 var 
  : Var
  | Let
+ | Const
  ;
 
 /// RegularExpressionLiteral ::
@@ -971,6 +1002,10 @@ OctalIntegerLiteral
  : {!strictMode}? '0' OctalDigit+
  ;
 
+BinaryLiteral
+ : '0' [bB] BinDigit+
+ ;
+
 /// 7.6.1.1 Keywords
 Break      : 'break';
 Do         : 'do';
@@ -989,7 +1024,7 @@ For        : 'for';
 Switch     : 'switch';
 While      : 'while';
 Debugger   : 'debugger';
-Function   : 'function';
+Function   : 'function' | 'function*';
 This       : 'this';
 With       : 'with';
 Default    : 'default';
@@ -999,6 +1034,8 @@ Delete     : 'delete';
 In         : 'in';
 Try        : 'try';
 Of         : 'of';  
+Get        : 'get';
+Set        : 'set';
 
 /// 7.6.1.2 Future Reserved Words
 Class   : 'class';
@@ -1021,8 +1058,8 @@ Protected  : {strictMode}? 'protected';
 Static     : {strictMode}? 'static';
 Yield      : {strictMode}? 'yield';
 
-/// 7.6 Identifier Names and Identifiers
-Identifiers
+/// 7.6 Identifier Names and Identifier
+Identifier
  : IdentifierStart IdentifierPart*
  ;
 
@@ -1112,13 +1149,17 @@ fragment HexDigit
  : [0-9a-fA-F]
  ;
 
+fragment BinDigit
+ : [0-1]
+ ;
+
 fragment OctalDigit
  : [0-7]
  ;
 
 fragment DecimalIntegerLiteral
  : '0'
- | [1-9] DecimalDigit*
+ | [0-9] DecimalDigit*
  ;
 
 fragment ExponentPart

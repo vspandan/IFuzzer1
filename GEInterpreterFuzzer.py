@@ -172,14 +172,25 @@ def main(fileList,args):
             count=0
             for file in fileList:
                 from subprocess import Popen,PIPE
-                exec_cmd="timeout 3 "+ JS_SHELL_PATH2 +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+file
+                exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+file
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
                 (out,err)=p.communicate()
                 rc= p.returncode
-                if rc==3:
+                if rc==3 and rc != 6:
                 	continue
                 elif rc!=0 :
                     newfname=tempDirectoryName+"/"+str(count)+"_.js"
+                    temp=[]
+                    errfile=config.get('Mappings','errlog')+str(args[0])
+                    if isfile(errfile):
+                        f2 = open(errfile, 'rb')
+                        temp=load(f2)
+                        f2.close()
+                    if len(err)>0 and err not in temp:
+                        temp.append(err)
+                        f1 = open(errfile, 'wb')
+                        dump(temp, f1)
+                        f1.close()
                 else:
                     newfname=tempDirectoryName+"/"+str(count)+".js"
                 count+=1

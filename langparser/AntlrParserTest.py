@@ -1,4 +1,5 @@
-from os import path
+from os.path import isfile, join, isdir, exists, abspath
+from os import path,listdir
 from copy import deepcopy
 from random import choice
 from collections import defaultdict
@@ -22,6 +23,8 @@ logging.basicConfig(filename=LOG_FILENAME,
                     )
 
 globalobj=['Infinity', 'NaN', 'undefined', 'null ', 'eval', 'uneval', 'isFinite', 'isNaN', 'parseFloat', 'parseInt', 'decodeURI', 'decodeURIComponent', 'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'Object', 'Function', 'Boolean', 'Symbol', 'Error', 'EvalError', 'InternalError', 'RangeError', 'ReferenceError', 'SyntaxError', 'TypeError', 'URIError', 'Number', 'Math', 'Date', 'String', 'RegExp', 'Array', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array', 'Uint16Array', 'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'Map', 'Set', 'WeakMap', 'WeakSet', 'Promise', 'Generator', 'GeneratorFunction', 'ArrayBuffer', 'DataView', 'JSON', 'Reflect', 'Proxy', 'Iterator', 'ParallelArray', 'StopIteration']
+
+fileList = []
 
 def extractNonTerminal(input,nonTerminals):        
     def extractNT(root,nonTerminals):
@@ -139,9 +142,9 @@ def parseTree(input,ind=False):
         for id in identifiers_JavaObj:
             identifiers.append(id)
         # xmlCode=''.join(split('(\W+)',output['parsecode']))
-        return output['parsecode'],identifiers
+        return output['parsecode']
         # return xmlCode,identifiers
-    return "",[]
+    return ""
 """
 Restricting to accept only files;
 """
@@ -221,7 +224,46 @@ def CountNestedStructures(output):
         pass
     return (a,b,c,d)                 
 
+
+def listAllTestCasesDir(testCasesDir):
+        for f in listdir(testCasesDir):
+            fi=join(testCasesDir,f)
+            if not isfile(fi):
+                listAllTestCasesDir(fi)
+            else:
+                    fileList.append(f)
+
 if __name__ == '__main__':
-    print parseTree("/home/spandan/test.js",False)
-    print extractCodeFrag("/home/spandan/test.js")
+    # listAllTestCasesDir("/home/spandan/output3")
+    # print len(fileList)
+    # for filename in fileList:
+    #         f1 = "/home/spandan/output4/"+filename+".xml"
+    #         print f1
+    #         f=open(f1,"w")
+    #         f.write(parseTree("/home/spandan/output2/"+filename,False))
+    #         f.close()
     
+    args = sys.argv[1:]
+    print parseTree(args[0],False)
+    # listAllTestCasesDir("/home/spandan/output4")
+    # count=0
+    # for filename in fileList:
+    #         f1 = "/home/spandan/output4/"+filename
+    #         f=open(f1,"r")
+    #         st = f.read()
+    #         import re
+    #         res=re.findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',st)
+    #         if res:
+    #             print res
+    #             i=raw_input()
+    #             if i=='y':
+    #                 print "NC"
+    #                 continue
+    #             count+=1
+    #             from shutil import copyfile
+    # #             copyfile("/home/spandan/repo/geinterpreterfuzz/tmp_2_0/"+filename.replace(".xml",""),"/home/spandan/output2/"+filename.replace(".xml",""))
+    #             copyfile("/home/spandan/output3/"+filename.replace(".xml",""),"/home/spandan/output5/"+filename.replace(".xml",""))
+    #         f.close()
+    # print count
+
+    # # 
