@@ -1,4 +1,4 @@
-from os import path
+from os import path,stat
 from copy import deepcopy
 from random import choice
 from collections import defaultdict
@@ -36,14 +36,6 @@ def extractNonTerminal(input,nonTerminals):
         except:
             pass
     return nonTerminals
-
-# def extractNTandText(root):
-#     if root is not None:
-#         for child in root:
-#             nonTerminals.append(child.tag)
-#             txt=ElementTree.tostring(child,method="text")
-#             values.append(txt)
-#             extractNTandText(child)       
 
 def genCodeFrag(input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
     class Temp(object):
@@ -139,7 +131,7 @@ def parseTree(input,ind=False):
         for id in identifiers_JavaObj:
             identifiers.append(id)
         # xmlCode=''.join(split('(\W+)',output['parsecode']))
-        return output['parsecode'],identifiers
+        return output['parsecode'],identifiers, output['exec_time']
         # return xmlCode,identifiers
     return "",[]
 """
@@ -147,23 +139,11 @@ Restricting to accept only files;
 """
 def extractCodeFrag(fileName,que=None):
     logging.info(fileName)
-    # output,identifiers=parseTree(fileName,False)
-    
-    # root = ElementTree.fromstring(output)
-    # extractNTandText(root)
-    # d = defaultdict(list)
-    # for position in range(len(nonTerminals)):
-    #         nt=nonTerminals[position]
-    #         d1 = []
-    #         code = values[position]
-    #         if len(code) > 0:
-    #             if d.has_key(nt):
-    #                 d.get(nt).append(code)
-    #             else:
-    #                 d1.append(code)
-    #                 d[str(nt)] = d1
     c=CodeFragmentExtractor()
-    d=c.extractFrags(fileName,True)
+    st="\n"
+    f=open(fileName,"r")
+    d=c.extractFrags("\n"+f.read(),False)
+    f.close()
     c=None
     if que is not None:
         que.put(d)

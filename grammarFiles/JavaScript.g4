@@ -6,17 +6,19 @@ sourceElement : statement | functionDeclaration
 
 functionDeclaration : function identifier ( formalParameterList ) { functionBody } | function identifier ( ) { functionBody }
 
-statement : block | variableStatement | emptyStatement | expressionStatement | ifStatement | iterationStatement | continueStatement | breakStatement | returnStatement | withStatement | labelledStatement | switchStatement | throwStatement | tryStatement | debuggerStatement
+statement : block | variableStatement | emptyStatement | expressionStatement | ifStatement | iterationStatement | continueStatement | breakStatement | returnStatement | withStatement | labelledStatement | switchStatement | throwStatement | tryStatement | debuggerStatement | yieldExpression | elseStatement
+
+yieldExpression : Yield expression | Yield
 
 block : { statementList } |  { } 
 
 statementList : statement | statement statementList
 
-variableStatement : var variableDeclarationList ;
+variableStatement : var variableDeclarationList | let variableDeclarationList | const variableDeclarationList ;
 
 variableDeclarationList : variableDeclarationList  , variableDeclaration | variableDeclaration
 
-variableDeclaration : identifier initialiser |  identifier
+variableDeclaration : identifier initialiser | arrayLiteral initialiser | objectLiteral initialiser | identifier | arrayLiteral | objectLiteral
 
 initialiser : = assignmentExpression
 
@@ -28,7 +30,7 @@ ifStatement : if ( expression ) statement elseStatement | if ( expression ) stat
 
 elseStatement : else statement
 
-iterationStatement : do statement while ( expression ) ; | while ( expression ) statement | for ( ; ; ) statement | for ( ; ; expression ) statement | for ( ; expression ; ) statement | for ( ; expression ; expression ) statement | for ( expression ; ; ) statement | for ( expression ; ; expression ) statement | for ( expression ; expression ; ) statement | for ( expression ; expression ; expression ) statement | for ( var variableDeclarationList ; ; ) statement | for ( var variableDeclarationList ; ; expression ) statement | for ( var variableDeclarationList ; expression ; ) statement | for ( var variableDeclarationList ; expression ; expression ) statement | for ( assignmentExpression In expression ) statement | for ( var variableDeclaration In expression ) statement
+iterationStatement : do statement while ( expression ) ; | while ( expression ) statement | for ( ; ; ) statement | for ( ; ; expression ) statement | for ( ; expression ; ) statement | for ( ; expression ; expression ) statement | for ( expression ; ; ) statement | for ( expression ; ; expression ) statement | for ( expression ; expression ; ) statement | for ( expression ; expression ; expression ) statement | for ( var variableDeclarationList ; ; ) statement | for ( var variableDeclarationList ; ; expression ) statement | for ( var variableDeclarationList ; expression ; ) statement | for ( var variableDeclarationList ; expression ; expression ) statement |  for ( let variableDeclarationList ; ; ) statement | for ( let variableDeclarationList ; ; expression ) statement | for ( let variableDeclarationList ; expression ; ) statement | let ( var variableDeclarationList ; expression ; expression ) statement |  for ( const variableDeclarationList ; ; ) statement | for ( const variableDeclarationList ; ; expression ) statement | for ( const variableDeclarationList ; expression ; ) statement | for ( const variableDeclarationList ; expression ; expression ) statement | for each ( var leftHandSideExpression in expression ) statement  | for ( var leftHandSideExpression in expression ) statement  | for each ( let leftHandSideExpression in expression ) statement  | for ( let leftHandSideExpression in expression ) statement  | for each ( const leftHandSideExpression in expression ) statement  | for ( const leftHandSideExpression in expression ) statement | for ( const variableDeclarationList ; expression ; ) statement | for ( const variableDeclarationList ; expression ; expression ) statement | for each ( var leftHandSideExpression of expression ) statement  | for ( var leftHandSideExpression of expression ) statement  | for each ( let leftHandSideExpression of expression ) statement  | for ( let leftHandSideExpression of expression ) statement  | for each ( const leftHandSideExpression of expression ) statement  | for ( const leftHandSideExpression of expression ) statement 
 
 continueStatement : continue identifier ; | continue ;
 
@@ -52,19 +54,21 @@ throwStatement : throw expression ;
 
 tryStatement : try block catchProduction | try block finallyProduction | try block catchProduction finallyProduction
 
-catchProduction : catch ( identifier ) block
+catchProduction : catchProduction catch ( identifier ) block | 
 
 finallyProduction : finally block
 
 debuggerStatement : debugger ;
 
-formalParameterList : formalParameterList , identifier | identifier
+formalParameterList : formalParameterList ',' formalParameter | formalParameter
+
+formalParameter : identifier | arrayLiteral | objectLiteral
 
 functionBody : sourceElements |
     
 arrayLiteral : [ elementList , elision ] | [ elementList , ] |[ elementList ] | [ , elision ] | [ , ] |[ elision ] | [] | [elementList elision]
 
-elementList : elision assignmentExpression elementList | elision assignmentExpression | assignmentExpression |elision elementList
+elementList : elision expression elementList | elision expression | expression |elision elementList
 
 elision : , | , elision
 
@@ -72,7 +76,7 @@ objectLiteral : { } | { propertyNameAndValueList } |{ propertyNameAndValueList ,
 
 propertyNameAndValueList : propertyAssignment , propertyNameAndValueList | propertyAssignment
     
-propertyAssignment : propertyName : assignmentExpression | get identifier ( ) { functionBody } | set identifier ( propertySetParameterList ) { functionBody }
+propertyAssignment : propertyName | propertyName : assignmentExpression | get identifierName ( ) { functionBody } | set identifierName ( propertySetParameterList ) { functionBody }
     
 propertyName : identifierName | StringLiteral | numericLiteral
     
@@ -80,11 +84,11 @@ propertySetParameterList : identifier
 
 arguments : ( argumentList ) |  ( )
     
-argumentList : assignmentExpression , argumentList | assignmentExpression 
+argumentList : expression , argumentList | expression 
     
-expression : assignmentExpression expression | assignmentExpression   
- 
-assignmentExpression : conditionalExpression | leftHandSideExpression  =  assignmentExpression | leftHandSideExpression assignmentOperator assignmentExpression
+expression : assignmentExpression expression | assignmentExpression | assignmentExpression for each ( identifier of expression ) statement | assignmentExpression for  ( identifier of expression ) statement | assignmentExpression for each ( identifier in expression ) statement | assignmentExpression for  ( identifier in expression ) statement | expression if ( expression ) | ( formalParameterList ) =>  expression | ( ) => expression | ( formalParameterList ) => statement | ( ) => statement | identifier => { statement }  | identifier => expression | let ( expression ) statement
+
+assignmentExpression : yieldExpression | conditionalExpression | leftHandSideExpression  =  assignmentExpression | leftHandSideExpression assignmentOperator assignmentExpression
 
 conditionalExpression : logicalORExpression | logicalORExpression  ?  assignmentExpression  :  assignmentExpression
 
@@ -120,7 +124,7 @@ newExpression :  memberExpression | new newExpression
 
 memberExpression :  primaryExpression | functionExpression | memberExpression [  ] | memberExpression . identifierName | new memberExpression arguments
 
-functionExpression :  function ( formalParameterList ) { functionBody } | function ( ) { functionBody }
+functionExpression :  function identifier ( formalParameterList ) { functionBody } | function identifier ( ) { functionBody } | function ( formalParameterList ) { functionBody } | function ( ) { functionBody }
 
 primaryExpression :  this | identifier | literal | arrayLiteral | objectLiteral | arguments
 
@@ -132,7 +136,7 @@ identifierName : identifier | reservedWord
 
 reservedWord : keyword | futureReservedWord | NullLiteral | BooleanLiteral
 
-keyword : break | do | instanceof | typeof | case | else | new | var | catch | finally | return | void | continue | for | switch | while | debugger | function | this | with | default | if | throw | delete | in | try
+keyword : break | do | instanceof | typeof | case | else | new | var | catch | finally | return | void | continue | for | switch | while | debugger | function | this | with | default | if | throw | delete | in | try | get | set 
 
 futureReservedWord : class | enum | extends | super | const | export | import | implements | let | private | public | interface | package | protected | static | yield
 
@@ -140,9 +144,7 @@ NullLiteral : null
 
 BooleanLiteral : true | false
 
-numericLiteral : DecimalLiteral | HexIntegerLiteral | OctalIntegerLiteral
-
-identifier : 
+numericLiteral : DecimalLiteral | HexIntegerLiteral | OctalIntegerLiteral | BinaryLiteral
 
 StringLiteral :
 

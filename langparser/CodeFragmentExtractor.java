@@ -21,6 +21,7 @@ import java.util.Arrays;
 public class CodeFragmentExtractor {
     
     public HashMap XMLIRGenerator(String script, boolean isPrg) throws IOException {
+        long startTime = System.currentTimeMillis();
         
         final List<String> nonTermWithIdentifiers=  Arrays.asList("variableDeclaration","continueStatement","breakStatement","labelledStatement","catchProduction","functionDeclaration","formalParameterList","propertySetParameterList","getter","setter","primaryExpression");
         
@@ -42,11 +43,18 @@ public class CodeFragmentExtractor {
         final HashSet identifiers = new HashSet();
         final ArrayList nonTerminals = new ArrayList();
         ParseTreeWalker.DEFAULT.walk(new ECMAScriptBaseListener(){
-            private boolean eosInd=false;
-            private boolean isAssignmentExpression2Context = false;
+            private boolean escape=false;
             @Override
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
-                
+                if (ctx.getRuleIndex()== ECMAScriptParser.RULE_callExpression){
+                    String stmt=tokens.getText(ctx);
+                            String[] s=stmt.split("[\\W]");
+                            for (String st:s){
+                                if (st.equals("eval")){
+                                    escape=true;
+                                }
+                            }
+                }
                 java.util.List<ParseTree> childs=ctx.children;
                 boolean ind=false;
                 if (childs!=null){
@@ -65,14 +73,9 @@ public class CodeFragmentExtractor {
                         }
                     if (ind){
                         ind=false;
-                        String Stmt = null;
-                        Stmt = tokens.getText(ctx);
                         String key=ruleNames[ctx.getRuleIndex()];
-                        
-                        if(key.equals("eos")){
-                            eosInd=false;
-                        }
-                        sb.append("<"+key+">");
+                        if(!escape && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eos && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eof && ctx.getRuleIndex()!= ECMAScriptParser.RULE_emptyStatement)       
+                            sb.append("<"+key+">");
                     }
                 }
             }
@@ -97,21 +100,27 @@ public class CodeFragmentExtractor {
                                 }
                             }
                         
+                            
                         if (ind){
                             ind=false;
                             String Stmt = null;
                             Stmt = tokens.getText(ctx);
                             String key=ruleNames[ctx.getRuleIndex()];
-/*                            if (ctx instanceof ECMAScriptParser.AssignmentExpression2Context && ctx.getParent().getParent().getRuleIndex() == ECMAScriptParser.RULE_expressionStatement ){
-                                System.out.println("append");
-                                sb.append(";");    
+
+                            if(key.equals("eos")){
+                                sb.append(";");
                             }
-*/                            if(key.equals("eos")){
-                                eosInd=false;
+                            if(! escape && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eos && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eof && ctx.getRuleIndex()!= ECMAScriptParser.RULE_emptyStatement)       
+                                sb.append("</"+key+">");
+                            if (ctx.getRuleIndex()== ECMAScriptParser.RULE_callExpression ){
+                                escape=false;
                             }
-                            sb.append("</"+key+">");
                         }
                     }
+                    if (ctx.getRuleIndex()== ECMAScriptParser.RULE_debuggerStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_variableStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_expressionStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_throwStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_returnStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_breakStatement | ctx.getRuleIndex()==ECMAScriptParser.RULE_continueStatement){
+                        sb.append(";");
+                    }
+                
                 }
             }
             
@@ -123,15 +132,9 @@ public class CodeFragmentExtractor {
                         if(ctx.getSymbol().getType()==ECMAScriptParser.Identifier && !global_Objects.contains(token)){
                             identifiers.add(token);  
                         }
-                        if (!eosInd){
-                            if(!token.equals("<EOF>"))
+                        
+                        if(!token.equals("<EOF>"))
                             sb.append(xmlEscapeText(token)+" ");
-                        }
-                        else{
-                            if (!token.trim().equals(";"))
-                            sb.append(";");
-                            
-                        }
                     }
                     catch (Exception e){
                         System.out.println(e.getMessage());
@@ -148,8 +151,10 @@ public class CodeFragmentExtractor {
             
             
         }, parser.program());
+        long endTime = System.currentTimeMillis();
         hm.put("parsecode",sb.toString());
         hm.put("identifiers",new ArrayList(identifiers));
+        hm.put("exec_time",endTime-startTime);
         return hm;
     }
     

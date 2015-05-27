@@ -130,7 +130,7 @@ class Genotype(object):
                         prg_list[position] = self._converge(item)
                     elif item in ['StringLiteral','RegularExpressionLiteral']:
                         prg_list[position] = self._converge('literal')
-                    elif item in ['DecimalLiteral','HexIntegerLiteral','OctalIntegerLiteral']:
+                    elif item in ['DecimalLiteral','HexIntegerLiteral','OctalIntegerLiteral','BinaryLiteral']:
                         prg_list[position] = self._converge('numericLiteral')
                     elif item in self._keys:
                         if depth < self._max_depth:

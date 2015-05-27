@@ -217,18 +217,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitForVarStatement(@NotNull ECMAScriptParser.ForVarStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code ForInStatement}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForInStatement(@NotNull ECMAScriptParser.ForInStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForInStatement}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForInStatement(@NotNull ECMAScriptParser.ForInStatementContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code ForVarInStatement}
 	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
 	 * @param ctx the parse tree
@@ -240,150 +228,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitForVarInStatement(@NotNull ECMAScriptParser.ForVarInStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarInStatement2}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarInStatement2(@NotNull ECMAScriptParser.ForVarInStatement2Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarInStatement2}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarInStatement2(@NotNull ECMAScriptParser.ForVarInStatement2Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarInStatement3}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarInStatement3(@NotNull ECMAScriptParser.ForVarInStatement3Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarInStatement3}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarInStatement3(@NotNull ECMAScriptParser.ForVarInStatement3Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarOfStatement}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarOfStatement(@NotNull ECMAScriptParser.ForVarOfStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarOfStatement}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarOfStatement(@NotNull ECMAScriptParser.ForVarOfStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarOfStatement2}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarOfStatement2(@NotNull ECMAScriptParser.ForVarOfStatement2Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarOfStatement2}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarOfStatement2(@NotNull ECMAScriptParser.ForVarOfStatement2Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarOfStatement3}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarOfStatement3(@NotNull ECMAScriptParser.ForVarOfStatement3Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarOfStatement3}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarOfStatement3(@NotNull ECMAScriptParser.ForVarOfStatement3Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarOfStatement4}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarOfStatement4(@NotNull ECMAScriptParser.ForVarOfStatement4Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarOfStatement4}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarOfStatement4(@NotNull ECMAScriptParser.ForVarOfStatement4Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarOfStatement5}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarOfStatement5(@NotNull ECMAScriptParser.ForVarOfStatement5Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarOfStatement5}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarOfStatement5(@NotNull ECMAScriptParser.ForVarOfStatement5Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForVarOfStatement6}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForVarOfStatement6(@NotNull ECMAScriptParser.ForVarOfStatement6Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForVarOfStatement6}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForVarOfStatement6(@NotNull ECMAScriptParser.ForVarOfStatement6Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForEachStatement}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForEachStatement(@NotNull ECMAScriptParser.ForEachStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForEachStatement}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForEachStatement(@NotNull ECMAScriptParser.ForEachStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForEachStatement2}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForEachStatement2(@NotNull ECMAScriptParser.ForEachStatement2Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForEachStatement2}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForEachStatement2(@NotNull ECMAScriptParser.ForEachStatement2Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForEachStatement3}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForEachStatement3(@NotNull ECMAScriptParser.ForEachStatement3Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForEachStatement3}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForEachStatement3(@NotNull ECMAScriptParser.ForEachStatement3Context ctx);
-	/**
-	 * Enter a parse tree produced by the {@code ForEachStatement7}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterForEachStatement7(@NotNull ECMAScriptParser.ForEachStatement7Context ctx);
-	/**
-	 * Exit a parse tree produced by the {@code ForEachStatement7}
-	 * labeled alternative in {@link ECMAScriptParser#iterationStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitForEachStatement7(@NotNull ECMAScriptParser.ForEachStatement7Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#continueStatement}.
 	 * @param ctx the parse tree
@@ -713,6 +557,18 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitExpression(@NotNull ECMAScriptParser.ExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code AssignmentExpression0}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentExpression0(@NotNull ECMAScriptParser.AssignmentExpression0Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentExpression0}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentExpression0(@NotNull ECMAScriptParser.AssignmentExpression0Context ctx);
+	/**
 	 * Enter a parse tree produced by the {@code AssignmentExpression1}
 	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
 	 * @param ctx the parse tree
@@ -748,6 +604,42 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAssignmentExpression3(@NotNull ECMAScriptParser.AssignmentExpression3Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignmentExpression4}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentExpression4(@NotNull ECMAScriptParser.AssignmentExpression4Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentExpression4}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentExpression4(@NotNull ECMAScriptParser.AssignmentExpression4Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignmentExpression5}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentExpression5(@NotNull ECMAScriptParser.AssignmentExpression5Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentExpression5}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentExpression5(@NotNull ECMAScriptParser.AssignmentExpression5Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code AssignmentExpression6}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentExpression6(@NotNull ECMAScriptParser.AssignmentExpression6Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code AssignmentExpression6}
+	 * labeled alternative in {@link ECMAScriptParser#assignmentExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentExpression6(@NotNull ECMAScriptParser.AssignmentExpression6Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#conditionalExpression}.
 	 * @param ctx the parse tree
@@ -1028,14 +920,4 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEof(@NotNull ECMAScriptParser.EofContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#var}.
-	 * @param ctx the parse tree
-	 */
-	void enterVar(@NotNull ECMAScriptParser.VarContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#var}.
-	 * @param ctx the parse tree
-	 */
-	void exitVar(@NotNull ECMAScriptParser.VarContext ctx);
 }

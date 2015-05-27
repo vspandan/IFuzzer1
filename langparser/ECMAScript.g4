@@ -236,8 +236,7 @@ functionDeclaration
 ///     TryStatement
 ///     DebuggerStatement
 statement
- : labelledStatement
- | block
+ : block
  | variableStatement
  | emptyStatement
  | expressionStatement
@@ -247,14 +246,17 @@ statement
  | breakStatement
  | returnStatement
  | withStatement
+ | labelledStatement
  | switchStatement
  | throwStatement
  | tryStatement
  | debuggerStatement
+ | yieldExpression
+ | elseStatement
  ;
 
 yieldExpression
- : Yield expression? eos 
+ : Yield expression? 
  ;
 
 /// Block :
@@ -274,7 +276,7 @@ statementList
 /// VariableStatement :
 ///     var VariableDeclarationList ;
 variableStatement
- : var variableDeclarationList eos
+ : (Var | Let | Const) variableDeclarationList 
  ;
 
 /// VariableDeclarationList :
@@ -308,8 +310,8 @@ emptyStatement
 /// ExpressionStatement :
 ///     [lookahead âˆ‰ {{, function}] Expression ;
 expressionStatement
- : {!here(OpenBrace)}? expression
- | {!here(Function)}? expression
+ : {!here(OpenBrace)}? expression 
+ | {!here(Function)}? expression 
  ;
 
 /// IfStatement :
@@ -320,8 +322,8 @@ ifStatement
  ;
 
 elseStatement
- : Else statement
- ;
+: Else statement
+;
 
 /// IterationStatement :
 ///     do Statement while ( Expression );
@@ -334,42 +336,29 @@ iterationStatement
  : Do statement While '(' expression ')' eos                                                 # DoStatement
  | While '(' expression ')' statement                                                        # WhileStatement
  | For '(' expression? ';' expression? ';' expression? ')' statement         # ForStatement
- | For '(' var variableDeclarationList ';' expression? ';' expression? ')' statement # ForVarStatement
- | For '(' assignmentExpression In expression ')' statement?                                      # ForInStatement
- | For '(' var Identifier In expression ')' statement?                               # ForVarInStatement
- | For '(' var arrayLiteral In expression ')' statement?                               # ForVarInStatement2
- | For '(' var objectLiteral In expression ')' statement?                               # ForVarInStatement3
- | For '(' var Identifier Of expression ')' statement?                               # ForVarOfStatement
- | For '(' var arrayLiteral Of expression ')' statement?                               # ForVarOfStatement2
- | For '(' var objectLiteral Of expression ')' statement?                               # ForVarOfStatement3
- | For '(' Identifier Of expression ')' statement?                               # ForVarOfStatement4
- | For '(' arrayLiteral Of expression ')' statement?                               # ForVarOfStatement5
- | For '(' objectLiteral Of expression ')' statement?                               # ForVarOfStatement6
- | For 'each' '(' var Identifier In expression ')' statement?                             #ForEachStatement
- | For 'each' '(' var arrayLiteral In expression ')' statement?                             #ForEachStatement2
- | For 'each' '(' var objectLiteral In expression ')' statement?                             #ForEachStatement3
- | For 'each' '(' assignmentExpression In expression ')' statement?                            #ForEachStatement7
+ | For '(' (Var | Let | Const) variableDeclarationList ';' expression? ';' expression? ')' statement # ForVarStatement
+ | For Each? '(' (Var | Let | Const)? (variableDeclaration | leftHandSideExpression) (In | Of) expression ')' statement?                               # ForVarInStatement
  ;
 
 /// ContinueStatement :
 ///     continue ;
 ///     continue [no LineTerminator here] Identifier ;
 continueStatement
- : Continue {!here(LineTerminator)}? Identifier? eos
+ : Continue {!here(LineTerminator)}? Identifier? 
  ;
 
 /// BreakStatement :
 ///     break ;
 ///     break [no LineTerminator here] Identifier ;
 breakStatement
- : Break {!here(LineTerminator)}? Identifier? eos
+ : Break {!here(LineTerminator)}? Identifier? 
  ;
 
 /// ReturnStatement :
 ///     return ;
 ///     return [no LineTerminator here] Expression ;
 returnStatement
- : Return {!here(LineTerminator)}? expression? eos
+ : Return {!here(LineTerminator)}? expression? 
  ;
 
 /// WithStatement :
@@ -413,13 +402,13 @@ defaultClause
 /// LabelledStatement :
 ///     identifier ':' Statement
 labelledStatement
- : identifierName ':' statement
+ : identifierName ':' (statement | expression)
  ;
 
 /// ThrowStatement :
 ///     throw [no LineTerminator here] Expression ;
 throwStatement
- : Throw {!here(LineTerminator)}? expression eos
+ : Throw {!here(LineTerminator)}? expression 
  ;
 
 /// TryStatement :
@@ -449,7 +438,7 @@ finallyProduction
 /// DebuggerStatement :
 ///     debugger ;
 debuggerStatement
- : Debugger eos
+ : Debugger 
  ;
 
 /// FormalParameterList :
@@ -676,22 +665,18 @@ argumentList
  expression
  :     assignmentExpression
  |     expression ',' assignmentExpression
- | assignmentExpression For '(' Identifier In expression ')' statement?
- | assignmentExpression For '(' Identifier Of expression ')' statement?
- | assignmentExpression For 'each' '(' Identifier In expression ')' statement?
- | assignmentExpression For 'each' '(' Identifier Of expression ')' statement?
- | yieldExpression
- | expression If '(' expression ')'
- | '(' formalParameterList? ')' '=>' statement
- | '(' formalParameterList? ')' '=>' expression
- | Identifier '=>' '{' statement '}'
- | Identifier '=>' expression
- | Let '(' expression ')' statement
+ | 	   assignmentExpression For Each? '(' (Var | Let | Const)? (variableDeclaration | leftHandSideExpression)  (In | Of) expression ')' statement?
+ |	   expression If '(' expression ')'
  ;
  assignmentExpression
- :     conditionalExpression                                                # AssignmentExpression1
+ :     yieldExpression                                                      # AssignmentExpression0
+ |     conditionalExpression                                                # AssignmentExpression1
  |     leftHandSideExpression '=' assignmentExpression                      # AssignmentExpression2
  |     leftHandSideExpression assignmentOperator assignmentExpression       # AssignmentExpression3
+ |     Let '(' expression ')' statement                                     # AssignmentExpression4
+ |     '(' formalParameterList? ')' '=>' (statement | expression)           # AssignmentExpression5
+ |     Identifier '=>' ('{' statement '}' | expression)                     # AssignmentExpression6
+ 
  ;
  conditionalExpression
  :     logicalORExpression
@@ -774,8 +759,8 @@ argumentList
 callExpression  
  :     memberExpression arguments
  |     callExpression arguments
- |     callExpression {!here(LineTerminator)}? '[' expression ']'
- |     callExpression {!here(LineTerminator)}? '.' identifierName
+ |     callExpression '[' expression ']'
+ |     callExpression '.' identifierName
  ;
 newExpression  
  :     memberExpression
@@ -789,8 +774,7 @@ memberExpression
  |     New memberExpression arguments
  ;
 functionExpression  
- :     Function Identifier? '(' formalParameterList? ')' '{' functionBody '}'
- |     Function Identifier? '(' formalParameterList? ')' statement
+ :     Function Identifier? '(' formalParameterList? ')' ('{' functionBody '}'|statement)
  ;
  
 primaryExpression  
@@ -877,6 +861,7 @@ keyword
  | Of
  | Get
  | Set
+ | Each
  ;
 
 futureReservedWord
@@ -909,11 +894,6 @@ eof
  : EOF
  ;
 
-var 
- : Var
- | Let
- | Const
- ;
 
 /// RegularExpressionLiteral ::
 ///     / RegularExpressionBody / RegularExpressionFlags
@@ -1007,35 +987,36 @@ BinaryLiteral
  ;
 
 /// 7.6.1.1 Keywords
-Break      : 'break';
-Do         : 'do';
-Instanceof : 'instanceof';
-Typeof     : 'typeof';
-Case       : 'case';
-Else       : 'else';
-New        : 'new';
-Var        : 'var';
-Catch      : 'catch';
-Finally    : 'finally';
-Return     : 'return';
-Void       : 'void';
-Continue   : 'continue';
-For        : 'for';
-Switch     : 'switch';
-While      : 'while';
-Debugger   : 'debugger';
+Break      : 'break' | 'break*';
+Do         : 'do'|'do*';
+Instanceof : 'instanceof'|'instanceof*';
+Typeof     : 'typeof'|'typeof*';
+Case       : 'case'|'case*';
+Else       : 'else'|'else*';
+New        : 'new'|'new*';
+Var        : 'var'|'var*';
+Catch      : 'catch'|'catch*';
+Finally    : 'finally'|'finally*';
+Return     : 'return'|'return*';
+Void       : 'void'|'void*';
+Continue   : 'continue'|'continue*';
+For        : 'for'|'for*';
+Switch     : 'switch'|'switch*';
+While      : 'while'|'while*';
+Debugger   : 'debugger'|'debugger*';
 Function   : 'function' | 'function*';
-This       : 'this';
-With       : 'with';
-Default    : 'default';
-If         : 'if';
-Throw      : 'throw';
-Delete     : 'delete';
-In         : 'in';
-Try        : 'try';
-Of         : 'of';  
-Get        : 'get';
-Set        : 'set';
+This       : 'this'|'this*';
+With       : 'with'|'with*';
+Default    : 'default'|'default*';
+If         : 'if'|'if*';
+Throw      : 'throw'|'throw*';
+Delete     : 'delete'|'delete*';
+In         : 'in'|'in*';
+Try        : 'try'|'try*';
+Of         : 'of'|'of*';  
+Get        : 'get'|'get*';
+Set        : 'set'|'set*';
+Each       : 'each'|'each*';
 
 /// 7.6.1.2 Future Reserved Words
 Class   : 'class';
@@ -1048,15 +1029,15 @@ Import  : 'import';
 
 /// The following tokens are also considered to be FutureReservedWords 
 /// when parsing strict mode  
-Implements : {strictMode}? 'implements';
-Let        : {strictMode}? 'let';
+Implements : {strictMode}? ('implements'|'implements*');
+Let        : {strictMode}? ('let'|'let*');
 Private    : {strictMode}? 'private';
 Public     : {strictMode}? 'public';
 Interface  : {strictMode}? 'interface';
 Package    : {strictMode}? 'package';
 Protected  : {strictMode}? 'protected';
 Static     : {strictMode}? 'static';
-Yield      : {strictMode}? 'yield';
+Yield      : {strictMode}? ('yield'|'yield*');
 
 /// 7.6 Identifier Names and Identifier
 Identifier
@@ -1067,6 +1048,7 @@ Identifier
 StringLiteral
  : '"' DoubleStringCharacter* '"'
  | '\'' SingleStringCharacter* '\''
+ | '`' SingleStringCharacter* '`'
  ;
 
 WhiteSpaces

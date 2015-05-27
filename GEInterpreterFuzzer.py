@@ -4,7 +4,7 @@ from GECodeGenerator import runFuzzer
 from datetime import datetime
 from string import lower
 import sys
-from os import listdir, mkdir, makedirs,remove
+from os import listdir, mkdir, makedirs,remove,stat
 from os.path import isfile, join, isdir, exists, abspath
 from langparser.AntlrParser import *
 from Queue import Queue
@@ -13,6 +13,11 @@ from shutil import copyfile
 import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
+LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+LOG_LEVEL= config.get('Mappings', 'loglevel');
+
+import logging
+logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
 
 JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
@@ -62,8 +67,6 @@ def createFragmentPool():
                     codeFrags2[key] = codeFrags2.get(key)+codeFrags.get(key)
                 else:
                     codeFrags2[key]=codeFrags.get(key)
-        print (datetime.now())
-        print ("Finalizing: Writing to file")
         for key in codeFrags2.keys():
             fileName = abspath("database" + "/" + key)
             temp=[]
@@ -79,32 +82,23 @@ def createFragmentPool():
             f1 = open(fileName, 'wb')
             dump(temp, f1)
             f1.close()
+        print (datetime.now())
+        print ("Finalized: Writing to file")
         
     print("Considering " + str(len(fileList)) + " files for learning code fragments")
     if not exists("database"):
         makedirs("database")
-    count=0
+    count=1
     ind=True
     for f in fileList:
-        print (count)
-        print (f)
-        if count > -1 :
+        statinfo=stat(f)
+        if count > 1200 and statinfo.st_size <= 15000 :
+            print (count)
+            print (f)
             try:
-                que=Queue()
-                import threading
-                t=threading.Thread(target=extractCodeFrag,kwargs={'fileName':f,'que':que})
-                t.start()
-                t.join(10)
                 timeout=False
-                if t.isAlive():
-                    try:
-                        timeout=True
-                        raise Exception('','')
-                    except:
-                        continue
-                        a=None
+                res=extractCodeFrag(f)
                 if not timeout:
-                    res=que.get(False)
                     if res is not None:
                         codeFragPool.append(res)
                 
@@ -124,41 +118,23 @@ def main(fileList,args):
         listAllTestCasesDir(testsuite)
 
         if args[0]=='1':
-            corrKey = 'iteration1'
-            iteration=int(config.get('Mappings',corrKey))
-            targetDirectory=targetDirectoryName1+str(iteration)
+            targetDirectory=targetDirectoryName1
             shell=JS_SHELL_PATH1
             options=JS_SHELL_OPTIONS1
         elif args[0]=='2':
-            corrKey = 'iteration2'
-            iteration=int(config.get('Mappings',corrKey))
-            targetDirectory=targetDirectoryName2+str(iteration)
+            targetDirectory=targetDirectoryName2
             shell=JS_SHELL_PATH2
             options=JS_SHELL_OPTIONS2
         elif args[0]=='3':
-            corrKey = 'iteration3'
-            iteration=int(config.get('Mappings',corrKey))
-            targetDirectory=targetDirectoryName3+str(iteration)
+            targetDirectory=targetDirectoryName3
             shell=JS_SHELL_PATH3
             options=JS_SHELL_OPTIONS3
         else:
         	print "Invalid Arguments"
         	return
 
-        tempDirectoryName=tmpDirectoryName+"_"+str(args[0])+"_"+str(iteration)
-        config.set('Mappings', 'mappings.logfile','CodegenLog'+"_"+str(args[0])+"_"+str(iteration)+'.log');
+        tempDirectoryName=tmpDirectoryName+"_"+str(args[0])
 
-        with open('ConfigFile.properties','wb') as f:
-                    config.write(f)
-        config.read('ConfigFile.properties')
-        LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
-        LOG_LEVEL= config.get('Mappings', 'loglevel');
-        
-        import logging
-        logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
-
-        from GECodeGenerator import runFuzzer 
-        
         fileList2=[]
         
         if not exists(tempDirectoryName):
@@ -171,6 +147,9 @@ def main(fileList,args):
             logging.info("Moving files that has to be processed to temporary location")
             count=0
             for file in fileList:
+                statinfo = stat(file)
+                if statinfo.st_size>15000:
+                    continue
                 from subprocess import Popen,PIPE
                 exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+file
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
@@ -203,12 +182,8 @@ def main(fileList,args):
             listAllTestCasesDir(tempDirectoryName)
             fileList2=fileList[:]
         
-        status=runFuzzer(fileList2,targetDirectory, shell,options,EXCLUDE_FILES,INCLUDE_NT,int(args[0]))
-        if status:
-            status=False
-            config.set('Mappings', corrKey, iteration+1);
-            with open('ConfigFile.properties','wb') as f:
-                config.write(f)
+        from GECodeGenerator import runFuzzer         
+        runFuzzer(fileList2,targetDirectory, shell,options,EXCLUDE_FILES,INCLUDE_NT,int(args[0]))
     finally:
         pass
 

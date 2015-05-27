@@ -57,13 +57,11 @@ public final class Builder {
             lexer.removeErrorListeners();
             
             this.parser = new ECMAScriptParser(new CommonTokenStream(lexer));
-            this.parser.removeErrorListeners();
             
         }
 
         public Parser(ECMAScriptLexer lexer) {
             this.parser = new ECMAScriptParser(new CommonTokenStream(lexer));
-            this.parser.removeErrorListeners();
             
         }
 

@@ -257,18 +257,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterForInStatement(@NotNull ECMAScriptParser.ForInStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForInStatement(@NotNull ECMAScriptParser.ForInStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterForVarInStatement(@NotNull ECMAScriptParser.ForVarInStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -276,150 +264,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitForVarInStatement(@NotNull ECMAScriptParser.ForVarInStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarInStatement2(@NotNull ECMAScriptParser.ForVarInStatement2Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarInStatement2(@NotNull ECMAScriptParser.ForVarInStatement2Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarInStatement3(@NotNull ECMAScriptParser.ForVarInStatement3Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarInStatement3(@NotNull ECMAScriptParser.ForVarInStatement3Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarOfStatement(@NotNull ECMAScriptParser.ForVarOfStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarOfStatement(@NotNull ECMAScriptParser.ForVarOfStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarOfStatement2(@NotNull ECMAScriptParser.ForVarOfStatement2Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarOfStatement2(@NotNull ECMAScriptParser.ForVarOfStatement2Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarOfStatement3(@NotNull ECMAScriptParser.ForVarOfStatement3Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarOfStatement3(@NotNull ECMAScriptParser.ForVarOfStatement3Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarOfStatement4(@NotNull ECMAScriptParser.ForVarOfStatement4Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarOfStatement4(@NotNull ECMAScriptParser.ForVarOfStatement4Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarOfStatement5(@NotNull ECMAScriptParser.ForVarOfStatement5Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarOfStatement5(@NotNull ECMAScriptParser.ForVarOfStatement5Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForVarOfStatement6(@NotNull ECMAScriptParser.ForVarOfStatement6Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForVarOfStatement6(@NotNull ECMAScriptParser.ForVarOfStatement6Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForEachStatement(@NotNull ECMAScriptParser.ForEachStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForEachStatement(@NotNull ECMAScriptParser.ForEachStatementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForEachStatement2(@NotNull ECMAScriptParser.ForEachStatement2Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForEachStatement2(@NotNull ECMAScriptParser.ForEachStatement2Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForEachStatement3(@NotNull ECMAScriptParser.ForEachStatement3Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForEachStatement3(@NotNull ECMAScriptParser.ForEachStatement3Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterForEachStatement7(@NotNull ECMAScriptParser.ForEachStatement7Context ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitForEachStatement7(@NotNull ECMAScriptParser.ForEachStatement7Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -809,6 +653,18 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAssignmentExpression0(@NotNull ECMAScriptParser.AssignmentExpression0Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignmentExpression0(@NotNull ECMAScriptParser.AssignmentExpression0Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAssignmentExpression1(@NotNull ECMAScriptParser.AssignmentExpression1Context ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -840,6 +696,42 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAssignmentExpression3(@NotNull ECMAScriptParser.AssignmentExpression3Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssignmentExpression4(@NotNull ECMAScriptParser.AssignmentExpression4Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignmentExpression4(@NotNull ECMAScriptParser.AssignmentExpression4Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssignmentExpression5(@NotNull ECMAScriptParser.AssignmentExpression5Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignmentExpression5(@NotNull ECMAScriptParser.AssignmentExpression5Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAssignmentExpression6(@NotNull ECMAScriptParser.AssignmentExpression6Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAssignmentExpression6(@NotNull ECMAScriptParser.AssignmentExpression6Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -1176,18 +1068,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEof(@NotNull ECMAScriptParser.EofContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterVar(@NotNull ECMAScriptParser.VarContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitVar(@NotNull ECMAScriptParser.VarContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

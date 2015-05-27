@@ -3,7 +3,7 @@ from copy import deepcopy
 from datetime import datetime
 from os import path,listdir,remove
 from random import choice, randint, random
-from re import sub,split
+from re import sub,split,findall
 from subprocess import Popen,PIPE
 from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
@@ -96,8 +96,8 @@ class GrammaticalEvolution(object):
     def set_generative_mutation_rate(self,rate):
         self._generative_mutation_rate=rate
 
-	def set_multiple_rate(self, rate):
-		self._multiple_rate = rate
+    def set_multiple_rate(self, rate):
+        self._multiple_rate = rate
 
     def set_crossover_count(self, count):
         self.crossoverCount=count
@@ -349,15 +349,15 @@ class GrammaticalEvolution(object):
         if self._generation > 0:
             program=self.de_EscapeText(gene,program)
             try:
-            	prg=beautify(program)
-            	program=prg
+                prg=beautify(program)
+                program=prg
             except:
-            	pass
+                pass
             gene.local_bnf['program']=program
         prglen=len(program)
         if prglen > 0:
             try:
-            	f=NamedTemporaryFile(delete=False)
+                f=NamedTemporaryFile(delete=False)
                 f.close()
                 if self.interpreter_Options is not None:
                     option = choice(self.interpreter_Options)
@@ -369,7 +369,6 @@ class GrammaticalEvolution(object):
                     tempFileObj=open(f.name,"w")
                     tempFileObj.write(program)
                     tempFileObj.close()
-
                     timedout=False
                     l=[None,None]        
                     t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option})
@@ -423,6 +422,7 @@ class GrammaticalEvolution(object):
                     if (rc < 0 or rc > 1) and rc != -6 :
                         program+="\n//"+option + "\n//" + err.replace("\n"," ")
                         logging.info("Crash:")
+                        logging.info("TimeStamp:" + str(datetime.now()))
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
                         logging.info(program)
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
@@ -448,9 +448,10 @@ class GrammaticalEvolution(object):
                                     gene._fitness =  score - (self.parsimony_constant * gene.prgLength )
 
                 else:
-                    if rc and rc != 3 :
+                    if rc != 0 and rc != 3:
                         program+="\n//"+option + "\n//" + err.replace("\n"," ")
                         logging.info("Crash:")
+                        logging.info("TimeStamp:" + str(datetime.now()))
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
                         logging.info(program)
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
@@ -464,12 +465,15 @@ class GrammaticalEvolution(object):
                         f1.write(program)
                         f1.close
                     else:
-                        if rc != 3 :
+                        if rc!=3:
                             score=self.computeSubScore(gene,program,err)
                             if score is not None:
                                 if self._generation==0:
                                     gene._fitness =  score
                                 else:
+                                    if prgLength is not None:
+                                        if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
+                                            return
                                     gene._fitness =  score - (self.parsimony_constant * gene.prgLength )
             except:
                 pass
@@ -495,51 +499,44 @@ class GrammaticalEvolution(object):
     
     def computeSubScore (self, gene, program,err):
         try:
+            score=0.0
             logging.info("Inside computeSubScore method")
-            # def handler(signum, frame):
-            #         self.function_break=True
-
-            # signal.signal(signal.SIGALRM, handler)
-            # if self._generation == 0:
-            #     signal.alarm(6*self.FUNCTION_EXEC_TIMEOUT)
-            # else:
-            #     signal.alarm(3*self.FUNCTION_EXEC_TIMEOUT)
-
-            # if self.function_break:
-            #     self.function_break=False
-            #     return None
             ti=time()
-            incompl,dummy=parseTree(program,True)
+            incompl,dummy,exec_time=parseTree(program,True)
+            res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
+            if len(res) > 0:
+                print "computeSubScore-rejection"
+                return None
             logging.info("Score Calc: Invoked parser for " +str(time()-ti) +" seconds")
-            if self._generation==0:
-                gene.prgLength=len(extractNonTerminal(incompl,[]))
+            gene.prgLength=len(extractNonTerminal(incompl,[]))
+            score= -float(exec_time)/gene.prgLength
             a,b,c,d=CountNestedStructures(incompl)
             logging.info("Completed - Score Calc in " +str(time()-ti) + " seconds")
             
             for temp in a:
                 if temp>0:
                     temp=temp-1
-                gene.score += temp*1.0
+                score += temp*1.0
             for temp in b:
                 if temp>0:
                     temp=temp-1
-                gene.score += temp*1.0
+                score += temp*1.0
             for temp in c:
                 if temp>0:
                     temp=temp-1
-                gene.score += temp*1.0
+                score += temp*1.0
             for temp in d:
                 if temp>0:
                     temp=temp-1
-                gene.score += temp*1
+                score += temp*1
             if "warning" in err:
                 logging.info("warning found: "+err)
-                gene.score+=10
+                score+=10
             logging.info("exiting computeSubScore method")
         except:
             return None
         finally:
-            return gene.score
+            return score
 
     def _perform_endcycle(self):
         self._pre_selected = self._evaluate_fitness(True)
@@ -607,10 +604,6 @@ class GrammaticalEvolution(object):
             for gene in self.population:
                 if gene._fitness!=self._fitness_fail:
                     flist1.append(deepcopy(gene))
-        # else:
-        #     for gene in self.population:
-        #         if gene.get_fitness()!=self._fitness_fail:
-        #             flist1.append(deepcopy(gene))
         return flist1
 
     def _perform_crossovers(self, flist):
@@ -639,17 +632,16 @@ class GrammaticalEvolution(object):
             if length % 2 == 1:
                 length -= 1
             if length >= 2:
-                while True:
+                while len(flist) >=2 :
                 # for i in xrange(0, length, 2):
                     # parent1 = flist[i]
                     # flist.remove(parent1)
                     # parent2 = flist[i+1]
                     # flist.remove(parent2)
-
                     parent1 = choice(flist)
                     parent2 = choice(flist)
-                    if (parent1 == parent2) or  (parent1._fitness == self._fitness_fail) or (parent2._fitness_fail==self._fitness_fail):
-                        continue
+                    flist.remove(parent1)
+                    flist.remove(parent2)
 
                     if randint(0, 1):
                             child1 = (parent1)
@@ -667,6 +659,10 @@ class GrammaticalEvolution(object):
             
                     ti1=time()
                     child1ParseTree,child1._identifiers=parseTree(child1Prg,True)
+                    res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child1ParseTree)
+                    if len(res) > 0:
+                        print "crossover1-rejection"
+                        continue
                     non_term1=extractNonTerminal(child1ParseTree,[])
                     logging.info("Invoked parser - Crossover-1 for " +str(time()-ti1) +" seconds")
                     child1.prgLength=len(non_term1)
@@ -674,9 +670,14 @@ class GrammaticalEvolution(object):
                     
                     ti2=time()
                     child2ParseTree,child2._identifiers=parseTree(child2Prg,True)
+                    res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child2ParseTree)
+                    if len(res) > 0:
+                        print "crossover2-rejection"
+                        continue
                     non_term2=extractNonTerminal(child2ParseTree,[])
                     child2.prgLength=len(non_term2)
                     logging.info("Invoked parser - Crossover-2 for " +str(time()-ti2)+" seconds")
+
                     
                     if self.nT_Invld_Gen_Process is not None:
                         commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
@@ -738,19 +739,6 @@ class GrammaticalEvolution(object):
                             logging.info("Crossover-Success")
                             break;
                         else:
-                            # print "++++++++++++++++"
-                            # print child1Prg
-                            # print "****************"
-                            # print child1.get_program()
-                            # print "----------------"
-                            # print child1.err
-                            # print "++++++++++++++++"
-                            # print child2Prg
-                            # print "****************"
-                            # print child2.get_program()
-                            # print "----------------"
-                            # print child2.err
-                            # print "++++++++++++++++"
                             logging.info("Crossover-Failed")
                             logging.debug(child1.err)
                             logging.debug(child2.err)
@@ -760,8 +748,6 @@ class GrammaticalEvolution(object):
                         return child_list
             
         except:
-            pass
-        finally:
             logging.info("Crossover Completed in "+str(time()-ti))
             return child_list
 
@@ -782,17 +768,6 @@ class GrammaticalEvolution(object):
 
     def mutate(self,gene):
         try:
-            # def handler(signum, frame):
-            #     raise Exception('Mutation Time out')
-
-            
-            # signal.signal(signal.SIGALRM, handler)
-            # signal.alarm(self.FUNCTION_EXEC_TIMEOUT)
-            
-            # if (self.mutation_break):
-            #     self.mutation_break=False
-            #     return None
-
             pr=gene.local_bnf['program']
             
             if round(random(),1) < self._mutation_rate :
@@ -802,6 +777,10 @@ class GrammaticalEvolution(object):
                 
                 ti1=time()
                 incompl, gene._identifiers = parseTree(gene.get_program(),True)
+                res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
+                if len(res) > 0:
+                    print "mutation-rejection"
+                    return None
                 non_TerminalsList=extractNonTerminal(incompl,[])
                 logging.info("Invoked parser - Mutation-1 for " +str(time()-ti1)+" seconds")
                 count=1
@@ -849,13 +828,6 @@ class GrammaticalEvolution(object):
                             logging.info("Mutation-Success")
                             break
                         else:
-                            # print "++++++++++++++++"
-                            # print pr
-                            # print "****************"
-                            # print gene.get_program()
-                            # print "----------------"
-                            # print gene.err
-                            # print "++++++++++++++++"
                             logging.info("Mutation-Failed")
                             logging.debug(selectedNt)
                             logging.debug(dummy)
@@ -897,42 +869,28 @@ class GrammaticalEvolution(object):
             else:
                 break
         logging.info("replacement done")
-        # for rsel in self.replacement_selections:
-        #     rsel.set_fitness_list(self.fitness_list)
-
-        #     for i in rsel.select():
-        #         replaced_g = self.population[i]
-        #         if position < len(fitness_pool):
-        #             newGene = fitness_pool[position]
-        #             newGene.member_no = replaced_g.member_no
-        #             newGene._generation = self._generation + 1
-        #             newGene.local_bnf['<member_no>'] = [newGene.member_no]
-        #             self.population[newGene.member_no] = newGene
-        #             position += 1
-        #         else:
-        #             break
 
     def de_EscapeText(self, gene, string):
         self.identifiers_mapping={}
-    	indicator=False
+        indicator=False
         if len(gene._identifiers)> 0:
             indicator=True
-    	wordList=split(VARIABLE_FORMAT, string)
+        wordList=split(VARIABLE_FORMAT, string)
         modifiedWordList=[]
         for word in wordList:
-    		if "&lt" in word:
-    			word=word.replace("&lt;","<")
-    		elif "&gt" in word:
-    			word=word.replace("&lt;",">")
-    		elif "&quot" in word:
-    			word=word.replace("&lt;","\"")
-    		elif "&amp" in word:
-    			word=word.replace("&lt;","&")
-    		elif "&apos" in word:
-    			word=word.replace("&apos;","\\")
-    		elif "&pipe" in word:
-    			word=word.replace("#pipe;","|")
-    		elif "_id_" in word:
+            if "&lt" in word:
+                word=word.replace("&lt;","<")
+            elif "&gt" in word:
+                word=word.replace("&lt;",">")
+            elif "&quot" in word:
+                word=word.replace("&lt;","\"")
+            elif "&amp" in word:
+                word=word.replace("&lt;","&")
+            elif "&apos" in word:
+                word=word.replace("&apos;","\\")
+            elif "&pipe" in word:
+                word=word.replace("#pipe;","|")
+            elif "_id_" in word:
                     if indicator:
                         if self.identifiers_mapping.has_key(word):
                             word=self.identifiers_mapping[word]
@@ -942,7 +900,17 @@ class GrammaticalEvolution(object):
                             word=temp
                     else:
                         word='a'
-    		modifiedWordList.append(word)
+            elif "timeout" in word:
+                    if indicator:
+                        if self.identifiers_mapping.has_key(word):
+                            word=self.identifiers_mapping[word]
+                        else:
+                            temp=choice(gene._identifiers).replace("timeout","")
+                            self.identifiers_mapping[word]=temp
+                            word=temp
+                    else:
+                        word='a'
+            modifiedWordList.append(word)
         return ''.join(modifiedWordList)
 
     def _continue_processing(self):
@@ -956,6 +924,10 @@ class GrammaticalEvolution(object):
         logging.info(self.interpreter_Shell)
         logging.info(fitl)
         s=set()
+        for i in range(len(fitl)):
+            s.add(fitl[i][0])
+        logging.info("Unique: "+str(len(s)) +" Genotype Objects based on Fitness")
+        
         
         
 
