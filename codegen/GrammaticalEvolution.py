@@ -384,6 +384,7 @@ class GrammaticalEvolution(object):
                     else:
                         (out,err,rc)=l[1]
                         gene.err=err
+                        gene.rc=rc
                         # Eliminating reference error; JS support hostilling
                         if 'ReferenceError:' in err:
                             if self._generation==0:
@@ -465,7 +466,7 @@ class GrammaticalEvolution(object):
                         f1.write(program)
                         f1.close
                     else:
-                        if rc!=3:
+                        if rc!=3 :
                             score=self.computeSubScore(gene,program,err)
                             if score is not None:
                                 if self._generation==0:
@@ -611,17 +612,7 @@ class GrammaticalEvolution(object):
         ti=time()
         child_list = []
         try:
-            #this kills entire crossover process; hope it doesnt have much impact
-            def handler(signum, frame):
-                self.crossover_break=True
-
-            signal.signal(signal.SIGALRM, handler)
-            signal.alarm(len(flist)*self.FUNCTION_EXEC_TIMEOUT)
-
-            if self.crossover_break:
-                self.crossover_break=False
-                return child_list
-
+            
             logging.debug("crossover started")
             length = int(round(self._crossover_rate * float(self._population_size)))
             """
@@ -658,7 +649,7 @@ class GrammaticalEvolution(object):
         
             
                     ti1=time()
-                    child1ParseTree,child1._identifiers=parseTree(child1Prg,True)
+                    child1ParseTree,child1._identifiers,exec_time=parseTree(child1Prg,True)
                     res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child1ParseTree)
                     if len(res) > 0:
                         print "crossover1-rejection"
@@ -669,7 +660,7 @@ class GrammaticalEvolution(object):
 
                     
                     ti2=time()
-                    child2ParseTree,child2._identifiers=parseTree(child2Prg,True)
+                    child2ParseTree,child2._identifiers,exec_time=parseTree(child2Prg,True)
                     res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child2ParseTree)
                     if len(res) > 0:
                         print "crossover2-rejection"
@@ -739,9 +730,13 @@ class GrammaticalEvolution(object):
                             logging.info("Crossover-Success")
                             break;
                         else:
+                            child1.local_bnf['program']=child1Prg
+                            child2.local_bnf['program']=child2Prg
                             logging.info("Crossover-Failed")
                             logging.debug(child1.err)
+                            logging.debug(child1.rc)
                             logging.debug(child2.err)
+                            logging.debug(child2.rc)
                         logging.debug(subString1)
                         logging.debug(subString2)
                     if len(child_list) == length:
@@ -776,7 +771,7 @@ class GrammaticalEvolution(object):
                 shrink=False
                 
                 ti1=time()
-                incompl, gene._identifiers = parseTree(gene.get_program(),True)
+                incompl, gene._identifiers,exec_time = parseTree(gene.get_program(),True)
                 res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
                 if len(res) > 0:
                     print "mutation-rejection"
@@ -828,12 +823,14 @@ class GrammaticalEvolution(object):
                             logging.info("Mutation-Success")
                             break
                         else:
+                            gene.local_bnf['program']=pr
                             logging.info("Mutation-Failed")
                             logging.debug(selectedNt)
                             logging.debug(dummy)
                             logging.debug(gene.local_bnf['CodeFrag'])
                             logging.debug(pr)
                             logging.debug (gene.err)
+                            logging.debug(gene.rc)
         except:
             pass
         finally:
@@ -928,21 +925,10 @@ class GrammaticalEvolution(object):
             s.add(fitl[i][0])
         logging.info("Unique: "+str(len(s)) +" Genotype Objects based on Fitness")
         
-        
-        
-
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:
                 return False
         if fitl.get_target_value() is not None:
-            if fitl.get_fitness_type() == MAX:
-                if fitl.best_value() >= fitl.get_target_value():
+                if fitl.best_value() == fitl.get_target_value():
                     return False
-            elif fitl.get_fitness_type() == MIN:
-                if fitl.best_value() <= fitl.get_target_value():
-                    return False
-            elif fitl.get_fitness_type() == CENTER:
-                if fitl.best_value() <= fitl.get_target_value():
-                    return False
-
         return status

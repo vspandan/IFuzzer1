@@ -107,11 +107,12 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
         threadList=[]
         totalTempList=[]
         while True:
+            TestCases1=TestCases[:]
             tempList=[]    
             while len(tempList)<Population_size:
-                t=choice(TestCases)
+                t=choice(TestCases1)
                 tempList.append(t)
-                TestCases.remove(t)
+                TestCases1.remove(t)
             logging.debug(tempList)
             process(tempList)
             return False

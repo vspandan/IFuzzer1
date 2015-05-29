@@ -92,7 +92,7 @@ def createFragmentPool():
     ind=True
     for f in fileList:
         statinfo=stat(f)
-        if count > 1200 and statinfo.st_size <= 15000 :
+        if count > 0 and statinfo.st_size <= 15000 :
             print (count)
             print (f)
             try:
@@ -146,12 +146,18 @@ def main(fileList,args):
             logging.info(datetime.now())
             logging.info("Moving files that has to be processed to temporary location")
             count=0
-            for file in fileList:
+            f=open("parserescapelist","r")
+            escapeList=[]
+            for line in f:
+            	escapeList.append(line)
+            print escapeList
+            raw_input()
+            for f in fileList:
                 statinfo = stat(file)
-                if statinfo.st_size>15000:
+                if statinfo.st_size>15000 and f in escapeList:
                     continue
                 from subprocess import Popen,PIPE
-                exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+file
+                exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+f
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
                 (out,err)=p.communicate()
                 rc= p.returncode
