@@ -150,11 +150,9 @@ def main(fileList,args):
             escapeList=[]
             for line in f:
             	escapeList.append(line)
-            print escapeList
-            raw_input()
             for f in fileList:
-                statinfo = stat(file)
-                if statinfo.st_size>15000 and f in escapeList:
+                statinfo = stat(f)
+                if statinfo.st_size>15000 or f in escapeList:
                     continue
                 from subprocess import Popen,PIPE
                 exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+f
@@ -179,7 +177,7 @@ def main(fileList,args):
                 else:
                     newfname=tempDirectoryName+"/"+str(count)+".js"
                 count+=1
-                copyfile(file, newfname)
+                copyfile(f, newfname)
                 fileList2.append(newfname)
             logging.info("Moved files that has to be processed to temporary location")
         else:
