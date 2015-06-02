@@ -43,7 +43,7 @@ public class CodeFragmentExtractor {
         final HashSet identifiers = new HashSet();
         final ArrayList nonTerminals = new ArrayList();
         ParseTreeWalker.DEFAULT.walk(new ECMAScriptBaseListener(){
-            private boolean escape=false;
+            private boolean escape=true;
             @Override
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
                 if (ctx.getRuleIndex()== ECMAScriptParser.RULE_callExpression){
@@ -56,7 +56,7 @@ public class CodeFragmentExtractor {
                             }
                 }
                 java.util.List<ParseTree> childs=ctx.children;
-                boolean ind=false;
+                boolean ind=true;
                 if (childs!=null){
                     
                     if (childs.size()>1){
@@ -72,9 +72,8 @@ public class CodeFragmentExtractor {
                             }
                         }
                     if (ind){
-                        ind=false;
+                        ind=true;
                         String key=ruleNames[ctx.getRuleIndex()];
-                        if(!escape && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eos && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eof && ctx.getRuleIndex()!= ECMAScriptParser.RULE_emptyStatement)       
                             sb.append("<"+key+">");
                     }
                 }
@@ -84,7 +83,7 @@ public class CodeFragmentExtractor {
             public void exitEveryRule(@NotNull ParserRuleContext ctx) {
                 if(ctx != null) {
                     java.util.List<ParseTree> childs=ctx.children;
-                    boolean ind=false;
+                    boolean ind=true;
                     if (childs!=null){
                         if (childs.size()>1){
                             ind = true;
@@ -102,18 +101,17 @@ public class CodeFragmentExtractor {
                         
                             
                         if (ind){
-                            ind=false;
+                            ind=true;
                             String Stmt = null;
                             Stmt = tokens.getText(ctx);
                             String key=ruleNames[ctx.getRuleIndex()];
 
-                            if(key.equals("eos")){
+                            /*if(key.equals("eos")){
                                 sb.append(";");
-                            }
-                            if(! escape && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eos && ctx.getRuleIndex()!= ECMAScriptParser.RULE_eof && ctx.getRuleIndex()!= ECMAScriptParser.RULE_emptyStatement)       
+                            }*/
                                 sb.append("</"+key+">");
                             if (ctx.getRuleIndex()== ECMAScriptParser.RULE_callExpression ){
-                                escape=false;
+                                escape=true;
                             }
                         }
                     }
@@ -129,7 +127,7 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                     try{
                         String token=ctx.getText();
-                        if(ctx.getSymbol().getType()==ECMAScriptParser.Identifier && !global_Objects.contains(token)){
+                        if(ctx.getSymbol().getType()==ECMAScriptParser.IdentifierName && !global_Objects.contains(token)){
                             identifiers.add(token);  
                         }
                         
@@ -192,7 +190,7 @@ public class CodeFragmentExtractor {
                 try{
                     if(ctx != null) {
                         java.util.List<ParseTree> childs=ctx.children;
-                        boolean ind=false;
+                        boolean ind=true;
                         if (childs.size()>1){
                             ind = true;
                         }
@@ -208,14 +206,14 @@ public class CodeFragmentExtractor {
                             }
                         
                         if (ind){
-                            ind=false;
+                            ind=true;
                             String Stmt = "";
                             /*Stmt = tokens.getText(ctx);*/
                             int start = ctx.start.getTokenIndex();
                             int stop = ctx.stop.getTokenIndex();
                             for (int i = start; i <= stop; i++) {
                                 String tokenText=tokens.get(i).getText();
-                                if (tokens.get(i).getType()==ECMAScriptParser.Identifier && !global_Objects.contains(tokenText))
+                                if (tokens.get(i).getType()==ECMAScriptParser.IdentifierName && !global_Objects.contains(tokenText))
                                     tokenText = "_id_"+tokenText;
                                 Stmt += tokenText;
                             }

@@ -20,27 +20,15 @@ import logging
 logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
 
-JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
-JS_SHELL_PATH3="/home/spandan/google/v8/out/native/shell"
-
-JS_SHELL_OPTIONS1=[' -w -f ']
-# JS_SHELL_OPTIONS1=[' -w -f ', ' -w -Z 1 -f',' -w -Z 0 -f', ' -w -j -f',' -w -m -f',' -w -p -f',' -w -m -a -f']
-JS_SHELL_OPTIONS2=[' -w --fuzzing-safe  -f']
 JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f',         ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
-JS_SHELL_OPTIONS3=None
-
-testsuite="testsamples"
-targetDirectoryName1="generatedTestCases_js18_"
-targetDirectoryName3="generatedTestCases_v8_"
+testsuite="tests/tests/"
 targetDirectoryName2="generatedTestCases_js31_"
-
 
 tmpDirectoryName="tmp"
 
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js', 'user.js', 'sta.js','test262-browser.js', 'test262-shell.js','test402-browser.js', 'test402-shell.js', 'testBuiltInObject.js', 'testIntl.js','js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','js'))
 
-INCLUDE_NT=['ifStatement', 'iterationStatement', 'labelledStatement', 'throwStatement', 'functionDeclaration', 'arrayLiteral', 'propertyAssignment', 'propertyName', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'callExpression', 'functionExpression', 'assignmentOperator']
 INCLUDE_NT=None
 
 fileList = []
@@ -117,24 +105,10 @@ def main(fileList,args):
         status=False
         listAllTestCasesDir(testsuite)
 
-        if args[0]=='1':
-            targetDirectory=targetDirectoryName1
-            shell=JS_SHELL_PATH1
-            options=JS_SHELL_OPTIONS1
-        elif args[0]=='2':
-            targetDirectory=targetDirectoryName2
-            shell=JS_SHELL_PATH2
-            options=JS_SHELL_OPTIONS2
-        elif args[0]=='3':
-            targetDirectory=targetDirectoryName3
-            shell=JS_SHELL_PATH3
-            options=JS_SHELL_OPTIONS3
-        else:
-        	print "Invalid Arguments"
-        	return
-
-        tempDirectoryName=tmpDirectoryName+"_"+str(args[0])
-
+        targetDirectory=targetDirectoryName2
+        shell=JS_SHELL_PATH2
+        options=JS_SHELL_OPTIONS2
+        tempDirectoryName=tmpDirectoryName+"_2"
         fileList2=[]
         
         if not exists(tempDirectoryName):
@@ -146,14 +120,8 @@ def main(fileList,args):
             logging.info(datetime.now())
             logging.info("Moving files that has to be processed to temporary location")
             count=0
-            f=open("parserescapelist","r")
-            escapeList=[]
-            for line in f:
-            	escapeList.append(line)
             for f in fileList:
                 statinfo = stat(f)
-                if statinfo.st_size>15000 or f in escapeList:
-                    continue
                 from subprocess import Popen,PIPE
                 exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+f
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
@@ -164,7 +132,7 @@ def main(fileList,args):
                 elif rc!=0 :
                     newfname=tempDirectoryName+"/"+str(count)+"_.js"
                     temp=[]
-                    errfile=config.get('Mappings','errlog')+str(args[0])
+                    errfile=config.get('Mappings','errlog')
                     if isfile(errfile):
                         f2 = open(errfile, 'rb')
                         temp=load(f2)
@@ -187,7 +155,7 @@ def main(fileList,args):
             fileList2=fileList[:]
         
         from GECodeGenerator import runFuzzer         
-        runFuzzer(fileList2,targetDirectory, shell,options,EXCLUDE_FILES,INCLUDE_NT,int(args[0]))
+        runFuzzer(fileList2,targetDirectory, shell,options,EXCLUDE_FILES,INCLUDE_NT,2)
     finally:
         pass
 

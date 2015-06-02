@@ -1,28 +1,18 @@
 if [ "$1" == "-c" ]; then
 	cd langparser
 	java -jar antlr-4.5-rc-2-complete.jar -package langparser ECMAScript.g4
-	javac -cp "../lib/*" *.java
+	javac -cp "antlr-4.5-rc-2-complete.jar" *.java
 	cd ..
 	jar cvfm ECMAScript.jar langparser/Manifest.txt langparser/*.class langparser/antlr-4.5-rc-2-complete.jar
 	mv ECMAScript.jar langparser/
 	rm -rf langparser/*.class
 elif [ "$1" == "-r" ]; then
-	if [ "$2" == "js18" ]; then
-		while true
-		do
-			jython -J-Xmx2000m GEInterpreterFuzzer.py 1
-			echo "Spidermonkey-1.8.5"
-		done
-	elif [ "$2" == "js31" ]; then
+	if [ "$2" == "js31" ]; then
 		while true
 		do
 			jython -J-Xmx2000m GEInterpreterFuzzer.py 2
 			echo "Spidermonkey-31"
-		done
-	elif [ "$2" == "v8" ]; then
-		while true
-		do
-			jython -J-Xmx1024m GEInterpreterFuzzer.py 3
+			break
 		done
 	elif [ "$2" == "gen" ]; then
 		jython GEInterpreterFuzzer.py 0
