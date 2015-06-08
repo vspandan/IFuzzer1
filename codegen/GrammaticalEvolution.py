@@ -131,6 +131,7 @@ class GrammaticalEvolution(object):
             for fileName in fileList:
                 f=open(path.abspath(fileName),"r")
                 self.initial_Population.append(f.read())
+                remove(fileName)
 
     def set_population_size(self, size):
         size = long(size)
@@ -276,7 +277,7 @@ class GrammaticalEvolution(object):
             if self._generation == 0 :
                 logging.debug("evaluating" + str(gene.member_no))
                 logging.debug(gene.local_bnf["program"])
-                gene.score=0
+                gene.score=10
                 self.compute_fitness(gene)
             self.population[gene.member_no]=gene
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
@@ -423,12 +424,12 @@ class GrammaticalEvolution(object):
                     if (rc < 0 or rc > 1) and rc != -6 :
                         program+="\n//"+option + "\n//" + err.replace("\n"," ")
                         logging.info("Crash:")
+                        logging.info("Interpreter:"+self.interpreter_Shell)
+                        logging.info("Error:"+err)
                         logging.info("TimeStamp:" + str(datetime.now()))
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
                         logging.info(program)
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
-                        logging.info("error:"+err)
-                        logging.info("interpreter:"+self.interpreter_Shell)
                         FILECOUNT = len(listdir(self.targetDirectory))+1 
                         if gene._generation!=0:
                             gene._fitness=self._fitness_fail
@@ -438,44 +439,43 @@ class GrammaticalEvolution(object):
                         f1.close
                     else:
                         if rc == 0 :
-                            score=self.computeSubScore(gene,program,err)
-                            if score is not None:
+                            gene.score += self.computeSubScore(gene,program,err)
+                            if gene.score is not None:
                                 if self._generation==0:
-                                    gene._fitness =  score
+                                    gene._fitness =  gene.score
                                 else:
                                     if prgLength is not None:
                                         if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
                                             return
-                                    gene._fitness =  score - (self.parsimony_constant * gene.prgLength )
+                                    gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
 
                 else:
                     if rc != 0 and rc != 3:
                         program+="\n//"+option + "\n//" + err.replace("\n"," ")
                         logging.info("Crash:")
+                        logging.info("Interpreter:"+self.interpreter_Shell)
+                        logging.info("Error:"+err)
                         logging.info("TimeStamp:" + str(datetime.now()))
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
                         logging.info(program)
                         logging.info("++++++++++++++++++++++++++++++++++++++++")
-                        logging.info("error:"+err)
-                        logging.info("interpreter:"+self.interpreter_Shell)
                         FILECOUNT = len(listdir(self.targetDirectory))+1 
-                        if gene._generation!=0:
-                            gene._fitness=self._fitness_fail
+                        gene._fitness=self._fitness_fail
                         newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
                         f1=open(newFile,'w')
                         f1.write(program)
                         f1.close
                     else:
                         if rc!=3 :
-                            score=self.computeSubScore(gene,program,err)
-                            if score is not None:
+                            gene.score=self.computeSubScore(gene,program,err)
+                            if gene.score is not None:
                                 if self._generation==0:
-                                    gene._fitness =  score
+                                    gene._fitness =  gene.score
                                 else:
                                     if prgLength is not None:
                                         if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
                                             return
-                                    gene._fitness =  score - (self.parsimony_constant * gene.prgLength )
+                                    gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
             except:
                 pass
             finally:
@@ -488,7 +488,7 @@ class GrammaticalEvolution(object):
 
     def run_cmd(self, fi,l,option):
         try:
-            exec_cmd=self.interpreter_Shell+" "+option+" shell.js "+ fi
+            exec_cmd=self.interpreter_Shell+" "+option+" shell.js " + fi
             p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
@@ -542,8 +542,8 @@ class GrammaticalEvolution(object):
     def _perform_endcycle(self):
         self._pre_selected = self._evaluate_fitness(True)
         childList=[]
-        for gene in self._pre_selected:
-            childList.append(deepcopy(gene))
+        # for gene in self._pre_selected:
+        #     childList.append(deepcopy(gene))
         remainingPopCount = self._population_size - len(self._pre_selected)
         while len(childList) < remainingPopCount:
             if round(random(),1) <= 0.7:
@@ -556,8 +556,8 @@ class GrammaticalEvolution(object):
                 logging.info("performing crossover and mutation")
                 fitness_pool = self._evaluate_fitness(False,limitSelection)
                 child_list = self._perform_crossovers(fitness_pool)
-                childList.extend(child_list)   
-
+                if child_list is not None:
+                	childList.extend(child_list)   
                 fitness_pool = self._evaluate_fitness()
                 child_list = self._perform_mutations(fitness_pool,(remainingPopCount-len(childList)))
                 if child_list is not None:
@@ -571,7 +571,8 @@ class GrammaticalEvolution(object):
                     
                 fitness_pool = self._evaluate_fitness(False,limitSelection)
                 child_list = self._perform_crossovers(fitness_pool)
-                childList.extend(child_list)    
+                if child_list is not None:
+                	childList.extend(child_list)    
         self._perform_replacements(childList)
 
     """
@@ -702,10 +703,10 @@ class GrammaticalEvolution(object):
                         except:
                             continue
                         child1.local_bnf['program']=child1Prg_
-                        child1.score=0
+                        child1.score=10
                         self.compute_fitness(child1,len(non_term1))
                         child2.local_bnf['program']=child2Prg_
-                        child2.score=0
+                        child2.score=10
                         self.compute_fitness(child2,len(non_term1))
 
                         if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
@@ -730,9 +731,13 @@ class GrammaticalEvolution(object):
                             logging.info("Crossover-Success")
                             break;
                         else:
+                            logging.info("Crossover-Failed")
+                            # if child1.get_fitness()== self._fitness_fail and child1.rc != 3:
+                            #     logging.info(child1.local_bnf['program'])
+                            # if child2.get_fitness()== self._fitness_fail and child2.rc != 3:
+                            #     logging.info(child2.local_bnf['program'])
                             child1.local_bnf['program']=child1Prg
                             child2.local_bnf['program']=child2Prg
-                            logging.info("Crossover-Failed")
                             logging.debug(child1.err)
                             logging.debug(child1.rc)
                             logging.debug(child2.err)
@@ -811,7 +816,7 @@ class GrammaticalEvolution(object):
 
                         tmp=gene.local_bnf['CodeFrag']
                         gene.local_bnf['CodeFrag']=tmp
-                        gene.score=0
+                        gene.score=10
                         ti3=time()
                         gene._map_gene(selectedNt)
                         logging.info("Mutation completed " +str(time()-ti3))
@@ -825,6 +830,8 @@ class GrammaticalEvolution(object):
                         else:
                             gene.local_bnf['program']=pr
                             logging.info("Mutation-Failed")
+                            # if gene.get_fitness()== self._fitness_fail and gene.rc != 3:
+                            #     logging.info(gene.local_bnf['CodeFrag'])
                             logging.debug(selectedNt)
                             logging.debug(dummy)
                             logging.debug(gene.local_bnf['CodeFrag'])
@@ -857,7 +864,7 @@ class GrammaticalEvolution(object):
             gene.member_no=position
             self.population[position]=gene
             position+=1
-        self._pre_selected
+        
         for gene in fitness_pool:
             if position<self._population_size:
                 gene.member_no=position
@@ -916,14 +923,14 @@ class GrammaticalEvolution(object):
         """
         status = True
         fitl = self.fitness_list
-        logging.info("mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
-        logging.info("fitness values : After Generation " + str(self._generation))
-        logging.info(self.interpreter_Shell)
-        logging.info(fitl)
         s=set()
         for i in range(len(fitl)):
             s.add(fitl[i][0])
+        logging.info(self.interpreter_Shell)
+        logging.info("Mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
         logging.info("Unique: "+str(len(s)) +" Genotype Objects based on Fitness")
+        logging.info("Fitness values : After Generation " + str(self._generation))
+        logging.info(fitl)
         
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:

@@ -402,7 +402,7 @@ defaultClause
 /// LabelledStatement :
 ///     identifier ':' Statement
 labelledStatement
- : identifierName ':' (statement | expression)
+ : propertyName ':' (statement | expression)
  ;
 
 /// ThrowStatement :
@@ -509,7 +509,7 @@ propertyNameAndValueList
 ///     set PropertyName ( PropertySetParameterList ) { FunctionBody }
 propertyAssignment
  : propertyName                                                 # PropertyExpressionAssignment1
- | propertyName ':' assignmentExpression                            # PropertyExpressionAssignment
+ | labelledStatement                            # PropertyExpressionAssignment
  | Get propertyName '(' ')' '{' functionBody '}'                          # PropertyGetter
  | Set propertyName '(' propertySetParameterList ')' '{' functionBody '}' # PropertySetter
  ;           
@@ -774,7 +774,7 @@ memberExpression
  |     New memberExpression arguments
  ;
 functionExpression  
- :     Function Identifier? '(' formalParameterList? ')' ('{' functionBody '}'|statement)
+ :     Function? Identifier? '(' formalParameterList? ')' ('{' functionBody '}'|statement)
  ;
  
 primaryExpression  

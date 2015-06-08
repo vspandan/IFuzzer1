@@ -22,7 +22,7 @@ logging.basicConfig(filename=LOG_FILENAME,
 
 FILECOUNT = 0
 
-Population_size=300
+Population_size=200
 Timeout = 10
 Generations=1000
 
@@ -58,11 +58,11 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 # ges.set_fitness_selections(
                 #     FitnessProportionate(ges.fitness_list, 'linear'))
                 
-                ges.set_crossover_rate(float(0.95))
-                ges.set_mutation_rate(float(0.2))
+                ges.set_crossover_rate(float(0.35))
+                ges.set_mutation_rate(float(0.85))
 
                 ges.set_max_depth(2)
-                ges.set_generative_mutation_rate(0.3)
+                ges.set_generative_mutation_rate(0.7)
 
                 ges.set_children_per_crossover(2)
                 
@@ -72,7 +72,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 ges.set_crossover_count(1);
                 ges._multiple_rate=(0.2)
 
-                ges.set_max_fitness_rate(float(0.1))
+                ges.set_max_fitness_rate(float(0.04))
                 
                 ges.set_replacement_selections(
                         ReplacementTournament(ges.fitness_list, tournament_size=3))
@@ -110,11 +110,16 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
             TestCases1=TestCases[:]
             tempList=[]    
             while len(tempList)<Population_size:
-                t=choice(TestCases1)
-                tempList.append(t)
+                if len(TestCases1)>=Population_size:
+                    t=choice(TestCases1)
+                    tempList.append(t)
+                else:
+                    t=choice(TestCases1)
+                    remove(t)
                 TestCases1.remove(t)
-            logging.debug(tempList)
-            process(tempList)
+            if len(tempList) >=Population_size:
+                logging.debug(tempList)
+                process(tempList)
             return False
             
     return initialize()

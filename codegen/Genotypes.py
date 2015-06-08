@@ -101,6 +101,7 @@ class Genotype(object):
         values = self.local_bnf[variable]
         value = self._select_choice(self._get_codon(), values)
         #value = sub('[\'()]', '', value)
+        logging.info("Expansion-"+variable+":"+str(value))
         return str(value)
     
     def _converge(self, item):

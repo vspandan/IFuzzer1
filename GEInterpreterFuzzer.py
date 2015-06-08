@@ -20,12 +20,11 @@ import logging
 logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
 
-JS_SHELL_PATH1="/home/spandan/mozilla/js-1.8.5/js/src/dist/bin/js"
+JS_SHELL_PATH1="/home/rubbernecker/js-1.8.5/js/src/dist/bin/js"
 JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
 JS_SHELL_PATH3="/home/spandan/google/v8/out/native/shell"
 
-JS_SHELL_OPTIONS1=[' -w -f ']
-# JS_SHELL_OPTIONS1=[' -w -f ', ' -w -Z 1 -f',' -w -Z 0 -f', ' -w -j -f',' -w -m -f',' -w -p -f',' -w -m -a -f']
+JS_SHELL_OPTIONS1=[' -w -f ', ' -w -Z 1 -f',' -w -Z 0 -f', ' -w -j -f',' -w -m -f',' -w -p -f',' -w -m -a -f']
 JS_SHELL_OPTIONS2=[' -w --fuzzing-safe  -f']
 JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f',         ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
 JS_SHELL_OPTIONS3=None
@@ -40,8 +39,7 @@ tmpDirectoryName="tmp"
 
 EXCLUDE_FILES = set(('browser.js', 'shell.js', 'jsref.js', 'template.js', 'user.js', 'sta.js','test262-browser.js', 'test262-shell.js','test402-browser.js', 'test402-shell.js', 'testBuiltInObject.js', 'testIntl.js','js-test-driver-begin.js', 'js-test-driver-end.js','gcstats.js','js'))
 
-INCLUDE_NT=['ifStatement', 'iterationStatement', 'labelledStatement', 'throwStatement', 'functionDeclaration', 'arrayLiteral', 'propertyAssignment', 'propertyName', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'callExpression', 'functionExpression', 'assignmentOperator']
-INCLUDE_NT=None
+INCLUDE_NT=['sourceElement', 'functionDeclaration', 'statement', 'yieldExpression', 'variableStatement', 'variableDeclarationList', 'variableDeclaration', 'initialiser', 'expressionStatement', 'ifStatement', 'iterationStatement', 'continueStatement', 'breakStatement', 'returnStatement', 'withStatement', 'switchStatement', 'caseClauses', 'defaultClause', 'labelledStatement', 'throwStatement', 'tryStatement', 'catchProduction', 'finallyProduction', 'formalParameterList', 'formalParameter', 'functionBody', 'arrayLiteral', 'elementList', 'objectLiteral', 'propertyNameAndValueList', 'propertyAssignment', 'propertyName', 'propertySetParameterList', 'arguments', 'argumentList', 'expression', 'assignmentExpression', 'conditionalExpression', 'logicalORExpression', 'logicalANDExpression', 'bitwiseORExpression', 'bitwiseXORExpression', 'bitwiseANDExpression', 'equalityExpression', 'relationalExpression', 'shiftExpression', 'additiveExpression', 'multiplicativeExpression', 'unaryExpression', 'postfixExpression', 'leftHandSideExpression', 'newExpression', 'memberExpression', 'functionExpression', 'literal', 'BooleanLiteral', 'numericLiteral', 'StringLiteral', 'RegularExpressionLiteral']
 
 fileList = []
 
@@ -92,7 +90,7 @@ def createFragmentPool():
     ind=True
     for f in fileList:
         statinfo=stat(f)
-        if count > 0 and statinfo.st_size <= 15000 :
+        if count > 4200 and statinfo.st_size <= 15000 and count!=809:
             print (count)
             print (f)
             try:
@@ -149,10 +147,12 @@ def main(fileList,args):
             f=open("parserescapelist","r")
             escapeList=[]
             for line in f:
-            	escapeList.append(line)
+            	escapeList.append(line.strip())
             for f in fileList:
                 statinfo = stat(f)
-                if statinfo.st_size>15000 or f in escapeList:
+                if f in escapeList:
+                	continue
+                if statinfo.st_size>15000 :
                     continue
                 from subprocess import Popen,PIPE
                 exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+f

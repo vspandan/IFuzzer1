@@ -7,4 +7,4 @@
 
 
 //should return syntax error
-//seg fault
+//Assertion failure: compartment mismatched, at jscntxtinlines.h:545 
