@@ -1,0 +1,226 @@
+\begin{thebibliography}{10}
+
+\bibitem{Misc01}
+{\url{https://bugzilla.mozilla.org/show_bug.cgi?id=1133247}}.
+
+\bibitem{EcmaScript2}
+{\em ECMAScript 2015 - ECMAScript Language Specification}.
+\newblock Draft edition, April 2015.
+
+\bibitem{Alba:2005}
+E.~Alba and J.~F. Chicano.
+\newblock Software testing with evolutionary strategies.
+\newblock In {\em Proceedings of the Second International Conference on Rapid
+  Integration of Software Engineering Techniques}, RISE'05, pages 50--65, 2006.
+
+\bibitem{AnupamM98}
+V.~Anupam and A.~J. Mayer.
+\newblock Security of web browser scripting languages: Vulnerabilities,
+  attacks, and remedies.
+\newblock In {\em Proceedings of the 7th {USENIX} Security Symposium, San
+  Antonio, TX, USA, January 26-29, 1998}, 1998.
+
+\bibitem{Arya12}
+A.~Arya and C.~Neckar.
+\newblock Fuzzing for security.
+\newblock \url{http://blog.chromium.org/2012/04/fuzzing-for-security.html},
+  April 2012.
+
+\bibitem{Byrne10}
+J.~Byrne, M.~O'Neill, J.~McDermott, and A.~Brabazon.
+\newblock {An Analysis of the Behaviour of Mutation in Grammatical Evolution}.
+\newblock In {\em Proceedings of Genetic Programming, 13th European Conference,
+  EuroGP}, pages 14--25, April 2010.
+
+\bibitem{clarke2009fuzzing}
+T.~Clarke.
+\newblock Fuzzing for software vulnerability discovery.
+\newblock 2009.
+
+\bibitem{DelGrosso:2008}
+C.~Del~Grosso, G.~Antoniol, E.~Merlo, and P.~Galinier.
+\newblock Detecting buffer overflow via automatic test input data generation.
+\newblock {\em Comput. Oper. Res.}, 35(10):3125--3143, Oct. 2008.
+
+\bibitem{demott2007}
+DeMott, Jared, Enbody, Richard, Punch, and W.~F.
+\newblock Revolutionizing the field of grey-box attack surface testing with
+  evolutionary fuzzing.
+
+\bibitem{Duchene:2014}
+F.~Duchene, S.~Rawat, J.-L. Richier, and R.~Groz.
+\newblock Kameleonfuzz: Evolutionary fuzzing for black-box xss detection.
+\newblock In {\em Proceedings of the 4th ACM Conference on Data and Application
+  Security and Privacy}, CODASPY '14, pages 37--48, New York, NY, USA, 2014.
+  ACM.
+
+\bibitem{EcmaScript}
+{ECMA International}.
+\newblock {\em Standard ECMA-262 - ECMAScript Language Specification}.
+\newblock Ecma International, 5.1 edition, June 2011.
+
+\bibitem{Fagan10}
+D.~Fagan, M.~O'Neill, E.~G. L{\'{o}}pez, A.~Brabazon, and S.~McGarraghy.
+\newblock An analysis of genotype-phenotype maps in grammatical evolution.
+\newblock In {\em Proceedings of Genetic Programming, 13th European Conference,
+  EuroGP 2010}, pages 62--73, 2010.
+
+\bibitem{4682289}
+L.~Guang-Hong, W.~Gang, Z.~Tao, S.~Jian-Mei, and T.~Zhuo-Chun.
+\newblock Vulnerability analysis for x86 executables using genetic algorithm
+  and fuzzing.
+\newblock In {\em Convergence and Hybrid Information Technology, 2008. ICCIT
+  '08. Third International Conference on}, volume~2, pages 491--497, Nov 2008.
+
+\bibitem{Hallaraker:2005}
+O.~Hallaraker and G.~Vigna.
+\newblock Detecting malicious javascript code in mozilla.
+\newblock In {\em Proceedings of the 10th IEEE International Conference on
+  Engineering of Complex Computer Systems}, ICECCS '05, pages 85--94,
+  Washington, DC, USA, 2005.
+
+\bibitem{Holler11}
+C.~Holler, K.~Herzig, and A.~Zeller.
+\newblock Fuzzing with code fragments.
+\newblock In {\em Proceedings of the 21th {USENIX} Security Symposium}, pages
+  445--458, August 2012.
+
+\bibitem{Kaksonen}
+R.~Kaksonen, M.~Laakso, and A.~Takanen.
+\newblock System security assessment through specification mutations and fault
+  injection.
+\newblock In {\em Proceedings of the International Conference on Communications
+  and Multimedia Security Issues}, May 2001.
+
+\bibitem{LangdonP98}
+W.~B. Langdon and R.~Poli.
+\newblock Fitness causes bloat: Mutation.
+\newblock In {\em Proceedings ofGenetic Programming, First European Workshop,
+  EuroGP'98}, pages 37--48, 1998.
+
+\bibitem{Luke06}
+S.~Luke and L.~Panait.
+\newblock A comparison of bloat control methods for genetic programming.
+\newblock {\em Evolutionary Computation}, 14(3):309--344, September 2006.
+
+\bibitem{Neill_10}
+R.~I. McKay, N.~X. Hoai, P.~A. Whigham, Y.~Shan, and M.~O'Neill.
+\newblock Grammar-based genetic programming: a survey.
+\newblock {\em Genetic Programming and Evolvable Machines}, 11(3-4):365--396,
+  May 2010.
+
+\bibitem{DeltaTool}
+S.~McPeak and D.~S. Wilkerson.
+\newblock The delta tool.
+\newblock \url{http://delta.tigris.org}.
+
+\bibitem{Miller89}
+B.~P. Miller, L.~Fredriksen, and B.~So.
+\newblock An empirical study of the reliability of {UNIX} utilities.
+\newblock {\em Communications of the {ACM}}, 33(12):32--44, December 1990.
+
+\bibitem{miller2007smart}
+C.~Miller.
+\newblock How smart is intelligent fuzzing-or-how stupid is dumb fuzzing.
+\newblock August 2007.
+
+\bibitem{Ryan00}
+M.~O'Neill and C.~Ryan.
+\newblock Grammar based function definition in grammatical evolution.
+\newblock In {\em Proceedings of the Genetic and Evolutionary Computation
+  Conference {GECCO}}, pages 485--490, July 2000.
+
+\bibitem{Ryan01}
+M.~O'Neill and C.~Ryan.
+\newblock Grammatical evolution.
+\newblock {\em {IEEE} Trans. Evolutionary Computation}, 5(4):349--358, August
+  2001.
+
+\bibitem{Ryan03}
+M.~O'Neill and C.~Ryan.
+\newblock Crossover in grammatical evolution.
+\newblock {\em Genetic Programming and Evolvable Machines}, 4(1):67--93, March
+  2003.
+
+\bibitem{Parr13}
+T.~Parr.
+\newblock {\em The Definitive ANTLR 4 Reference}.
+\newblock Pragmatic Bookshelf, 2nd edition, 2013.
+
+\bibitem{PoliLM2008}
+R.~Poli, W.~B. Langdon, and N.~F. McPhee.
+\newblock {\em A Field Guide to Genetic Programming}.
+\newblock lulu.com, 2008.
+
+\bibitem{Rawat:2010}
+S.~Rawat and L.~Mounier.
+\newblock An evolutionary computing approach for hunting buffer overflow
+  vulnerabilities: A case of aiming in dim light.
+\newblock In {\em Proceedings of the 2010 European Conference on Computer
+  Network Defense}, EC2ND '10, pages 37--45, Washington, DC, USA, 2010. IEEE
+  Computer Society.
+
+\bibitem{Jesse07}
+J.~Rudersman.
+\newblock Introducing jsfunfuzz.
+\newblock \url{http://www.squarefree.com/2007/08/02/introducing-jsfunfuzz},
+  2007.
+
+\bibitem{Ryan98}
+C.~Ryan, J.~J. Collins, and M.~O'Neill.
+\newblock Grammatical evolution: Evolving programs for an arbitrary language.
+\newblock In {\em Genetic Programming, First European Workshop, EuroGP}, pages
+  83--96, April 1998.
+
+\bibitem{Sekar09}
+R.~Sekar.
+\newblock An efficient blackbox technique for defeating web application
+  attacks.
+\newblock In {\em Proceedings of the Network and Distributed System Security
+  Symposium}, February 2009.
+
+\bibitem{SouleF98}
+T.~Soule and J.~A. Foster.
+\newblock Effects of code growth and parsimony pressure on populations in
+  geneticprogramming.
+\newblock {\em Evolutionary Computation}, 6(4):293--309, December 1998.
+
+\bibitem{Soule96}
+T.~Soule, J.~A. Foster, and Dickinson.
+\newblock Code growth in genetic programming.
+\newblock In {\em Genetic Programming 1996:Proceedings of the First Annual
+  Conference}, pages 215--223, May 1996.
+
+\bibitem{sparks2007}
+S.~Sparks, S.~Embleton, R.~Cunningham, and C.~Zou.
+\newblock Automated vulnerability analysis: Leveraging control flow for
+  evolutionary input crafting.
+\newblock In {\em Computer Security Applications Conference, 2007. ACSAC 2007.
+  Twenty-Third Annual}, pages 477--486. IEEE, 2007.
+
+\bibitem{Yang}
+X.~Yang, Y.~Chen, E.~Eide, and J.~Regehr.
+\newblock Finding and understanding bugs in {C} compilers.
+\newblock In {\em Proceedings of the 32nd {ACM} {SIGPLAN} Conference on
+  Programming Language Design and Implementation,}, pages 283--294, June 2011.
+
+\bibitem{Zelaski08}
+Zalewski.
+\newblock Announcing ref\_fuzz a 2 year old fuzzer.
+\newblock
+  \url{http://lcamtuf.blogspot.in/2010/06/announcing-reffuzz-2yo-fuzzer.html},
+  2010.
+
+\bibitem{Zelaski11}
+Zalewski.
+\newblock Announcing cross\_fuzz a potential 0-day in circulation and more.
+\newblock
+  \url{http://lcamtuf.blogspot.in/2011/01/announcing-crossfuzz-potential-0-day-in.html},
+  2011.
+
+\bibitem{ZellerH02}
+A.~Zeller and R.~Hildebrandt.
+\newblock Simplifying and isolating failure-inducing input.
+\newblock {\em {IEEE} Trans. Software Eng.}, 28(2):183--200, 2002.
+
+\end{thebibliography}

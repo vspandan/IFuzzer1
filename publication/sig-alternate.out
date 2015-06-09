@@ -1,0 +1,25 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Background}{}% 2
+\BOOKMARK [1][-]{section.3}{IFuzzer Approach}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Fragment Pool}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Initial Population}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{Genetic Operators}{section.3}% 6
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Crossover}{subsection.3.3}% 7
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Mutation}{subsection.3.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.3.3}{Shrink Mutation and Hoist Mutation}{subsection.3.3}% 9
+\BOOKMARK [3][-]{subsubsection.3.3.4}{Replacement}{subsection.3.3}% 10
+\BOOKMARK [2][-]{subsection.3.4}{Bloat Control}{section.3}% 11
+\BOOKMARK [2][-]{subsection.3.5}{Code Evolution}{section.3}% 12
+\BOOKMARK [2][-]{subsection.3.6}{Semantic Adjustment}{section.3}% 13
+\BOOKMARK [1][-]{section.4}{Implementation}{}% 14
+\BOOKMARK [2][-]{subsection.4.1}{Parser}{section.4}% 15
+\BOOKMARK [2][-]{subsection.4.2}{Code Generation}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.3}{Fitness Evaluation}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.4}{Executing tests}{section.4}% 18
+\BOOKMARK [1][-]{section.5}{Experimentation}{}% 19
+\BOOKMARK [2][-]{subsection.5.1}{LangFuzz vs IFuzzer}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.2}{Environment Setup}{section.5}% 21
+\BOOKMARK [2][-]{subsection.5.3}{Result of Comparison}{section.5}% 22
+\BOOKMARK [1][-]{section.6}{Related Work}{}% 23
+\BOOKMARK [1][-]{section.7}{Conclusion and Future Work}{}% 24
+\BOOKMARK [1][-]{section.8}{References}{}% 25

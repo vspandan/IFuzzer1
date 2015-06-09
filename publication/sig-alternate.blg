@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: sig-alternate.aux
+The style file: abbrv.bst
+Database file #1: sigproc.bib
+Warning--to sort, need author, editor, or key in EcmaScript2
+Warning--to sort, need author or key in Misc01
+Warning--empty author and editor in EcmaScript2
+Warning--empty publisher in EcmaScript2
+Warning--empty journal in clarke2009fuzzing
+Warning--empty journal in demott2007
+Warning--empty year in demott2007
+Warning--empty journal in miller2007smart
+You've used 38 entries,
+            2118 wiz_defined-function locations,
+            741 strings with 10115 characters,
+and the built_in function-call counts, 13103 in all, are:
+= -- 1253
+> -- 567
+< -- 15
++ -- 232
+- -- 186
+* -- 851
+:= -- 2046
+add.period$ -- 113
+call.type$ -- 38
+change.case$ -- 205
+chr.to.int$ -- 0
+cite$ -- 46
+duplicate$ -- 557
+empty$ -- 1117
+format.name$ -- 186
+if$ -- 2877
+int.to.chr$ -- 0
+int.to.str$ -- 38
+missing$ -- 35
+newline$ -- 189
+num.names$ -- 72
+pop$ -- 282
+preamble$ -- 1
+purify$ -- 169
+quote$ -- 0
+skip$ -- 431
+stack$ -- 0
+substring$ -- 712
+swap$ -- 160
+text.length$ -- 15
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 144
+warning$ -- 8
+while$ -- 114
+width$ -- 40
+write$ -- 404
+(There were 8 warnings)

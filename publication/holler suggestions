@@ -1,0 +1,9 @@
+then you should either use --thread-count=2 or --no-threads (either of the two)
+<decoder> --no-threads produces more stable tests, but some issues cannot be found with --no-threads
+<decoder> then you should randomly add:
+<decoder> --ion-eager
+<decoder> --baseline-eager
+<decoder> --ion-offthread-compile=off
+<decoder> if you're using a debug build, you can also add --ion-check-range-analysis
+<decoder> for debug builds, you should always use --enable-debug --enable-optimize while building, otherwise it gets very slow
+<decoder> for non-debug builds you should use --disable-debug --enable-optimize --enable-gczeal at least
