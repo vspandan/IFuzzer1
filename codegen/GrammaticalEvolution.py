@@ -10,7 +10,6 @@ from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype
 from time import time
-from threading import Thread
 from jsbeautifier import beautify
 from tempfile import NamedTemporaryFile
 

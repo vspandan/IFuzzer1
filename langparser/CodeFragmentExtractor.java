@@ -1,4 +1,5 @@
 package langparser;
+import java.util.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -46,15 +47,6 @@ public class CodeFragmentExtractor {
             private boolean escape=true;
             @Override
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
-                if (ctx.getRuleIndex()== ECMAScriptParser.RULE_callExpression){
-                    String stmt=tokens.getText(ctx);
-                            String[] s=stmt.split("[\\W]");
-                            for (String st:s){
-                                if (st.equals("eval")){
-                                    escape=true;
-                                }
-                            }
-                }
                 java.util.List<ParseTree> childs=ctx.children;
                 boolean ind=true;
                 if (childs!=null){
@@ -110,14 +102,11 @@ public class CodeFragmentExtractor {
                                 sb.append(";");
                             }*/
                                 sb.append("</"+key+">");
-                            if (ctx.getRuleIndex()== ECMAScriptParser.RULE_callExpression ){
-                                escape=true;
-                            }
                         }
                     }
-                    if (ctx.getRuleIndex()== ECMAScriptParser.RULE_debuggerStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_variableStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_expressionStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_throwStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_returnStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_breakStatement | ctx.getRuleIndex()==ECMAScriptParser.RULE_continueStatement){
-                        sb.append(";");
-                    }
+                    
+
+                   
                 
                 }
             }
@@ -127,9 +116,6 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                     try{
                         String token=ctx.getText();
-                        if(ctx.getSymbol().getType()==ECMAScriptParser.IdentifierName && !global_Objects.contains(token)){
-                            identifiers.add(token);  
-                        }
                         
                         if(!token.equals("<EOF>"))
                             sb.append(xmlEscapeText(token)+" ");
@@ -163,6 +149,7 @@ public class CodeFragmentExtractor {
         System.out.println(hm);
         hm=c.extractFrags(script,true);
         System.out.println(hm);
+		System.out.println(c.extractAST(script,true));
     }
     
     public HashMap<String,ArrayList> extractFrags(String script, boolean isFile) throws IOException {
@@ -213,7 +200,7 @@ public class CodeFragmentExtractor {
                             int stop = ctx.stop.getTokenIndex();
                             for (int i = start; i <= stop; i++) {
                                 String tokenText=tokens.get(i).getText();
-                                if (tokens.get(i).getType()==ECMAScriptParser.IdentifierName && !global_Objects.contains(tokenText))
+                                if (!global_Objects.contains(tokenText))
                                     tokenText = "_id_"+tokenText;
                                 Stmt += tokenText;
                             }
@@ -253,7 +240,21 @@ public class CodeFragmentExtractor {
         }, parser.program());
         return hm;
     }
-    
+
+	public String extractAST(String script, boolean isFile) throws IOException {
+        ECMAScriptParser parser = null;
+        if (!isFile){
+            parser = new Builder.Parser(script).build();
+        }
+        else{
+            FileInputStream fis = new FileInputStream(script);
+            parser = new Builder.Parser(new ANTLRInputStream(fis)).build();
+            fis.close();
+        }
+		AST ast = new AST(parser.program());
+        return ast.toString();
+    }
+
     private String xmlEscapeText(String t) {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < t.length(); i++){
@@ -272,5 +273,131 @@ public class CodeFragmentExtractor {
             }
         }
         return sb.toString();
+    }
+	
+}
+
+
+
+class AST {
+
+    private final Object payload;
+
+    private final List<AST> children;
+
+    public AST(ParseTree tree) {
+        this(null, tree);
+    }
+
+    private AST(AST ast, ParseTree tree) {
+        this(ast, tree, new ArrayList<AST>());
+    }
+
+    private AST(AST parent, ParseTree tree, List<AST> children) {
+
+        this.payload = getPayload(tree);
+        this.children = children;
+
+        if (parent == null) {
+            walk(tree, this);
+        }
+        else {
+            parent.children.add(this);
+        }
+    }
+
+    public Object getPayload() {
+        return payload;
+    }
+
+    public List<AST> getChildren() {
+        return new ArrayList<>(children);
+    }
+
+    private Object getPayload(ParseTree tree) {
+        if (tree.getChildCount() == 0) {
+            return tree.getPayload();
+        }
+        else {
+            String ruleName = tree.getClass().getSimpleName().replace("Context", "");
+            return Character.toLowerCase(ruleName.charAt(0)) + ruleName.substring(1);
+        }
+    }
+
+    private static void walk(ParseTree tree, AST ast) {
+
+        if (tree.getChildCount() == 0) {
+            new AST(ast, tree);
+        }
+        else if (tree.getChildCount() == 1) {
+            walk(tree.getChild(0), ast);
+        }
+        else if (tree.getChildCount() > 1) {
+
+            for (int i = 0; i < tree.getChildCount(); i++) {
+
+                AST temp = new AST(ast, tree.getChild(i));
+
+                if (!(temp.payload instanceof Token)) {
+                    walk(tree.getChild(i), temp);
+                }
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+
+        AST ast = this;
+        List<AST> firstStack = new ArrayList<>();
+        firstStack.add(ast);
+
+        List<List<AST>> childListStack = new ArrayList<>();
+        childListStack.add(firstStack);
+
+        while (!childListStack.isEmpty()) {
+
+            List<AST> childStack = childListStack.get(childListStack.size() - 1);
+
+            if (childStack.isEmpty()) {
+                childListStack.remove(childListStack.size() - 1);
+            }
+            else {
+                ast = childStack.remove(0);
+                String caption;
+
+                if (ast.payload instanceof Token) {
+                    Token token = (Token) ast.payload;
+                    caption = String.format("TOKEN[type: %s, text: %s]",
+                            token.getType(), token.getText().replace("\n", "\\n"));
+                }
+                else {
+                    caption = String.valueOf(ast.payload);
+                }
+
+                String indent = "";
+
+                for (int i = 0; i < childListStack.size() - 1; i++) {
+                    indent += (childListStack.get(i).size() > 0) ? "|  " : "   ";
+                }
+
+                builder.append(indent)
+                        .append(childStack.isEmpty() ? "'- " : "|- ")
+                        .append(caption)
+                        .append("\n");
+
+                if (ast.children.size() > 0) {
+                    List<AST> children = new ArrayList<>();
+                    for (int i = 0; i < ast.children.size(); i++) {
+                        children.add(ast.children.get(i));
+                    }
+                    childListStack.add(children);
+                }
+            }
+        }
+
+        return builder.toString();
     }
 }

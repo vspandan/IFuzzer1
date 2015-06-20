@@ -73,7 +73,7 @@ def createFragmentPool():
         print (datetime.now())
         print ("Finalized: Writing to file")
         
-    print("Considering " + str(len(fileList)) + " files for learning code fragments")
+    print("Considering " + str(len(fileList)) + " files for learning code fragments " + str(datetime.now()))
     if not exists("database"):
         makedirs("database")
     count=1
@@ -83,18 +83,31 @@ def createFragmentPool():
         if count > 0 and statinfo.st_size <= 15000 :
             print (count)
             print (f)
-            try:
-                timeout=False
-                res=extractCodeFrag(f)
-                if not timeout:
-                    if res is not None:
-                        codeFragPool.append(res)
-                
-                if count % 200 == 0:
-                    finalize()
-                    codeFragPool=[]
-            except:
-                pass
+            que=Queue()
+            import threading
+            t=threading.Thread(target=extractCodeFrag,kwargs={'fileName':f,'que':que})
+            t.start()
+            t.join(30)
+            timeout=False
+            if t.isAlive():
+                try:
+                    timeout=True
+                    raise Exception('','')
+                except:
+                    print "Timed-Out"
+                    count+=1
+                    continue
+            # res=extractCodeFrag(f)
+            if not timeout:
+                res=que.get(False)
+                if res is not None:
+                    codeFragPool.append(res)
+            
+            if count % 100 == 0:
+                finalize()
+                codeFragPool=[]
+            
+            
         count+=1
     finalize()
     
