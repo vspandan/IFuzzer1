@@ -423,10 +423,6 @@ methodDefinition
  | Set propertyName '(' variableDeclaration ')' '{' functionBody '}' 
  ;
 
-/// PropertyName :
-///     identifierName
-///     StringLiteral
-///     NumericLiteral
 propertyName
  : identifierName
  | StringLiteral
@@ -434,23 +430,14 @@ propertyName
  | '[' assignmentExpression ']'
  ;
     
-/// PropertySetParameterList :
-///     identifierName
 propertySetParameterList
  : identifierName
  ;
 
-/// Arguments :
-///     ( )
-///     ( ArgumentList )
 arguments
- : '(' ')'
- | '(' argumentList ')'
+ : '(' argumentList? ')'
  ;
     
-/// ArgumentList :
-///     AssignmentExpression
-///     ArgumentList , AssignmentExpression
 argumentList
  : '...'? assignmentExpression
  | argumentList  ',' '...'? assignmentExpression 
@@ -625,7 +612,7 @@ templateSpans
  ;
 
 templateMiddleList
- : templateMiddleList? TemplateMiddle expression
+ : (TemplateMiddle expression)+
  ;
 
 assignmentOperator

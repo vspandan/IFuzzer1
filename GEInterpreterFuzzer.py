@@ -80,38 +80,18 @@ def createFragmentPool():
     ind=True
     for f in fileList:
         statinfo=stat(f)
-        if count > 0 and statinfo.st_size <= 15000 :
+        if count > 0 and statinfo.st_size <= 10000 :
             print (count)
             print (f)
-            que=Queue()
-            import threading
-            t=threading.Thread(target=extractCodeFrag,kwargs={'fileName':f,'que':que})
-            t.start()
-            t.join(30)
-            timeout=False
-            if t.isAlive():
-                try:
-                    timeout=True
-                    raise Exception('','')
-                except:
-                    print "Timed-Out"
-                    count+=1
-                    continue
-            # res=extractCodeFrag(f)
-            if not timeout:
-                res=que.get(False)
-                if res is not None:
-                    codeFragPool.append(res)
-            
+            res=extractCodeFrag(f)
+            if res is not None:
+                codeFragPool.append(res)
             if count % 100 == 0:
                 finalize()
                 codeFragPool=[]
-            
-            
         count+=1
     finalize()
-    
-    print ("Finished; Code generation and testing begins")
+    print ("Finished; Code generation and testing begins " +str(datetime.now()))
 
 def main(fileList,args):
     try:

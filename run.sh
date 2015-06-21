@@ -7,26 +7,24 @@ if [ "$1" == "-c" ]; then
 	mv ECMAScript.jar langparser/
 	rm -rf langparser/*.class
 elif [ "$1" == "-r" ]; then
-	if [ "$2" == "js31" ]; then
+	if [ "$2" == "j" ]; then
 		while true
 		do
 			jython -J-Xmx2000m GEInterpreterFuzzer.py 2
 			echo "Spidermonkey-31"
 			break
 		done
-	elif [ "$2" == "gen" ]; then
-		jython GEInterpreterFuzzer.py 0
+	elif [ "$2" == "g" ]; then
+		jython -J-Xmx2000m -J-XX:-UseGCOverheadLimit GEInterpreterFuzzer.py 0
 	else
 		echo "run [options]"
-		echo "\"-r gen\" fragments generation"
-		echo "\"-r js18\" Spidermonkey 1.8.5"
-		echo "\"-r js31\" Spidermonkey 31"
+		echo "\"-r g\" fragments generation"
+		echo "\"-r j\" Spidermonkey 31"
 		echo "\"-r v8\" Chrome V8"
 	fi;
 else 
 	echo "run [options]"
-	echo "\"-r gen\" fragments generation"
-	echo "\"-r js18\" Spidermonkey 1.8.5"
-	echo "\"-r js31\" Spidermonkey 31"
+	echo "\"-r g\" fragments generation"
+	echo "\"-r j\" Spidermonkey 31"
 	echo "\"-r v8\" Chrome V8"
 fi;
