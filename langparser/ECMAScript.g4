@@ -573,6 +573,7 @@ callExpression
  |     callExpression arguments
  |     callExpression '[' expression ']'
  |     callExpression '.' identifierName
+ |     callExpression templateLiteral
  ;
 
 superCall
@@ -588,6 +589,7 @@ memberExpression
  :     primaryExpression
  |     memberExpression '[' expression ']'
  |     memberExpression '.' identifierName
+ |     memberExpression templateLiteral
  |     superPropery
  |     New memberExpression arguments
  ;
@@ -610,10 +612,22 @@ primaryExpression
  |     objectLiteral
  |     '(' expression ')'
  |     arrayLiteral
+ |     templateLiteral
  ;
 
-/// AssignmentOperator : one of
-///     *=  /=  %=  +=  -=  <<= >>= >>>=    &=  ^=  |=
+templateLiteral 
+ : NoSubstitutionTemplate
+ | TemplateHead expression templateSpans
+ ;
+
+templateSpans
+ : templateMiddleList? TemplateTail
+ ;
+
+templateMiddleList
+ : templateMiddleList? TemplateMiddle expression
+ ;
+
 assignmentOperator
  : '*=' 
  | '/=' 
@@ -874,7 +888,6 @@ Identifier
 StringLiteral
  : '"' DoubleStringCharacter* '"'
  | '\'' SingleStringCharacter* '\''
- | '`' SingleStringCharacter* '`'
  ;
 
 WhiteSpaces
@@ -1448,18 +1461,35 @@ fragment RegularExpressionBackslashSequence
  
 /// RegularExpressionClass ::
 ///     [ RegularExpressionClassChars ]
-///
-/// RegularExpressionClassChars ::
-///     [empty]
-///     RegularExpressionClassChars RegularExpressionClassChar
 fragment RegularExpressionClass
   : '[' RegularExpressionClassChar* ']'
   ;
  
-/// RegularExpressionClassChar ::
-///     RegularExpressionNonTerminator but not ] or \
-///     RegularExpressionBackslashSequence
 fragment RegularExpressionClassChar
  : ~[\r\n\u2028\u2029\]\\]
  | RegularExpressionBackslashSequence
+ ;
+
+NoSubstitutionTemplate
+ : '`' TemplateCharacter* '`'
+ ;
+
+TemplateHead
+ : '`' TemplateCharacter* '$' '{'
+ ;
+
+TemplateTail
+ : '}' TemplateCharacter* '`'
+ ;
+
+TemplateMiddle
+ : '}' TemplateCharacter* '$' '{'
+ ;
+
+fragment TemplateCharacter
+ : ~[`\\$\r\n] 
+ | '$' // no { ahead! TODO
+ | '\\' EscapeSequence
+ | LineContinuation
+ | LineTerminatorSequence
  ;

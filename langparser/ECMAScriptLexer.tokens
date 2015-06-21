@@ -109,6 +109,10 @@ WhiteSpaces=108
 MultiLineComment=109
 SingleLineComment=110
 UnexpectedCharacter=111
+NoSubstitutionTemplate=112
+TemplateHead=113
+TemplateTail=114
+TemplateMiddle=115
 '...'=1
 'each'=2
 '=>'=3

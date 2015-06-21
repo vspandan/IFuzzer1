@@ -1061,6 +1061,42 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTemplateLiteral(@NotNull ECMAScriptParser.TemplateLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTemplateLiteral(@NotNull ECMAScriptParser.TemplateLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTemplateSpans(@NotNull ECMAScriptParser.TemplateSpansContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTemplateSpans(@NotNull ECMAScriptParser.TemplateSpansContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTemplateMiddleList(@NotNull ECMAScriptParser.TemplateMiddleListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTemplateMiddleList(@NotNull ECMAScriptParser.TemplateMiddleListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAssignmentOperator(@NotNull ECMAScriptParser.AssignmentOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}

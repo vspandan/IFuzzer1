@@ -879,6 +879,36 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitPrimaryExpression(@NotNull ECMAScriptParser.PrimaryExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#templateLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterTemplateLiteral(@NotNull ECMAScriptParser.TemplateLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#templateLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitTemplateLiteral(@NotNull ECMAScriptParser.TemplateLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#templateSpans}.
+	 * @param ctx the parse tree
+	 */
+	void enterTemplateSpans(@NotNull ECMAScriptParser.TemplateSpansContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#templateSpans}.
+	 * @param ctx the parse tree
+	 */
+	void exitTemplateSpans(@NotNull ECMAScriptParser.TemplateSpansContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#templateMiddleList}.
+	 * @param ctx the parse tree
+	 */
+	void enterTemplateMiddleList(@NotNull ECMAScriptParser.TemplateMiddleListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#templateMiddleList}.
+	 * @param ctx the parse tree
+	 */
+	void exitTemplateMiddleList(@NotNull ECMAScriptParser.TemplateMiddleListContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#assignmentOperator}.
 	 * @param ctx the parse tree
 	 */
