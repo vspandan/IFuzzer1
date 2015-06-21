@@ -29,25 +29,13 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSourceElements(@NotNull ECMAScriptParser.SourceElementsContext ctx) { }
+	@Override public void enterStatementListItem(@NotNull ECMAScriptParser.StatementListItemContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSourceElements(@NotNull ECMAScriptParser.SourceElementsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSourceElement(@NotNull ECMAScriptParser.SourceElementContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSourceElement(@NotNull ECMAScriptParser.SourceElementContext ctx) { }
+	@Override public void exitStatementListItem(@NotNull ECMAScriptParser.StatementListItemContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -60,6 +48,66 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionDeclaration(@NotNull ECMAScriptParser.FunctionDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassDeclaration(@NotNull ECMAScriptParser.ClassDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassDeclaration(@NotNull ECMAScriptParser.ClassDeclarationContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassTail(@NotNull ECMAScriptParser.ClassTailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassTail(@NotNull ECMAScriptParser.ClassTailContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassHeritage(@NotNull ECMAScriptParser.ClassHeritageContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassHeritage(@NotNull ECMAScriptParser.ClassHeritageContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassBody(@NotNull ECMAScriptParser.ClassBodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassBody(@NotNull ECMAScriptParser.ClassBodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterClassElement(@NotNull ECMAScriptParser.ClassElementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitClassElement(@NotNull ECMAScriptParser.ClassElementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -941,6 +989,18 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNewExpression(@NotNull ECMAScriptParser.NewExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -960,6 +1020,18 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -19,25 +19,15 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitProgram(@NotNull ECMAScriptParser.ProgramContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#sourceElements}.
+	 * Enter a parse tree produced by {@link ECMAScriptParser#statementListItem}.
 	 * @param ctx the parse tree
 	 */
-	void enterSourceElements(@NotNull ECMAScriptParser.SourceElementsContext ctx);
+	void enterStatementListItem(@NotNull ECMAScriptParser.StatementListItemContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#sourceElements}.
+	 * Exit a parse tree produced by {@link ECMAScriptParser#statementListItem}.
 	 * @param ctx the parse tree
 	 */
-	void exitSourceElements(@NotNull ECMAScriptParser.SourceElementsContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#sourceElement}.
-	 * @param ctx the parse tree
-	 */
-	void enterSourceElement(@NotNull ECMAScriptParser.SourceElementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#sourceElement}.
-	 * @param ctx the parse tree
-	 */
-	void exitSourceElement(@NotNull ECMAScriptParser.SourceElementContext ctx);
+	void exitStatementListItem(@NotNull ECMAScriptParser.StatementListItemContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#functionDeclaration}.
 	 * @param ctx the parse tree
@@ -48,6 +38,56 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionDeclaration(@NotNull ECMAScriptParser.FunctionDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#classDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassDeclaration(@NotNull ECMAScriptParser.ClassDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#classDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassDeclaration(@NotNull ECMAScriptParser.ClassDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#classTail}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassTail(@NotNull ECMAScriptParser.ClassTailContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#classTail}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassTail(@NotNull ECMAScriptParser.ClassTailContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#classHeritage}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassHeritage(@NotNull ECMAScriptParser.ClassHeritageContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#classHeritage}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassHeritage(@NotNull ECMAScriptParser.ClassHeritageContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassBody(@NotNull ECMAScriptParser.ClassBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassBody(@NotNull ECMAScriptParser.ClassBodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#classElement}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassElement(@NotNull ECMAScriptParser.ClassElementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#classElement}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassElement(@NotNull ECMAScriptParser.ClassElementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#statement}.
 	 * @param ctx the parse tree
@@ -779,6 +819,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitCallExpression(@NotNull ECMAScriptParser.CallExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#superCall}.
+	 * @param ctx the parse tree
+	 */
+	void enterSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#superCall}.
+	 * @param ctx the parse tree
+	 */
+	void exitSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#newExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -798,6 +848,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#superPropery}.
+	 * @param ctx the parse tree
+	 */
+	void enterSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#superPropery}.
+	 * @param ctx the parse tree
+	 */
+	void exitSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#functionExpression}.
 	 * @param ctx the parse tree
