@@ -20,10 +20,11 @@ import logging
 logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
 
-JS_SHELL_PATH2="/home/spandan/mozilla/centralrepo/mozilla-central/js/src/dist/bin/js"
+JS_SHELL_PATH2="/home/rubbernecker/jsengines/firefox/js/src/dist/bin/js"
 JS_SHELL_OPTIONS2=[' --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f',         ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --thread-count=2 --fuzzing-safe  -f', ' --ion-offthread-compile=off --thread-count=2 --fuzzing-safe  -f', ' --ion-eager --thread-count=2 --fuzzing-safe  -f', ' --baseline-eager --no-fpu --thread-count=2 --fuzzing-safe  -f', ' --no-baseline --no-ion --thread-count=2 --fuzzing-safe  -f', ' --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --no-sse3 --no-threads --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-threads --fuzzing-safe  -f', ' --ion-offthread-compile=off --no-threads --fuzzing-safe  -f', ' --ion-eager --no-threads --fuzzing-safe  -f', ' --baseline-eager --no-fpu --no-threads --fuzzing-safe  -f', ' --no-baseline --no-ion --no-threads --fuzzing-safe  -f']
+
 testsuite="tests/tests/"
-targetDirectoryName2="generatedTestCases_js31_"
+targetDirectoryName2="generatedTestCases_js31"
 
 tmpDirectoryName="tmp"
 
@@ -97,7 +98,6 @@ def main(fileList,args):
     try:
         status=False
         listAllTestCasesDir(testsuite)
-
         targetDirectory=targetDirectoryName2
         shell=JS_SHELL_PATH2
         options=JS_SHELL_OPTIONS2
@@ -116,7 +116,7 @@ def main(fileList,args):
             for f in fileList:
                 statinfo = stat(f)
                 from subprocess import Popen,PIPE
-                exec_cmd="timeout 3 "+ shell +" -f /home/spandan/repo/geinterpreterfuzz/shell.js -f "+f
+                exec_cmd="timeout 3 "+ shell +" -f "+f
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
                 (out,err)=p.communicate()
                 rc= p.returncode

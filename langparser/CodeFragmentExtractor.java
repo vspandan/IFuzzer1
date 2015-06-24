@@ -47,67 +47,20 @@ public class CodeFragmentExtractor {
             private boolean escape=true;
             @Override
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
-                java.util.List<ParseTree> childs=ctx.children;
-                boolean ind=true;
-                if (childs!=null){
-                    
-                    if (childs.size()>1){
-                            ind = true;
-                    }
-                    else 
-                        if (childs.size()>0){
-                            for (ParseTree p : childs){
-                                if (p.getChildCount()==0){
-                                    ind=true;
-                                    break;
-                                }
-                            }
-                        }
-                    if (ind){
-                        ind=true;
+                if(ctx != null) {
                         String key=ruleNames[ctx.getRuleIndex()];
-                            sb.append("<"+key+">");
-                    }
+                        sb.append("<"+key+">");
                 }
             }
             
             @Override
             public void exitEveryRule(@NotNull ParserRuleContext ctx) {
                 if(ctx != null) {
-                    java.util.List<ParseTree> childs=ctx.children;
-                    boolean ind=true;
-                    if (childs!=null){
-                        if (childs.size()>1){
-                            ind = true;
-                        }
-                        else 
-                            if (childs.size()>0){
-                                for (ParseTree p : childs){
-                                    if (p.getChildCount()==0){
-                                        ind=true;
-                                        break;
-                                    }
-                                    
-                                }
-                            }
-                        
-                            
-                        if (ind){
-                            ind=true;
-                            String Stmt = null;
-                            Stmt = tokens.getText(ctx);
-                            String key=ruleNames[ctx.getRuleIndex()];
-
-                            /*if(key.equals("eos")){
-                                sb.append(";");
-                            }*/
-                                sb.append("</"+key+">");
-                        }
+                    String key=ruleNames[ctx.getRuleIndex()];
+                    sb.append("</"+key+">");
+                    if (ctx.getRuleIndex()== ECMAScriptParser.RULE_debuggerStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_variableStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_expressionStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_throwStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_returnStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_breakStatement | ctx.getRuleIndex()==ECMAScriptParser.RULE_continueStatement){
+                        sb.append(";");
                     }
-                    
-
-                   
-                
                 }
             }
             
@@ -116,7 +69,9 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                     try{
                         String token=ctx.getText();
-                        
+                        if(ctx.getSymbol().getType()==ECMAScriptParser.Identifier && !global_Objects.contains(token)){
+                            identifiers.add(token);  
+                        }
                         if(!token.equals("<EOF>"))
                             sb.append(xmlEscapeText(token)+" ");
                     }
@@ -126,13 +81,6 @@ public class CodeFragmentExtractor {
                     
                 }
             }
-            
-            @Override
-            public void visitErrorNode(@NotNull ErrorNode ctx) {
-                if(ctx != null) {
-                }
-            }
-            
             
         }, parser.program());
         long endTime = System.currentTimeMillis();
@@ -170,73 +118,35 @@ public class CodeFragmentExtractor {
         
         
         ParseTreeWalker.DEFAULT.walk(new ECMAScriptBaseListener(){
-            
-            
             @Override
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
                 try{
                     if(ctx != null) {
-                        java.util.List<ParseTree> childs=ctx.children;
-                        boolean ind=true;
-                        if (childs.size()>1){
-                            ind = true;
+                        String Stmt = "";
+                        int start = ctx.start.getTokenIndex();
+                        int stop = ctx.stop.getTokenIndex();
+                        for (int i = start; i <= stop; i++) {
+                            String tokenText=tokens.get(i).getText();
+                            if (tokens.get(i).getType()==ECMAScriptParser.Identifier && !global_Objects.contains(tokenText))
+                                tokenText = "_id_"+tokenText;
+                            Stmt += tokenText;
                         }
-                        else 
-                            if (childs.size()>0){
-                                for (ParseTree p : childs){
-                                    if (p.getChildCount()==0){
-                                        ind=true;
-                                        break;
-                                    }
-                                    
-                                }
-                            }
-                        
-                        if (ind){
-                            ind=true;
-                            String Stmt = "";
-                            /*Stmt = tokens.getText(ctx);*/
-                            int start = ctx.start.getTokenIndex();
-                            int stop = ctx.stop.getTokenIndex();
-                            for (int i = start; i <= stop; i++) {
-                                String tokenText=tokens.get(i).getText();
-                                if (!global_Objects.contains(tokenText))
-                                    tokenText = "_id_"+tokenText;
-                                Stmt += tokenText;
-                            }
-                            //System.out.println(ctx.start);
-                            
-                            String key=ruleNames[ctx.getRuleIndex()];
-                            ArrayList<String> aL = null;
-                            if (!hm.containsKey(key)){
-                                aL = new ArrayList<String>();
-                                aL.add(Stmt);
-                            }
-                            else{
-                                aL=hm.get(key);
-                                aL.add(Stmt);
-                            }
-                            hm.put(key,aL);
+                        String key=ruleNames[ctx.getRuleIndex()];
+                        ArrayList<String> aL = null;
+                        if (!hm.containsKey(key)){
+                            aL = new ArrayList<String>();
+                            aL.add(Stmt);
                         }
+                        else{
+                            aL=hm.get(key);
+                            aL.add(Stmt);
+                        }
+                        hm.put(key,aL);
                     }
-                    
                 }
                 catch(Exception e){
-                    
                 }
             }
-            
-            
-            @Override
-            public void visitTerminal(@NotNull TerminalNode node) {
-            }
-            
-            
-            @Override
-            public void visitErrorNode(@NotNull ErrorNode node) {
-            }
-            
-            
         }, parser.program());
         return hm;
     }

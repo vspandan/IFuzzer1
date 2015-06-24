@@ -127,7 +127,7 @@ classTail
  ;
 
 classHeritage
- : Extends leftHandSideExpression
+ : Extends assignmentExpression
  ; 
 
 classBody
@@ -258,7 +258,7 @@ iterationStatement
  | While '(' expression ')' statement                                                      
  | For '(' expression? ';' expression? ';' expression? ')' statement        
  | For '(' (Var|Let|Const) variableDeclarationList ';' expression? ';' expression? ')' statement 
- | For 'each'? '(' ((Var|Let|Const) identifierBinding | leftHandSideExpression) (In|Of) expression ')' statement
+ | For 'each'? '(' ((Var|Let|Const) identifierBinding | assignmentExpression) (In|Of) expression ')' statement
  ;
 
 continueStatement
@@ -464,93 +464,48 @@ expression
  ;
  
 assignmentExpression
- :     conditionalExpression 
- |     yieldExpression 
- |     leftHandSideExpression '=' assignmentExpression  
- |     leftHandSideExpression assignmentOperator assignmentExpression 
+ :     yieldExpression 
+ |     assignmentExpression '=' assignmentExpression  
+ |     assignmentExpression assignmentOperator assignmentExpression 
  |     arrowFunction 
- |     assignmentExpression For 'each'? '(' ((Var|Let|Const) identifierBinding | leftHandSideExpression) (In | Of) expression ')'
+ |     assignmentExpression For 'each'? '(' ((Var|Let|Const) identifierBinding | assignmentExpression) (In | Of) expression ')'
  |     assignmentExpression If '(' expression ')'
- ;
-
-conditionalExpression
- :     logicalORExpression
- |     logicalORExpression '?' assignmentExpression ':' assignmentExpression 
- ;
- logicalORExpression
- :     logicalANDExpression
- |     logicalORExpression '||' logicalANDExpression
- ;
- logicalANDExpression
- :     bitwiseORExpression
- |     logicalANDExpression '&&' bitwiseORExpression
- ;
- bitwiseORExpression
- :     bitwiseXORExpression
- |     bitwiseORExpression '|' bitwiseXORExpression
- ;
- bitwiseXORExpression
- :     bitwiseANDExpression
- |     bitwiseXORExpression '^' bitwiseANDExpression
- ;
- bitwiseANDExpression
- :     equalityExpression
- |     bitwiseANDExpression '&' equalityExpression
- ;
- equalityExpression 
- :     relationalExpression
- |     equalityExpression '==' relationalExpression
- |     equalityExpression '!=' relationalExpression
- |     equalityExpression '===' relationalExpression
- |     equalityExpression '!==' relationalExpression
- ;
- relationalExpression 
- :     shiftExpression
- |     relationalExpression '<' shiftExpression
- |     relationalExpression '>' shiftExpression
- |     relationalExpression '<=' shiftExpression
- |     relationalExpression '>=' shiftExpression
- |     relationalExpression Instanceof shiftExpression 
- |     relationalExpression In shiftExpression
- ;
-  shiftExpression
- :     additiveExpression
- |     shiftExpression '<<' additiveExpression
- |     shiftExpression '>>' additiveExpression
- |     shiftExpression '>>>' additiveExpression
- ; 
- additiveExpression  
- :     multiplicativeExpression
- |     additiveExpression '+' multiplicativeExpression
- |     additiveExpression '-' multiplicativeExpression
- ;
- multiplicativeExpression  
- :     unaryExpression
- |     multiplicativeExpression '*' unaryExpression
- |     multiplicativeExpression '/' unaryExpression
- |     multiplicativeExpression '%' unaryExpression
- ;
- unaryExpression  
- :     postfixExpression
- |     Delete unaryExpression
- |     Void unaryExpression
- |     Typeof unaryExpression
- |     '++' unaryExpression
- |     '--' unaryExpression
- |     '+' unaryExpression
- |     '-' unaryExpression
- |     '~' unaryExpression
- |     '!' unaryExpression
- ;
-
-postfixExpression  
- :     leftHandSideExpression
- |     leftHandSideExpression {!here(LineTerminator)}? '++'
- |     leftHandSideExpression {!here(LineTerminator)}? '--'
- ;
-
-leftHandSideExpression  
- :     callExpression
+ |     assignmentExpression '?' assignmentExpression ':' assignmentExpression 
+ |     assignmentExpression '||' assignmentExpression
+ |     assignmentExpression '&&' assignmentExpression
+ |     assignmentExpression '|' assignmentExpression
+ |     assignmentExpression '^' assignmentExpression
+ |     assignmentExpression '&' assignmentExpression
+ |     assignmentExpression '==' assignmentExpression
+ |     assignmentExpression '!=' assignmentExpression
+ |     assignmentExpression '===' assignmentExpression
+ |     assignmentExpression '!==' assignmentExpression
+ |     assignmentExpression '<' assignmentExpression
+ |     assignmentExpression '>' assignmentExpression
+ |     assignmentExpression '<=' assignmentExpression
+ |     assignmentExpression '>=' assignmentExpression
+ |     assignmentExpression Instanceof assignmentExpression 
+ |     assignmentExpression In assignmentExpression
+ |     assignmentExpression '<<' assignmentExpression
+ |     assignmentExpression '>>' assignmentExpression
+ |     assignmentExpression '>>>' assignmentExpression
+ |     assignmentExpression '+' assignmentExpression
+ |     assignmentExpression '-' assignmentExpression
+ |     assignmentExpression '*' assignmentExpression
+ |     assignmentExpression '/' assignmentExpression
+ |     assignmentExpression '%' assignmentExpression
+ |     Delete assignmentExpression
+ |     Void assignmentExpression
+ |     Typeof assignmentExpression
+ |     '++' assignmentExpression
+ |     '--' assignmentExpression
+ |     '+' assignmentExpression
+ |     '-' assignmentExpression
+ |     '~' assignmentExpression
+ |     '!' assignmentExpression
+ |     assignmentExpression {!here(LineTerminator)}? '++'
+ |     assignmentExpression {!here(LineTerminator)}? '--'
+ |     callExpression
  |     newExpression
  ;
 
@@ -573,7 +528,15 @@ newExpression
  ;
 
 memberExpression  
- :     primaryExpression
+ :     This
+ |     identifierName
+ |     functionExpression
+ |     classDeclaration
+ |     literal
+ |     objectLiteral
+ |     '(' expression ')'
+ |     arrayLiteral
+ |     templateLiteral
  |     memberExpression '[' expression ']'
  |     memberExpression '.' identifierName
  |     memberExpression templateLiteral
@@ -590,18 +553,6 @@ functionExpression
  :     Function '*'? identifierName? '(' formalParameterList? ')' ('{' functionBody '}'|statement)
  ;
  
-primaryExpression  
- :     This
- |     identifierName
- |     functionExpression
- |     classDeclaration
- |     literal
- |     objectLiteral
- |     '(' expression ')'
- |     arrayLiteral
- |     templateLiteral
- ;
-
 templateLiteral 
  : NoSubstitutionTemplate
  | TemplateHead expression templateSpans

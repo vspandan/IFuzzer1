@@ -127,18 +127,18 @@ class Genotype(object):
                     item = prg_list[position]
                     if item in self.keywords:
                         prg_list[position]=lower(item)
-                    elif item in ['identifier']:
-                        prg_list[position] = self._converge(item)
-                    elif item in ['StringLiteral','RegularExpressionLiteral']:
-                        prg_list[position] = self._converge('literal')
-                    elif item in ['DecimalLiteral','HexIntegerLiteral','OctalIntegerLiteral','BinaryLiteral']:
-                        prg_list[position] = self._converge('numericLiteral')
                     elif item in self._keys:
                         if depth < self._max_depth:
                             prg_list[position] = self.resolve_variable(item)
                         else:
                             prg_list[position] = self._converge(item)
                         continue_map = True
+                    else:
+                        if item == 'StringLiteral':
+                            prg_list[position] = self._converge('literal')
+                        elif item in ['literal','numericliteral','templateLiteral']:
+                            prg_list[position] = self._converge(item)
+                    
                     position += 1
                     
                 depth += 1
