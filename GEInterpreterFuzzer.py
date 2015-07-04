@@ -78,10 +78,15 @@ def createFragmentPool():
     if not exists("database"):
         makedirs("database")
     count=1
+    escapeFileList=[]
+    escapeFile=open("escape.lst","r")
+    for line in escapeFile:
+        escapeFileList.append(line.strip())
+    escapeFile.close()
     ind=True
     for f in fileList:
         statinfo=stat(f)
-        if count > 0 and statinfo.st_size <= 10000 :
+        if count > 3600 and statinfo.st_size <= 10000 and f not in escapeFileList:
             print (count)
             print (f)
             res=extractCodeFrag(f)
@@ -113,8 +118,14 @@ def main(fileList,args):
             logging.info(datetime.now())
             logging.info("Moving files that has to be processed to temporary location")
             count=0
+            escapeFileList=[]
+            escapeFile=open("escape.lst","r")
+            for line in escapeFile:
+                escapeFileList.append(line.strip())
+            escapeFile.close()
             for f in fileList:
-                statinfo = stat(f)
+                if f in escapeFileList:
+                    continue
                 from subprocess import Popen,PIPE
                 exec_cmd="timeout 3 "+ shell +" -f "+f
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)

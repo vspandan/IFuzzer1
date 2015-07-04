@@ -669,6 +669,146 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitAssignmentExpression(@NotNull ECMAScriptParser.AssignmentExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#conditionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterConditionalExpression(@NotNull ECMAScriptParser.ConditionalExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#conditionalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitConditionalExpression(@NotNull ECMAScriptParser.ConditionalExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#logicalORExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalORExpression(@NotNull ECMAScriptParser.LogicalORExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#logicalORExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalORExpression(@NotNull ECMAScriptParser.LogicalORExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#logicalANDExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalANDExpression(@NotNull ECMAScriptParser.LogicalANDExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#logicalANDExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalANDExpression(@NotNull ECMAScriptParser.LogicalANDExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseORExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitwiseORExpression(@NotNull ECMAScriptParser.BitwiseORExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#bitwiseORExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitwiseORExpression(@NotNull ECMAScriptParser.BitwiseORExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseXORExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitwiseXORExpression(@NotNull ECMAScriptParser.BitwiseXORExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#bitwiseXORExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitwiseXORExpression(@NotNull ECMAScriptParser.BitwiseXORExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#bitwiseANDExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitwiseANDExpression(@NotNull ECMAScriptParser.BitwiseANDExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#bitwiseANDExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitwiseANDExpression(@NotNull ECMAScriptParser.BitwiseANDExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#equalityExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityExpression(@NotNull ECMAScriptParser.EqualityExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#equalityExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityExpression(@NotNull ECMAScriptParser.EqualityExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#relationalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalExpression(@NotNull ECMAScriptParser.RelationalExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#relationalExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalExpression(@NotNull ECMAScriptParser.RelationalExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#shiftExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterShiftExpression(@NotNull ECMAScriptParser.ShiftExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#shiftExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitShiftExpression(@NotNull ECMAScriptParser.ShiftExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#additiveExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditiveExpression(@NotNull ECMAScriptParser.AdditiveExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#additiveExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditiveExpression(@NotNull ECMAScriptParser.AdditiveExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#multiplicativeExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicativeExpression(@NotNull ECMAScriptParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#multiplicativeExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicativeExpression(@NotNull ECMAScriptParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#unaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpression(@NotNull ECMAScriptParser.UnaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#unaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpression(@NotNull ECMAScriptParser.UnaryExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#postfixExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPostfixExpression(@NotNull ECMAScriptParser.PostfixExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#postfixExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPostfixExpression(@NotNull ECMAScriptParser.PostfixExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#callExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -728,6 +868,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#primaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimaryExpression(@NotNull ECMAScriptParser.PrimaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#primaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimaryExpression(@NotNull ECMAScriptParser.PrimaryExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#templateLiteral}.
 	 * @param ctx the parse tree

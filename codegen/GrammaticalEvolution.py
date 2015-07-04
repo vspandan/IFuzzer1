@@ -448,10 +448,6 @@ class GrammaticalEvolution(object):
             logging.info("Inside computeSubScore method")
             ti=time()
             incompl,dummy,exec_time=parseTree(program,True)
-            res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
-            if len(res) > 0:
-                print "computeSubScore-rejection"
-                return None
             logging.info("Score Calc: Invoked parser for " +str(time()-ti) +" seconds")
             gene.prgLength=len(extractNonTerminal(incompl,[]))
             score= -float(exec_time)/gene.prgLength
@@ -595,10 +591,6 @@ class GrammaticalEvolution(object):
             
                     ti1=time()
                     child1ParseTree,child1._identifiers,exec_time=parseTree(child1Prg,True)
-                    res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child1ParseTree)
-                    if len(res) > 0:
-                        print "crossover1-rejection"
-                        continue
                     non_term1=extractNonTerminal(child1ParseTree,[])
                     logging.info("Invoked parser - Crossover-1 for " +str(time()-ti1) +" seconds")
                     child1.prgLength=len(non_term1)
@@ -606,10 +598,6 @@ class GrammaticalEvolution(object):
                     
                     ti2=time()
                     child2ParseTree,child2._identifiers,exec_time=parseTree(child2Prg,True)
-                    res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child2ParseTree)
-                    if len(res) > 0:
-                        print "crossover2-rejection"
-                        continue
                     non_term2=extractNonTerminal(child2ParseTree,[])
                     child2.prgLength=len(non_term2)
                     logging.info("Invoked parser - Crossover-2 for " +str(time()-ti2)+" seconds")
@@ -721,10 +709,6 @@ class GrammaticalEvolution(object):
                 
                 ti1=time()
                 incompl, gene._identifiers,exec_time = parseTree(gene.get_program(),True)
-                res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
-                if len(res) > 0:
-                    print "mutation-rejection"
-                    return None
                 non_TerminalsList=extractNonTerminal(incompl,[])
                 logging.info("Invoked parser - Mutation-1 for " +str(time()-ti1)+" seconds")
                 count=1

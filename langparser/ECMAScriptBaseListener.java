@@ -809,6 +809,174 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterConditionalExpression(@NotNull ECMAScriptParser.ConditionalExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConditionalExpression(@NotNull ECMAScriptParser.ConditionalExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLogicalORExpression(@NotNull ECMAScriptParser.LogicalORExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogicalORExpression(@NotNull ECMAScriptParser.LogicalORExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLogicalANDExpression(@NotNull ECMAScriptParser.LogicalANDExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLogicalANDExpression(@NotNull ECMAScriptParser.LogicalANDExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBitwiseORExpression(@NotNull ECMAScriptParser.BitwiseORExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBitwiseORExpression(@NotNull ECMAScriptParser.BitwiseORExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBitwiseXORExpression(@NotNull ECMAScriptParser.BitwiseXORExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBitwiseXORExpression(@NotNull ECMAScriptParser.BitwiseXORExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBitwiseANDExpression(@NotNull ECMAScriptParser.BitwiseANDExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBitwiseANDExpression(@NotNull ECMAScriptParser.BitwiseANDExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterEqualityExpression(@NotNull ECMAScriptParser.EqualityExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEqualityExpression(@NotNull ECMAScriptParser.EqualityExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRelationalExpression(@NotNull ECMAScriptParser.RelationalExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRelationalExpression(@NotNull ECMAScriptParser.RelationalExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterShiftExpression(@NotNull ECMAScriptParser.ShiftExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitShiftExpression(@NotNull ECMAScriptParser.ShiftExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterAdditiveExpression(@NotNull ECMAScriptParser.AdditiveExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdditiveExpression(@NotNull ECMAScriptParser.AdditiveExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterMultiplicativeExpression(@NotNull ECMAScriptParser.MultiplicativeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiplicativeExpression(@NotNull ECMAScriptParser.MultiplicativeExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnaryExpression(@NotNull ECMAScriptParser.UnaryExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnaryExpression(@NotNull ECMAScriptParser.UnaryExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPostfixExpression(@NotNull ECMAScriptParser.PostfixExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPostfixExpression(@NotNull ECMAScriptParser.PostfixExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCallExpression(@NotNull ECMAScriptParser.CallExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -876,6 +1044,18 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunctionExpression(@NotNull ECMAScriptParser.FunctionExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrimaryExpression(@NotNull ECMAScriptParser.PrimaryExpressionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrimaryExpression(@NotNull ECMAScriptParser.PrimaryExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
