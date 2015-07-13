@@ -22,7 +22,7 @@ logging.basicConfig(filename=LOG_FILENAME,
 
 FILECOUNT = 0
 
-Population_size=500
+Population_size=300
 Timeout = 10
 Generations=100
 
@@ -39,7 +39,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
         def process(fil):
                 bnf=""
                 ges = GrammaticalEvolution()
-                ges.setGrammarFile(abspath("grammarFiles/JavaScript.g4"))
+                ges.setGrammarFile(abspath("langparser/JavaScript.g4"))
                 ges.set_bnf(bnf)
                 ges.set_genotype_length(20, 5000)
                 ges.set_population_size(Population_size)

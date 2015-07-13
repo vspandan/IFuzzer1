@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from copy import deepcopy
+from threading import Thread
 from datetime import datetime
 from os import path,listdir,remove
 from random import choice, randint, random
@@ -309,7 +310,10 @@ class GrammaticalEvolution(object):
                 self._compute_fitness()
             else:
                 break
-            logging.info("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
+            diff=round((time()-starttime))
+            if (diff>600):
+            	break
+            logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
       
     def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals,interpreterInd):
         self.interpreter_Shell=interpreter_Shell
@@ -354,84 +358,99 @@ class GrammaticalEvolution(object):
             except:
                 pass
             gene.local_bnf['program']=program
-        prglen=len(program)
-        if prglen > 0:
+
+        if len(program) > 0:
             try:
                 f=NamedTemporaryFile(delete=False)
                 f.close()
-                if self.interpreter_Options is not None:
-                    option = choice(self.interpreter_Options)
-                else:
-                    option=""
-                while prglen>0:
-                    prglen -= 1
+                option = choice(self.interpreter_Options)
+                while True:
                     tempFileObj=open(f.name,"w")
                     tempFileObj.write(program)
                     tempFileObj.close()
-
-                    result=tests.jit_test.main(f.name,[self.interpreter_Shell])
-                    for i,res in enumerate(result):
-                        (out,err,rc)=(res.out,res.err,res.rc)
-                    gene.err=err
-                    gene.rc=rc
-                    # Eliminating reference error; JS support hostilling
-                    if 'ReferenceError:' in err:
-                        if self._generation==0:
-                            break
-                        words=err.split()
-                        nextword=words[words.index('ReferenceError:')+1]
-                        if nextword == 'invalid' or nextword ==  'reference' :
-                            return 
-                        selected=None
-                        while nextword == selected or selected is None:
-                            if len(gene._identifiers)<0:
-                                break
-                            selected=choice(gene._identifiers)
-                            gene._identifiers.remove(selected)
-                        logging.info("Replacing "+nextword+" with "+selected)
-                        if nextword == selected or selected is None:
-                            break
-                        
-                        newWordList=[]
-                        wordList=split(VARIABLE_FORMAT1, program)
-                        for word in wordList:
-                            if word == nextword:
-                                newWordList.append(selected)
-                            else:
-                                newWordList.append(word)
-                        logging.info("Replaced "+nextword+" with "+selected)
-                        program=''.join(newWordList)
-                        gene.local_bnf['program'] = program
+                    timedout=False
+                    l=[None,None]        
+                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':''})
+                    t.start()
+                    t.join(self.execution_timeout)
+                    if t.isAlive():
+                        if l[0] is not None:
+                            logging.info("JS shell execution timeout. Process : "+str(l[0].pid))
+                            l[0].kill()
+                            kill(l[0].pid, 9)
+                            timedout=True
+                            sleep(.1)
                     else:
-                        break
+                        (out,err,rc)=l[1]
+                        gene.err=err
+                        gene.rc=rc
+                        # Eliminating reference error; JS support hostilling
+                        if 'ReferenceError:' in err:
+                            if self._generation==0:
+                                break
+                            words=err.split()
+                            nextword=words[words.index('ReferenceError:')+1]
+                            if nextword == 'invalid' or nextword ==  'reference' :
+                                return 
+                            selected=None
+                            while nextword == selected or selected is None:
+                                if len(gene._identifiers)<0:
+                                    break
+                                selected=choice(gene._identifiers)
+                                gene._identifiers.remove(selected)
+                            logging.info("Replacing "+nextword+" with "+selected)
+                            if nextword == selected or selected is None:
+                                break
+                            
+                            newWordList=[]
+                            wordList=split(VARIABLE_FORMAT1, program)
+                            for word in wordList:
+                                if word == nextword:
+                                    newWordList.append(selected)
+                                else:
+                                    newWordList.append(word)
+                            logging.info("Replaced "+nextword+" with "+selected)
+                            program=''.join(newWordList)
+                            gene.local_bnf['program'] = program
+                        else:
+                            break
                 if "timeout" in err or "terminating" in err or "out of memory" in err:
                     return
-                if rc not in [0,3,6]:
-                    program+="\n//"+option + "\n//" + err.replace("\n"," ")
-                    logging.info("Crash:")
-                    logging.info("Interpreter:"+self.interpreter_Shell)
-                    logging.info("Error:"+err)
-                    logging.info("TimeStamp:" + str(datetime.now()))
-                    logging.info("++++++++++++++++++++++++++++++++++++++++")
-                    logging.info(program)
-                    logging.info("++++++++++++++++++++++++++++++++++++++++")
-                    FILECOUNT = len(listdir(self.targetDirectory))+1 
-                    gene._fitness=self._fitness_fail
-                    newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
-                    f1=open(newFile,'w')
-                    f1.write(program)
-                    f1.close
-                else:
-                    if rc!=3 :
-                        gene.score=self.computeSubScore(gene,program,err)
-                        if gene.score is not None:
-                            if self._generation==0:
-                                gene._fitness =  gene.score
-                            else:
-                                if prgLength is not None:
-                                    if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
-                                        return
-                                gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+                if timedout:
+                    return
+                if rc!=3 :
+                    if gene.score is not None:
+                        if self._generation==0:
+                            gene._fitness =  gene.score
+                        else:
+                            if prgLength is not None:
+                                if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
+                                    return
+                            gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+                for option in self.interpreter_Options:
+                    l=[None,None]        
+                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':''})
+                    t.start()
+                    t.join(self.execution_timeout)
+                    (out,err,rc)=l[1]
+                    gene.err=err
+                    gene.rc=rc
+                    if rc not in [0,3,6]:
+                        program+="\n//"+option + "\n//" + err.replace("\n"," ")
+                        logging.info("Crash:")
+                        logging.info("Interpreter:"+self.interpreter_Shell)
+                        logging.info("Error:"+err)
+                        logging.info("TimeStamp:" + str(datetime.now()))
+                        logging.info("++++++++++++++++++++++++++++++++++++++++")
+                        logging.info(program)
+                        logging.info("++++++++++++++++++++++++++++++++++++++++")
+                        FILECOUNT = len(listdir(self.targetDirectory))+1 
+                        gene._fitness=self._fitness_fail
+                        newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
+                        f1=open(newFile,'w')
+                        f1.write(program)
+                        f1.close
+                        
             except:
                 pass
             finally:
@@ -442,12 +461,29 @@ class GrammaticalEvolution(object):
                     pass
         logging.info("compute_fitness completed")
     
+    def run_cmd(self, fi,l,option):
+        try:
+            # exec_cmd=self.interpreter_Shell+" "+option+" shell.js " + fi
+            exec_cmd=self.interpreter_Shell+" "+option+" " + fi
+            p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+            l[0]=p
+            out, err = p.communicate()
+            l[1]=(out,err,p.returncode)
+            sys.stdout.flush()
+            sys.stderr.flush()
+        except:
+            pass
+
     def computeSubScore (self, gene, program,err):
         try:
             score=0.0
             logging.info("Inside computeSubScore method")
             ti=time()
             incompl,dummy,exec_time=parseTree(program,True)
+            res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
+            if len(res) > 0:
+                print "computeSubScore-rejection"
+                return None
             logging.info("Score Calc: Invoked parser for " +str(time()-ti) +" seconds")
             gene.prgLength=len(extractNonTerminal(incompl,[]))
             score= -float(exec_time)/gene.prgLength
@@ -591,6 +627,10 @@ class GrammaticalEvolution(object):
             
                     ti1=time()
                     child1ParseTree,child1._identifiers,exec_time=parseTree(child1Prg,True)
+                    res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child1ParseTree)
+                    if len(res) > 0:
+                        print "crossover1-rejection"
+                        continue
                     non_term1=extractNonTerminal(child1ParseTree,[])
                     logging.info("Invoked parser - Crossover-1 for " +str(time()-ti1) +" seconds")
                     child1.prgLength=len(non_term1)
@@ -598,6 +638,10 @@ class GrammaticalEvolution(object):
                     
                     ti2=time()
                     child2ParseTree,child2._identifiers,exec_time=parseTree(child2Prg,True)
+                    res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child2ParseTree)
+                    if len(res) > 0:
+                        print "crossover2-rejection"
+                        continue
                     non_term2=extractNonTerminal(child2ParseTree,[])
                     child2.prgLength=len(non_term2)
                     logging.info("Invoked parser - Crossover-2 for " +str(time()-ti2)+" seconds")
@@ -709,6 +753,10 @@ class GrammaticalEvolution(object):
                 
                 ti1=time()
                 incompl, gene._identifiers,exec_time = parseTree(gene.get_program(),True)
+                res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
+                if len(res) > 0:
+                    print "mutation-rejection"
+                    return None
                 non_TerminalsList=extractNonTerminal(incompl,[])
                 logging.info("Invoked parser - Mutation-1 for " +str(time()-ti1)+" seconds")
                 count=1
