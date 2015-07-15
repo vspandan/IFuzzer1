@@ -58,8 +58,7 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                     String key=ruleNames[ctx.getRuleIndex()];
                     sb.append("</"+key+">");
-                    if (ctx.getRuleIndex()== ECMAScriptParser.RULE_debuggerStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_variableStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_expressionStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_throwStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_returnStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_breakStatement | ctx.getRuleIndex()==ECMAScriptParser.RULE_continueStatement){
-                        sb.append(";");
+                    if (ctx.getRuleIndex()== ECMAScriptParser.RULE_debuggerStatement||ctx.getRuleIndex()== ECMAScriptParser.RULE_expressionStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_throwStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_returnStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_breakStatement | ctx.getRuleIndex()==ECMAScriptParser.RULE_continueStatement){
                     }
                 }
             }
@@ -95,16 +94,16 @@ public class CodeFragmentExtractor {
         String script = "/home/spandan/test.js";
         HashMap hm=c.XMLIRGenerator(script,false);
         System.out.println(hm);
-        hm=c.extractFrags(script,true);
+        hm=c.extractFrags(script,false);
         System.out.println(hm);
 		System.out.println(c.extractAST(script,true));
     }
     
-    public HashMap<String,ArrayList> extractFrags(String script, boolean isFile) throws IOException {
+    public HashMap<String,ArrayList> extractFrags(String script, boolean isPrg) throws IOException {
         final List<String> global_Objects=  Arrays.asList("Infinity", "NaN", "undefined", "null ", "eval", "uneval", "isFinite", "isNaN", "parseFloat", "parseInt", "decodeURI", "decodeURIComponent", "encodeURI", "encodeURIComponent", "escape", "unescape", "Object", "Function", "Boolean", "Symbol", "Error", "EvalError", "InternalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError", "Number", "Math", "Date", "String", "RegExp", "Array", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array", "Uint32Array", "Float32Array", "Float64Array", "Map", "Set", "WeakMap", "WeakSet", "Promise", "Generator", "GeneratorFunction", "ArrayBuffer", "DataView", "JSON", "Reflect", "Proxy", "Iterator", "ParallelArray", "StopIteration");
         ECMAScriptParser parser = null;
         final HashMap<String,ArrayList> hm=new HashMap<String,ArrayList>();
-        if (!isFile){
+        if (isPrg){
             parser = new Builder.Parser(script).build();
         }
         else{

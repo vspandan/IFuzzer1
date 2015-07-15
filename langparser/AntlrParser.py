@@ -121,28 +121,36 @@ def genCodeFrag(input,nT,nonTerminal=None,INCLUDE_NT_LIST = None, count=1):
         logging.info("GenCodeFrag method - Completed ")
         return subcode,out,selectedNTList
 
-def parseTree(input,ind=False):
+"""
+True: Program
+False: File
+"""
+def parseTree(input):
     if len(input)>0:
-        c=CodeFragmentExtractor()
-        output = c.XMLIRGenerator(input,ind)
-        c=None
-        identifiers_JavaObj=output['identifiers']
-        identifiers=[]
-        for id in identifiers_JavaObj:
-            identifiers.append(id)
-        # xmlCode=''.join(split('(\W+)',output['parsecode']))
-        return output['parsecode'],identifiers, output['exec_time']
-        # return xmlCode,identifiers
-    return "",[]
+        try:
+            c=CodeFragmentExtractor()
+            output = c.XMLIRGenerator("\n"+input,True)
+            c=None
+            identifiers_JavaObj=output['identifiers']
+            identifiers=[]
+            for id in identifiers_JavaObj:
+                identifiers.append(id)
+            # xmlCode=''.join(split('(\W+)',output['parsecode']))
+            return output['parsecode'],identifiers, output['exec_time']
+            # return xmlCode,identifiers
+        except:
+            return "",[],0
+    return "",[],0
 """
 Restricting to accept only files;
+True: Program
+False: File
 """
 def extractCodeFrag(fileName,que=None):
     logging.info(fileName)
     c=CodeFragmentExtractor()
-    st="\n"
     f=open(fileName,"r")
-    d=c.extractFrags("\n"+f.read(),False)
+    d=c.extractFrags("\n"+f.read(),True)
     f.close()
     c=None
     if que is not None:

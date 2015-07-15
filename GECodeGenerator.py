@@ -28,7 +28,7 @@ Generations=100
 
 
 #Author: Spandan Veggalam
-def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess, interpreterInd):
+def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess):
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
@@ -58,8 +58,8 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 # ges.set_fitness_selections(
                 #     FitnessProportionate(ges.fitness_list, 'linear'))
                 
-                ges.set_crossover_rate(float(0.5))
-                ges.set_mutation_rate(float(0.8))
+                ges.set_crossover_rate(float(0.8))
+                ges.set_mutation_rate(float(0.2))
 
                 ges.set_max_depth(2)
                 ges.set_generative_mutation_rate(0.3)
@@ -89,7 +89,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 # print fil
                 
 
-                if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess,interpreterInd):
+                if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
                     ges.run()
                     for gene in ges.population:
                         if gene.get_fitness() != ges._fitness_fail :

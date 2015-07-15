@@ -315,10 +315,9 @@ class GrammaticalEvolution(object):
             	break
             logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals,interpreterInd):
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals):
         self.interpreter_Shell=interpreter_Shell
         self.interpreter_Options =interpreter_Options
-        self.interpreterInd=interpreterInd
         self.nT_Invld_Gen_Process=preSelectedNonTerminals
         self._extractProductions()
         self._prepareInitial_Population(file)
@@ -418,7 +417,8 @@ class GrammaticalEvolution(object):
                     return
                 if timedout:
                     return
-                if rc!=3 :
+                if rc not in [1,3]:
+                    gene.score += self.computeSubScore(gene,program,err)
                     if gene.score is not None:
                         if self._generation==0:
                             gene._fitness =  gene.score
@@ -427,15 +427,18 @@ class GrammaticalEvolution(object):
                                 if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
                                     return
                             gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+                else:
+                    return
+                
                 for option in self.interpreter_Options:
                     l=[None,None]        
-                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':''})
+                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option})
                     t.start()
                     t.join(self.execution_timeout)
                     (out,err,rc)=l[1]
                     gene.err=err
                     gene.rc=rc
-                    if rc not in [0,3,6]:
+                    if rc not in [0,6]:
                         program+="\n//"+option + "\n//" + err.replace("\n"," ")
                         logging.info("Crash:")
                         logging.info("Interpreter:"+self.interpreter_Shell)
@@ -479,7 +482,7 @@ class GrammaticalEvolution(object):
             score=0.0
             logging.info("Inside computeSubScore method")
             ti=time()
-            incompl,dummy,exec_time=parseTree(program,True)
+            incompl,dummy,exec_time=parseTree(program)
             res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
             if len(res) > 0:
                 print "computeSubScore-rejection"
@@ -589,7 +592,6 @@ class GrammaticalEvolution(object):
         ti=time()
         child_list = []
         try:
-            
             logging.debug("crossover started")
             length = int(round(self._crossover_rate * float(self._population_size)))
             """
@@ -626,7 +628,8 @@ class GrammaticalEvolution(object):
         
             
                     ti1=time()
-                    child1ParseTree,child1._identifiers,exec_time=parseTree(child1Prg,True)
+                    print parseTree(child1Prg)
+                    child1ParseTree,child1._identifiers,exec_time=parseTree(child1Prg)
                     res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child1ParseTree)
                     if len(res) > 0:
                         print "crossover1-rejection"
@@ -637,7 +640,7 @@ class GrammaticalEvolution(object):
 
                     
                     ti2=time()
-                    child2ParseTree,child2._identifiers,exec_time=parseTree(child2Prg,True)
+                    child2ParseTree,child2._identifiers,exec_time=parseTree(child2Prg)
                     res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child2ParseTree)
                     if len(res) > 0:
                         print "crossover2-rejection"
@@ -752,7 +755,7 @@ class GrammaticalEvolution(object):
                 shrink=False
                 
                 ti1=time()
-                incompl, gene._identifiers,exec_time = parseTree(gene.get_program(),True)
+                incompl, gene._identifiers,exec_time = parseTree(gene.get_program())
                 res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
                 if len(res) > 0:
                     print "mutation-rejection"

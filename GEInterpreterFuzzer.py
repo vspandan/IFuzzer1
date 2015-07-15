@@ -22,7 +22,7 @@ logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
 
 JS_SHELL_PATH2="/home/rubbernecker/jsengines/firefox/js/src/dist/bin/js"
-JS_SHELL_OPTIONS2=[' -f',' --ion-eager --ion-offthread-compile=off -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --ion-extra-checks --no-sse3 --no-threads -f', '--baseline-eager -f' , '--baseline-eager --no-fpu -f', '--no-baseline -f', '--no-ion -f' ]
+JS_SHELL_OPTIONS2=[' --ion-eager --ion-offthread-compile=off -f', ' --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --ion-extra-checks --no-sse3 --no-threads -f', '--baseline-eager -f' , '--baseline-eager --no-fpu -f', '--no-baseline -f', '--no-ion -f' ]
 
 testsuite="tests/tests/"
 targetDirectoryName2="generatedTestCases_js31"
@@ -160,7 +160,7 @@ def main(fileList,args):
             fileList2=fileList[:]
         
         from GECodeGenerator import runFuzzer         
-        runFuzzer(fileList2,targetDirectory, shell,options,EXCLUDE_FILES,INCLUDE_NT,2)
+        runFuzzer(fileList2,targetDirectory, shell,options,EXCLUDE_FILES,INCLUDE_NT)
     finally:
         pass
 
