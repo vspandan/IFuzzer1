@@ -22,13 +22,13 @@ logging.basicConfig(filename=LOG_FILENAME,
 
 FILECOUNT = 0
 
-Population_size=300
+Population_size=400
 Timeout = 10
 Generations=100
 
 
 #Author: Spandan Veggalam
-def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess):
+def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess,shell_ind):
     def selectGrammarFIle():
         Tk().withdraw()        
         e.set(askopenfilename())   
@@ -59,7 +59,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 #     FitnessProportionate(ges.fitness_list, 'linear'))
                 
                 ges.set_crossover_rate(float(0.8))
-                ges.set_mutation_rate(float(0.2))
+                ges.set_mutation_rate(float(1))
 
                 ges.set_max_depth(2)
                 ges.set_generative_mutation_rate(0.3)
@@ -68,9 +68,9 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 
                 ges.set_mutation_type('s')
 
-                ges.set_mutation_count(1);
-                ges.set_crossover_count(1);
-                ges._multiple_rate=(0.2)
+                ges.set_mutation_count(3);
+                ges.set_crossover_count(3);
+                ges._multiple_rate=(0.5)
 
                 ges.set_max_fitness_rate(float(0.04))
                 
@@ -89,7 +89,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 # print fil
                 
 
-                if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess):
+                if ges.create_genotypes(fil,interpreter,options,nTInvlvdGenProcess,shell_ind):
                     ges.run()
                     for gene in ges.population:
                         if gene.get_fitness() != ges._fitness_fail :
@@ -103,23 +103,31 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                             f.write(generatedPrg)
                             f.close
                 ges=None
+                for f in fil:
+					remove(f);                
 
         threadList=[]
         totalTempList=[]
+        iteration=0
         while True:
-            TestCases1=TestCases[:]
             tempList=[]    
+            print("iteration: "+str(iteration+1))
+            iteration+=1
             while len(tempList)<Population_size:
-                if len(TestCases1)>=Population_size:
-                    t=choice(TestCases1)
+                if len(TestCases)>=Population_size:
+                    t=choice(TestCases)
                     tempList.append(t)
                 else:
-                    t=choice(TestCases1)
-                    remove(t)
-                TestCases1.remove(t)
+                    if len(TestCases)>0:
+                        t=choice(TestCases)
+                        remove(t)
+                TestCases.remove(t)
             if len(tempList) >=Population_size:
                 logging.debug(tempList)
                 process(tempList)
+            else:
+                for f in TestCases:
+                    remove(f);                            	
             return False
             
     return initialize()
