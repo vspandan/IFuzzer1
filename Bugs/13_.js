@@ -1,14 +1,31 @@
-function f(x, y, z) {
-    var z;
-    z = Math.fround(z);
-    assertFloat32(z, true);
-    assertFloat32(z, false);
-    return z;
+var isConstructing = getSelfHostedValue("_IsConstructing");
+
+for (var i = 0; i < 40; i++) {
+    isConstructing('aaaaa');
 }
 
-setJitCompilerOption("ion.warmup.trigger", 50);
-for (var n = 100; n--;) {
-    assertEq(f(0, 1, 2), 2);
-    
-}
-//Assertion failure: secondArg->type() == MIRType_Boolean, at /home/rubbernecker/jsengines/firefox/js/src/jit/MCallOptimize.cpp:2648 
+
+///home/rubbernecker/jsengines/firefox/js/src/dist/bin/js
+// --ion-eager --ion-offthread-compile=off -f
+//Assertion failure: callInfo.argc() == 0, at /home/rubbernecker/jsengines/firefox/js/src/jit/MCallOptimize.cpp:3062 
+//Generation:4
+///home/rubbernecker/jsengines/firefox/js/src/dist/bin/js
+// --ion-eager --ion-offthread-compile=off --ion-check-range-analysis --ion-extra-checks --no-sse3 --no-threads -f
+//Assertion failure: callInfo.argc() == 0, at /home/rubbernecker/jsengines/firefox/js/src/jit/MCallOptimize.cpp:3062 
+//Generation:4
+///home/rubbernecker/jsengines/firefox/js/src/dist/bin/js
+//--baseline-eager -f
+//Assertion failure: args.length() == 0, at /home/rubbernecker/jsengines/firefox/js/src/vm/SelfHosting.cpp:1206 
+//Generation:4
+///home/rubbernecker/jsengines/firefox/js/src/dist/bin/js
+//--baseline-eager --no-fpu -f
+//Assertion failure: args.length() == 0, at /home/rubbernecker/jsengines/firefox/js/src/vm/SelfHosting.cpp:1206 
+//Generation:4
+///home/rubbernecker/jsengines/firefox/js/src/dist/bin/js
+//--no-baseline -f
+//Assertion failure: args.length() == 0, at /home/rubbernecker/jsengines/firefox/js/src/vm/SelfHosting.cpp:1206 
+//Generation:4
+///home/rubbernecker/jsengines/firefox/js/src/dist/bin/js
+//--no-ion -f
+//Assertion failure: args.length() == 0, at /home/rubbernecker/jsengines/firefox/js/src/vm/SelfHosting.cpp:1206 
+//Generation:4

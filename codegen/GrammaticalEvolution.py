@@ -888,6 +888,18 @@ class GrammaticalEvolution(object):
                             word=temp
                     else:
                         word='a'
+            elif "quit" in word:
+                    if indicator:
+                        if self.identifiers_mapping.has_key(word):
+                            word=self.identifiers_mapping[word]
+                        else:
+                            temp=choice(gene._identifiers).replace("quit","")
+                            self.identifiers_mapping[word]=temp
+                            word=temp
+                    else:
+                        word='a'
+            modifiedWordList.append(word)
+
             modifiedWordList.append(word)
         return ''.join(modifiedWordList)
 
