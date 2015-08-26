@@ -22,9 +22,9 @@ logging.basicConfig(filename=LOG_FILENAME,
 
 FILECOUNT = 0
 
-Population_size=400
+Population_size=300
 Timeout = 10
-Generations=100
+Generations=40
 
 
 #Author: Spandan Veggalam
