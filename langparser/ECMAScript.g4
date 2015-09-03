@@ -258,7 +258,7 @@ iterationStatement
  | While '(' expression ')' statement                                                      
  | For '(' expression? ';' expression? ';' expression? ')' statement        
  | For '(' (Var|Let|Const) variableDeclarationList ';' expression? ';' expression? ')' statement 
- | For 'each'? '(' ((Var|Let|Const) identifierBinding | conditionalExpression) (In|Of) expression ')' statement
+ | For 'each'? '(' ((Var|Let|Const) identifierBinding | leftHandSideExpression) (In|Of) expression ')' statement
  ;
 
 continueStatement
@@ -509,11 +509,16 @@ conditionalExpression
  |     '!' conditionalExpression
  |     conditionalExpression {!here(LineTerminator)}? '++'
  |     conditionalExpression {!here(LineTerminator)}? '--'
- |     newExpression
- |     callExpression
+ |     leftHandSideExpression
  ;
 
-callExpression  
+
+leftHandSideExpression  
+ :     callExpression
+ |     newExpression
+ ;
+
+callExpression   
  :     memberExpression arguments
  |     superCall
  |     callExpression arguments
