@@ -93,7 +93,7 @@ def createFragmentPool():
     ind=True
     for f in fileList:
         statinfo=stat(f)
-        if count > 3600 and statinfo.st_size <= 10000 and f not in escapeFileList:
+        if count > -1 and statinfo.st_size <= 10000 and f not in escapeFileList:
             print (count)
             print (f)
             res=extractCodeFrag(f)
@@ -172,6 +172,8 @@ if __name__ == "__main__":
     sys.setrecursionlimit(300000)
     if args[0]=="0":
         listAllTestCasesDir(testsuite)
+        if not exists("database"):
+            makedirs("database")
         fileList1=listdir("database")
         if len(fileList1):
             while True:

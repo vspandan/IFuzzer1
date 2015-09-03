@@ -353,8 +353,7 @@ class GrammaticalEvolution(object):
         if self._generation > 0:
             program=self.de_EscapeText(gene,program)
             try:
-                prg=beautify(program)
-                program=prg
+                program=beautify(program)
             except:
                 pass
             gene.local_bnf['program']=program
@@ -898,8 +897,6 @@ class GrammaticalEvolution(object):
                             word=temp
                     else:
                         word='a'
-            modifiedWordList.append(word)
-
             modifiedWordList.append(word)
         return ''.join(modifiedWordList)
 

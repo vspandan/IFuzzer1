@@ -127,7 +127,7 @@ classTail
  ;
 
 classHeritage
- : Extends leftHandSideExpression
+ : Extends conditionalExpression
  ; 
 
 classBody
@@ -258,7 +258,7 @@ iterationStatement
  | While '(' expression ')' statement                                                      
  | For '(' expression? ';' expression? ';' expression? ')' statement        
  | For '(' (Var|Let|Const) variableDeclarationList ';' expression? ';' expression? ')' statement 
- | For 'each'? '(' ((Var|Let|Const) identifierBinding | leftHandSideExpression) (In|Of) expression ')' statement
+ | For 'each'? '(' ((Var|Let|Const) identifierBinding | conditionalExpression) (In|Of) expression ')' statement
  ;
 
 continueStatement
@@ -270,7 +270,7 @@ breakStatement
  ;
 
 returnStatement
- : Return {!here(LineTerminator)}? expression? 
+ : Return {!here(LineTerminator)}? expression? eos?
  ;
 
 withStatement
@@ -464,94 +464,53 @@ expression
  ;
  
 assignmentExpression
- :     conditionalExpression 
+ :     conditionalExpression
  |     yieldExpression 
- |     leftHandSideExpression '=' assignmentExpression  
- |     leftHandSideExpression assignmentOperator assignmentExpression 
+ |     conditionalExpression '=' assignmentExpression  eos?
+ |     conditionalExpression assignmentOperator assignmentExpression 
  |     arrowFunction 
- |     assignmentExpression For 'each'? '(' ((Var|Let|Const) identifierBinding | leftHandSideExpression) (In | Of) expression ')'
+ |     assignmentExpression For 'each'? '(' ((Var|Let|Const) identifierBinding | conditionalExpression) (In | Of) expression ')'
  |     assignmentExpression If '(' expression ')'
  ;
 
 conditionalExpression
- :     logicalORExpression
- |     logicalORExpression '?' assignmentExpression ':' assignmentExpression 
- ;
- logicalORExpression
- :     logicalANDExpression
- |     logicalORExpression '||' logicalANDExpression
- ;
- logicalANDExpression
- :     bitwiseORExpression
- |     logicalANDExpression '&&' bitwiseORExpression
- ;
- bitwiseORExpression
- :     bitwiseXORExpression
- |     bitwiseORExpression '|' bitwiseXORExpression
- ;
- bitwiseXORExpression
- :     bitwiseANDExpression
- |     bitwiseXORExpression '^' bitwiseANDExpression
- ;
- bitwiseANDExpression
- :     equalityExpression
- |     bitwiseANDExpression '&' equalityExpression
- ;
- equalityExpression 
- :     relationalExpression
- |     equalityExpression '==' relationalExpression
- |     equalityExpression '!=' relationalExpression
- |     equalityExpression '===' relationalExpression
- |     equalityExpression '!==' relationalExpression
- ;
- relationalExpression 
- :     shiftExpression
- |     relationalExpression '<' shiftExpression
- |     relationalExpression '>' shiftExpression
- |     relationalExpression '<=' shiftExpression
- |     relationalExpression '>=' shiftExpression
- |     relationalExpression Instanceof shiftExpression 
- |     relationalExpression In shiftExpression
- ;
-  shiftExpression
- :     additiveExpression
- |     shiftExpression '<<' additiveExpression
- |     shiftExpression '>>' additiveExpression
- |     shiftExpression '>>>' additiveExpression
- ; 
- additiveExpression  
- :     multiplicativeExpression
- |     additiveExpression '+' multiplicativeExpression
- |     additiveExpression '-' multiplicativeExpression
- ;
- multiplicativeExpression  
- :     unaryExpression
- |     multiplicativeExpression '*' unaryExpression
- |     multiplicativeExpression '/' unaryExpression
- |     multiplicativeExpression '%' unaryExpression
- ;
- unaryExpression  
- :     postfixExpression
- |     Delete unaryExpression
- |     Void unaryExpression
- |     Typeof unaryExpression
- |     '++' unaryExpression
- |     '--' unaryExpression
- |     '+' unaryExpression
- |     '-' unaryExpression
- |     '~' unaryExpression
- |     '!' unaryExpression
- ;
-
-postfixExpression  
- :     leftHandSideExpression
- |     leftHandSideExpression {!here(LineTerminator)}? '++'
- |     leftHandSideExpression {!here(LineTerminator)}? '--'
- ;
-
-leftHandSideExpression  
- :     callExpression
+ :     conditionalExpression '?' assignmentExpression ':' assignmentExpression 
+ |     conditionalExpression '||' conditionalExpression
+ |     conditionalExpression '&&' conditionalExpression
+ |     conditionalExpression '|' conditionalExpression
+ |     conditionalExpression '^' conditionalExpression
+ |     conditionalExpression '&' conditionalExpression
+ |     conditionalExpression '==' conditionalExpression
+ |     conditionalExpression '!=' conditionalExpression
+ |     conditionalExpression '===' conditionalExpression
+ |     conditionalExpression '!==' conditionalExpression
+ |     conditionalExpression '<' conditionalExpression
+ |     conditionalExpression '>' conditionalExpression
+ |     conditionalExpression '<=' conditionalExpression
+ |     conditionalExpression '>=' conditionalExpression
+ |     conditionalExpression Instanceof conditionalExpression 
+ |     conditionalExpression In conditionalExpression
+ |     conditionalExpression '<<' conditionalExpression
+ |     conditionalExpression '>>' conditionalExpression
+ |     conditionalExpression '>>>' conditionalExpression
+ |     conditionalExpression '+' conditionalExpression
+ |     conditionalExpression '-' conditionalExpression
+ |     conditionalExpression '*' conditionalExpression
+ |     conditionalExpression '/' conditionalExpression
+ |     conditionalExpression '%' conditionalExpression
+ |     Delete conditionalExpression
+ |     Void conditionalExpression
+ |     Typeof conditionalExpression
+ |     '++' conditionalExpression
+ |     '--' conditionalExpression
+ |     '+' conditionalExpression
+ |     '-' conditionalExpression
+ |     '~' conditionalExpression
+ |     '!' conditionalExpression
+ |     conditionalExpression {!here(LineTerminator)}? '++'
+ |     conditionalExpression {!here(LineTerminator)}? '--'
  |     newExpression
+ |     callExpression
  ;
 
 callExpression  
@@ -560,7 +519,6 @@ callExpression
  |     callExpression arguments
  |     callExpression '[' expression ']'
  |     callExpression '.' identifierName
- |     callExpression templateLiteral
  ;
 
 superCall
@@ -576,7 +534,6 @@ memberExpression
  :     primaryExpression
  |     memberExpression '[' expression ']'
  |     memberExpression '.' identifierName
- |     memberExpression templateLiteral
  |     superPropery
  |     New memberExpression arguments
  ;
@@ -599,20 +556,6 @@ primaryExpression
  |     objectLiteral
  |     '(' expression ')'
  |     arrayLiteral
- |     templateLiteral
- ;
-
-templateLiteral 
- : NoSubstitutionTemplate
- | TemplateHead expression templateSpans
- ;
-
-templateSpans
- : templateMiddleList? TemplateTail
- ;
-
-templateMiddleList
- : (TemplateMiddle expression)+
  ;
 
 assignmentOperator
@@ -869,12 +812,13 @@ Yield      : {strictMode}? ('yield'|'yield*');
 /// 7.6 identifierName Names and identifierName
 Identifier
  : IdentifierStart IdentifierPart*
- ;
+  ;
 
 /// 7.8.4 String Literals
 StringLiteral
  : '"' DoubleStringCharacter* '"'
  | '\'' SingleStringCharacter* '\''
+ | '`' TemplateCharacter* '`'
  ;
 
 WhiteSpaces
@@ -908,9 +852,9 @@ fragment SingleStringCharacter
 
 fragment EscapeSequence
  : CharacterEscapeSequence
- | '0' // no digit ahead! TODO
  | HexEscapeSequence
  | UnicodeEscapeSequence
+ | DecimalDigit
  ;
 
 fragment CharacterEscapeSequence
@@ -1455,22 +1399,6 @@ fragment RegularExpressionClass
 fragment RegularExpressionClassChar
  : ~[\r\n\u2028\u2029\]\\]
  | RegularExpressionBackslashSequence
- ;
-
-NoSubstitutionTemplate
- : '`' TemplateCharacter* '`'
- ;
-
-TemplateHead
- : '`' TemplateCharacter* '$' '{'
- ;
-
-TemplateTail
- : '}' TemplateCharacter* '`'
- ;
-
-TemplateMiddle
- : '}' TemplateCharacter* '$' '{'
  ;
 
 fragment TemplateCharacter
