@@ -301,6 +301,7 @@ class GrammaticalEvolution(object):
         logging.info("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
         while True:
             logging.info("Starting "+str(self._generation)+" Generation - "+str(datetime.now()))
+            print("Starting "+str(self._generation)+" Generation - "+str(datetime.now()))
             starttime=time()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
@@ -368,7 +369,7 @@ class GrammaticalEvolution(object):
                     tempFileObj.close()
                     timedout=False
                     l=[None,None]        
-                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0][0]})
+                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':" -f "})
                     t.start()
                     t.join(self.execution_timeout)
                     if t.isAlive():
@@ -378,6 +379,7 @@ class GrammaticalEvolution(object):
                             kill(l[0].pid, 9)
                             timedout=True
                             sleep(.1)
+                        break
                     else:
                         (out,err,rc)=l[1]
                         gene.err=err
@@ -443,9 +445,9 @@ class GrammaticalEvolution(object):
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
                             logging.info(program)
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
-                            FILECOUNT = len(listdir(self.targetDirectory))+1 
+                            FILECOUNT = len(listdir("Bugs"))+1 
                             gene._fitness=self._fitness_fail
-                            newFile=self.targetDirectory+"/"+str(FILECOUNT)+"_.js"
+                            newFile="Bugs/"+str(FILECOUNT)+"_.js"
                             f1=open(newFile,'w')
                             f1.write(program)
                             f1.close
@@ -913,6 +915,7 @@ class GrammaticalEvolution(object):
         logging.info("Mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
         logging.info("Unique: "+str(len(s)) +" Genotype Objects based on Fitness")
         logging.info("Fitness values : After Generation " + str(self._generation))
+        logging.info(str(datetime.now()))
         logging.info(fitl)
         
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:

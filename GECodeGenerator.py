@@ -22,9 +22,9 @@ logging.basicConfig(filename=LOG_FILENAME,
 
 FILECOUNT = 0
 
-Population_size=300
+Population_size=100
 Timeout = 10
-Generations=40
+Generations=30
 
 
 #Author: Spandan Veggalam
@@ -104,30 +104,35 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                             f.close
                 ges=None
                 for f in fil:
-					remove(f);                
+                    try:
+                        remove(f);                
+                    except:
+                        pass
 
         threadList=[]
         totalTempList=[]
         iteration=0
         while True:
-            tempList=[]    
-            print("iteration: "+str(iteration+1))
-            iteration+=1
-            while len(tempList)<Population_size:
-                if len(TestCases)>=Population_size:
-                    t=choice(TestCases)
-                    tempList.append(t)
-                else:
-                    if len(TestCases)>0:
+            try:
+                tempList=[]    
+                print("iteration: "+str(iteration+1))
+                iteration+=1
+                while len(tempList)<Population_size:
+                    if len(TestCases)>=Population_size:
                         t=choice(TestCases)
-                        remove(t)
-                TestCases.remove(t)
-            if len(tempList) >=Population_size:
-                logging.debug(tempList)
-                process(tempList)
-            else:
-                for f in TestCases:
-                    remove(f);                            	
-            return False
+                        tempList.append(t)
+                    else:
+                        if len(TestCases)>0:
+                            t=choice(TestCases)
+                            remove(t)
+                    TestCases.remove(t)
+                if len(tempList) >=Population_size:
+                    logging.debug(tempList)
+                    process(tempList)
+                else:
+                    for f in TestCases:
+                        remove(f);                            	
+            except:
+            	return False
             
     return initialize()
