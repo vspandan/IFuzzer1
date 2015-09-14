@@ -22,9 +22,9 @@ logging.basicConfig(filename=LOG_FILENAME,
 
 FILECOUNT = 0
 
-Population_size=100
+Population_size=200
 Timeout = 10
-Generations=30
+Generations=20
 
 
 #Author: Spandan Veggalam
@@ -58,8 +58,8 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 # ges.set_fitness_selections(
                 #     FitnessProportionate(ges.fitness_list, 'linear'))
                 
-                ges.set_crossover_rate(float(0.8))
-                ges.set_mutation_rate(float(1))
+                ges.set_crossover_rate(float(0.4))
+                ges.set_mutation_rate(float(0.8))
 
                 ges.set_max_depth(2)
                 ges.set_generative_mutation_rate(0.3)
@@ -111,12 +111,9 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
 
         threadList=[]
         totalTempList=[]
-        iteration=0
         while True:
             try:
                 tempList=[]    
-                print("iteration: "+str(iteration+1))
-                iteration+=1
                 while len(tempList)<Population_size:
                     if len(TestCases)>=Population_size:
                         t=choice(TestCases)
@@ -129,6 +126,7 @@ def runFuzzer(TestCases,targetDirectory,interpreter,options,excludeFiles,nTInvlv
                 if len(tempList) >=Population_size:
                     logging.debug(tempList)
                     process(tempList)
+                    return False
                 else:
                     for f in TestCases:
                         remove(f);                            	
