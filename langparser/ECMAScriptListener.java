@@ -679,6 +679,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitConditionalExpression(@NotNull ECMAScriptParser.ConditionalExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#leftHandSideExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLeftHandSideExpression(@NotNull ECMAScriptParser.LeftHandSideExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#callExpression}.
 	 * @param ctx the parse tree
 	 */
