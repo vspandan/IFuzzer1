@@ -361,15 +361,16 @@ class GrammaticalEvolution(object):
 
         if len(program) > 0:
             try:
-                f=NamedTemporaryFile(delete=False)
-                f.close()
+                # f=NamedTemporaryFile(delete=False)
+                # f.close()
                 while True:
-                    tempFileObj=open(f.name,"w")
-                    tempFileObj.write(program)
-                    tempFileObj.close()
+                    # tempFileObj=open(f.name,"w")
+                    # tempFileObj.write(program)
+                    # tempFileObj.close()
                     timedout=False
                     l=[None,None]        
-                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':" -f "})
+                    # t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':" -f "})
+                    t=Thread(target=self.run_cmd,kwargs={'l':l,'option':" -e ", 'prg':program})
                     t.start()
                     t.join(self.execution_timeout)
                     if t.isAlive():
@@ -430,7 +431,7 @@ class GrammaticalEvolution(object):
                 for a in range(2):
                     for option in self.interpreter_Options[a]:
                         l=[None,None]        
-                        t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option,'shellNum':a})
+                        t=Thread(target=self.run_cmd,kwargs={'l':l,'option':option, 'prg':program,'shellNum':a})
                         t.start()
                         t.join(self.execution_timeout)
                         (out,err,rc)=l[1]
@@ -462,10 +463,18 @@ class GrammaticalEvolution(object):
                     pass
         logging.info("compute_fitness completed")
     
-    def run_cmd(self, fi,l,option,shellNum=1):
+    # def run_cmd(self, fi,l,option,shellNum=1):
+    def run_cmd(self, l,option,prg,shellNum=0):
         try:
-            exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" " + fi
-            p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+            # exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" " + fi
+            exec_cmd=self.interpreter_Shell[shellNum]+" "+option
+            # p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+            cmd=exec_cmd.split()
+            cmd.append(prg)
+            print  "************************"
+            print cmd
+            print  "************************"
+            p = Popen(cmd, stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
             l[1]=(out,err,p.returncode)
