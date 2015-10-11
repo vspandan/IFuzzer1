@@ -16,6 +16,7 @@ elif [ "$1" == "-g" ]; then
 	jython -J-Xmx2000m -J-XX:-UseGCOverheadLimit GEInterpreterFuzzer.py 0
 else
 	echo "run [options]"
-	echo "\"-g\" fragments generation"
+	echo "\"-g\" Generation Fragments "
 	echo "\"-s\" Spidermonkey 31"
+	echo "\"-s\" Generate Parser"
 fi;

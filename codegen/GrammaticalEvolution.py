@@ -316,8 +316,7 @@ class GrammaticalEvolution(object):
             	break
             logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals,shell_ind):
-    	self.shell_ind=shell_ind
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals):
         self.interpreter_Shell=interpreter_Shell
         self.interpreter_Options =interpreter_Options
         self.nT_Invld_Gen_Process=preSelectedNonTerminals
@@ -428,7 +427,7 @@ class GrammaticalEvolution(object):
                             if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
                                 return
                         gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
-                for a in range(2):
+                for a in range(len(interpreter_Shell)):
                     for option in self.interpreter_Options[a]:
                         l=[None,None]        
                         t=Thread(target=self.run_cmd,kwargs={'l':l,'option':option, 'prg':program,'shellNum':a})
@@ -446,7 +445,7 @@ class GrammaticalEvolution(object):
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
                             logging.info(program)
                             logging.info("++++++++++++++++++++++++++++++++++++++++")
-                            FILECOUNT = len(listdir("Bugs"))+1 
+                            FILECOUNT = len(listdir("Bugs"))
                             gene._fitness=self._fitness_fail
                             newFile="Bugs/"+str(FILECOUNT)+"_.js"
                             f1=open(newFile,'w')
@@ -471,9 +470,6 @@ class GrammaticalEvolution(object):
             # p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
             cmd=exec_cmd.split()
             cmd.append(prg)
-            print  "************************"
-            print cmd
-            print  "************************"
             p = Popen(cmd, stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
