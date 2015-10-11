@@ -115,6 +115,6 @@ def runFuzzer(targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProces
             raw_input("deleting")                    
             rmtree(FileListDir)
             raw_input("deleted")
-    finally:
+    except:
         pass
         

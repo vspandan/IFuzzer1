@@ -89,6 +89,7 @@ def createFragmentPool():
         if input1 in ['y','n']:
             if input1=='y':
                 moveFiles(1)
+                listAllTestCases(testsuite)
                 raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
             else:
                 raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
@@ -128,7 +129,6 @@ def moveFiles(update = 0):
         if not exists(targetDirectory):
             makedirs(targetDirectory)
         if len(listdir(tempDirectoryName)) == 0 or update==1:
-            listAllTestCases(testsuite)
             count=len(listdir(tempDirectoryName))
             for f in fileList:
                 statinfo=stat(f)
