@@ -87,13 +87,14 @@ def createFragmentPool():
     while True:
         input1=raw_input("Do you want to Append Fragment Pool ? Y/N : ")
         if input1 in ['y','n']:
+            listAllTestCases(testsuite)
             if input1=='y':
-                moveFiles(1)
-                listAllTestCases(testsuite)
                 raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
+                moveFiles(1)
             else:
                 raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
-                rmtree(tempDirectoryName)
+                if exists(tempDirectoryName):
+                    rmtree(tempDirectoryName)
                 moveFiles(0)
                 listAllTestCases(tempDirectoryName)
                 for f in fileList1:
@@ -159,6 +160,7 @@ if __name__ == "__main__":
     sys.setrecursionlimit(300000)
     if args[0]=="0":
         createFragmentPool()
+    listAllTestCases(testsuite)
     moveFiles(0)
     from GECodeGenerator import runFuzzer         
     runFuzzer(targetDirectory,shell,options,EXCLUDE_FILES,INCLUDE_NT)

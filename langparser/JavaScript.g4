@@ -2,7 +2,7 @@ program : statementListItem |
 
 statementListItem : functionDeclaration | classDeclaration | statement
 
-functionDeclaration : function identifierName ( formalParameterList? ) { functionBody } 
+functionDeclaration : function identifierName ( formalParameterList ) { functionBody } | function identifierName ( ) { functionBody } 
 
 classDeclaration : class identifierReference classTail | class classTail
 
@@ -34,15 +34,15 @@ identifierReference : identifierName | yield
 
 identifierPattern : arrayBindingPattern | objectBindingPattern | argumentBindingPattern
 
-arrayBindingPattern : [ elision? restElement ] | [ bindingElementList ] | [ bindingElementList , elision? restElement ]
+arrayBindingPattern : [ restElement ] | [ elision restElement ] | [ bindingElementList ] | [ bindingElementList , elision restElement ] | [ bindingElementList , restElement ]
 
 restElement : ... identifierReference 
 
 bindingElementList : variableDeclaration | variableDeclaration bindingElementList | , variableDeclaration) | , variableDeclaration bindingElementList
 
-objectBindingPattern : { bindingPropertyList? } | { }
+objectBindingPattern : { bindingPropertyList } | { }
 
-argumentBindingPattern : ( bindingPropertyList? ) | ( )
+argumentBindingPattern : ( bindingPropertyList ) | ( )
 
 bindingPropertyList : bindingProperty | bindingPropertyList , bindingProperty
 
@@ -56,7 +56,7 @@ ifStatement : if ( expression ) statement elseStatement | if ( expression ) stat
 
 elseStatement: else statement
 
-iterationStatement : do statement while ( expression ) ;  | while ( expression ) statement  | for (  ;  ;  ) statement | for (  ;  ; expression? ) statement | for (  ; expression? ;  ) statement | for (  ; expression? ; expression? ) statement | for ( expression? ; ; ) statement | for ( expression? ;  ; expression? ) statement | for ( expression? ; expression? ;  ) statement | for ( expression? ; expression? ; expression? ) statement | for ( (var|let|const) variableDeclarationList ; expression? ; expression? ) statement | for ( var identifierBinding of expression ) statement | for ( let identifierBinding of expression ) statement | for ( const identifierBinding of expression ) statement | for ( var leftHandSideExpression of expression ) statement | for ( let leftHandSideExpression of expression ) statement | for ( const leftHandSideExpression of expression ) statement | for ( var identifierBinding  in expression ) statement | for ( let identifierBinding  in expression ) statement | for ( const identifierBinding  in expression ) statement | for ( var leftHandSideExpression in expression ) statement | for ( let leftHandSideExpression in expression ) statement | for ( const leftHandSideExpression in expression ) statement  | for each ( var identifierBinding of expression ) statement | for each ( let identifierBinding of expression ) statement | for each ( const identifierBinding of expression ) statement | for each ( var leftHandSideExpression of expression ) statement | for each ( let leftHandSideExpression of expression ) statement | for each ( const leftHandSideExpression of expression ) statement  | for each ( var identifierBinding  in expression ) statement | for each ( let identifierBinding  in expression ) statement | for each ( const identifierBinding  in expression ) statement | for each ( var leftHandSideExpression in expression ) statement | for each ( let leftHandSideExpression in expression ) statement | for each ( const leftHandSideExpression in expression ) statement 
+iterationStatement : do statement while ( expression ) ;  | while ( expression ) statement  | for (  ;  ;  ) statement | for (  ;  ; expression ) statement | for (  ; expression ;  ) statement | for (  ; expression ; expression ) statement | for ( expression ; ; ) statement | for ( expression ;  ; expression ) statement | for ( expression ; expression ;  ) statement | for ( expression ; expression ; expression ) statement | for ( (var|let|const) variableDeclarationList ; expression ; expression ) statement | for ( var identifierBinding of expression ) statement | for ( let identifierBinding of expression ) statement | for ( const identifierBinding of expression ) statement | for ( var leftHandSideExpression of expression ) statement | for ( let leftHandSideExpression of expression ) statement | for ( const leftHandSideExpression of expression ) statement | for ( var identifierBinding  in expression ) statement | for ( let identifierBinding  in expression ) statement | for ( const identifierBinding  in expression ) statement | for ( var leftHandSideExpression in expression ) statement | for ( let leftHandSideExpression in expression ) statement | for ( const leftHandSideExpression in expression ) statement  | for each ( var identifierBinding of expression ) statement | for each ( let identifierBinding of expression ) statement | for each ( const identifierBinding of expression ) statement | for each ( var leftHandSideExpression of expression ) statement | for each ( let leftHandSideExpression of expression ) statement | for each ( const leftHandSideExpression of expression ) statement  | for each ( var identifierBinding  in expression ) statement | for each ( let identifierBinding  in expression ) statement | for each ( const identifierBinding  in expression ) statement | for each ( var leftHandSideExpression in expression ) statement | for each ( let leftHandSideExpression in expression ) statement | for each ( const leftHandSideExpression in expression ) statement 
 
 continueStatement : continue | continue identifierName  
 
@@ -98,7 +98,7 @@ functionBody : statementListItem |
     
 arrayLiteral : [ ] | [ elementList ] | [ elementList , ] | [ elision ] | [ elementList , elision ]
 
-elementList : assignmentExpression  | elementList , assignmentExpression  | elision? ... assignmentExpression  | elementList , ...? assignmentExpression | elision assignmentExpression  | elementList , elision assignmentExpression  | elision ... assignmentExpression  | elementList , elision ... assignmentExpression 
+elementList : assignmentExpression  | elementList , assignmentExpression  | elision ... assignmentExpression  | ... assignmentExpression  | elementList , ... assignmentExpression | elementList , assignmentExpression | elision assignmentExpression  | elementList , elision assignmentExpression  | elision ... assignmentExpression  | elementList , elision ... assignmentExpression 
 
 elision : , | , elision
 objectLiteral : {  } | {  propertyNameAndValueList } | {  propertyNameAndValueList , }
@@ -107,7 +107,7 @@ propertyNameAndValueList : propertyAssignment | propertyNameAndValueList  , prop
     
 propertyAssignment :  identifierReference | identifierReference initialiser | propertyName : assignmentExpression | methodDefinition  
 
-methodDefinition :  propertyName ( ) { functionBody } | propertyName ( formalParameterList? ) { functionBody } | Get propertyName ( ) { functionBody } | Set propertyName ( variableDeclaration ) { functionBody } 
+methodDefinition :  propertyName ( ) { functionBody } | propertyName ( formalParameterList ) { functionBody } | Get propertyName ( ) { functionBody } | Set propertyName ( variableDeclaration ) { functionBody } 
 
 propertyName : identifierName | StringLiteral | numericLiteral | [ assignmentExpression ]
     

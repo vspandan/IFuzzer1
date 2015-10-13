@@ -14,6 +14,11 @@ elif [ "$1" == "-s" ]; then
 	done
 elif [ "$1" == "-g" ]; then
 	jython -J-Xmx2000m -J-XX:-UseGCOverheadLimit GEInterpreterFuzzer.py 0
+	while true
+	do
+		date
+		jython -J-Xmx2000m -J-XX:-UseGCOverheadLimit GEInterpreterFuzzer.py 2
+	done
 else
 	echo "run [options]"
 	echo "\"-g\" Generation Fragments "
