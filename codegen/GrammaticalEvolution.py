@@ -316,8 +316,9 @@ class GrammaticalEvolution(object):
             	break
             logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals):
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals,shellFiles):
         self.interpreter_Shell=interpreter_Shell
+        self.shellFiles=shellFiles
         self.interpreter_Options =interpreter_Options
         self.nT_Invld_Gen_Process=preSelectedNonTerminals
         self._extractProductions()
@@ -360,16 +361,16 @@ class GrammaticalEvolution(object):
 
         if len(program) > 0:
             try:
-                # f=NamedTemporaryFile(delete=False)
-                # f.close()
+                f=NamedTemporaryFile(delete=False)
+                f.close()
                 while True:
-                    # tempFileObj=open(f.name,"w")
-                    # tempFileObj.write(program)
-                    # tempFileObj.close()
+                    tempFileObj=open(f.name,"w")
+                    tempFileObj.write(program)
+                    tempFileObj.close()
                     timedout=False
                     l=[None,None]        
-                    # t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':" -f "})
-                    t=Thread(target=self.run_cmd,kwargs={'l':l,'option':" -e ", 'prg':program})
+                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':" -f "})
+                    # t=Thread(target=self.run_cmd,kwargs={'l':l,'option':" -e ", 'prg':program})
                     t.start()
                     t.join(self.execution_timeout)
                     if t.isAlive():
@@ -462,15 +463,15 @@ class GrammaticalEvolution(object):
                     pass
         logging.info("compute_fitness completed")
     
-    # def run_cmd(self, fi,l,option,shellNum=1):
-    def run_cmd(self, l,option,prg,shellNum=0):
+    def run_cmd(self, fi,l,option,shellNum=0):
+    # def run_cmd(self, l,option,prg,shellNum=0):
         try:
-            # exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" " + fi
-            exec_cmd=self.interpreter_Shell[shellNum]+" "+option
-            # p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
-            cmd=exec_cmd.split()
-            cmd.append(prg)
-            p = Popen(cmd, stdout=PIPE,stderr=PIPE)
+            exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" "+self.shellFiles+" "+fi
+            p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+            # exec_cmd=self.interpreter_Shell[shellNum]+" "+option
+            # cmd=exec_cmd.split()
+            # cmd.append(prg)
+            # p = Popen(cmd, stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
             l[1]=(out,err,p.returncode)

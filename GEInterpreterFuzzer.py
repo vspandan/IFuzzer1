@@ -23,6 +23,7 @@ targetDirectory=config.get('TargetDir', 'DIR')
 tempDirectoryName=config.get('TargetDir', 'TEMP')
 database=config.get('TargetDir', 'Database')
 
+SHELL_FILES=config.get('Interpreter', 'SHELL_FILES')
 EXCLUDE_FILES = set(config.get('Exclude', 'FILES').split(','))
 INCLUDE_NT=None
 
@@ -137,11 +138,11 @@ def moveFiles(update = 0):
                     continue
                 from subprocess import Popen,PIPE
                 #interpreter defined code-starts
-                exec_cmd="timeout 3 "+ shell[0] + " -f " + f
+                exec_cmd="timeout 3 "+ shell[0] + " -f " + SHELL_FILES + " " + f
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
                 (out0,err0)=p.communicate()
                 rc0= p.returncode
-                exec_cmd="timeout 3 "+ shell[1] +" "+f
+                exec_cmd="timeout 3 "+ shell[1] +" " + SHELL_FILES + " " + f
                 p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
                 (out1,err1)=p.communicate()
                 rc1= p.returncode
@@ -163,4 +164,4 @@ if __name__ == "__main__":
     listAllTestCases(testsuite)
     moveFiles(0)
     from GECodeGenerator import runFuzzer         
-    runFuzzer(targetDirectory,shell,options,EXCLUDE_FILES,INCLUDE_NT)
+    runFuzzer(targetDirectory,shell,options,EXCLUDE_FILES,INCLUDE_NT,SHELL_FILES)

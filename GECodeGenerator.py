@@ -29,7 +29,7 @@ Generations=int(config.get('Mappings', 'generations'));
 FileListDir=config.get('TargetDir', 'TEMP')
 
 #Author: Spandan Veggalam
-def runFuzzer(targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess):
+def runFuzzer(targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProcess,shellFiles):
 
     TestCases=[]
     tempList=[]    
@@ -96,7 +96,7 @@ def runFuzzer(targetDirectory,interpreter,options,excludeFiles,nTInvlvdGenProces
 
             ges.set_crossover_bias_rate(115)
             
-            if ges.create_genotypes(tempList,interpreter,options,nTInvlvdGenProcess):
+            if ges.create_genotypes(tempList,interpreter,options,nTInvlvdGenProcess,shellFiles):
                 ges.run()
                 for gene in ges.population:
                     if gene.get_fitness() != ges._fitness_fail :
