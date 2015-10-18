@@ -97,6 +97,7 @@ def createFragmentPool():
                 if exists(tempDirectoryName):
                     rmtree(tempDirectoryName)
                 moveFiles(0)
+                fileList[:] = []
                 listAllTestCases(tempDirectoryName)
                 for f in fileList1:
                     remove(database+"/"+f)

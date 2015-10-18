@@ -104,7 +104,7 @@ class Genotype(object):
         return str(value)
     
     def _converge(self, item):
-        fileName = abspath("database" + "/" + item)
+        fileName = abspath(config.get('TargetDir', 'Database') + "/" + item)
         
         if  path.isfile(fileName): 
             f = open(fileName,'r')
