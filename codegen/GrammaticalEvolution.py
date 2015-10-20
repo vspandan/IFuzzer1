@@ -425,7 +425,6 @@ class GrammaticalEvolution(object):
                             program+="\n//"+self.interpreter_Shell[a]+"\n//"+option + "\n//" + str(datetime.now()) + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
                             logging.info("Crash:")
                             logging.info(program)
-                            targetDir=config.get('TargetDir', 'BUGSDIR')
                             FILECOUNT = len(listdir(self.targetDir))
                             newFile=self.targetDir+"/"+str(FILECOUNT)+".js"
                             f1=open(newFile,'w')
@@ -433,15 +432,16 @@ class GrammaticalEvolution(object):
                             f1.close
                         if rc == self.interpreter_ReturnCodes[a][1]:
                         	flag=False
-                gene.score += self.computeSubScore(gene,program,err)
-                if gene.score is not None and flag:
-                    if self._generation==0:
-                        gene._fitness =  gene.score
-                    else:
-                        if prgLength is not None:
-                            if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
-                                return
-                        gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+                if flag:
+                    gene.score += self.computeSubScore(gene,program,err)
+                    if gene.score is not None:
+                        if self._generation==0:
+                            gene._fitness =  gene.score
+                        else:
+                            if prgLength is not None:
+                                if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
+                                    return
+                            gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
             except:
                 pass
             finally:
