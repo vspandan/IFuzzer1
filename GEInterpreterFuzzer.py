@@ -23,18 +23,24 @@ targetDirectory=config.get('TargetDir', 'DIR')
 tempDirectoryName=config.get('TargetDir', 'TEMP')
 database=config.get('TargetDir', 'Database')
 
-SHELL_FILES=config.get('Interpreter', 'SHELL_FILES')
 EXCLUDE_FILES = set(config.get('Exclude', 'FILES').split(','))
 INCLUDE_NT=None
 
 fileList = []
-interpreters = {}
-interpreterList=config.get('Interpreter', 'SHELL_PATH').split(';')
-for i in interpreterList:
+shell=[]
+options=[]
+returnCodes=[]
+shellFiles=[]
+for i in config.get('Interpreter', 'SHELL_PATH').split('||'):
     splitValues=i.split(':')
-    interpreters[splitValues[0]]=splitValues[1].split(',')
-shell=interpreters.keys()
-options=interpreters.values()
+    shell.append(splitValues[0])
+    options.append(splitValues[1].split(','))
+    shellFiles.append(splitValues[3])
+    returncode=[]
+    for j in splitValues[2].split(','):
+        returncode.append(int(j))
+    returnCodes.append(returncode)
+
 
 def listAllTestCases(testCasesDir):
     if(isinstance(testCasesDir,list)):
@@ -138,21 +144,19 @@ def moveFiles(update = 0):
                 if statinfo.st_size == 0:
                     continue
                 from subprocess import Popen,PIPE
-                #interpreter defined code-starts
-                exec_cmd="timeout 3 "+ shell[0] + " -f " + SHELL_FILES + " " + f
-                p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
-                (out0,err0)=p.communicate()
-                rc0= p.returncode
-                exec_cmd="timeout 3 "+ shell[1] +" " + SHELL_FILES + " " + f
-                p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
-                (out1,err1)=p.communicate()
-                rc1= p.returncode
-                if rc1 == 1 or rc0==3:
-                    continue
-                #interpreter defined code-ends
-                newfname=tempDirectoryName+"/"+str(count)+".js"
-                count+=1
-                copyfile(f, newfname)
+                flag=True
+                for a in range(len(shell)):
+                    exec_cmd="timeout 3 "+ shell[a] + " " + options[a][0] + " " + shellFiles[a] + " " + f
+                    p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+                    (out0,err0) = p.communicate()
+                    rc0 = p.returncode
+                    if rc0 == returnCodes[a][1]:
+                        flag=False
+                        break
+                if flag:   
+                    newfname=tempDirectoryName+"/"+str(count)+".js"
+                    count+=1
+                    copyfile(f, newfname)
             print "Copied " + str(count) + " files to temporary location"
     except:
         pass
@@ -165,4 +169,4 @@ if __name__ == "__main__":
     listAllTestCases(testsuite)
     moveFiles(0)
     from GECodeGenerator import runFuzzer         
-    runFuzzer(targetDirectory,shell,options,EXCLUDE_FILES,INCLUDE_NT,SHELL_FILES)
+    runFuzzer(targetDirectory,shell,options,returnCodes,EXCLUDE_FILES,INCLUDE_NT,shellFiles)

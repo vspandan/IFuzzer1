@@ -86,6 +86,7 @@ class GrammaticalEvolution(object):
         self.mutation_break=False
         self.function_break=False
         self.crossover_bias_rate=0
+        self.targetDir=config.get('TargetDir', 'BUGSDIR')
 
     def set_crossover_bias_rate(self,percentage):
         self.crossover_bias_rate=percentage
@@ -131,7 +132,6 @@ class GrammaticalEvolution(object):
             for fileName in fileList:
                 f=open(path.abspath(fileName),"r")
                 self.initial_Population.append(f.read())
-                # remove(fileName)
 
     def set_population_size(self, size):
         size = long(size)
@@ -290,7 +290,6 @@ class GrammaticalEvolution(object):
         if varianceValue == 0:
             self.parsimony_constant=0
         else:
-            # self.parsimony_constant=abs(calculateCovariance(meanFitness)/varianceValue)
             self.parsimony_constant=calculateCovariance(meanFitness)/varianceValue
 
     def run(self, starting_generation=0):
@@ -316,10 +315,11 @@ class GrammaticalEvolution(object):
             	break
             logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,preSelectedNonTerminals,shellFiles):
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,interpreter_ReturnCodes,preSelectedNonTerminals,shellFiles):
         self.interpreter_Shell=interpreter_Shell
         self.shellFiles=shellFiles
         self.interpreter_Options =interpreter_Options
+        self.interpreter_ReturnCodes=interpreter_ReturnCodes
         self.nT_Invld_Gen_Process=preSelectedNonTerminals
         self._extractProductions()
         self._prepareInitial_Population(file)
@@ -349,6 +349,7 @@ class GrammaticalEvolution(object):
     def compute_fitness(self,gene,prgLength=None):
         logging.info("compute_fitness entered")
         ti=time()
+        flag=True;
         gene._fitness=self._fitness_fail
         program=gene.local_bnf['program']
         if self._generation > 0:
@@ -368,9 +369,8 @@ class GrammaticalEvolution(object):
                     tempFileObj.write(program)
                     tempFileObj.close()
                     timedout=False
-                    l=[None,None]        
-                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':" -f "})
-                    # t=Thread(target=self.run_cmd,kwargs={'l':l,'option':" -e ", 'prg':program})
+                    l=[None,None]
+                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0][0],'shellNum':0})
                     t.start()
                     t.join(self.execution_timeout)
                     if t.isAlive():
@@ -383,9 +383,6 @@ class GrammaticalEvolution(object):
                         break
                     else:
                         (out,err,rc)=l[1]
-                        gene.err=err
-                        gene.rc=rc
-                        # Eliminating reference error; JS support hostilling
                         if 'ReferenceError:' in err:
                             if self._generation==0:
                                 break
@@ -415,12 +412,29 @@ class GrammaticalEvolution(object):
                             gene.local_bnf['program'] = program
                         else:
                             break
-                if timedout:
+                if timedout or rc==self.interpreter_Options[0][1]:
                     return
-                if rc==3 and ('SyntaxError' in err or 'ReferenceError' in err) :
-                    return
+                for a in range(len(self.interpreter_Shell)):
+                    for option in self.interpreter_Options[a]:
+                        l=[None,None]        
+                        t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option, 'shellNum':a})
+                        t.start()
+                        t.join(self.execution_timeout)
+                        (out,err,rc)=l[1]
+                        if rc not in self.interpreter_ReturnCodes[a]:
+                            program+="\n//"+self.interpreter_Shell[a]+"\n//"+option + "\n//" + str(datetime.now()) + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
+                            logging.info("Crash:")
+                            logging.info(program)
+                            targetDir=config.get('TargetDir', 'BUGSDIR')
+                            FILECOUNT = len(listdir(self.targetDir))
+                            newFile=self.targetDir+"/"+str(FILECOUNT)+".js"
+                            f1=open(newFile,'w')
+                            f1.write(program)
+                            f1.close
+                        if rc == self.interpreter_ReturnCodes[a][1]:
+                        	flag=False
                 gene.score += self.computeSubScore(gene,program,err)
-                if gene.score is not None:
+                if gene.score is not None and flag:
                     if self._generation==0:
                         gene._fitness =  gene.score
                     else:
@@ -428,31 +442,6 @@ class GrammaticalEvolution(object):
                             if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
                                 return
                         gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
-                for a in range(len(interpreter_Shell)):
-                    for option in self.interpreter_Options[a]:
-                        l=[None,None]        
-                        t=Thread(target=self.run_cmd,kwargs={'l':l,'option':option, 'prg':program,'shellNum':a})
-                        t.start()
-                        t.join(self.execution_timeout)
-                        (out,err,rc)=l[1]
-                        gene.err=err
-                        gene.rc=rc
-                        if rc not in [0,1,3,6]:
-                            program+="\n//"+self.interpreter_Shell[a]+"\n//"+option + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
-                            logging.info("Crash:")
-                            logging.info("Interpreter:"+self.interpreter_Shell[a])
-                            logging.info("Error:"+err)
-                            logging.info("TimeStamp:" + str(datetime.now()))
-                            logging.info("++++++++++++++++++++++++++++++++++++++++")
-                            logging.info(program)
-                            logging.info("++++++++++++++++++++++++++++++++++++++++")
-                            FILECOUNT = len(listdir("Bugs"))
-                            gene._fitness=self._fitness_fail
-                            newFile="Bugs/"+str(FILECOUNT)+"_.js"
-                            f1=open(newFile,'w')
-                            f1.write(program)
-                            f1.close
-                            
             except:
                 pass
             finally:
@@ -463,15 +452,10 @@ class GrammaticalEvolution(object):
                     pass
         logging.info("compute_fitness completed")
     
-    def run_cmd(self, fi,l,option,shellNum=0):
-    # def run_cmd(self, l,option,prg,shellNum=0):
+    def run_cmd(self, fi,l,option,shellNum):
         try:
-            exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" "+self.shellFiles+" "+fi
+            exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" "+self.shellFiles[shellNum]+" "+fi
             p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
-            # exec_cmd=self.interpreter_Shell[shellNum]+" "+option
-            # cmd=exec_cmd.split()
-            # cmd.append(prg)
-            # p = Popen(cmd, stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
             l[1]=(out,err,p.returncode)
@@ -524,8 +508,6 @@ class GrammaticalEvolution(object):
     def _perform_endcycle(self):
         self._pre_selected = self._evaluate_fitness(True)
         childList=[]
-        # for gene in self._pre_selected:
-        #     childList.append(deepcopy(gene))
         remainingPopCount = self._population_size - len(self._pre_selected)
         while len(childList) < remainingPopCount:
             if round(random(),1) <= 0.7:
@@ -606,11 +588,6 @@ class GrammaticalEvolution(object):
                 length -= 1
             if length >= 2:
                 while len(flist) >=2 :
-                # for i in xrange(0, length, 2):
-                    # parent1 = flist[i]
-                    # flist.remove(parent1)
-                    # parent2 = flist[i+1]
-                    # flist.remove(parent2)
                     parent1 = choice(flist)
                     parent2 = choice(flist)
                     flist.remove(parent1)
@@ -713,16 +690,8 @@ class GrammaticalEvolution(object):
                             break;
                         else:
                             logging.info("Crossover-Failed")
-                            # if child1.get_fitness()== self._fitness_fail and child1.rc != 3:
-                            #     logging.info(child1.local_bnf['program'])
-                            # if child2.get_fitness()== self._fitness_fail and child2.rc != 3:
-                            #     logging.info(child2.local_bnf['program'])
                             child1.local_bnf['program']=child1Prg
                             child2.local_bnf['program']=child2Prg
-                            logging.debug(child1.err)
-                            logging.debug(child1.rc)
-                            logging.debug(child2.err)
-                            logging.debug(child2.rc)
                         logging.debug(subString1)
                         logging.debug(subString2)
                     if len(child_list) == length:
@@ -811,14 +780,10 @@ class GrammaticalEvolution(object):
                         else:
                             gene.local_bnf['program']=pr
                             logging.info("Mutation-Failed")
-                            # if gene.get_fitness()== self._fitness_fail and gene.rc != 3:
-                            #     logging.info(gene.local_bnf['CodeFrag'])
                             logging.debug(selectedNt)
                             logging.debug(dummy)
                             logging.debug(gene.local_bnf['CodeFrag'])
                             logging.debug(pr)
-                            logging.debug (gene.err)
-                            logging.debug(gene.rc)
         except:
             pass
         finally:

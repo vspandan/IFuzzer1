@@ -153,3 +153,10 @@ assignmentOperator : *=  | /=  | %=  | +=  | -=  | <<=  | >>=  | >>>=  | &=  | ^
 keyword : break | do | instanceof | typeof | case | else | new | var | catch | finally | return | void | continue | for | switch | while | debugger | function | this | with | default | if | throw | delete | in | try | get | set 
 
 futureReservedWord : class | enum | extends | super | const | export | import | implements | let | private | public | interface | package | protected | static | yield
+
+
+emptyStatement : ;
+
+identifiername : Identifier | reservedWord
+
+reservedWord : keyword  | futureReservedWord | null | true | false
