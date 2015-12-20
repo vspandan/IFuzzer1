@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-
+from marshal import dump, load
 from os import listdir,remove
 from os.path import isfile, join, abspath
-
 from shutil import rmtree
-
 from codegen.fitness import FitnessElites, FitnessTournament, FitnessProportionate
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
-
 from random import choice
 import ConfigParser
 import logging
@@ -19,22 +16,21 @@ config.read('ConfigFile.properties')
 LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
 LOG_LEVEL= config.get('Mappings', 'loglevel');
 
-logging.basicConfig(filename=LOG_FILENAME,
-                    level=LOG_LEVEL,
-                    )
+logging.basicConfig(filename=LOG_FILENAME,level=LOG_LEVEL,)
 
 Population_size=int(config.get('Options', 'POPULATION_SIZE'));
-FileListDir=config.get('TargetDir', 'TEMP')
+FileListFile= abspath(config.get('TargetDir', 'FILELIST'))
 
-#Author: Spandan Veggalam
-def runFuzzer(targetDirectory,interpreter,options,returnCodes,excludeFiles,nTInvlvdGenProcess,shellFiles):
-
-    TestCases=[]
+def runFuzzer(interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
     tempList=[]    
-
-    for f in listdir(FileListDir):
-        fi=join(FileListDir,f)
-        TestCases.append(abspath(fi))
+    TestCases=[]
+    if isfile(FileListFile):
+        f2 = open(FileListFile, 'rb')
+        TestCases=load(f2)
+        f2.close()
+    else: 
+        return
+    
     try:
         while len(tempList)<Population_size:
             if len(TestCases)>0:
@@ -43,6 +39,13 @@ def runFuzzer(targetDirectory,interpreter,options,returnCodes,excludeFiles,nTInv
                 TestCases.remove(t)
             else:
                 break
+        f2 = open(FileListFile, 'wb')
+        dump(TestCases, f2)
+        f2.close()
+        f2 = open(FileListFile, 'rb')
+        TestCases=load(f2)
+        f2.close()
+        
         if len(tempList) >= Population_size:
             logging.debug(tempList)
             bnf=""
@@ -90,26 +93,23 @@ def runFuzzer(targetDirectory,interpreter,options,returnCodes,excludeFiles,nTInv
             
             ges.dynamic_mutation_rate(int(config.get('Options', 'DYNAMIC_MUTATION_RATE')))
             ges.dynamic_crossover_rate(int(config.get('Options', 'DYNAMIC_CROSSOVER_RATE')))
-            ges.targetDirectory=targetDirectory
-
+            
             ges.set_crossover_bias_rate(int(config.get('Options', 'CROSSOVER_BIAS_RATE')))
             
-            if ges.create_genotypes(tempList,interpreter,options,returnCodes,nTInvlvdGenProcess,shellFiles):
+            if ges.create_genotypes(tempList,interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
                 ges.run()
                 for gene in ges.population:
                     if gene.get_fitness() != ges._fitness_fail :
                         generatedPrg= gene.get_program()
+                        targetDirectory= abspath(config.get('TargetDir', 'TARGETDIR'))
+                        if not exists(targetDirectory):
+                            makedirs(targetDirectory)
                         newFile=targetDirectory+"/"+str(len(listdir(targetDirectory))+1)+config.get('Interpreter', 'FILE_TYPE')
                         f=open(newFile,'w')
                         f.write(generatedPrg)
                         f.close
             ges=None
-            for f in tempList:
-                try:
-                    remove(f);                
-                except:
-                    pass
         else:
-            rmtree(FileListDir)
+            remove(FileListFile)
     except:
         pass

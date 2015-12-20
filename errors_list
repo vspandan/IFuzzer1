@@ -1,9 +1,0 @@
-InternalError: too much recursion (31)
-Error: compartment cannot save singleton anymore. (107)
-Error: Can't create worker threads with --no-threads (96)
-Error: Can't use offThreadCompileScript with --no-threads (109)
-Assertion failure: i < argc_, at ../../dist/include/js/CallArgs.h:296 
-Assertion failure: getSlotRef(EVAL).isUndefined(), at /home/rubbernecker/jsengines/firefox/js/src/vm/GlobalObject.h:147 (1)
-Assertion failure: type == MIRType_Float32, at /home/rubbernecker/jsengines/firefox/js/src/jit/Lowering.cpp:548 (120)
-Assertion failure: secondArg->type() == MIRType_Boolean, at /home/rubbernecker/jsengines/firefox/js/src/jit/MCallOptimize.cpp:2648 (116,115,104,93,74,54)
-Assertion failure: input()->isRecoveredOnBailout() == mustBeRecovered_ (assertRecoveredOnBailout failed during compilation), at /home/rubbernecker/jsengines/firefox/js/src/jit/Recover.cpp:1465 (114,85,33,5)

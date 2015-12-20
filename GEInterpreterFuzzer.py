@@ -3,45 +3,55 @@ from marshal import dump, load
 from GECodeGenerator import runFuzzer 
 from datetime import datetime
 from string import lower
-import sys
 from os import listdir, mkdir, makedirs,remove,stat
 from os.path import isfile, join, isdir, exists, abspath
 from langparser.AntlrParser import *
 from Queue import Queue
 from collections import defaultdict
 from shutil import copyfile, rmtree
+import sys
 import ConfigParser
 import logging
+
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
-LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
+LOG_FILENAME= config.get('Mappings', 'mappings.logfile')
 LOG_LEVEL= config.get('Mappings', 'loglevel');
 logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
-testsuite=config.get('Testsuite', 'testsuitedirs').split(',')
-targetDirectory=config.get('TargetDir', 'DIR')
-tempDirectoryName=config.get('TargetDir', 'TEMP')
-database=config.get('TargetDir', 'Database')
+testsuite=config.get('Testsuite', 'TESTSUITE').split(',')
+database=config.get('TargetDir', 'DATABASE')
 
-EXCLUDE_FILES = set(config.get('Exclude', 'FILES').split(','))
-INCLUDE_NT=None
+FILE_TYPE = config.get('Interpreter', 'FILE_TYPE')
+LIB_FILE = config.get('Interpreter', 'LIB_FILE')
+FILELISTFILE= abspath(config.get('TargetDir', 'FILELIST'))
+INCLUDE_NT = None
 
 fileList = []
 shell=[]
 options=[]
 returnCodes=[]
-shellFiles=[]
-for i in config.get('Interpreter', 'SHELL_PATH').split('||'):
-    splitValues=i.split(':')
-    shell.append(splitValues[0])
-    options.append(splitValues[1].split(','))
-    shellFiles.append(splitValues[3])
-    returncode=[]
-    for j in splitValues[2].split(','):
-        returncode.append(int(j))
-    returnCodes.append(returncode)
+libfiLes=[]
+fileOptionSpecifier=[]
+shellfileOption = []
 
+"""
+Initializes the options
+"""
+def generateOptions():
+    for i in config.get('Interpreter', 'SHELL_PATH').split('||'):
+        splitValues=i.split(':')
+        shell.append(splitValues[0])
+        options.append(splitValues[1].split(','))
+        returncode=[]
+        for j in splitValues[2].split(','):
+            returncode.append(int(j))
+        returnCodes.append(returncode)
+        fileOptionSpecifier.append(splitValues[3])
 
+"""
+Lists all the directories and makes a call to list the files
+"""
 def listAllTestCases(testCasesDir):
     if(isinstance(testCasesDir,list)):
         for dir in testCasesDir:
@@ -49,16 +59,30 @@ def listAllTestCases(testCasesDir):
     else:
         listAllTestCasesDir(testCasesDir)
 
+"""
+Lists all the files in a directory
+"""
 def listAllTestCasesDir(testCaseDir):
     for f in listdir(testCaseDir):
             fi=join(testCaseDir,f)
             if not isfile(fi):
                 listAllTestCasesDir(fi)
             else:
-                if f.endswith("js") and f not in EXCLUDE_FILES:
+                if f.endswith(FILE_TYPE):
                     fileList.append(abspath(fi))
+                    if f.endswith(LIB_FILE):
+                        statinfo=stat(abspath(fi))
+                        if statinfo.st_size == 0:
+                            continue
+                        libfiLes.append(abspath(fi))
 
+"""
+Creates fragment pool
+"""
 def createFragmentPool():
+    """
+    Sub function with limited scope; Dumps the code fragments generated
+    """
     def finalize():
         codeFrags2=defaultdict(list)
         print (datetime.now())
@@ -94,26 +118,17 @@ def createFragmentPool():
     while True:
         input1=raw_input("Do you want to Append Fragment Pool ? Y/N : ")
         if input1 in ['y','n']:
-            listAllTestCases(testsuite)
             if input1=='y':
                 raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
-                moveFiles(1)
             else:
                 raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
-                if exists(tempDirectoryName):
-                    rmtree(tempDirectoryName)
-                moveFiles(0)
-                fileList[:] = []
-                listAllTestCases(tempDirectoryName)
                 for f in fileList1:
                     remove(database+"/"+f)
             break;
         else:
             print "Answer must be 'Y' or 'N'"
     codeFragPool=[]
-    print("Considering " + str(len(fileList)) + " files for learning code fragments " + str(datetime.now()))
-    if not exists(database):
-        makedirs(database)
+    
     count=1
     ind=True
     for f in fileList:
@@ -131,42 +146,53 @@ def createFragmentPool():
     finalize()
     print ("Finished; Code generation and testing begins " +str(datetime.now()))
 
-def moveFiles(update = 0):
+"""
+Elimiates unwanted files
+"""
+def collectFiles():
     try:
-        if not exists(tempDirectoryName):
-            makedirs(tempDirectoryName)
-        if not exists(targetDirectory):
-            makedirs(targetDirectory)
-        if len(listdir(tempDirectoryName)) == 0 or update==1:
-            count=len(listdir(tempDirectoryName))
-            for f in fileList:
-                statinfo=stat(f)
-                if statinfo.st_size == 0:
-                    continue
-                from subprocess import Popen,PIPE
-                flag=True
-                for a in range(len(shell)):
-                    exec_cmd="timeout 3 "+ shell[a] + " " + options[a][0] + " " + shellFiles[a] + " " + f
-                    p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
-                    (out0,err0) = p.communicate()
-                    rc0 = p.returncode
-                    if rc0 == returnCodes[a][1]:
-                        flag=False
-                        break
-                if flag:   
-                    newfname=tempDirectoryName+"/"+str(count)+".js"
-                    count+=1
-                    copyfile(f, newfname)
-            print "Copied " + str(count) + " files to temporary location"
+        tempList = []
+        for f in fileList:
+            statinfo=stat(f)
+            if statinfo.st_size == 0:
+                continue
+            print f
+            from subprocess import Popen,PIPE
+            flag=True
+            for a in range(len(shell)):
+                exec_cmd="timeout 3 "+ shell[a] + " " + options[a][0]  + " "+ shellfileOption[a] + " " + f
+                p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+                (out0,err0) = p.communicate()
+                rc0 = p.returncode
+                if rc0 == returnCodes[a][1]:
+                    print err0
+                    flag=False
+                    break
+            if flag:   
+                tempList.append(f)
+        fileList[:] =tempList
+        f1 = open(FILELISTFILE, 'wb')
+        dump(fileList,f1)
+        f1.close()
     except:
         pass
 
+"""
+Driver function
+"""
 if __name__ == "__main__":
     args = sys.argv[1:]
     sys.setrecursionlimit(300000)
+    listAllTestCases(testsuite)
+    generateOptions()
     if args[0]=="0":
         createFragmentPool()
-    listAllTestCases(testsuite)
-    moveFiles(0)
+    for a in range(len(shell)):
+        shellfileoption=""
+        for shellfile in libfiLes:
+            shellfileoption = shellfileoption + " " + shellfile + " " + fileOptionSpecifier[a]
+        shellfileOption.append(shellfileoption);
+    if not exists(FILELISTFILE):
+        collectFiles()
     from GECodeGenerator import runFuzzer         
-    runFuzzer(targetDirectory,shell,options,returnCodes,EXCLUDE_FILES,INCLUDE_NT,shellFiles)
+    runFuzzer(shell,options,returnCodes,INCLUDE_NT,shellfileOption)

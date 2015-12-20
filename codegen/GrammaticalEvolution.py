@@ -14,21 +14,19 @@ from time import time
 from jsbeautifier import beautify
 from tempfile import NamedTemporaryFile
 
+import tests.jit_test
 import signal 
 import ConfigParser
+import logging
 
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
 
 LOG_FILENAME= config.get('Mappings', 'mappings.logfile');
 LOG_LEVEL= config.get('Mappings', 'loglevel');
-import logging
 
-logging.basicConfig(filename=LOG_FILENAME,
-                    level=LOG_LEVEL,
-                    )
+logging.basicConfig(filename=LOG_FILENAME,level=LOG_LEVEL,)
 
-import tests.jit_test
 VARIABLE_FORMAT = '(\W+)'
 VARIABLE_FORMAT1 = '([a-zA-Z0-9_$]+)'
 STOPPING_MAX_GEN = 'max_generations'
@@ -79,7 +77,6 @@ class GrammaticalEvolution(object):
         self._max_depth = 0
         self._generative_mutation_rate=0.5
         self.identifiers_mapping={}
-        self.targetDirectory=""
         self.parsimony_constant=0
         self.meanLength=1
         self.crossover_break=False
@@ -311,13 +308,11 @@ class GrammaticalEvolution(object):
             else:
                 break
             diff=round((time()-starttime))
-            if (diff>1800):
-            	break
             logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,interpreter_ReturnCodes,preSelectedNonTerminals,shellFiles):
+    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,interpreter_ReturnCodes,preSelectedNonTerminals,shellfileOption):
         self.interpreter_Shell=interpreter_Shell
-        self.shellFiles=shellFiles
+        self.shellfileOption=shellfileOption
         self.interpreter_Options =interpreter_Options
         self.interpreter_ReturnCodes=interpreter_ReturnCodes
         self.nT_Invld_Gen_Process=preSelectedNonTerminals
@@ -454,7 +449,7 @@ class GrammaticalEvolution(object):
     
     def run_cmd(self, fi,l,option,shellNum):
         try:
-            exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" "+self.shellFiles[shellNum]+" "+fi
+            exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" "+self.shellfileOption[shellNum]+" "+fi
             p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
