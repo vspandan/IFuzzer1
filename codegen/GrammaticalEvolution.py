@@ -250,7 +250,7 @@ class GrammaticalEvolution(object):
     def get_worst_member(self):
         return self.population[self.fitness_list.worst_member()]
 
-    def _compute_fitness(self):
+    def calcfitness(self):
         self.meanLength=1
         def calculateCovariance(meanFitness):
             value=0
@@ -292,7 +292,7 @@ class GrammaticalEvolution(object):
     def run(self, starting_generation=0):
         self._generation = starting_generation
         starttime=time()
-        self._compute_fitness()
+        self.calcfitness()
         self._generation+=1
         logging.info("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
         while True:
@@ -304,7 +304,7 @@ class GrammaticalEvolution(object):
             if self._continue_processing() and self.fitness_list.best_value() != self._fitness_fail:
                 self._perform_endcycle()
                 self._generation+=1
-                self._compute_fitness()
+                self.calcfitness()
             else:
                 break
             diff=round((time()-starttime))
@@ -373,16 +373,19 @@ class GrammaticalEvolution(object):
                             logging.info("JS shell execution timeout. Process : "+str(l[0].pid))
                             l[0].kill()
                             kill(l[0].pid, 9)
-                            timedout=True
                             sleep(.1)
+                            logging.info("Calculating Fitness - Killed timeout process " +str(time()-ti)+" seconds")
+                            return
                         break
                     else:
                         (out,err,rc)=l[1]
+                        refError=False
                         if 'ReferenceError:' in err:
                             if self._generation==0:
                                 break
                             words=err.split()
                             nextword=words[words.index('ReferenceError:')+1]
+                            logging.info("Reference Error - Returning")
                             if nextword == 'invalid' or nextword ==  'reference' :
                                 return 
                             selected=None
@@ -405,10 +408,13 @@ class GrammaticalEvolution(object):
                             logging.info("Replaced "+nextword+" with "+selected)
                             program=''.join(newWordList)
                             gene.local_bnf['program'] = program
+                            refError=True
                         else:
+                            refError=False
                             break
-                if timedout or rc==self.interpreter_Options[0][1]:
+                if refError:
                     return
+                ti1=time()
                 for a in range(len(self.interpreter_Shell)):
                     for option in self.interpreter_Options[a]:
                         l=[None,None]        
@@ -437,6 +443,7 @@ class GrammaticalEvolution(object):
                                 if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
                                     return
                             gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+                logging.info("Calculating Fitness - Execution Completed in " +str(time()-ti1)+" seconds")
             except:
                 pass
             finally:
@@ -449,8 +456,12 @@ class GrammaticalEvolution(object):
     
     def run_cmd(self, fi,l,option,shellNum):
         try:
-            exec_cmd=self.interpreter_Shell[shellNum]+" "+option+" "+self.shellfileOption[shellNum]+" "+fi
-            p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+            cmd=[]
+            cmd.append(self.interpreter_Shell[shellNum])
+            cmd=cmd+str(option.strip()).split()
+            cmd=cmd+self.shellfileOption[shellNum]
+            cmd.append(fi)
+            p = Popen(cmd, stdout=PIPE,stderr=PIPE)
             l[0]=p
             out, err = p.communicate()
             l[1]=(out,err,p.returncode)
@@ -465,10 +476,6 @@ class GrammaticalEvolution(object):
             logging.info("Inside computeSubScore method")
             ti=time()
             incompl,dummy,exec_time=parseTree(program)
-            # res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
-            # if len(res) > 0:
-            #     print "computeSubScore-rejection"
-            #     return None
             logging.info("Score Calc: Invoked parser for " +str(time()-ti) +" seconds")
             gene.prgLength=len(extractNonTerminal(incompl,[]))
             score= -float(exec_time)/gene.prgLength
@@ -478,23 +485,23 @@ class GrammaticalEvolution(object):
             for temp in a:
                 if temp>0:
                     temp=temp-1
-                score += temp*1.0
+                score += temp*2.0
             for temp in b:
                 if temp>0:
                     temp=temp-1
-                score += temp*1.0
+                score += temp*10.0
             for temp in c:
                 if temp>0:
                     temp=temp-1
-                score += temp*1.0
+                score += temp*2.0
             for temp in d:
                 if temp>0:
                     temp=temp-1
-                score += temp*1
+                score += temp*5
             if "warning" in err:
                 logging.info("warning found: "+err)
                 score+=10
-            logging.info("exiting computeSubScore method")
+            logging.info("exiting computeSubScore method Completed in " +str(time()-ti)+" seconds")
         except:
             return None
         finally:
@@ -534,12 +541,6 @@ class GrammaticalEvolution(object):
                 	childList.extend(child_list)    
         self._perform_replacements(childList)
 
-    """
-        if ind=True; certain num of indv are selected based on max fitness rate (say m). These are included in offspring list.
-
-        remianing individuals max_pop - m are selected which includes these m indiv undergo crossover and mutation
-        m+(n-m) = n (new offspring are generated which represents next generations)
-    """
     def _evaluate_fitness(self,ind=False,limitSelection=False): 
         flist = []
         flist1 = []
@@ -604,10 +605,6 @@ class GrammaticalEvolution(object):
             
                     ti1=time()
                     child1ParseTree,child1._identifiers,exec_time=parseTree(child1Prg)
-                    # res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child1ParseTree)
-                    # if len(res) > 0:
-                    #     print "crossover1-rejection"
-                    #     continue
                     non_term1=extractNonTerminal(child1ParseTree,[])
                     logging.info("Invoked parser - Crossover-1 for " +str(time()-ti1) +" seconds")
                     child1.prgLength=len(non_term1)
@@ -615,10 +612,6 @@ class GrammaticalEvolution(object):
                     
                     ti2=time()
                     child2ParseTree,child2._identifiers,exec_time=parseTree(child2Prg)
-                    # res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',child2ParseTree)
-                    # if len(res) > 0:
-                    #     print "crossover2-rejection"
-                    #     continue
                     non_term2=extractNonTerminal(child2ParseTree,[])
                     child2.prgLength=len(non_term2)
                     logging.info("Invoked parser - Crossover-2 for " +str(time()-ti2)+" seconds")
@@ -722,10 +715,6 @@ class GrammaticalEvolution(object):
                 
                 ti1=time()
                 incompl, gene._identifiers,exec_time = parseTree(gene.get_program())
-                # res=findall('(<)([a-zA-Z]+)(><\/)+([a-zA-Z]+)(>)',incompl)
-                # if len(res) > 0:
-                #     print "mutation-rejection"
-                #     return None
                 non_TerminalsList=extractNonTerminal(incompl,[])
                 logging.info("Invoked parser - Mutation-1 for " +str(time()-ti1)+" seconds")
                 count=1

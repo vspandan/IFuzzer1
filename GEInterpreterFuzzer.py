@@ -47,7 +47,7 @@ def generateOptions():
         for j in splitValues[2].split(','):
             returncode.append(int(j))
         returnCodes.append(returncode)
-        fileOptionSpecifier.append(splitValues[3])
+        fileOptionSpecifier.append(splitValues[3].strip())
 
 """
 Lists all the directories and makes a call to list the files
@@ -188,10 +188,11 @@ if __name__ == "__main__":
     if args[0]=="0":
         createFragmentPool()
     for a in range(len(shell)):
-        shellfileoption=""
+        shellfileoption=[]
         for shellfile in libfiLes:
-            shellfileoption = shellfileoption + " " + shellfile + " " + fileOptionSpecifier[a]
-        shellfileOption.append(shellfileoption);
+            shellfileoption.append(shellfile)
+            shellfileoption.append(fileOptionSpecifier[a])
+        shellfileOption.append(shellfileoption)
     if not exists(FILELISTFILE):
         collectFiles()
     from GECodeGenerator import runFuzzer         
