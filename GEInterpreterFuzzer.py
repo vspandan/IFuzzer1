@@ -152,6 +152,7 @@ Elimiates unwanted files
 def collectFiles():
     try:
         tempList = []
+        print "Total Number of Files "+ str(len(fileList))
         for f in fileList:
             statinfo=stat(f)
             if statinfo.st_size == 0:
@@ -160,8 +161,15 @@ def collectFiles():
             from subprocess import Popen,PIPE
             flag=True
             for a in range(len(shell)):
-                exec_cmd="timeout 3 "+ shell[a] + " " + options[a][0]  + " "+ shellfileOption[a] + " " + f
-                p = Popen(exec_cmd.split(), stdout=PIPE,stderr=PIPE)
+                cmd=['timeout','5']
+                cmd.append(shell[a])
+                option=options[a][0].strip();
+                if len(option)>0:
+                    cmd=cmd+option.split()
+                if len(shellfileOption[a])>0:
+                    cmd=cmd+shellfileOption[a]
+                cmd.append(f)
+                p = Popen(cmd, stdout=PIPE,stderr=PIPE)
                 (out0,err0) = p.communicate()
                 rc0 = p.returncode
                 if rc0 == returnCodes[a][1]:
@@ -170,11 +178,12 @@ def collectFiles():
                     break
             if flag:   
                 tempList.append(f)
+        print "Files Listed for Processing "+ str(len(tempList))
         fileList[:] =tempList
         f1 = open(FILELISTFILE, 'wb')
         dump(fileList,f1)
         f1.close()
-    except:
+    finally:
         pass
 
 """
@@ -191,7 +200,8 @@ if __name__ == "__main__":
         shellfileoption=[]
         for shellfile in libfiLes:
             shellfileoption.append(shellfile)
-            shellfileoption.append(fileOptionSpecifier[a])
+            if len(fileOptionSpecifier[a])>0:
+                shellfileoption.append(fileOptionSpecifier[a])
         shellfileOption.append(shellfileoption)
     if not exists(FILELISTFILE):
         collectFiles()

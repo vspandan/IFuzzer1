@@ -2,7 +2,7 @@
 from copy import deepcopy
 from threading import Thread
 from datetime import datetime
-from os import path,listdir,remove
+from os import path,listdir,remove,kill
 from random import choice, randint, random
 from re import sub,split,findall
 from subprocess import Popen,PIPE
@@ -359,11 +359,11 @@ class GrammaticalEvolution(object):
             try:
                 f=NamedTemporaryFile(delete=False)
                 f.close()
+                timedout=False
                 while True:
                     tempFileObj=open(f.name,"w")
                     tempFileObj.write(program)
                     tempFileObj.close()
-                    timedout=False
                     l=[None,None]
                     t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0][0],'shellNum':0})
                     t.start()
@@ -375,8 +375,7 @@ class GrammaticalEvolution(object):
                             kill(l[0].pid, 9)
                             sleep(.1)
                             logging.info("Calculating Fitness - Killed timeout process " +str(time()-ti)+" seconds")
-                            return
-                        break
+                        return
                     else:
                         (out,err,rc)=l[1]
                         refError=False
@@ -412,15 +411,24 @@ class GrammaticalEvolution(object):
                         else:
                             refError=False
                             break
-                if refError:
+                if refError :
                     return
-                ti1=time()
                 for a in range(len(self.interpreter_Shell)):
                     for option in self.interpreter_Options[a]:
+                        ti1=time()
                         l=[None,None]        
                         t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option, 'shellNum':a})
                         t.start()
                         t.join(self.execution_timeout)
+                        if t.isAlive():
+                            if l[0] is not None:
+                                logging.info("JS shell execution timeout. Process : "+str(l[0].pid))
+                                l[0].kill()
+                                kill(l[0].pid, 9)
+                                sleep(.1)
+                                timedout=True
+                                logging.info("Calculating Fitness - Killed timeout process " +str(time()-ti)+" seconds")
+                            return
                         (out,err,rc)=l[1]
                         if rc not in self.interpreter_ReturnCodes[a]:
                             program+="\n//"+self.interpreter_Shell[a]+"\n//"+option + "\n//" + str(datetime.now()) + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
@@ -431,21 +439,15 @@ class GrammaticalEvolution(object):
                             f1=open(newFile,'w')
                             f1.write(program)
                             f1.close
-                        if rc == self.interpreter_ReturnCodes[a][1]:
-                        	flag=False
-                if flag:
-                    gene.score += self.computeSubScore(gene,program,err)
-                    if gene.score is not None:
-                        if self._generation==0:
-                            gene._fitness =  gene.score
-                        else:
-                            if prgLength is not None:
-                                if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
-                                    return
-                            gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
-                logging.info("Calculating Fitness - Execution Completed in " +str(time()-ti1)+" seconds")
-            except:
-                pass
+                gene.score += self.computeSubScore(gene,program,err)
+                if gene.score is not None:
+                    if self._generation==0:
+                        gene._fitness =  gene.score
+                    else:
+                        if prgLength is not None:
+                            if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
+                                return
+                        gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
             finally:
                 try:
                     logging.info("Calculating Fitness - Completed in " +str(time()-ti)+" seconds")
@@ -458,8 +460,11 @@ class GrammaticalEvolution(object):
         try:
             cmd=[]
             cmd.append(self.interpreter_Shell[shellNum])
-            cmd=cmd+str(option.strip()).split()
-            cmd=cmd+self.shellfileOption[shellNum]
+            opt=option.strip();
+            if len(opt)>0:
+                cmd=cmd+opt.split()
+            if len(self.shellfileOption[shellNum])>0:
+                cmd=cmd+self.shellfileOption[shellNum]
             cmd.append(fi)
             p = Popen(cmd, stdout=PIPE,stderr=PIPE)
             l[0]=p
