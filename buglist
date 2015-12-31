@@ -1,0 +1,13 @@
+1234323 	Core 	JavaScript Engine 	nobody@mozilla.org 	UNCO 	--- 	AddressSanitizer failed to allocate 0x001000000000 bytes. AddressSanitizer's allocator is terminating the process instead of returning 0 	23:42:41
+1234979 	Core 	JavaScript Engine 	nobody@mozilla.org 	UNCO 	--- 	AddressSanitizer: SEGV /builds/slave/m-cen-l64-asan-000000000000000/build/src/js/src/jsobj.h:122 	08:03:04
+1235122 	Core 	JavaScript Engine 	nobody@mozilla.org 	UNCO 	--- 	AddressSanitizer failed to allocate 0x400002000 (17179877376) bytes of LargeMmapAllocator 	23:40:54
+1235160 	Core 	JavaScript Engine: J 	nobody@mozilla.org 	UNCO 	--- 	crash due to Assertion failure: index < length_, at js/src/jit/FixedList.h:84 	08:02:15
+1193307 	Core 	JavaScript Engine 	nobody@mozilla.org 	NEW 	--- 	evaluate() method results in "Error: compartment cannot save singleton anymore" 	2015-08-11
+1133247 	Core 	XPConnect 	nobody@mozilla.org 	REOP 	--- 	OOM error is not reported in the browser console 	2015-11-01
+1192401 	Core 	JavaScript Engine 	nfitzgerald@mozilla.com 	RESO 	FIXE 	Crash due to Assertion failure: getSlotRef(EVAL).isUndefined(), at js/src/vm/GlobalObject.h:147 	2015-11-27
+1141969 	Core 	JavaScript Engine 	nobody@mozilla.org 	RESO 	INVA 	Crash[@js::SCInput::SCInput] or assertion failure: (nbytes & 7) == 0 at StructuredClone.cpp:463 	2015-03-11
+1192381 	Core 	JavaScript Engine: J 	nobody@mozilla.org 	RESO 	INVA 	Crash due to Assertion failure: input()->isRecoveredOnBailout() == mustBeRecovered_ (assertRecoveredOnBailout failed during compilation), at js/src/jit/Recover.cpp:1465 	2015-08-11
+1205605 	Core 	JavaScript Engine 	nobody@mozilla.org 	RESO 	INVA 	InternalError: too much recursion 
+1192379 	Core 	JavaScript Engine: J 	nobody@mozilla.org 	RESO 	WONT 	input()->isRecoveredOnBailout() 
+1132451 	Core 	JavaScript Engine 	nobody@mozilla.org 	VERI 	WONT 	out of memory 	2015-02-14
+1132776 	Core 	JavaScript Engine 	nobody@mozilla.org 	VERI 	WONT 	segmentation fault 	2015-02-14 

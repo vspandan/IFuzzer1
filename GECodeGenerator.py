@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from marshal import dump, load
-from os import listdir,remove
-from os.path import isfile, join, abspath
+from os import listdir,remove,makedirs
+from os.path import isfile, join, abspath, exists
 from shutil import rmtree
 from codegen.fitness import FitnessElites, FitnessTournament, FitnessProportionate
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
@@ -52,13 +52,10 @@ def runFuzzer(interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption
             ges = GrammaticalEvolution()
             ges.setGrammarFile(abspath(config.get('Options', 'GRAMMAR_FILE')))
             ges.set_bnf(bnf)
-            ges.set_genotype_length(int(config.get('Options', 'MIN_GENE_LENGTH')), int(config.get('Options', 'MAX_GENE_LENGTH')))
             ges.set_population_size(Population_size)
-            ges.set_wrap(bool(config.get('Options', 'WRAP')))
             ges.set_max_generations(int(config.get('Options', 'MAX_GENERATIONS')))
             ges.set_fitness_type(config.get('Options', 'FITNESS_TYPE'), float(config.get('Options', 'MAX_FITNESS_VALUE')))
             
-            ges.set_max_program_length(int(config.get('Options', 'MAX_PROGRAM_LENGTH')))
             ges.set_fitness_fail(float(config.get('Options', 'FITNESS_FAIL')))
             
             ges.set_execution_timeout(int(config.get('Options', 'INTERPRETER_TIMEOUT')))
@@ -89,7 +86,6 @@ def runFuzzer(interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption
                     ReplacementTournament(ges.fitness_list, tournament_size=int(config.get('Options', 'REPLACEMENT_TOURNAMENT_SIZE'))))
             
             ges.set_maintain_history(bool(config.get('Options', 'MAINTAIN_HISTORY')))
-            ges.set_extend_genotype(bool(config.get('Options', 'EXTEND_GENOTYPE')))
             
             ges.dynamic_mutation_rate(int(config.get('Options', 'DYNAMIC_MUTATION_RATE')))
             ges.dynamic_crossover_rate(int(config.get('Options', 'DYNAMIC_CROSSOVER_RATE')))

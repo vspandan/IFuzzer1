@@ -10,7 +10,7 @@ from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
 from codegen.fitness import FitnessList, Fitness, Replacement
 from codegen.Genotypes import Genotype
-from time import time
+from time import time,sleep
 from jsbeautifier import beautify
 from tempfile import NamedTemporaryFile
 
@@ -39,7 +39,6 @@ class GrammaticalEvolution(object):
         self._pre_selected = []
         self.history = []
         self.population = []
-        self.initial_Population = []
         self.non_Terminals=[]
         self.stopping_criteria = {
                 STOPPING_MAX_GEN: None
@@ -53,8 +52,6 @@ class GrammaticalEvolution(object):
         self._mutation_rate = 0.02
         self._max_fitness_rate = 0.5
 
-        self._wrap = True
-        self._extend_genotype = True
         self._start_gene_length = None
         self._max_gene_length = None
         self._max_program_length = None
@@ -84,6 +81,17 @@ class GrammaticalEvolution(object):
         self.function_break=False
         self.crossover_bias_rate=0
         self.targetDir=config.get('TargetDir', 'BUGSDIR')
+        self.getMetricNonTerminals()
+
+    def getMetricNonTerminals(self):
+        logging.info("getMetricNonTerminals Started")
+        nonTerminalListStr= config.get('Interpreter', 'METRICS_NON_TEMINALS')
+        nonTermList=nonTerminalListStr.split(",")
+        self.metricNonTerm={}
+        for nonTerm in nonTermList:
+            splitValues=nonTerm.split(":")
+            self.metricNonTerm[splitValues[0]]=float(splitValues[1])
+        logging.info("getMetricNonTerminals Completed")
 
     def set_crossover_bias_rate(self,percentage):
         self.crossover_bias_rate=percentage
@@ -123,13 +131,6 @@ class GrammaticalEvolution(object):
         f.close()        
         self.set_bnf(bnf)
     
-    def _prepareInitial_Population (self,fileList):
-            self.initial_Population=[]
-            count=0
-            for fileName in fileList:
-                f=open(path.abspath(fileName),"r")
-                self.initial_Population.append(f.read())
-
     def set_population_size(self, size):
         size = long(size)
         if isinstance(size, long) and size > 0:
@@ -141,25 +142,6 @@ class GrammaticalEvolution(object):
         else:
             raise ValueError("""
                 population size, %s, must be a long above 0""" % (size))
-
-    def set_genotype_length(self, start_gene_length,
-                                    max_gene_length=None):
-        if max_gene_length is None:
-            max_gene_length = start_gene_length
-
-        start_gene_length = long(start_gene_length)
-        max_gene_length = long(max_gene_length)
-        self._start_gene_length = start_gene_length
-        self._max_gene_length = max_gene_length
-
-    def get_genotype_length(self):
-        return (self._start_gene_length, self._max_gene_length)
-
-    def set_extend_genotype(self, true_false):
-            self._extend_genotype = true_false
-
-    def set_wrap(self, true_false):
-            self._wrap = true_false
 
     def set_bnf(self, bnf):
         def strip_spaces(key, values):
@@ -251,17 +233,23 @@ class GrammaticalEvolution(object):
         return self.population[self.fitness_list.worst_member()]
 
     def calcfitness(self):
+        logging.info("calcfitness Started")
         self.meanLength=1
+        
         def calculateCovariance(meanFitness):
+            logging.info("calculateCovariance Started")
             value=0
             for gene in self.population:
                 value += ( gene.get_fitness() - meanFitness ) * ( gene.prgLength - self.meanLength )
+            logging.info("calculateCovariance Completed")
             return value
 
         def variance():
+            logging.info("variance Started")
             value=0
             for gene in self.population:
                 value += ( gene.prgLength - self.meanLength ) ** 2 
+            logging.info("variance Completed")
             return value
         
         totalLength=0
@@ -272,8 +260,6 @@ class GrammaticalEvolution(object):
             gene.starttime = starttime
             gene.set_keys (self.non_Terminals)
             if self._generation == 0 :
-                logging.debug("evaluating" + str(gene.member_no))
-                logging.debug(gene.local_bnf["program"])
                 gene.score=10
                 self.compute_fitness(gene)
             self.population[gene.member_no]=gene
@@ -288,8 +274,10 @@ class GrammaticalEvolution(object):
             self.parsimony_constant=0
         else:
             self.parsimony_constant=calculateCovariance(meanFitness)/varianceValue
+        logging.info("calcfitness Completed")
 
     def run(self, starting_generation=0):
+        logging.info("Starting Code Generation Process")
         self._generation = starting_generation
         starttime=time()
         self.calcfitness()
@@ -297,7 +285,6 @@ class GrammaticalEvolution(object):
         logging.info("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
         while True:
             logging.info("Starting "+str(self._generation)+" Generation - "+str(datetime.now()))
-            print("Starting "+str(self._generation)+" Generation - "+str(datetime.now()))
             starttime=time()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
@@ -309,40 +296,97 @@ class GrammaticalEvolution(object):
                 break
             diff=round((time()-starttime))
             logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
+        logging.info("Completed Code Generation Process")
       
-    def create_genotypes(self,file,interpreter_Shell,interpreter_Options,interpreter_ReturnCodes,preSelectedNonTerminals,shellfileOption):
+    def create_genotypes(self,fileList,interpreter_Shell,interpreter_Options,interpreter_ReturnCodes,preSelectedNonTerminals,shellfileOption):
+        logging.info("create_genotypes Started")
         self.interpreter_Shell=interpreter_Shell
         self.shellfileOption=shellfileOption
         self.interpreter_Options =interpreter_Options
         self.interpreter_ReturnCodes=interpreter_ReturnCodes
         self.nT_Invld_Gen_Process=preSelectedNonTerminals
         self._extractProductions()
-        self._prepareInitial_Population(file)
-        if len(self.initial_Population)<=0:
+        
+        if len(fileList)<self._population_size:
+            logging.info("create_genotypes Completed")
             return
         member_no = 0
         
         while member_no < self._population_size:
-            gene = Genotype(self._start_gene_length,
-                        self._max_gene_length,
-                        member_no)
+            gene = Genotype(member_no)
             gene.local_bnf = deepcopy(self._bnf)
             gene.local_bnf['<member_no>'] = [gene.member_no]
             gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
-            gene._extend_genotype = self._extend_genotype
-            gene._wrap = self._wrap
             gene.preSelectedNonTerminals=preSelectedNonTerminals
             gene._initial_member_no =  member_no
-            member_no += 1
-            gene.local_bnf["program"]=self.initial_Population[gene.member_no]
+            
+            f=open(path.abspath(fileList[member_no]),"r")
+            program=f.read()
+            f.close()
+            
+            gene.origin=fileList[member_no]
+            gene.evolutionGraph.append(fileList[member_no])
+            gene.local_bnf["program"]=program
+            gene.syntaxTree,gene._identifiers,dummy2=parseTree(program)
+            gene.non_term=extractNonTerminal(gene.syntaxTree,[])
             self.population.append(gene)
-        self.initial_Population=None
+            
+            member_no += 1
+        logging.info("create_genotypes Completed")
         return True;  
     
-           
+    def checkNResolveRefError(self, out, err):
+        logging.info("checkNResolveRefError Started")
+        if 'ReferenceError:' in err or 'ReferenceError' in out:
+            if self._generation==0:
+                logging.info("checkNResolveRefError Completed")
+                return False
+            words=err.split()
+            nextword=words[words.index('ReferenceError:')+1]
+            logging.info("Reference Error - Returning")
+            if nextword == 'invalid' or nextword ==  'reference' :
+                logging.info("checkNResolveRefError Completed")
+                return 
+            selected=None
+            while nextword == selected or selected is None:
+                if len(gene._identifiers)<0:
+                    return False
+                selected=choice(gene._identifiers)
+                gene._identifiers.remove(selected)
+            logging.info("Replacing "+nextword+" with "+selected)
+            if nextword == selected or selected is None:
+                logging.info("checkNResolveRefError Completed")
+                return False
+            
+            newWordList=[]
+            wordList=split(VARIABLE_FORMAT1, program)
+            for word in wordList:
+                if word == nextword:
+                    newWordList.append(selected)
+                else:
+                    newWordList.append(word)
+            logging.info("Replaced "+nextword+" with "+selected)
+            program=''.join(newWordList)
+            gene.local_bnf['program'] = program
+            logging.info("checkNResolveRefError Completed")
+            return True
+        logging.info("checkNResolveRefError Completed")
+        return False
 
-    def compute_fitness(self,gene,prgLength=None):
-        logging.info("compute_fitness entered")
+    def logBug(self,program,shell,option,err):
+        logging.info("logBug Completed")
+        program+="\n//"+shell+"\n//"+option + "\n//" + str(datetime.now()) + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
+        logging.info("Crash:")
+        logging.info(program)
+        FILECOUNT = len(listdir(self.targetDir))
+        newFile=self.targetDir+"/"+str(FILECOUNT)+".js"
+        f1=open(newFile,'w')
+        f1.write(program)
+        f1.close
+        logging.info("logBug Completed")
+
+    def compute_fitness(self,gene):
+        logging.info("compute_fitness started")
         ti=time()
         flag=True;
         gene._fitness=self._fitness_fail
@@ -359,7 +403,7 @@ class GrammaticalEvolution(object):
             try:
                 f=NamedTemporaryFile(delete=False)
                 f.close()
-                timedout=False
+                refError=False
                 while True:
                     tempFileObj=open(f.name,"w")
                     tempFileObj.write(program)
@@ -370,96 +414,60 @@ class GrammaticalEvolution(object):
                     t.join(self.execution_timeout)
                     if t.isAlive():
                         if l[0] is not None:
-                            logging.info("JS shell execution timeout. Process : "+str(l[0].pid))
                             l[0].kill()
                             kill(l[0].pid, 9)
                             sleep(.1)
-                            logging.info("Calculating Fitness - Killed timeout process " +str(time()-ti)+" seconds")
+                            logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
                         return
                     else:
                         (out,err,rc)=l[1]
-                        refError=False
-                        if 'ReferenceError:' in err:
-                            if self._generation==0:
-                                break
-                            words=err.split()
-                            nextword=words[words.index('ReferenceError:')+1]
-                            logging.info("Reference Error - Returning")
-                            if nextword == 'invalid' or nextword ==  'reference' :
-                                return 
-                            selected=None
-                            while nextword == selected or selected is None:
-                                if len(gene._identifiers)<0:
-                                    break
-                                selected=choice(gene._identifiers)
-                                gene._identifiers.remove(selected)
-                            logging.info("Replacing "+nextword+" with "+selected)
-                            if nextword == selected or selected is None:
-                                break
-                            
-                            newWordList=[]
-                            wordList=split(VARIABLE_FORMAT1, program)
-                            for word in wordList:
-                                if word == nextword:
-                                    newWordList.append(selected)
-                                else:
-                                    newWordList.append(word)
-                            logging.info("Replaced "+nextword+" with "+selected)
-                            program=''.join(newWordList)
-                            gene.local_bnf['program'] = program
-                            refError=True
-                        else:
+                        if not self.checkNResolveRefError(out,err):
                             refError=False
-                            break
+                            break;
+                        else:
+                            refError=True
                 if refError :
+                    logging.info("compute_fitness completed - Reference Error"+str(time()-ti)+" seconds")
                     return
+                execStart=time()
                 for a in range(len(self.interpreter_Shell)):
                     for option in self.interpreter_Options[a]:
-                        ti1=time()
+
                         l=[None,None]        
                         t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option, 'shellNum':a})
                         t.start()
                         t.join(self.execution_timeout)
                         if t.isAlive():
                             if l[0] is not None:
-                                logging.info("JS shell execution timeout. Process : "+str(l[0].pid))
                                 l[0].kill()
                                 kill(l[0].pid, 9)
                                 sleep(.1)
-                                timedout=True
-                                logging.info("Calculating Fitness - Killed timeout process " +str(time()-ti)+" seconds")
+                                logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
                             return
                         (out,err,rc)=l[1]
                         if rc not in self.interpreter_ReturnCodes[a]:
-                            program+="\n//"+self.interpreter_Shell[a]+"\n//"+option + "\n//" + str(datetime.now()) + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
-                            logging.info("Crash:")
-                            logging.info(program)
-                            FILECOUNT = len(listdir(self.targetDir))
-                            newFile=self.targetDir+"/"+str(FILECOUNT)+".js"
-                            f1=open(newFile,'w')
-                            f1.write(program)
-                            f1.close
-                gene.score += self.computeSubScore(gene,program,err)
+                            self.logBug(program,self.interpreter_Shell[a],option,err)
+
+                score,prgLength = self.computeSubScore(gene,program,err,time()-execStart)
+                gene.score+=score
                 if gene.score is not None:
                     if self._generation==0:
                         gene._fitness =  gene.score
-                    else:
-                        if prgLength is not None:
-                            if (gene.prgLength/prgLength) > (self.crossover_bias_rate/100):
-                                return
-                        gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+                    elif (gene.prgLength/prgLength) < (self.crossover_bias_rate/100):
+                            gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
             finally:
                 try:
-                    logging.info("Calculating Fitness - Completed in " +str(time()-ti)+" seconds")
+                    logging.info("compute_fitness completed"+str(time()-ti)+" seconds")
                     remove(f.name)
                 except:
                     pass
-        logging.info("compute_fitness completed")
+        
     
     def run_cmd(self, fi,l,option,shellNum):
+        logging.info("run_cmd started")
         try:
             cmd=[]
-            cmd.append(self.interpreter_Shell[shellNum])
+            cmd.append(self.interpreter_Shell[shellNum].strip())
             opt=option.strip();
             if len(opt)>0:
                 cmd=cmd+opt.split()
@@ -474,45 +482,30 @@ class GrammaticalEvolution(object):
             sys.stderr.flush()
         except:
             pass
+        logging.info("run_cmd completed")
 
-    def computeSubScore (self, gene, program,err):
+    def computeSubScore (self, gene, program,err,exec_time):
+        logging.info("computeSubScore started")
         try:
             score=0.0
-            logging.info("Inside computeSubScore method")
             ti=time()
-            incompl,dummy,exec_time=parseTree(program)
-            logging.info("Score Calc: Invoked parser for " +str(time()-ti) +" seconds")
-            gene.prgLength=len(extractNonTerminal(incompl,[]))
-            score= -float(exec_time)/gene.prgLength
-            a,b,c,d=CountNestedStructures(incompl)
-            logging.info("Completed - Score Calc in " +str(time()-ti) + " seconds")
-            
-            for temp in a:
-                if temp>0:
-                    temp=temp-1
-                score += temp*2.0
-            for temp in b:
-                if temp>0:
-                    temp=temp-1
-                score += temp*10.0
-            for temp in c:
-                if temp>0:
-                    temp=temp-1
-                score += temp*2.0
-            for temp in d:
-                if temp>0:
-                    temp=temp-1
-                score += temp*5
+            #TODO calc programlength using cyclic complexity
+            prgLength=len(program.split())
+            score= -float(exec_time)/prgLength
+            nonTerminalsMeticsInfo=CountNestedStructures(gene.syntaxTree,self.metricNonTerm.keys())
+            for a in nonTerminalsMeticsInfo.keys():
+                for temp in a:
+                    score += temp*self.metricNonTerm[a]
             if "warning" in err:
                 logging.info("warning found: "+err)
                 score+=10
-            logging.info("exiting computeSubScore method Completed in " +str(time()-ti)+" seconds")
         except:
-            return None
-        finally:
-            return score
+            pass
+        logging.info("computeSubScore completed")
+        return score,prgLength
 
     def _perform_endcycle(self):
+        logging.info("performing crossover and mutation")
         self._pre_selected = self._evaluate_fitness(True)
         childList=[]
         remainingPopCount = self._population_size - len(self._pre_selected)
@@ -524,7 +517,6 @@ class GrammaticalEvolution(object):
             ch=choice([0,1])
             ch=0
             if ch==0:
-                logging.info("performing crossover and mutation")
                 fitness_pool = self._evaluate_fitness(False,limitSelection)
                 child_list = self._perform_crossovers(fitness_pool)
                 if child_list is not None:
@@ -534,7 +526,6 @@ class GrammaticalEvolution(object):
                 if child_list is not None:
                     childList.extend(child_list)
             else:
-                logging.info("performin mutation and crossover")
                 fitness_pool = self._evaluate_fitness()
                 child_list = self._perform_mutations(fitness_pool,(remainingPopCount-len(childList)))
                 if child_list is not None:
@@ -545,10 +536,12 @@ class GrammaticalEvolution(object):
                 if child_list is not None:
                 	childList.extend(child_list)    
         self._perform_replacements(childList)
+        logging.info("completed performing crossover and mutation")
 
     def _evaluate_fitness(self,ind=False,limitSelection=False): 
-        flist = []
-        flist1 = []
+        logging.info("_evaluate_fitness started")
+        parentlist = []
+        parentlist1 = []
         if ind:
             total = int(round(self._max_fitness_rate * float(self._population_size)))
         else: 
@@ -561,171 +554,156 @@ class GrammaticalEvolution(object):
                 for i in selected:
                     if count == total:
                         break
-                    flist.append(i)
+                    parentlist.append(i)
                     count += 1
-            for member_no in flist:
+            for member_no in parentlist:
                 gene=self.population[member_no]
                 if gene._fitness!=self._fitness_fail:
-                    flist1.append(deepcopy(gene))
+                    parentlist1.append(deepcopy(gene))
         else:
             for gene in self.population:
                 if gene._fitness!=self._fitness_fail:
-                    flist1.append(deepcopy(gene))
-        return flist1
+                    parentlist1.append(deepcopy(gene))
+        logging.info("_evaluate_fitness completed")
+        return parentlist1
 
-    def _perform_crossovers(self, flist):
-        logging.info("Crossover: Started")
+    def _perform_crossovers(self, parentlist):
+        logging.info("_perform_crossovers started")
         ti=time()
         child_list = []
         try:
-            logging.debug("crossover started")
             length = int(round(self._crossover_rate * float(self._population_size)))
             """
             If no of fitness selections is less than no of indv undergoing crossover, than only no equal to no of fitness selections are allowed to undergo process.
             """
-            if len(flist) < length:
-                length=len(flist)
+            if len(parentlist) < length:
+                length=len(parentlist)
             if length % 2 == 1:
                 length -= 1
             if length >= 2:
-                while len(flist) >=2 :
-                    parent1 = choice(flist)
-                    parent2 = choice(flist)
-                    flist.remove(parent1)
-                    flist.remove(parent2)
+                while len(parentlist) >=2 :
+                    child1 = choice(parentlist)
+                    child2 = choice(parentlist)
+                    
+                    parentlist.remove(child1)
+                    parentlist.remove(child2)
 
-                    if randint(0, 1):
-                            child1 = (parent1)
-                            child2 = (parent2)
-                    else:
-                            child1 = (parent2)
-                            child2 = (parent1)
-                    
-                    child1_binary = child1.binary_gene
-                    child2_binary = child2.binary_gene
-                    
                     child1Prg=child1.get_program()
                     child2Prg=child2.get_program()
+
+                    child1.prgLength=len(child1Prg.split())
+                    child2.prgLength=len(child2Prg.split())
         
-            
-                    ti1=time()
-                    child1ParseTree,child1._identifiers,exec_time=parseTree(child1Prg)
-                    non_term1=extractNonTerminal(child1ParseTree,[])
-                    logging.info("Invoked parser - Crossover-1 for " +str(time()-ti1) +" seconds")
-                    child1.prgLength=len(non_term1)
-
-                    
-                    ti2=time()
-                    child2ParseTree,child2._identifiers,exec_time=parseTree(child2Prg)
-                    non_term2=extractNonTerminal(child2ParseTree,[])
-                    child2.prgLength=len(non_term2)
-                    logging.info("Invoked parser - Crossover-2 for " +str(time()-ti2)+" seconds")
-
-                    
                     if self.nT_Invld_Gen_Process is not None:
-                        commonNonTerm=[val for val in non_term1 if (val in set(non_term2) and val in self.nT_Invld_Gen_Process)]
+                        commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term) and val in self.nT_Invld_Gen_Process)]
                     else:
-                        commonNonTerm=[val for val in non_term1 if (val in set(non_term2))]
+                        commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term))]
                     
                     trail=0
                     while trail<5:
                         trail += 1
                         count=1
                         if round(random(),1) < self._multiple_rate:
-                            count=int(self.crossoverCount*(round(random(),1)))+1        
-                        selectedNt=[]
-                        if len(commonNonTerm) > 0:
-                            for i in range(count):
-                                selectedNt.append(choice(commonNonTerm))
-                        else:
-                            break
-                        ti3=time()
-                        subString1,s1,selected1NTList=genCodeFrag(child1ParseTree,non_term1,selectedNt,None,len(selectedNt))
-                        subString2,s2,selected2NTList=genCodeFrag(child2ParseTree,non_term2,selectedNt,None,len(selectedNt))
-                        logging.info("Invoked Parser - Crossover-SubCode for " +str(time()-ti3)+" seconds")
-                        try:
-                            for k in selected2NTList:
-                                s1 = s1.replace(selected2NTList[k],subString2[k])
-                            for k in selected1NTList:
-                                s2 = s2.replace(selected1NTList[k],subString1[k])
-                            child1Prg_=s1
-                            child2Prg_=s2
+                            count=int(self.crossoverCount*(round(random(),1)))+1
                         
-                        except:
-                            continue
-                        child1.local_bnf['program']=child1Prg_
+                        if len(commonNonTerm) < 0:
+                            break
+                        et1 = ElementTree.fromstring(child1.syntaxTree)
+                        et2 = ElementTree.fromstring(child2.syntaxTree)
+
+                        parent_map1 = dict((c, p) for p in et1.getiterator() for c in p)
+                        parent_map2 = dict((c, p) for p in et2.getiterator() for c in p)
+                        
+                        for i in range(count):
+                            k=choice(commonNonTerm)
+                            li1= et1.findall('.//'+k)
+                            li2= et2.findall('.//'+k)
+                            selectedXMLNode1= random.choice(li)
+                            selectedXMLNode2= random.choice(li1)
+
+                            parent = parent_map1[selectedXMLNode1]
+                            index = parent._children.index(selectedXMLNode1)
+                            parent._children[index] = selectedXMLNode2
+
+                            parent = parent_map2[selectedXMLNode2]
+                            index = parent._children.index(selectedXMLNode2)
+                            parent._children[index] = selectedXMLNode1
+                            
+                        p1=ProgramGen()
+                        p2=ProgramGen()
+
+                        child1.local_bnf['program']=p1.treeToProg(et1)
+                        child2.local_bnf['program']=p2.treeToProg(et2)
+
                         child1.score=10
-                        self.compute_fitness(child1,len(non_term1))
-                        child2.local_bnf['program']=child2Prg_
                         child2.score=10
-                        self.compute_fitness(child2,len(non_term1))
+
+                        self.compute_fitness(child1)
+                        self.compute_fitness(child2)
 
                         if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
                             
-                            child1.generate_decimal_gene()
-                            child1._update_genotype()
-                            child1.local_bnf['CodeFrag']=""
-
-                            child2.generate_decimal_gene()
-                            child2._update_genotype()
-                            child2.local_bnf['CodeFrag']=""
+                            child1.syntaxTree=et1
+                            child2.syntaxTree=et2
+                            child1.non_term=extractNonTerminal(et1,[])
+                            child2.non_term=extractNonTerminal(et2,[])
 
                             if self._children_per_crossover == 2:
                                 child_list.append(child1)
                                 child_list.append(child2)
                             else:
-                                ch=choice([0,1])
-                                if ch==0:
-                                    child_list.append(child1)
-                                else:
-                                    child_list.append(child2)
+                                child_list.append(child1)
                             logging.info("Crossover-Success")
                             break;
                         else:
                             logging.info("Crossover-Failed")
                             child1.local_bnf['program']=child1Prg
                             child2.local_bnf['program']=child2Prg
-                        logging.debug(subString1)
-                        logging.debug(subString2)
                     if len(child_list) == length:
+                        logging.info("_perform_crossovers completed")
                         return child_list
             
         except:
-            logging.info("Crossover Completed in "+str(time()-ti))
+            logging.info("_perform_crossovers completed")
             return child_list
 
+    def genIncompleteSyntaxTree(self,gene,count):
+        logging.info("genIncompleteSyntaxTree started")
+        et1 = ElementTree.fromstring(gene.syntaxTree)
+        parent_map1 = dict((c, p) for p in et1.getiterator() for c in p)
+        selectedNt=[]
+        i=0;
+        while i<count:
+            k=choice(gene.non_term)
+            li= et1.findall('.//'+k)
+            if len(li)>0:
+                selectedNt.append(k)
+                selectedXMLNode1= choice(li)
+                etTemp = ElementTree.fromstring("<MutationNode> "+k+" </MutationNode>")
+                print k
+                print selectedXMLNode1
+                t1=ProgramGen()
+                print t1.treeToProg(selectedXMLNode1)
+                parent = parent_map1[selectedXMLNode1]
+                index = parent._children.index(selectedXMLNode1)
+                parent._children[index] = etTemp
+                i+=1
+        t=ProgramGen()
+        logging.info("genIncompleteSyntaxTree completed")
+        return t.treeToProg(et1),selectedNt
 
-        
-    def _mutatebinarygene(self, gene, position1, position2):
-        newRandBGene = ""
-        
-        count = 0
-        length = position2 - position1
-        if length > 0:
-            while count < length * 8 :
-                newRandBGene = newRandBGene + str(randint(0, 1))
-                count += 1        
-            gene = ''.join([gene[:position1 * 8], newRandBGene , gene[(position1 + length) * 8:]])
-        
-        return gene
-
+            
     def mutate(self,gene):
         try:
+            logging.info("mutate started")
             pr=gene.local_bnf['program']
-            
+            ti3=time()
             if round(random(),1) < self._mutation_rate :
-                logging.debug("mutation started")
                 generative=False
                 shrink=False
-                
-                ti1=time()
-                incompl, gene._identifiers,exec_time = parseTree(gene.get_program())
-                non_TerminalsList=extractNonTerminal(incompl,[])
-                logging.info("Invoked parser - Mutation-1 for " +str(time()-ti1)+" seconds")
+
                 count=1
-
-                if len(non_TerminalsList) > 1:
-
+                if len(gene.non_term) > 1:
                     if round(random(),1) < self._generative_mutation_rate :
                         generative=True
                         gene._max_depth=self._max_depth
@@ -735,50 +713,44 @@ class GrammaticalEvolution(object):
 
                     if round(random(),1) < self.shrink_mutation_rate:
                         shrink=True
-                    ti2=time()
-                    gene.prgLength=len(non_TerminalsList)
+                    
+                    gene.prgLength=len(gene.get_program().split())
                     trail=0
                 
                     while trail < 3:
                         trail+=1
-                        logging.info("Invoked parser - Mutation-SubCode for " +str(time()-ti2)+" seconds")
-                        dummy,gene.local_bnf['CodeFrag'],selectedNt=genCodeFrag(incompl,non_TerminalsList,None,self.nT_Invld_Gen_Process,count)
-                        logging.info("Invoked parser - Mutation-SubCode for " +str(time()-ti2)+" seconds")
-                        
+                        gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteSyntaxTree(gene,count)
+                        print gene.local_bnf['CodeFrag']
+
                         if len(selectedNt) <=0 :
                             logging.info("Mutation-Failed-Not selected any non-terminal")
                             return None
+                
                         if shrink:
-                            for val in selectedNt.values():
+                            for val in selectedNt:
                                 gene.local_bnf['CodeFrag'].replace(val,'')
                             break
 
-                        tmp=gene.local_bnf['CodeFrag']
-                        gene.local_bnf['CodeFrag']=tmp
                         gene.score=10
-                        ti3=time()
+                        
                         gene._map_gene(selectedNt)
-                        logging.info("Mutation completed " +str(time()-ti3))
-                        logging.debug(dummy)
+                        raw_input()
                         self.compute_fitness(gene)
-                        if gene.get_fitness() != self._fitness_fail :
-                            gene.local_bnf['CodeFrag']=""
-                            gene.prog_generated = 1
+                        if gene.get_fitness() != self._fitness_fail:
+                            gene.syntaxTree,gene._identifiers,dummy2=parseTree(program)
+                            gene.non_term=extractNonTerminal(gene.syntaxTree,[])
                             logging.info("Mutation-Success")
                             break
                         else:
                             gene.local_bnf['program']=pr
                             logging.info("Mutation-Failed")
-                            logging.debug(selectedNt)
-                            logging.debug(dummy)
-                            logging.debug(gene.local_bnf['CodeFrag'])
-                            logging.debug(pr)
         except:
             pass
-        finally:
-            return gene               
+        logging.info("mutate completed" +str(time()-ti3))
+        return gene               
     
     def _perform_mutations(self, mlist, count):
+        logging.info("_perform_mutations started")
         mutatedList=[]
         for gene in mlist:
             try:
@@ -787,13 +759,14 @@ class GrammaticalEvolution(object):
                     mutatedList.append(result)
                     mlist.remove(gene)
                 if len(mutatedList) == count:
-                    return mutatedList
+                    break
             except:
-                logging.info("Function execution timeout")
                 pass
+        logging.info("_perform_mutations completed")
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
+        logging.info("_perform_replacements started")
         position = 0
         for gene in self._pre_selected:
             gene.member_no=position
@@ -807,9 +780,10 @@ class GrammaticalEvolution(object):
                 position+=1
             else:
                 break
-        logging.info("replacement done")
+        logging.info("_perform_replacements completed")
 
     def de_EscapeText(self, gene, string):
+        logging.info("de_EscapeText started")
         self.identifiers_mapping={}
         indicator=False
         if len(gene._identifiers)> 0:
@@ -820,11 +794,11 @@ class GrammaticalEvolution(object):
             if "&lt" in word:
                 word=word.replace("&lt;","<")
             elif "&gt" in word:
-                word=word.replace("&lt;",">")
+                word=word.replace("&gt;",">")
             elif "&quot" in word:
-                word=word.replace("&lt;","\"")
+                word=word.replace("&quot;","\"")
             elif "&amp" in word:
-                word=word.replace("&lt;","&")
+                word=word.replace("&amp;","&")
             elif "&apos" in word:
                 word=word.replace("&apos;","\\")
             elif "&pipe" in word:
@@ -860,9 +834,11 @@ class GrammaticalEvolution(object):
                     else:
                         word='a'
             modifiedWordList.append(word)
+        logging.info("de_EscapeText completed")
         return ''.join(modifiedWordList)
 
     def _continue_processing(self):
+        logging.info("_continue_processing started")
         """
         This method analyzes the fitness list against the stopping_criteria defined over target_value and max generations
         """
@@ -880,8 +856,11 @@ class GrammaticalEvolution(object):
         
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:
+                logging.info("_continue_processing completed")
                 return False
         if fitl.get_target_value() is not None:
                 if fitl.best_value() == fitl.get_target_value():
+                    logging.info("_continue_processing completed")
                     return False
+        logging.info("_continue_processing completed")
         return status
