@@ -164,7 +164,7 @@ class GrammaticalEvolution(object):
                     bnf_dict[key] = values
                 else:
                     pass
-        self.non_Terminals = non_Terminals        
+        self.non_Terminals = non_Terminals   
         self._bnf = bnf_dict
 
     def set_maintain_history(self, true_false):
@@ -408,6 +408,7 @@ class GrammaticalEvolution(object):
                     tempFileObj=open(f.name,"w")
                     tempFileObj.write(program)
                     tempFileObj.close()
+                    ti1=time()
                     l=[None,None]
                     t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0][0],'shellNum':0})
                     t.start()
@@ -418,21 +419,29 @@ class GrammaticalEvolution(object):
                             kill(l[0].pid, 9)
                             sleep(.1)
                             logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
+                        gene.rc=None
+                        gene.err=None
                         return
+                    if (time()-ti1) > self.execution_timeout:
+                        gene.rc=None
+                        gene.err=None
+                        return
+                    (out,err,rc)=l[1]
+                    gene.rc=rc
+                    gene.err=err
+                    gene.out=out
+                    if not self.checkNResolveRefError(out,err):
+                        refError=False
+                        break;
                     else:
-                        (out,err,rc)=l[1]
-                        if not self.checkNResolveRefError(out,err):
-                            refError=False
-                            break;
-                        else:
-                            refError=True
-                if refError :
+                        refError=True
+                if refError or rc == self.interpreter_ReturnCodes[0][1]:
                     logging.info("compute_fitness completed - Reference Error"+str(time()-ti)+" seconds")
                     return
                 execStart=time()
                 for a in range(len(self.interpreter_Shell)):
                     for option in self.interpreter_Options[a]:
-
+                        ti1=time()
                         l=[None,None]        
                         t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option, 'shellNum':a})
                         t.start()
@@ -443,18 +452,27 @@ class GrammaticalEvolution(object):
                                 kill(l[0].pid, 9)
                                 sleep(.1)
                                 logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
+                            gene.rc=None
+                            gene.err=None
+                            return
+                        if (time()-ti1) > self.execution_timeout:
+                            gene.rc=None
+                            gene.err=None
                             return
                         (out,err,rc)=l[1]
+                        gene.rc=rc
+                        gene.err=err
                         if rc not in self.interpreter_ReturnCodes[a]:
                             self.logBug(program,self.interpreter_Shell[a],option,err)
 
                 score,prgLength = self.computeSubScore(gene,program,err,time()-execStart)
                 gene.score+=score
-                if gene.score is not None:
-                    if self._generation==0:
-                        gene._fitness =  gene.score
-                    elif (gene.prgLength/prgLength) < (self.crossover_bias_rate/100):
-                            gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+
+                if self._generation==0:
+                    gene._fitness =  gene.score
+                elif (prgLength/gene.prgLength) < (self.crossover_bias_rate/100):
+                    gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+
             finally:
                 try:
                     logging.info("compute_fitness completed"+str(time()-ti)+" seconds")
@@ -464,11 +482,10 @@ class GrammaticalEvolution(object):
         
     
     def run_cmd(self, fi,l,option,shellNum):
-        logging.info("run_cmd started")
         try:
-            cmd=[]
+            cmd=['timeout',str(self.execution_timeout+1)]
             cmd.append(self.interpreter_Shell[shellNum].strip())
-            opt=option.strip();
+            opt=option.strip()
             if len(opt)>0:
                 cmd=cmd+opt.split()
             if len(self.shellfileOption[shellNum])>0:
@@ -482,7 +499,6 @@ class GrammaticalEvolution(object):
             sys.stderr.flush()
         except:
             pass
-        logging.info("run_cmd completed")
 
     def computeSubScore (self, gene, program,err,exec_time):
         logging.info("computeSubScore started")
@@ -584,7 +600,7 @@ class GrammaticalEvolution(object):
                 while len(parentlist) >=2 :
                     child1 = choice(parentlist)
                     child2 = choice(parentlist)
-                    
+
                     parentlist.remove(child1)
                     parentlist.remove(child2)
 
@@ -593,12 +609,12 @@ class GrammaticalEvolution(object):
 
                     child1.prgLength=len(child1Prg.split())
                     child2.prgLength=len(child2Prg.split())
-        
+
                     if self.nT_Invld_Gen_Process is not None:
                         commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term) and val in self.nT_Invld_Gen_Process)]
                     else:
                         commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term))]
-                    
+
                     trail=0
                     while trail<5:
                         trail += 1
@@ -615,20 +631,23 @@ class GrammaticalEvolution(object):
                         parent_map2 = dict((c, p) for p in et2.getiterator() for c in p)
                         
                         for i in range(count):
+                            
                             k=choice(commonNonTerm)
+                            
                             li1= et1.findall('.//'+k)
                             li2= et2.findall('.//'+k)
-                            selectedXMLNode1= random.choice(li)
-                            selectedXMLNode2= random.choice(li1)
-
+                            
+                            selectedXMLNode1= choice(li1)
+                            selectedXMLNode2= choice(li2)
+                        	
                             parent = parent_map1[selectedXMLNode1]
                             index = parent._children.index(selectedXMLNode1)
                             parent._children[index] = selectedXMLNode2
-
+                            
                             parent = parent_map2[selectedXMLNode2]
                             index = parent._children.index(selectedXMLNode2)
                             parent._children[index] = selectedXMLNode1
-                            
+                        
                         p1=ProgramGen()
                         p2=ProgramGen()
 
@@ -640,9 +659,8 @@ class GrammaticalEvolution(object):
 
                         self.compute_fitness(child1)
                         self.compute_fitness(child2)
-
+                        
                         if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
-                            
                             child1.syntaxTree=et1
                             child2.syntaxTree=et2
                             child1.non_term=extractNonTerminal(et1,[])
@@ -680,10 +698,7 @@ class GrammaticalEvolution(object):
                 selectedNt.append(k)
                 selectedXMLNode1= choice(li)
                 etTemp = ElementTree.fromstring("<MutationNode> "+k+" </MutationNode>")
-                print k
-                print selectedXMLNode1
                 t1=ProgramGen()
-                print t1.treeToProg(selectedXMLNode1)
                 parent = parent_map1[selectedXMLNode1]
                 index = parent._children.index(selectedXMLNode1)
                 parent._children[index] = etTemp
@@ -720,8 +735,7 @@ class GrammaticalEvolution(object):
                     while trail < 3:
                         trail+=1
                         gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteSyntaxTree(gene,count)
-                        print gene.local_bnf['CodeFrag']
-
+                        
                         if len(selectedNt) <=0 :
                             logging.info("Mutation-Failed-Not selected any non-terminal")
                             return None
@@ -734,7 +748,6 @@ class GrammaticalEvolution(object):
                         gene.score=10
                         
                         gene._map_gene(selectedNt)
-                        raw_input()
                         self.compute_fitness(gene)
                         if gene.get_fitness() != self._fitness_fail:
                             gene.syntaxTree,gene._identifiers,dummy2=parseTree(program)

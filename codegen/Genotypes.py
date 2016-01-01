@@ -79,7 +79,6 @@ class Genotype(object):
                     if item in self.keywords:
                         prg_list[position]=lower(item)
                     elif item in self._keys:
-                        print item
                         if depth < self._max_depth:
                             prg_list[position] = self.resolve_variable(item)
                         else:
@@ -109,11 +108,7 @@ class Genotype(object):
         logging.debug("Before mutation incomplete CodeFrag:"+program)
         for nonTerminal in selectedNTList:
             logging.info("Mutation: "+nonTerminal)
-            print nonTerminal
-            print "**********************"
             subcode=self._map_variables(nonTerminal)
-            print "**********************"
-            print subcode
             program = program.replace(nonTerminal,subcode)
         self.local_bnf['program'] = program  
         logging.debug("Completed mutation:"+program)

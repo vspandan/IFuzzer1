@@ -172,7 +172,7 @@ statementList
  ;
 
 variableStatement
- : (Var | Let | Const) variableDeclarationList 
+ : (Var | Let | Const) variableDeclarationList eos?
  ;
 
 variableDeclarationList

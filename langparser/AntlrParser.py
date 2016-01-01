@@ -9,6 +9,7 @@ sys.path.append(path.dirname(path.abspath(__file__))+"/ECMAScript.jar")
 sys.path.append(path.dirname(path.abspath(__file__))+"/antlr-4.5-rc-2-complete.jar")
 from langparser import CodeFragmentExtractor
 import xml.etree.ElementTree as ElementTree
+
 import ConfigParser
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
@@ -25,15 +26,17 @@ globalobj=config.get('Interpreter', 'GLOBALOBJ').split(",")
 identifier=config.get('Interpreter', 'IDENTIFIER')
 
 class ProgramGen:
-    out=""
+    def __init__(self):
+        self.out=""
+
     def treeToProg(self,root):
         if root is not None:
+            if root.text is not None:
+                self.out+=root.text
             for child in root:
-                if child.text is not None:
-                    self.out+=child.text
                 self.treeToProg(child)   
-                if child.tail is not None:
-                    self.out+=child.tail
+            if root.tail is not None:
+                self.out+=root.tail
         return self.out    
 
 class processTree(object):
@@ -151,25 +154,22 @@ def parseTree(input):
             return "",[],0
     logging.info("Parsing Program - Completed in "+str(output['exec_time']))
     return output['parsecode'],identifiers, output['exec_time']
+
+
 """
 Restricting to accept only files;
 True: Program
 False: File
 """
-def extractCodeFrag(fileName,que=None):
+def extractCodeFrag(fileName):
     logging.info(fileName)
     c=CodeFragmentExtractor()
     f=open(fileName,"r")
-    d=c.extractFrags("\n"+f.read(),True)
+    d = c.XMLIRGenerator("\n"+f.read(),True)
     f.close()
     c=None
-    if que is not None:
-        que.put(d)
-    if que is None:
-        return d
-
-
-
+    xml=d['parsecode']
+    return xml
 
 def CountNestedStructures(output,metricNonTerminals):
     nonTerminals={}
@@ -200,6 +200,7 @@ def CountNestedStructures(output,metricNonTerminals):
     return nonTerminals          
 
 if __name__ == '__main__':
-    print parseTree("/home/spandan/test.js",False)
-    print extractCodeFrag("/home/spandan/test.js")
+    f=open("/home/rubbernecker/ifuzzer_s/test.js","r")
+    print parseTree(f.read())
+    
     

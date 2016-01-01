@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 from marshal import dump, load
+from collections import defaultdict
+from datetime import datetime
 from os import listdir,remove,makedirs
 from os.path import isfile, join, abspath, exists
 from shutil import rmtree
@@ -7,6 +9,8 @@ from codegen.fitness import FitnessElites, FitnessTournament, FitnessProportiona
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
 from random import choice
+from langparser.AntlrParser import *
+import xml.etree.ElementTree as ElementTree
 import ConfigParser
 import logging
 
@@ -20,92 +24,169 @@ logging.basicConfig(filename=LOG_FILENAME,level=LOG_LEVEL,)
 
 Population_size=int(config.get('Options', 'POPULATION_SIZE'));
 FileListFile= abspath(config.get('TargetDir', 'FILELIST'))
+database = config.get('TargetDir', 'DATABASE')
 
-def runFuzzer(interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
-    tempList=[]    
-    TestCases=[]
-    if isfile(FileListFile):
-        f2 = open(FileListFile, 'rb')
-        TestCases=load(f2)
-        f2.close()
-    else: 
-        return
-    
-    try:
-        while len(tempList)<Population_size:
-            if len(TestCases)>0:
-                t=choice(TestCases)
-                tempList.append(t)
-                TestCases.remove(t)
-            else:
-                break
-        f2 = open(FileListFile, 'wb')
-        dump(TestCases, f2)
-        f2.close()
-        f2 = open(FileListFile, 'rb')
-        TestCases=load(f2)
-        f2.close()
+class GECodeGenerator(object):
+    def __init__(self):
+        self.grammarFile=abspath(config.get('Options', 'GRAMMAR_FILE'))
+        self.ges = GrammaticalEvolution()
+        self.initialize()
+
+    def initialize(self):
+        self.ges.setGrammarFile(self.grammarFile)
+        self.ges._extractProductions()
+                
+
+    def runFuzzer(self,interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
+        tempList=[]    
+        TestCases=[]
+        if isfile(FileListFile):
+            f2 = open(FileListFile, 'rb')
+            TestCases=load(f2)
+            f2.close()
+        else: 
+            return
         
-        if len(tempList) >= Population_size:
-            logging.debug(tempList)
-            bnf=""
-            ges = GrammaticalEvolution()
-            ges.setGrammarFile(abspath(config.get('Options', 'GRAMMAR_FILE')))
-            ges.set_bnf(bnf)
-            ges.set_population_size(Population_size)
-            ges.set_max_generations(int(config.get('Options', 'MAX_GENERATIONS')))
-            ges.set_fitness_type(config.get('Options', 'FITNESS_TYPE'), float(config.get('Options', 'MAX_FITNESS_VALUE')))
+        try:
+            while len(tempList)<Population_size:
+                if len(TestCases)>0:
+                    t=choice(TestCases)
+                    tempList.append(t)
+                    TestCases.remove(t)
+                else:
+                    break
+            f2 = open(FileListFile, 'wb')
+            dump(TestCases, f2)
+            f2.close()
+            f2 = open(FileListFile, 'rb')
+            TestCases=load(f2)
+            f2.close()
             
-            ges.set_fitness_fail(float(config.get('Options', 'FITNESS_FAIL')))
-            
-            ges.set_execution_timeout(int(config.get('Options', 'INTERPRETER_TIMEOUT')))
-            
-            ges.set_fitness_selections(
-                FitnessElites(ges.fitness_list, 0.5))
+            if len(tempList) >= Population_size:
+                logging.debug(tempList)
+                self.ges.set_population_size(Population_size)
+                self.ges.set_max_generations(int(config.get('Options', 'MAX_GENERATIONS')))
+                self.ges.set_fitness_type(config.get('Options', 'FITNESS_TYPE'), float(config.get('Options', 'MAX_FITNESS_VALUE')))
+                
+                self.ges.set_fitness_fail(float(config.get('Options', 'FITNESS_FAIL')))
+                
+                self.ges.set_execution_timeout(int(config.get('Options', 'INTERPRETER_TIMEOUT')))
+                
+                self.ges.set_fitness_selections(
+                    FitnessElites(self.ges.fitness_list, 0.5))
 
-            # ges.set_fitness_selections(
-            #     FitnessProportionate(ges.fitness_list, 'linear'))
-            
-            ges.set_crossover_rate(float(config.get('Options', 'CROSSOVER_RATE')))
-            ges.set_mutation_rate(float(config.get('Options', 'MUTATION_RATE')))
+                # self.ges.set_fitness_selections(
+                #     FitnessProportionate(self.ges.fitness_list, 'linear'))
+                
+                self.ges.set_crossover_rate(float(config.get('Options', 'CROSSOVER_RATE')))
+                self.ges.set_mutation_rate(float(config.get('Options', 'MUTATION_RATE')))
 
-            ges.set_max_depth(int(config.get('Options', 'MAX_DEPTH_EXPANSION')))
-            ges.set_generative_mutation_rate(float(config.get('Options', 'GENERATIVE_PROBABILITY')))
+                self.ges.set_max_depth(int(config.get('Options', 'MAX_DEPTH_EXPANSION')))
+                self.ges.set_generative_mutation_rate(float(config.get('Options', 'GENERATIVE_PROBABILITY')))
 
-            ges.set_children_per_crossover(int(config.get('Options', 'CHILDREN_PER_CROSSOVER')))
-            
-            ges.set_mutation_type(config.get('Options', 'MUTATION_TYPE'))
+                self.ges.set_children_per_crossover(int(config.get('Options', 'CHILDREN_PER_CROSSOVER')))
+                
+                self.ges.set_mutation_type(config.get('Options', 'MUTATION_TYPE'))
 
-            ges.set_mutation_count(int(config.get('Options', 'MULTIPLE_MUTATION_COUNT')));
-            ges.set_crossover_count(int(config.get('Options', 'MULTIPLE_CROSSOVER_COUNT')));
-            ges._multiple_rate=(float(config.get('Options', 'MULTIPLE_RATE')))
+                self.ges.set_mutation_count(int(config.get('Options', 'MULTIPLE_MUTATION_COUNT')));
+                self.ges.set_crossover_count(int(config.get('Options', 'MULTIPLE_CROSSOVER_COUNT')));
+                self.ges._multiple_rate=(float(config.get('Options', 'MULTIPLE_RATE')))
 
-            ges.set_max_fitness_rate(float(config.get('Options', 'MAX_FITNESS_INDV_RATE')))
+                self.ges.set_max_fitness_rate(float(config.get('Options', 'MAX_FITNESS_INDV_RATE')))
+                
+                self.ges.set_replacement_selections(
+                        ReplacementTournament(self.ges.fitness_list, tournament_size=int(config.get('Options', 'REPLACEMENT_TOURNAMENT_SIZE'))))
+                
+                self.ges.set_maintain_history(bool(config.get('Options', 'MAINTAIN_HISTORY')))
+                
+                self.ges.dynamic_mutation_rate(int(config.get('Options', 'DYNAMIC_MUTATION_RATE')))
+                self.ges.dynamic_crossover_rate(int(config.get('Options', 'DYNAMIC_CROSSOVER_RATE')))
+                
+                self.ges.set_crossover_bias_rate(int(config.get('Options', 'CROSSOVER_BIAS_RATE')))
+                
+                if self.ges.create_genotypes(tempList,interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
+                    self.ges.run()
+                    for gene in self.ges.population:
+                        if gene.get_fitness() != self.ges._fitness_fail :
+                            generatedPrg= gene.get_program()
+                            targetDirectory= abspath(config.get('TargetDir', 'TARGETDIR'))
+                            if not exists(targetDirectory):
+                                makedirs(targetDirectory)
+                            newFile=targetDirectory+"/"+str(len(listdir(targetDirectory))+1)+config.get('Interpreter', 'FILE_TYPE')
+                            f=open(newFile,'w')
+                            f.write(generatedPrg)
+                            f.close
+                ges=None
+            else:
+                remove(FileListFile)
+        except:
+            pass
+    
+    def finalize(self,codeFrags2):
             
-            ges.set_replacement_selections(
-                    ReplacementTournament(ges.fitness_list, tournament_size=int(config.get('Options', 'REPLACEMENT_TOURNAMENT_SIZE'))))
-            
-            ges.set_maintain_history(bool(config.get('Options', 'MAINTAIN_HISTORY')))
-            
-            ges.dynamic_mutation_rate(int(config.get('Options', 'DYNAMIC_MUTATION_RATE')))
-            ges.dynamic_crossover_rate(int(config.get('Options', 'DYNAMIC_CROSSOVER_RATE')))
-            
-            ges.set_crossover_bias_rate(int(config.get('Options', 'CROSSOVER_BIAS_RATE')))
-            
-            if ges.create_genotypes(tempList,interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
-                ges.run()
-                for gene in ges.population:
-                    if gene.get_fitness() != ges._fitness_fail :
-                        generatedPrg= gene.get_program()
-                        targetDirectory= abspath(config.get('TargetDir', 'TARGETDIR'))
-                        if not exists(targetDirectory):
-                            makedirs(targetDirectory)
-                        newFile=targetDirectory+"/"+str(len(listdir(targetDirectory))+1)+config.get('Interpreter', 'FILE_TYPE')
-                        f=open(newFile,'w')
-                        f.write(generatedPrg)
-                        f.close
-            ges=None
-        else:
-            remove(FileListFile)
-    except:
-        pass
+            print (datetime.now())
+            print ("Finalizing: Grouping Common Frags")
+            for key in codeFrags2.keys():
+                fileName = abspath(database + "/" + key)
+                temp=[]
+                if isfile(fileName):
+                    f2 = open(fileName, 'rb')
+                    temp=load(f2)
+                    f2.close()
+                temp = temp+codeFrags2.get(key)
+                f1 = open(fileName, 'wb')
+                dump(temp, f1)
+                f1.close()
+            print (datetime.now())
+            print ("Finalized: Writing to file")
+        
+        
+
+    def genFragPool(self,fileList):
+        codeFrags2=defaultdict(list)
+        if not exists(database):
+            makedirs(database)
+        fileList1=listdir(database)
+        while True:
+            input1=raw_input("Do you want to Append Fragment Pool ? Y/N : ")
+            if input1 in ['y','n']:
+                if input1=='y':
+                    raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
+                else:
+                    raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
+                    for f in fileList1:
+                        remove(database+"/"+f)
+                break;
+            else:
+                print "Answer must be 'Y' or 'N'"
+        count = 0
+        print (fileList)
+        import sys
+        sys.exit(1)
+        for f in fileList:
+            count+=1
+            statinfo=stat(f)
+            if statinfo.st_size <= 10000:
+                try:
+                    print(f)
+                    et1 = ElementTree.fromstring(extractCodeFrag(f))
+                    p1=ProgramGen()
+                    for nonTerm in self.ges.non_Terminals:
+                        li1= et1.findall('.//'+nonTerm)
+                        frags=[]
+                        for selectedXMLNode in li1:
+                            p1.out=""
+                            frags.append(p1.treeToProg(selectedXMLNode))
+                        if len(frags)>0:
+                            if codeFrags2.has_key(nonTerm) is None:
+                                codeFrags2[nonTerm]=codeFrags2.get(nonTerm)+frags
+                            else:
+                                codeFrags2[nonTerm]=frags
+                        frags.clear()
+                except:
+                    print "Error:"+f
+                if count % 100 == 0:
+                    self.finalize(codeFrags2)
+                    codeFrags2.clear()
+        self.finalize(codeFrags2)
+        print ("Finished; Code generation and testing begins " +str(datetime.now()))

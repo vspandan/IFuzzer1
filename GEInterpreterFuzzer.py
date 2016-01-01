@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-from marshal import dump, load
-from GECodeGenerator import runFuzzer 
-from datetime import datetime
+from marshal import dump
 from string import lower
 from os import listdir, mkdir, makedirs,remove,stat
 from os.path import isfile, join, isdir, exists, abspath
-from langparser.AntlrParser import *
 from Queue import Queue
-from collections import defaultdict
 from shutil import copyfile, rmtree
+from GECodeGenerator import GECodeGenerator
 import sys
 import ConfigParser
 import logging
@@ -20,7 +17,6 @@ LOG_LEVEL= config.get('Mappings', 'loglevel');
 logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
 testsuite=config.get('Testsuite', 'TESTSUITE').split(',')
-database=config.get('TargetDir', 'DATABASE')
 
 FILE_TYPE = config.get('Interpreter', 'FILE_TYPE')
 LIB_FILE = config.get('Interpreter', 'LIB_FILE')
@@ -77,76 +73,6 @@ def listAllTestCasesDir(testCaseDir):
                         libfiLes.append(abspath(fi))
 
 """
-Creates fragment pool
-"""
-def createFragmentPool():
-    """
-    Sub function with limited scope; Dumps the code fragments generated
-    """
-    def finalize():
-        codeFrags2=defaultdict(list)
-        print (datetime.now())
-        print ("Finalizing: Grouping Common Frags")
-        for codeFrags in codeFragPool:
-            keys=codeFrags2.keys()
-            for key in codeFrags.keys():
-                if key in keys:
-                    codeFrags2[key] = codeFrags2.get(key)+codeFrags.get(key)
-                else:
-                    codeFrags2[key]=codeFrags.get(key)
-        for key in codeFrags2.keys():
-            fileName = abspath(database + "/" + key)
-            temp=[]
-            if isfile(fileName):
-                f2 = open(fileName, 'rb')
-                temp=load(f2)
-                f2.close()
-            if temp is None:
-                temp = list(codeFrags2.get(key))
-            else:
-                temp = set(temp+list(codeFrags2.get(key)))
-                temp=list(temp)
-            f1 = open(fileName, 'wb')
-            dump(temp, f1)
-            f1.close()
-        print (datetime.now())
-        print ("Finalized: Writing to file")
-    
-    if not exists(database):
-        makedirs(database)
-    fileList1=listdir(database)
-    while True:
-        input1=raw_input("Do you want to Append Fragment Pool ? Y/N : ")
-        if input1 in ['y','n']:
-            if input1=='y':
-                raw_input("Updating Existing Fragment Pool\n Press any key to continue...")
-            else:
-                raw_input("Deleting Existing Fragment Pool\n Press any key to continue...")
-                for f in fileList1:
-                    remove(database+"/"+f)
-            break;
-        else:
-            print "Answer must be 'Y' or 'N'"
-    codeFragPool=[]
-    
-    count=1
-    ind=True
-    for f in fileList:
-        statinfo=stat(f)
-        if count > -1 and statinfo.st_size <= 10000:
-            print (count)
-            print (f)
-            res=extractCodeFrag(f)
-            if res is not None:
-                codeFragPool.append(res)
-            if count % 100 == 0:
-                finalize()
-                codeFragPool=[]
-        count+=1
-    finalize()
-    print ("Finished; Code generation and testing begins " +str(datetime.now()))
-
-"""
 Elimiates unwanted files
 """
 def collectFiles():
@@ -194,8 +120,9 @@ if __name__ == "__main__":
     sys.setrecursionlimit(300000)
     listAllTestCases(testsuite)
     generateOptions()
+    g=GECodeGenerator()
     if args[0]=="0":
-        createFragmentPool()
+        g.genFragPool(fileList)
     for a in range(len(shell)):
         shellfileoption=[]
         for shellfile in libfiLes:
@@ -205,5 +132,4 @@ if __name__ == "__main__":
         shellfileOption.append(shellfileoption)
     if not exists(FILELISTFILE):
         collectFiles()
-    from GECodeGenerator import runFuzzer         
-    runFuzzer(shell,options,returnCodes,INCLUDE_NT,shellfileOption)
+    g.runFuzzer(shell,options,returnCodes,INCLUDE_NT,shellfileOption)
