@@ -160,16 +160,14 @@ class GECodeGenerator(object):
             else:
                 print "Answer must be 'Y' or 'N'"
         count = 0
-        print (fileList)
-        import sys
-        sys.exit(1)
         for f in fileList:
             count+=1
             statinfo=stat(f)
             if statinfo.st_size <= 10000:
                 try:
                     print(f)
-                    et1 = ElementTree.fromstring(extractCodeFrag(f))
+                    xml=extractCodeFrag(f)
+                    et1 = ElementTree.fromstring(xml)
                     p1=ProgramGen()
                     for nonTerm in self.ges.non_Terminals:
                         li1= et1.findall('.//'+nonTerm)
@@ -182,7 +180,6 @@ class GECodeGenerator(object):
                                 codeFrags2[nonTerm]=codeFrags2.get(nonTerm)+frags
                             else:
                                 codeFrags2[nonTerm]=frags
-                        frags.clear()
                 except:
                     print "Error:"+f
                 if count % 100 == 0:

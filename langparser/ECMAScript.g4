@@ -115,11 +115,11 @@ statementListItem
  ;
 
 functionDeclaration
- : Function identifierName '(' formalParameterList? ')' '{' functionBody '}' 
+ : 'function' identifierName '(' formalParameterList? ')' '{' functionBody '}' 
  ;
 
 classDeclaration
- : Class identifierReference? classTail
+ : 'class' identifierReference? classTail
  ;
 
 classTail
@@ -127,7 +127,7 @@ classTail
  ;
 
 classHeritage
- : Extends conditionalExpression
+ : 'extends' conditionalExpression
  ; 
 
 classBody
@@ -135,7 +135,7 @@ classBody
  ;
 
 classElement
- : Static? methodDefinition
+ : 'static'? methodDefinition
  ;
 
 statement
@@ -159,7 +159,7 @@ statement
  ;
 
 yieldExpression
- : Yield '*'? assignmentExpression? 
+ : 'yield' '*'? assignmentExpression? 
  ;
 
 block
@@ -172,7 +172,7 @@ statementList
  ;
 
 variableStatement
- : (Var | Let | Const) variableDeclarationList eos?
+ : ('var' | 'let' | 'const') variableDeclarationList eos?
  ;
 
 variableDeclarationList
@@ -191,7 +191,7 @@ identifierBinding
 
 identifierReference
  : identifierName
- | Yield
+ | 'yield'
  ;
 
 identifierPattern
@@ -246,41 +246,41 @@ expressionStatement
  ;
 
 ifStatement
- : If '(' expression ')' statement elseStatement?
+ : 'if' '(' expression ')' statement elseStatement?
  ;
 
 elseStatement
-: Else statement
+: 'else' statement
 ;
 
 iterationStatement
- : Do statement While '(' expression ')' eos                                             
- | While '(' expression ')' statement                                                      
- | For '(' expression? ';' expression? ';' expression? ')' statement        
- | For '(' (Var|Let|Const) variableDeclarationList ';' expression? ';' expression? ')' statement 
- | For 'each'? '(' ((Var|Let|Const) identifierBinding | leftHandSideExpression) (In|Of) expression ')' statement
+ : 'do' statement 'while' '(' expression ')' eos                                             
+ | 'while' '(' expression ')' statement                                                      
+ | 'for' '(' expression? ';' expression? ';' expression? ')' statement        
+ | 'for' '(' ('var'|'let'|'const') variableDeclarationList ';' expression? ';' expression? ')' statement 
+ | 'for' 'each'? '(' (('var'|'let'|'const') identifierBinding | leftHandSideExpression) ('in'|'of') expression ')' statement
  ;
 
 continueStatement
- : Continue {!here(LineTerminator)}? identifierName? 
+ : 'continue' {!here(LineTerminator)}? identifierName? 
  ;
 
 breakStatement
- : Break {!here(LineTerminator)}? identifierName? 
+ : 'break' {!here(LineTerminator)}? identifierName? 
  ;
 
 returnStatement
- : Return {!here(LineTerminator)}? expression? eos?
+ : 'return' {!here(LineTerminator)}? expression? eos?
  ;
 
 withStatement
- : With '(' expression ')' statement
+ : 'with' '(' expression ')' statement
  ;
 
 /// SwitchStatement :
 ///     switch ( Expression ) CaseBlock
 switchStatement
- : Switch '(' expression ')' caseBlock
+ : 'switch' '(' expression ')' caseBlock
  ;
 
 /// CaseBlock :
@@ -300,13 +300,13 @@ caseClauses
 /// CaseClause :
 ///     case Expression ':' StatementList?
 caseClause
- : Case expression ':' statementList?
+ : 'case' expression ':' statementList?
  ;
 
 /// DefaultClause :
 ///     default ':' StatementList?
 defaultClause
- : Default ':' statementList?
+ : 'default' ':' statementList?
  ;
 
 /// LabelledStatement :
@@ -318,35 +318,35 @@ labelledStatement
 /// ThrowStatement :
 ///     throw [no LineTerminator here] Expression ;
 throwStatement
- : Throw {!here(LineTerminator)}? expression 
+ : 'throw' {!here(LineTerminator)}? expression 
  ;
 
 /// TryStatement :
-///     try Block Catch
-///     try Block Finally
-///     try Block Catch Finally
+///     try Block 'catch'
+///     try Block 'finally'
+///     try Block 'catch' 'finally'
 tryStatement
- : Try block catchProduction*
- | Try block finallyProduction
- | Try block catchProduction* finallyProduction
+ : 'try' block catchProduction*
+ | 'try' block finallyProduction
+ | 'try' block catchProduction* finallyProduction
  ;
 
-/// Catch :
+/// 'catch' :
 ///     catch ( identifierName ) Block
 catchProduction
- : Catch '(' identifierBinding (If expression)? ')' block
+ : 'catch' '(' identifierBinding ('if' expression)? ')' block
  ;
 
-/// Finally :
+/// 'finally' :
 ///     finally Block
 finallyProduction
- : Finally block
+ : 'finally' block
  ;
 
 /// DebuggerStatement :
 ///     debugger ;
 debuggerStatement
- : Debugger 
+ : 'debugger' 
  ;
 
 /// FormalParameterList :
@@ -419,8 +419,8 @@ propertyAssignment
 
 methodDefinition
  : {!here(Function)}? propertyName '(' formalParameterList? ')' '{' functionBody '}'
- | Get propertyName '(' ')' '{' functionBody '}'                          
- | Set propertyName '(' variableDeclaration ')' '{' functionBody '}' 
+ | 'get' propertyName '(' ')' '{' functionBody '}'                          
+ | 'set' propertyName '(' variableDeclaration ')' '{' functionBody '}' 
  ;
 
 propertyName
@@ -469,8 +469,8 @@ assignmentExpression
  |     conditionalExpression '=' assignmentExpression  eos?
  |     conditionalExpression assignmentOperator assignmentExpression 
  |     arrowFunction 
- |     assignmentExpression For 'each'? '(' ((Var|Let|Const) identifierBinding | conditionalExpression) (In | Of) expression ')'
- |     assignmentExpression If '(' expression ')'
+ |     assignmentExpression 'for' 'each'? '(' (('var'|'let'|'const') identifierBinding | conditionalExpression) ('in' | 'of') expression ')'
+ |     assignmentExpression 'if' '(' expression ')'
  ;
 
 conditionalExpression
@@ -488,8 +488,8 @@ conditionalExpression
  |     conditionalExpression '>' conditionalExpression
  |     conditionalExpression '<=' conditionalExpression
  |     conditionalExpression '>=' conditionalExpression
- |     conditionalExpression Instanceof conditionalExpression 
- |     conditionalExpression In conditionalExpression
+ |     conditionalExpression 'instanceof' conditionalExpression 
+ |     conditionalExpression 'in' conditionalExpression
  |     conditionalExpression '<<' conditionalExpression
  |     conditionalExpression '>>' conditionalExpression
  |     conditionalExpression '>>>' conditionalExpression
@@ -498,9 +498,9 @@ conditionalExpression
  |     conditionalExpression '*' conditionalExpression
  |     conditionalExpression '/' conditionalExpression
  |     conditionalExpression '%' conditionalExpression
- |     Delete conditionalExpression
- |     Void conditionalExpression
- |     Typeof conditionalExpression
+ |     'delete' conditionalExpression
+ |     'void' conditionalExpression
+ |     'typeof' conditionalExpression
  |     '++' conditionalExpression
  |     '--' conditionalExpression
  |     '+' conditionalExpression
@@ -519,20 +519,20 @@ leftHandSideExpression
  ;
 
 callExpression   
- :     memberExpression arguments
- |     superCall
- |     callExpression arguments
- |     callExpression '[' expression ']'
- |     callExpression '.' identifierName
+ :     memberExpression arguments eos?
+ |     superCall eos?
+ |     callExpression arguments eos?
+ |     callExpression '[' expression ']' eos?
+ |     callExpression '.' identifierName eos?
  ;
 
 superCall
- : Super arguments
+ : 'super' arguments
  ;
 
 newExpression  
  :     memberExpression
- |     New newExpression
+ |     'new' newExpression
  ;
 
 memberExpression  
@@ -540,20 +540,20 @@ memberExpression
  |     memberExpression '[' expression ']'
  |     memberExpression '.' identifierName
  |     superPropery
- |     New memberExpression arguments
+ |     'new' memberExpression arguments
  ;
 
 superPropery
- :      Super '[' expression ']'
- |      Super '.' identifierName
+ :      'super' '[' expression ']'
+ |      'super' '.' identifierName
  ;
 
 functionExpression  
- :     Function '*'? identifierName? '(' formalParameterList? ')' ('{' functionBody '}'|statement)
+ :     'function' '*'? identifierName? '(' formalParameterList? ')' ('{' functionBody '}'|statement)
  ;
  
 primaryExpression  
- :     This
+ :     'this'
  |     identifierName
  |     functionExpression
  |     classDeclaration
@@ -607,55 +607,55 @@ reservedWord
  ;
 
 keyword
- : Break
- | Do
- | Instanceof
- | Typeof
- | Case
- | Else
- | New
- | Var
- | Catch
- | Finally
- | Return
- | Void
- | Continue
- | For
- | Switch
- | While
- | Debugger
- | Function
- | This
- | With
- | Default
- | If
- | Throw
- | Delete
- | In
- | Try
- | Of
- | Get
- | Set
- | Each
+ : 'break'
+ | 'do'
+ | 'instanceof'
+ | 'typeof'
+ | 'case'
+ | 'else'
+ | 'new'
+ | 'var'
+ | 'catch'
+ | 'finally'
+ | 'return'
+ | 'void'
+ | 'continue'
+ | 'for'
+ | 'switch'
+ | 'while'
+ | 'debugger'
+ | 'function'
+ | 'this'
+ | 'with'
+ | 'default'
+ | 'if'
+ | 'throw'
+ | 'delete'
+ | 'in'
+ | 'try'
+ | 'of'
+ | 'get'
+ | 'set'
+ | 'each'
  ;
 
 futureReservedWord
- : Class
- | Enum
- | Extends
- | Super
- | Const
- | Export
- | Import
- | Implements
- | Let
- | Private
- | Public
- | Interface
- | Package
- | Protected
- | Static
- | Yield
+ : 'class'
+ | 'enum'
+ | 'extends'
+ | 'super'
+ | 'const'
+ | 'export'
+ | 'import'
+ | 'implements'
+ | 'let'
+ | 'private'
+ | 'public'
+ | 'interface'
+ | 'package'
+ | 'protected'
+ | 'static'
+ | 'yield'
  ;
 
 eos
