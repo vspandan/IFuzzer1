@@ -31,13 +31,13 @@ class ProgramGen:
 
     def treeToProg(self,root):
         if root is not None:
-            if root.text is not None:
-                self.out+=root.text
             for child in root:
+                if child.text is not None:
+                    self.out+=child.text
                 self.treeToProg(child)   
-            if root.tail is not None:
-                self.out+=root.tail
-        return self.out    
+                if child.tail is not None:
+                    self.out+=child.tail
+        return self.out 
 
 class processTree(object):
     def __init__(self):

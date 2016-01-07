@@ -977,30 +977,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterKeyword(@NotNull ECMAScriptParser.KeywordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitKeyword(@NotNull ECMAScriptParser.KeywordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterEos(@NotNull ECMAScriptParser.EosContext ctx) { }
 	/**
 	 * {@inheritDoc}

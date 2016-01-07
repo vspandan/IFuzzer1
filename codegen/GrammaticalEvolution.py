@@ -624,11 +624,18 @@ class GrammaticalEvolution(object):
                         
                         if len(commonNonTerm) < 0:
                             break
+                        # child1.syntaxTree,child1._identifiers,dummy2=parseTree(child1Prg)
+                        # child2.syntaxTree,child2._identifiers,dummy2=parseTree(child2Prg)
                         et1 = ElementTree.fromstring(child1.syntaxTree)
                         et2 = ElementTree.fromstring(child2.syntaxTree)
 
+                        # et11=child1.syntaxTree
+                        # et12=child2.syntaxTree
+
                         parent_map1 = dict((c, p) for p in et1.getiterator() for c in p)
                         parent_map2 = dict((c, p) for p in et2.getiterator() for c in p)
+
+                        # st1=""
                         
                         for i in range(count):
                             
@@ -643,10 +650,15 @@ class GrammaticalEvolution(object):
                             parent = parent_map1[selectedXMLNode1]
                             index = parent._children.index(selectedXMLNode1)
                             parent._children[index] = selectedXMLNode2
+                            # p=ProgramGen()
+                            # st1+=k+":"+p.treeToProg(selectedXMLNode2)+"\n\n"
+
                             
                             parent = parent_map2[selectedXMLNode2]
                             index = parent._children.index(selectedXMLNode2)
                             parent._children[index] = selectedXMLNode1
+                            # p=ProgramGen()
+                            # st1+=k+":"+p.treeToProg(selectedXMLNode1)+"\n\n"
                         
                         p1=ProgramGen()
                         p2=ProgramGen()
@@ -675,6 +687,30 @@ class GrammaticalEvolution(object):
                             break;
                         else:
                             logging.info("Crossover-Failed")
+                            # print child1Prg
+                            # print "**************************"
+                            # print child1.local_bnf['program']
+                            # print "**************************"
+                            # print child1.err
+                            # print child1.origin
+                            # print "**************************"
+                            # print child2Prg
+                            # print "**************************"
+                            # print child2.local_bnf['program']
+                            # print "**************************"
+                            # print child2.err
+                            # print child2.origin
+                            # print "**************************"
+                            # print ElementTree.tostring(et1)
+                            # print "**************************"
+                            # print ElementTree.tostring(et2)
+                            # print "**************************"
+                            # print et11
+                            # print "**************************"
+                            # print et12
+                            # print "++++++++++++++++++++++++++"
+                            # print st1
+                            # raw_input("Press any key to continue")
                             child1.local_bnf['program']=child1Prg
                             child2.local_bnf['program']=child2Prg
                     if len(child_list) == length:
@@ -734,6 +770,7 @@ class GrammaticalEvolution(object):
                 
                     while trail < 3:
                         trail+=1
+                        # gene.syntaxTree,gene._identifiers,dummy2=parseTree(pr)
                         gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteSyntaxTree(gene,count)
                         
                         if len(selectedNt) <=0 :
@@ -756,6 +793,9 @@ class GrammaticalEvolution(object):
                             break
                         else:
                             gene.local_bnf['program']=pr
+                            # print gene.err
+                            # print gene.origin
+                            # raw_input()
                             logging.info("Mutation-Failed")
         except:
             pass

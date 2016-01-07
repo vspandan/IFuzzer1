@@ -809,26 +809,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitReservedWord(@NotNull ECMAScriptParser.ReservedWordContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#keyword}.
-	 * @param ctx the parse tree
-	 */
-	void enterKeyword(@NotNull ECMAScriptParser.KeywordContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#keyword}.
-	 * @param ctx the parse tree
-	 */
-	void exitKeyword(@NotNull ECMAScriptParser.KeywordContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#futureReservedWord}.
-	 * @param ctx the parse tree
-	 */
-	void enterFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#futureReservedWord}.
-	 * @param ctx the parse tree
-	 */
-	void exitFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#eos}.
 	 * @param ctx the parse tree
 	 */
