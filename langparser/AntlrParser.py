@@ -29,15 +29,22 @@ class ProgramGen:
     def __init__(self):
         self.out=""
 
-    def treeToProg(self,root):
+    def treeToProg1(self,root):
         if root is not None:
             for child in root:
                 if child.text is not None:
                     self.out+=child.text
-                self.treeToProg(child)   
+                self.treeToProg1(child)   
                 if child.tail is not None:
                     self.out+=child.tail
-        return self.out 
+        return self.out
+
+    def treeToProg(self,root):
+        if root is not None:
+            if root.text is not None:
+                self.out+=root.text
+            self.treeToProg1(root)
+        return self.out
 
 class processTree(object):
     def __init__(self):
