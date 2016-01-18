@@ -4,7 +4,7 @@ from threading import Thread
 from datetime import datetime
 from os import path,listdir,remove,kill
 from random import choice, randint, random
-from re import sub,split,findall
+from re import sub,split
 from subprocess import Popen,PIPE
 from langparser.AntlrParser import *
 from codegen.fitness import CENTER, MAX, MIN
@@ -348,8 +348,8 @@ class GrammaticalEvolution(object):
             logging.info("Reference Error - nextword:"+nextword)
             logging.info("Reference Error - Returning")
             if nextword == 'invalid' or nextword ==  'reference' :
-                logging.info("checkNResolveRefError Completed")
-                return 
+                logging.info("checkNResolveRefError Completed - invalid")
+                return False
             selected=None
             while nextword == selected or selected is None:
                 if len(gene._identifiers)<=0:
@@ -401,8 +401,8 @@ class GrammaticalEvolution(object):
             program=self.de_EscapeText(gene,program)
             try:
                 program=beautify(program)
-            except:
-                pass
+            except Exception as e:
+                logging.info(e)
             gene.local_bnf['program']=program
 
         if len(program) > 0:
@@ -489,13 +489,14 @@ class GrammaticalEvolution(object):
                 try:
                     logging.info("compute_fitness completed"+str(time()-ti)+" seconds")
                     remove(f.name)
-                except:
+                except Exception as e:
+                    logging.info(e)
                     pass
         
     
     def run_cmd(self, fi,l,option,shellNum):
         try:
-            cmd=['timeout',str(self.execution_timeout+1)]
+            cmd=[]
             cmd.append(self.interpreter_Shell[shellNum].strip())
             opt=option.strip()
             if len(opt)>0:
@@ -509,7 +510,8 @@ class GrammaticalEvolution(object):
             l[1]=(out,err,p.returncode)
             sys.stdout.flush()
             sys.stderr.flush()
-        except:
+        except Exception as e:
+            logging.info(e)
             pass
 
     def computeSubScore (self, gene, program,err,exec_time):
@@ -535,7 +537,8 @@ class GrammaticalEvolution(object):
                 logging.info("warning found: "+err)
                 score+=10
             score=score/avgCycloMetricComplx
-        except:
+        except Exception as e:
+            logging.info(e)
             pass
         logging.info("computeSubScore completed")
         return score,pLen
@@ -618,10 +621,16 @@ class GrammaticalEvolution(object):
                 length -= 1
             if length >= 2:
                 logging.info("_perform_crossovers " + str(len(parentlist)) + " individuals are participating in the crossover")
-                while len(parentlist) >=2 :
+                while len(parentlist) < 2 :
                     logging.info("_perform_crossovers - Remaining " + str(len(parentlist)) + " individuals are participating in the crossover")
                     child1 = choice(parentlist)
                     child2 = choice(parentlist)
+
+                    try:
+                        parentlist.remove(child1)
+                        parentlist.remove(child2)
+                    except Exception as e:
+                        logging.info(e)
 
                     child1Prg=child1.get_program()
                     child2Prg=child2.get_program()
@@ -635,6 +644,7 @@ class GrammaticalEvolution(object):
                     while trail<5:
                         trail += 1
                         count=1
+                        selectedNTList = []
                         if round(random(),1) < self._multiple_rate:
                             count=int(self.crossoverCount*(round(random(),1)))+1
                         
@@ -648,42 +658,50 @@ class GrammaticalEvolution(object):
                         # et11=child1.syntaxTree
                         # et12=child2.syntaxTree
 
-                        parent_map1 = dict((c, p) for p in et1.getiterator() for c in p)
-                        parent_map2 = dict((c, p) for p in et2.getiterator() for c in p)
-
                         # st1=""
                         
                         i=0;
                         while True:
-                            
                             k=choice(commonNonTerm)
-                            
-                            li1= et1.findall('.//'+k)
-                            li2= et2.findall('.//'+k)
-                            
+                            li2=[]
+                            for r in et2.iter(k):
+                                li2.append(r)
+
+                            li1=[]
+                            for r in et1.iter(k):
+                                li1.append(r)
+
+
                             if len(li1)==0 or len(li2)==0 :
                                 continue
                             try:
                                 selectedXMLNode1= choice(li1)
                                 selectedXMLNode2= choice(li2)
-                            	
-                                parent = parent_map1[selectedXMLNode1]
-                                index = parent._children.index(selectedXMLNode1)
-                                parent._children[index] = selectedXMLNode2
-                                # p=ProgramGen()
-                                # st1+=k+":"+p.treeToProg(selectedXMLNode2)+"\n\n"
+                                child_1 = selectedXMLNode1.getchildren()
+                                child1DeepCopy=deepcopy(child_1)
+                                child_2 = selectedXMLNode2.getchildren()
+                                child2DeepCopy=deepcopy(child_2)
 
+                                while len(child_1):
+                                    ch=child_1[0]
+                                    selectedXMLNode1.remove(ch)
+
+                                while len(child_2):
+                                    ch=child_2[0]
+                                    selectedXMLNode2.remove(ch)
+
+                                for ch in child2DeepCopy:
+                                    selectedXMLNode1.append(ch)
+
+                                for ch in child1DeepCopy:
+                                    selectedXMLNode2.append(ch)
                                 
-                                parent = parent_map2[selectedXMLNode2]
-                                index = parent._children.index(selectedXMLNode2)
-                                parent._children[index] = selectedXMLNode1
-                                # p=ProgramGen()
-                                # st1+=k+":"+p.treeToProg(selectedXMLNode1)+"\n\n"
-
                                 i+=1;
+                                selectedNTList.append(k)
                                 if (i==count):
                                     break
-                            except:
+                            except Exception as e:
+                                logging.info(e)
                                 pass
                         p1=ProgramGen()
                         p2=ProgramGen()
@@ -714,61 +732,43 @@ class GrammaticalEvolution(object):
                             break;
                         else:
                             logging.info("Crossover-Failed")
-                            # print child1Prg
-                            # print "**************************"
-                            # print child1.local_bnf['program']
-                            # print "**************************"
-                            print child1.err
-                            print child1.origin
-                            # print "**************************"
-                            # print child2Prg
-                            # print "**************************"
-                            # print child2.local_bnf['program']
-                            # print "**************************"
-                            print child2.err
-                            print child2.origin
-                            # print "**************************"
-                            # print ElementTree.tostring(et1)
-                            # print "**************************"
-                            # print ElementTree.tostring(et2)
-                            # print "**************************"
-                            # print et11
-                            # print "**************************"
-                            # print et12
-                            # print "++++++++++++++++++++++++++"
-                            # print st1
-                            # raw_input("Press any key to continue")
+                            print selectedNTList
+                            print "Err Code (Child1) ::"+str(child1.rc)
+                            print "Err:"+str(child1.err)
+                            print "Origin:"+child1.origin
+                            print "Err Code (Child2) ::"+str(child2.rc)
+                            print "Err:"+str(child2.err)
+                            print "Origin:"+child2.origin
                             child1.local_bnf['program']=child1Prg
                             child2.local_bnf['program']=child2Prg
-                if len(child_list) == length:
+                if len(child_list) == length :
                     logging.info("_perform_crossovers completed")
                     return child_list
         except Exception as e:
             logging.info(e)
-            # import traceback
-            # exc_type, exc_value, exc_traceback = sys.exc_info()
-            # print "*** print_tb:"
-            # traceback.print_tb(exc_traceback, limit=1, file=sys.stdout)
             logging.info("_perform_crossovers completed with exception")
             return child_list
 
     def genIncompleteSyntaxTree(self,gene,count):
         logging.info("genIncompleteSyntaxTree started")
         et1 = ElementTree.fromstring(gene.syntaxTree)
-        parent_map1 = dict((c, p) for p in et1.getiterator() for c in p)
         selectedNt=[]
         i=0;
         while i<count:
             k=choice(gene.non_term)
-            li= et1.findall('.//'+k)
+            li=[]
+            for r in et1.iter(k):
+                li.append(r)
             if len(li)>0:
                 selectedNt.append(k)
                 selectedXMLNode1= choice(li)
+                child1 = selectedXMLNode1.getchildren()
+                child1DeepCopy=deepcopy(child1)
+                while len(child1):
+                    ch=child1[0]
+                    selectedXMLNode1.remove(ch)
                 etTemp = ElementTree.fromstring("<MutationNode> "+k+" </MutationNode>")
-                t1=ProgramGen()
-                parent = parent_map1[selectedXMLNode1]
-                index = parent._children.index(selectedXMLNode1)
-                parent._children[index] = etTemp
+                selectedXMLNode1.append(etTemp)
                 i+=1
         t=ProgramGen()
         logging.info("genIncompleteSyntaxTree completed")
@@ -827,8 +827,8 @@ class GrammaticalEvolution(object):
                             print gene.err
                             print gene.origin
                             logging.info("Mutation-Failed")
-        except:
-            pass
+        except Exception as e:
+            logging.info(e)
         logging.info("mutate completed" +str(time()-ti3))
         return gene               
     
@@ -843,8 +843,8 @@ class GrammaticalEvolution(object):
                     mlist.remove(gene)
                 if len(mutatedList) == count:
                     break
-            except:
-                pass
+            except Exception as e:
+                logging.info(e)
         logging.info("_perform_mutations completed")
         return mutatedList
 

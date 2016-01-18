@@ -17,15 +17,23 @@ class ProgramGen:
     def __init__(self):
         self.out=""
 
+    def treeToProg1(self,root):
+        if root is not None:
+            for child in root:
+                if child.text is not None:
+                    self.out+=child.text
+                self.treeToProg1(child)   
+                if child.tail is not None:
+                    self.out+=child.tail
+        return self.out
+
     def treeToProg(self,root):
         if root is not None:
             if root.text is not None:
                 self.out+=root.text
-            for child in root:
-                self.treeToProg(child)   
-            if root.tail is not None:
-                self.out+=root.tail
-        return self.out    
+            self.treeToProg1(root)
+        return self.out
+
 
 class processTree(object):
     def __init__(self):
@@ -188,7 +196,7 @@ def CountNestedStructures(output,metricNonTerminals):
     return nonTerminals          
 
 if __name__ == '__main__':
-    f=open("/home/rubbernecker/jsengines/firefox/js/src/tests/test262/ch11/11.13/11.13.2/S11.13.2_A4.6_T2.6.js","r")
+    f=open("/home/rubbernecker/ifuzzer_s/test.js","r")
     print parseTree(f.read())
     
     

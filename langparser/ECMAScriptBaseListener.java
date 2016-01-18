@@ -845,18 +845,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterNewExpression(@NotNull ECMAScriptParser.NewExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -876,18 +864,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

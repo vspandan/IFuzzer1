@@ -699,16 +699,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitCallExpression(@NotNull ECMAScriptParser.CallExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#superCall}.
-	 * @param ctx the parse tree
-	 */
-	void enterSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#superCall}.
-	 * @param ctx the parse tree
-	 */
-	void exitSuperCall(@NotNull ECMAScriptParser.SuperCallContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#newExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -728,16 +718,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMemberExpression(@NotNull ECMAScriptParser.MemberExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#superPropery}.
-	 * @param ctx the parse tree
-	 */
-	void enterSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#superPropery}.
-	 * @param ctx the parse tree
-	 */
-	void exitSuperPropery(@NotNull ECMAScriptParser.SuperProperyContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#functionExpression}.
 	 * @param ctx the parse tree

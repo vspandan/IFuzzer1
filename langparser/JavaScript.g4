@@ -111,8 +111,6 @@ methodDefinition :  propertyName ( ) { functionBody } | propertyName ( formalPar
 
 propertyName : identifierName | StringLiteral | numericLiteral | [ assignmentExpression ]
     
-propertySetParameterList : identifierName
-
 arguments : ( ) | ( argumentList )
     
 argumentList : assignmentExpression | argumentList  , assignmentExpression | ... assignmentExpression | argumentList  , ... assignmentExpression 

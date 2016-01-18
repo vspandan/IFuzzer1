@@ -160,6 +160,17 @@ class GECodeGenerator(object):
             else:
                 print "Answer must be 'Y' or 'N'"
         count = 0
+        # fi=open("Consolidated","w")
+        # fi.close()
+
+        # for f in fileList:
+        #     fo=open(f,"rb")
+        #     fi=open("Consolidated","ab")
+        #     fi.write("\n")
+        #     fi.write(fo.read())
+        #     fo.close()
+        #     fi.close()
+        
         for f in fileList:
             count+=1
             statinfo=stat(f)
@@ -168,20 +179,19 @@ class GECodeGenerator(object):
                     print(f)
                     xml=extractCodeFrag(f)
                     et1 = ElementTree.fromstring(xml)
-                    p1=ProgramGen()
-                    for nonTerm in self.ges.non_Terminals:
-                        li1= et1.findall('.//'+nonTerm)
-                        frags=[]
-                        for selectedXMLNode in li1:
-                            p1.out=""
-                            frags.append(p1.treeToProg(selectedXMLNode))
-                        if len(frags)>0:
-                            if codeFrags2.has_key(nonTerm) is None:
-                                codeFrags2[nonTerm]=codeFrags2.get(nonTerm)+frags
-                            else:
-                                codeFrags2[nonTerm]=frags
-                except:
-                    print "Error:"+f
+                    parent_map = dict((p, c) for p in et1.getiterator() for c in p)
+                    for key in parent_map.keys():
+                        nonTerm=key.tag
+                        p1=ProgramGen()
+                        frag=p1.treeToProg(key)
+                        if codeFrags2.has_key(nonTerm):
+                            frags=codeFrags2.get(nonTerm)
+                            frags.append(frag)
+                            codeFrags2[nonTerm]=frags
+                        else:
+                            codeFrags2[nonTerm]=[frag]
+                except Exception as e:
+                    print "Error:"+str(e)+"\nProcessing:"+f
                 if count % 100 == 0:
                     self.finalize(codeFrags2)
                     codeFrags2.clear()

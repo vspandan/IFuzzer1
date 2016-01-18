@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 from marshal import dump
+from subprocess import Popen,PIPE
 from string import lower
-from os import listdir, mkdir, makedirs,remove,stat
+from threading import Thread
+from os import listdir, mkdir, makedirs,remove,stat,kill
 from os.path import isfile, join, isdir, exists, abspath
 from Queue import Queue
 from shutil import copyfile, rmtree
@@ -72,6 +74,25 @@ def listAllTestCasesDir(testCaseDir):
                             continue
                         libfiLes.append(abspath(fi))
 
+def run_cmd(fi,l,option,shellNum):
+    try:
+        cmd=[]
+        cmd.append(shell[shellNum].strip())
+        cmd=cmd+option.split()
+        cmd=cmd+shellfileOption[shellNum]
+        cmd.append(fi)
+        print cmd
+        p = Popen(cmd, stdout=PIPE,stderr=PIPE)
+        l[0]=p
+        out, err = p.communicate()
+        l[1]=(out,err,p.returncode)
+        sys.stdout.flush()
+        sys.stderr.flush()
+    except Exception as e:
+        print e
+        logging.info(e)
+        pass
+
 """
 Elimiates unwanted files
 """
@@ -87,17 +108,17 @@ def collectFiles():
             from subprocess import Popen,PIPE
             flag=True
             for a in range(len(shell)):
-                cmd=['timeout','5']
-                cmd.append(shell[a])
-                option=options[a][0].strip();
-                if len(option)>0:
-                    cmd=cmd+option.split()
-                if len(shellfileOption[a])>0:
-                    cmd=cmd+shellfileOption[a]
-                cmd.append(f)
-                p = Popen(cmd, stdout=PIPE,stderr=PIPE)
-                (out0,err0) = p.communicate()
-                rc0 = p.returncode
+                l=[None,None]
+                t=Thread(target=run_cmd,kwargs={'fi':f,'l':l,'option':options[a][0],'shellNum':a})
+                t.start()
+                t.join(3)
+                if t.isAlive():
+                    if l[0] is not None:
+                        l[0].kill()
+                        kill(l[0].pid, 9)
+                        sleep(.1)
+                (out0,err0,rc0)=l[1]
+                print rc0
                 if rc0 == returnCodes[a][1]:
                     print err0
                     flag=False
@@ -132,4 +153,5 @@ if __name__ == "__main__":
         shellfileOption.append(shellfileoption)
     if not exists(FILELISTFILE):
         collectFiles()
+    # raw_input("Done")
     g.runFuzzer(shell,options,returnCodes,INCLUDE_NT,shellfileOption)

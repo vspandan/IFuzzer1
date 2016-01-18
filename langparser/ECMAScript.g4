@@ -127,7 +127,7 @@ classTail
  ;
 
 classHeritage
- : 'extends' conditionalExpression
+ : Extends conditionalExpression
  ; 
 
 classBody
@@ -419,8 +419,6 @@ propertyAssignment
 
 methodDefinition
  : {!here(Function)}? propertyName '(' formalParameterList? ')' '{' functionBody '}'
- | 'get' propertyName '(' ')' '{' functionBody '}'                          
- | 'set' propertyName '(' variableDeclaration ')' '{' functionBody '}' 
  ;
 
 propertyName
@@ -428,10 +426,6 @@ propertyName
  | StringLiteral
  | numericLiteral
  | '[' assignmentExpression ']'
- ;
-    
-propertySetParameterList
- : identifierName
  ;
 
 arguments
@@ -469,8 +463,6 @@ assignmentExpression
  |     conditionalExpression '=' assignmentExpression  eos?
  |     conditionalExpression assignmentOperator assignmentExpression 
  |     arrowFunction 
- |     assignmentExpression 'for' 'each'? '(' (('var'|'let'|'const') identifierBinding | conditionalExpression) ('in' | 'of') expression ')'
- |     assignmentExpression 'if' '(' expression ')'
  ;
 
 conditionalExpression
@@ -520,15 +512,11 @@ leftHandSideExpression
 
 callExpression   
  :     memberExpression arguments eos?
- |     superCall eos?
  |     callExpression arguments eos?
  |     callExpression '[' expression ']' eos?
  |     callExpression '.' identifierName eos?
  ;
 
-superCall
- : 'super' arguments
- ;
 
 newExpression  
  :     memberExpression
@@ -539,13 +527,7 @@ memberExpression
  :     primaryExpression
  |     memberExpression '[' expression ']'
  |     memberExpression '.' identifierName
- |     superPropery
  |     'new' memberExpression arguments
- ;
-
-superPropery
- :      'super' '[' expression ']'
- |      'super' '.' identifierName
  ;
 
 functionExpression  
@@ -735,8 +717,6 @@ Delete     : 'delete'|'delete*';
 In         : 'in'|'in*';
 Try        : 'try'|'try*';
 Of         : 'of'|'of*';  
-Get        : 'get'|'get*';
-Set        : 'set'|'set*';
 Each       : 'each'|'each*';
 
 /// 7.6.1.2 Future Reserved Words
