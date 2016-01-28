@@ -142,7 +142,10 @@ class GECodeGenerator(object):
         
         
 
-    def genFragPool(self,fileList):
+    def genFragPool(self):
+        f2 = open(FileListFile, 'rb')
+        fileList=load(f2)
+        f2.close()
         codeFrags2=defaultdict(list)
         if not exists(database):
             makedirs(database)

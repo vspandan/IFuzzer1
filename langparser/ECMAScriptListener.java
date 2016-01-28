@@ -499,16 +499,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitFormalParameter(@NotNull ECMAScriptParser.FormalParameterContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#functionBody}.
-	 * @param ctx the parse tree
-	 */
-	void enterFunctionBody(@NotNull ECMAScriptParser.FunctionBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#functionBody}.
-	 * @param ctx the parse tree
-	 */
-	void exitFunctionBody(@NotNull ECMAScriptParser.FunctionBodyContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#arrayLiteral}.
 	 * @param ctx the parse tree
 	 */
@@ -588,16 +578,6 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPropertyName(@NotNull ECMAScriptParser.PropertyNameContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link ECMAScriptParser#propertySetParameterList}.
-	 * @param ctx the parse tree
-	 */
-	void enterPropertySetParameterList(@NotNull ECMAScriptParser.PropertySetParameterListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link ECMAScriptParser#propertySetParameterList}.
-	 * @param ctx the parse tree
-	 */
-	void exitPropertySetParameterList(@NotNull ECMAScriptParser.PropertySetParameterListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#arguments}.
 	 * @param ctx the parse tree
@@ -759,6 +739,16 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 */
 	void exitLiteral(@NotNull ECMAScriptParser.LiteralContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringLiteral(@NotNull ECMAScriptParser.StringLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#stringLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringLiteral(@NotNull ECMAScriptParser.StringLiteralContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#numericLiteral}.
 	 * @param ctx the parse tree
 	 */
@@ -788,6 +778,26 @@ public interface ECMAScriptListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitReservedWord(@NotNull ECMAScriptParser.ReservedWordContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#keyword}.
+	 * @param ctx the parse tree
+	 */
+	void enterKeyword(@NotNull ECMAScriptParser.KeywordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#keyword}.
+	 * @param ctx the parse tree
+	 */
+	void exitKeyword(@NotNull ECMAScriptParser.KeywordContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link ECMAScriptParser#futureReservedWord}.
+	 * @param ctx the parse tree
+	 */
+	void enterFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ECMAScriptParser#futureReservedWord}.
+	 * @param ctx the parse tree
+	 */
+	void exitFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link ECMAScriptParser#eos}.
 	 * @param ctx the parse tree

@@ -86,20 +86,6 @@ class processTree(object):
                     self.out+=child.tail
         return self.subcode,self.out    
 
-def extractNonTerminal(input,nonTerminals):        
-    def extractNT(root,nonTerminals):
-        for child in root:
-            nonTerminals.append(child.tag)
-            extractNT(child,nonTerminals)    
-        return nonTerminals
-    if len(input)>0:
-        try:
-            root =ElementTree.fromstring(input)
-            nonTerminals=extractNT(root,nonTerminals)
-        except:
-            pass
-    return nonTerminals
-
 def genCodeFrag(input,nT,INCLUDE_NT_LIST = None, count=1):
     logging.info("GenCodeFrag method - Entered ")
     selectedNTList={}

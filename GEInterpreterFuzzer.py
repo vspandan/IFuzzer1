@@ -8,15 +8,12 @@ from os.path import isfile, join, isdir, exists, abspath
 from Queue import Queue
 from shutil import copyfile, rmtree
 from GECodeGenerator import GECodeGenerator
+from time import sleep
 import sys
 import ConfigParser
-import logging
 
 config = ConfigParser.RawConfigParser()
 config.read('ConfigFile.properties')
-LOG_FILENAME= config.get('Mappings', 'mappings.logfile')
-LOG_LEVEL= config.get('Mappings', 'loglevel');
-logging.basicConfig(filename=LOG_FILENAME, level=LOG_LEVEL, )
 
 testsuite=config.get('Testsuite', 'TESTSUITE').split(',')
 
@@ -81,7 +78,6 @@ def run_cmd(fi,l,option,shellNum):
         cmd=cmd+option.split()
         cmd=cmd+shellfileOption[shellNum]
         cmd.append(fi)
-        print cmd
         p = Popen(cmd, stdout=PIPE,stderr=PIPE)
         l[0]=p
         out, err = p.communicate()
@@ -90,7 +86,6 @@ def run_cmd(fi,l,option,shellNum):
         sys.stderr.flush()
     except Exception as e:
         print e
-        logging.info(e)
         pass
 
 """
@@ -113,12 +108,15 @@ def collectFiles():
                 t.start()
                 t.join(3)
                 if t.isAlive():
-                    if l[0] is not None:
-                        l[0].kill()
-                        kill(l[0].pid, 9)
-                        sleep(.1)
+                    try:
+                        if l[0] is not None:
+                            l[0].kill()
+                            kill(l[0].pid, 9)
+                            sleep(.1)
+                    except:
+                        print(e)
+                        pass
                 (out0,err0,rc0)=l[1]
-                print rc0
                 if rc0 == returnCodes[a][1]:
                     print err0
                     flag=False
@@ -142,8 +140,6 @@ if __name__ == "__main__":
     listAllTestCases(testsuite)
     generateOptions()
     g=GECodeGenerator()
-    if args[0]=="0":
-        g.genFragPool(fileList)
     for a in range(len(shell)):
         shellfileoption=[]
         for shellfile in libfiLes:
@@ -151,6 +147,11 @@ if __name__ == "__main__":
             if len(fileOptionSpecifier[a])>0:
                 shellfileoption.append(fileOptionSpecifier[a])
         shellfileOption.append(shellfileoption)
+    if args[0]=="0":
+        # if exists(FILELISTFILE):
+        #     remove(FILELISTFILE)
+        # collectFiles()
+        g.genFragPool()
     if not exists(FILELISTFILE):
         collectFiles()
     # raw_input("Done")

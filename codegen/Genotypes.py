@@ -85,11 +85,8 @@ class Genotype(object):
                             prg_list[position] = self._converge(item)
                         continue_map = True
                     else:
-                        if item == 'StringLiteral':
+                        if item in ['Identifier','numericLiteral']:
                             prg_list[position] = self._converge('literal')
-                        elif item in ['literal','numericliteral','templateLiteral']:
-                            prg_list[position] = self._converge(item)
-                    
                     position += 1
                     
                 depth += 1

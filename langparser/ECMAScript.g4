@@ -86,7 +86,6 @@ grammar ECMAScript;
         
         switch (this.lastToken.getType()) {
             case Identifier:
-            case NullLiteral:
             case BooleanLiteral:
             case This:
             case CloseBracket:
@@ -115,7 +114,7 @@ statementListItem
  ;
 
 functionDeclaration
- : 'function' identifierName '(' formalParameterList? ')' '{' functionBody '}' 
+ :    'function'  identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'|statement)
  ;
 
 classDeclaration
@@ -123,7 +122,7 @@ classDeclaration
  ;
 
 classTail
- : classHeritage '{' classBody '}'
+ : classHeritage? '{' classBody '}'
  ;
 
 classHeritage
@@ -201,9 +200,9 @@ identifierPattern
  ;
 
 arrayBindingPattern
- : '[' elision? restElement ']'
+ : '[' elision? restElement? ']'
  | '[' bindingElementList ']'
- | '[' bindingElementList ',' elision? restElement ']'
+ | '[' bindingElementList ',' elision? restElement? ']'
  ;
 
 restElement
@@ -368,10 +367,6 @@ formalParameter
  | objectLiteral
  ;
 
-functionBody
- : statementListItem?
- ;
-    
 arrayLiteral
  : '[' elision? ']'
  | '[' elementList ']'
@@ -418,12 +413,16 @@ propertyAssignment
  ;   
 
 methodDefinition
- : {!here(Function)}? propertyName '(' formalParameterList? ')' '{' functionBody '}'
+ : 'get' propertyName '(' ')' '{' statementListItem* '}'                          
+ | 'set' propertyName'(' variableDeclaration ')' '{' statementListItem* '}' 
+ | {!here(Function)}? propertyName '(' formalParameterList? ')' '{' statementListItem* '}'
  ;
+
+
 
 propertyName
  : identifierName
- | StringLiteral
+ | stringLiteral
  | numericLiteral
  | '[' assignmentExpression ']'
  ;
@@ -449,7 +448,7 @@ arrowParameters
 
 conciseBody
  : {!here(OpenBrace)}? assignmentExpression
- | '{' functionBody '}'
+ | '{' statementListItem* '}'
  ;
 
 expression
@@ -463,6 +462,8 @@ assignmentExpression
  |     conditionalExpression '=' assignmentExpression  eos?
  |     conditionalExpression assignmentOperator assignmentExpression 
  |     arrowFunction 
+ |     assignmentExpression 'for' 'each'? '(' (('var'|'let'|'const') identifierBinding | conditionalExpression) ('in' | 'of') expression ')'
+ |     assignmentExpression 'if' '(' expression ')'
  ;
 
 conditionalExpression
@@ -531,7 +532,7 @@ memberExpression
  ;
 
 functionExpression  
- :     'function' '*'? identifierName? '(' formalParameterList? ')' ('{' functionBody '}'|statement)
+ :     'function' identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'|statement)
  ;
  
 primaryExpression  
@@ -560,13 +561,18 @@ assignmentOperator
  ;
 
 literal
- : ( NullLiteral 
-   | BooleanLiteral
-   | StringLiteral
-   | RegularExpressionLiteral
-   )
+ : 'null' 
+ | 'true'
+ | 'false'
+ | stringLiteral
+ | RegularExpressionLiteral
  | numericLiteral
  ;
+
+stringLiteral
+ : StringLiteral
+ ;
+
 
 numericLiteral
  : DecimalLiteral
@@ -576,15 +582,67 @@ numericLiteral
  ;
 
 identifierName
- : Identifier
+ : reservedWord
+ | Identifier
  ;
 
 reservedWord
- : ( NullLiteral
-   | BooleanLiteral
-   )
+ : keyword
+ | futureReservedWord
  ;
 
+
+keyword
+ : 'break'
+ | 'do'
+ | 'instanceof'
+ | 'typeof'
+ | 'case'
+ | 'else'
+ | 'new'
+ | 'var'
+ | 'catch'
+ | 'finally'
+ | 'return'
+ | 'void'
+ | 'continue'
+ | 'for'
+ | 'switch'
+ | 'while'
+ | 'debugger'
+ | 'function'
+ | 'this'
+ | 'with'
+ | 'default'
+ | 'if'
+ | 'throw'
+ | 'delete'
+ | 'in'
+ | 'try'
+ | 'of'
+ | 'get'
+ | 'set'
+ | 'each'
+ ;
+
+futureReservedWord
+ : 'class'
+ | 'enum'
+ | 'extends'
+ | 'super'
+ | 'const'
+ | 'export'
+ | 'import'
+ | 'implements'
+ | 'let'
+ | 'private'
+ | 'public'
+ | 'interface'
+ | 'package'
+ | 'protected'
+ | 'static'
+ | 'yield'
+ ;
 
 eos
  : SemiColon
@@ -659,11 +717,6 @@ BitXorAssign               : '^=';
 BitOrAssign                : '|=';
 
 /// 7.8.1 Null Literals
-NullLiteral
- : 'null'
- ;
-
-/// 7.8.2 Boolean Literals
 BooleanLiteral
  : 'true'
  | 'false'
@@ -717,6 +770,8 @@ Delete     : 'delete'|'delete*';
 In         : 'in'|'in*';
 Try        : 'try'|'try*';
 Of         : 'of'|'of*';  
+Get        : 'get'|'get*';
+Set        : 'set'|'set*';
 Each       : 'each'|'each*';
 
 /// 7.6.1.2 Future Reserved Words
@@ -769,6 +824,8 @@ UnexpectedCharacter
  : .
  ;
 
+
+
 fragment DoubleStringCharacter
  : ~["\\\r\n]
  | '\\' EscapeSequence
@@ -782,7 +839,8 @@ fragment SingleStringCharacter
  ;
 
 fragment EscapeSequence
- : CharacterEscapeSequence
+ : UnicodeLetter
+ | CharacterEscapeSequence
  | HexEscapeSequence
  | UnicodeEscapeSequence
  | DecimalDigit

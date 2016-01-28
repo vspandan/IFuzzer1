@@ -605,18 +605,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFunctionBody(@NotNull ECMAScriptParser.FunctionBodyContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFunctionBody(@NotNull ECMAScriptParser.FunctionBodyContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterArrayLiteral(@NotNull ECMAScriptParser.ArrayLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -708,18 +696,6 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPropertyName(@NotNull ECMAScriptParser.PropertyNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPropertySetParameterList(@NotNull ECMAScriptParser.PropertySetParameterListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPropertySetParameterList(@NotNull ECMAScriptParser.PropertySetParameterListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -917,6 +893,18 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStringLiteral(@NotNull ECMAScriptParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStringLiteral(@NotNull ECMAScriptParser.StringLiteralContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumericLiteral(@NotNull ECMAScriptParser.NumericLiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -948,6 +936,30 @@ public class ECMAScriptBaseListener implements ECMAScriptListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitReservedWord(@NotNull ECMAScriptParser.ReservedWordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterKeyword(@NotNull ECMAScriptParser.KeywordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitKeyword(@NotNull ECMAScriptParser.KeywordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFutureReservedWord(@NotNull ECMAScriptParser.FutureReservedWordContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
