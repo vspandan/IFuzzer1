@@ -767,9 +767,8 @@ class GrammaticalEvolution(object):
                             logging.info("Origin:"+child2.origin)
                             child1.local_bnf['program']=child1Prg
                             child2.local_bnf['program']=child2Prg
-                if len(child_list) == length :
-                    logging.info("_perform_crossovers completed")
-                    return child_list
+                logging.info("_perform_crossovers completed")
+                return child_list
         except Exception as e:
             logging.info("_perform_crossovers-3-exception:")
             logging.info(e)
