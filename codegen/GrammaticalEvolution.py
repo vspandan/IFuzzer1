@@ -466,7 +466,7 @@ class GrammaticalEvolution(object):
                 for a in range(len(self.interpreter_Shell)):
                     for option in self.interpreter_Options[a]:
                         ti1=time()
-                        l=[None,None]        
+                        l=[None,None]
                         t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option, 'shellNum':a})
                         t.start()
                         t.join(self.execution_timeout)
@@ -480,6 +480,7 @@ class GrammaticalEvolution(object):
                             gene.err=None
                             gene.out=None
                             return
+                        logging.info("Invoked  interpreter for "+str(time()-ti1) +"seconds")
                         if (time()-ti1) > self.execution_timeout:
                             gene.rc=None
                             gene.err=None
