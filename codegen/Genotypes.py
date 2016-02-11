@@ -70,8 +70,8 @@ class Genotype(object):
     def _map_variables(self, program):
         try:
             depth = 0
-            prg_list = program.split()
             while True:
+                prg_list = program.split()
                 position = 0
                 continue_map = False
                 while position < len(prg_list):
@@ -91,8 +91,6 @@ class Genotype(object):
                 depth += 1
                 program = ' '.join(prg_list)
                 
-                prg_list = program.split()
-
                 if continue_map is False:
                     return program
 
@@ -102,10 +100,9 @@ class Genotype(object):
     def _map_gene(self,selectedNTList):
         program=self.local_bnf['CodeFrag']
         logging.debug("Before mutation incomplete CodeFrag:"+program)
-        for nonTerminal in selectedNTList:
-            logging.info("Mutation: "+nonTerminal)
-            subcode=self._map_variables(nonTerminal)
-            program = program.replace(nonTerminal,subcode)
+        logging.info("Mutation: "+nonTerminal)
+        subcode=self._map_variables(nonTerminal)
+        program = program.replace(nonTerminal,subcode)
         self.local_bnf['program'] = program  
         logging.debug("Completed mutation:"+program)
         logging.debug("After mutation complete CodeFrag:"+program)

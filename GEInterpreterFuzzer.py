@@ -22,6 +22,8 @@ LIB_FILE = config.get('Interpreter', 'LIB_FILE')
 FILELISTFILE= abspath(config.get('TargetDir', 'FILELIST'))
 INCLUDE_NT = None
 
+INCLUDE_NT1 = None
+
 fileList = []
 shell=[]
 options=[]
@@ -103,24 +105,24 @@ def collectFiles():
             from subprocess import Popen,PIPE
             flag=True
             for a in range(len(shell)):
-                l=[None,None]
-                t=Thread(target=run_cmd,kwargs={'fi':f,'l':l,'option':options[a][0],'shellNum':a})
-                t.start()
-                t.join(3)
-                if t.isAlive():
-                    try:
+                try:
+                    l=[None,None]
+                    t=Thread(target=run_cmd,kwargs={'fi':f,'l':l,'option':options[a][0],'shellNum':a})
+                    t.start()
+                    t.join(3)
+                    if t.isAlive():
                         if l[0] is not None:
                             l[0].kill()
                             kill(l[0].pid, 9)
                             sleep(.1)
-                    except:
+                    (out0,err0,rc0)=l[1]
+                    if rc0 == returnCodes[a][1]:
+                        print err0
+                        flag=False
+                        break
+                except:
                         print(e)
                         pass
-                (out0,err0,rc0)=l[1]
-                if rc0 == returnCodes[a][1]:
-                    print err0
-                    flag=False
-                    break
             if flag:   
                 tempList.append(f)
         print "Files Listed for Processing "+ str(len(tempList))
@@ -148,11 +150,11 @@ if __name__ == "__main__":
                 shellfileoption.append(fileOptionSpecifier[a])
         shellfileOption.append(shellfileoption)
     if args[0]=="0":
-        # if exists(FILELISTFILE):
-        #     remove(FILELISTFILE)
-        # collectFiles()
+        if exists(FILELISTFILE):
+            remove(FILELISTFILE)
+        collectFiles()
         g.genFragPool()
     if not exists(FILELISTFILE):
         collectFiles()
-    # raw_input("Done")
+    raw_input("Done")
     g.runFuzzer(shell,options,returnCodes,INCLUDE_NT,shellfileOption)

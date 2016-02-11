@@ -321,7 +321,7 @@ class GrammaticalEvolution(object):
         self.shellfileOption=shellfileOption
         self.interpreter_Options =interpreter_Options
         self.interpreter_ReturnCodes=interpreter_ReturnCodes
-        self.nT_Invld_Gen_Process=preSelectedNonTerminals
+        self.preSelectedNonTerminals=preSelectedNonTerminals
         self._extractProductions()
         
         if len(fileList)<self._population_size:
@@ -333,7 +333,8 @@ class GrammaticalEvolution(object):
             gene = Genotype(member_no)
             gene.local_bnf = deepcopy(self._bnf)
             gene.local_bnf['<member_no>'] = [gene.member_no]
-            gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
+            # gene.keywords=self._bnf['keyword']+self._bnf['futureReservedWord']
+            gene.keywords=[]
             gene.preSelectedNonTerminals=preSelectedNonTerminals
             gene._initial_member_no =  member_no
             
@@ -661,8 +662,8 @@ class GrammaticalEvolution(object):
                     child1Prg=child1.get_program()
                     child2Prg=child2.get_program()
 
-                    if self.nT_Invld_Gen_Process is not None:
-                        commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term) and val in self.nT_Invld_Gen_Process)]
+                    if self.preSelectedNonTerminals is not None:
+                        commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term) and val in self.preSelectedNonTerminals)]
                     else:
                         commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term))]
 

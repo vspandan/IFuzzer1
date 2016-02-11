@@ -142,7 +142,7 @@ statement
  | variableStatement
  | emptyStatement
  | ifStatement
- | expressionStatement
+ | expressionStatement eos?
  | iterationStatement
  | continueStatement
  | breakStatement
@@ -457,9 +457,9 @@ expression
  ;
  
 assignmentExpression
- :     conditionalExpression eos?
+ :     conditionalExpression 
  |     yieldExpression 
- |     conditionalExpression '=' assignmentExpression  eos?
+ |     conditionalExpression '=' assignmentExpression  
  |     conditionalExpression assignmentOperator assignmentExpression 
  |     arrowFunction 
  |     assignmentExpression 'for' 'each'? '(' (('var'|'let'|'const') identifierBinding | conditionalExpression) ('in' | 'of') expression ')'
@@ -512,10 +512,10 @@ leftHandSideExpression
  ;
 
 callExpression   
- :     memberExpression arguments eos?
- |     callExpression arguments eos?
- |     callExpression '[' expression ']' eos?
- |     callExpression '.' identifierName eos?
+ :     memberExpression arguments 
+ |     callExpression arguments 
+ |     callExpression '[' expression ']' 
+ |     callExpression '.' identifierName 
  ;
 
 
@@ -532,7 +532,7 @@ memberExpression
  ;
 
 functionExpression  
- :     'function' identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'|statement)
+ :     'function' identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'| statement)
  ;
  
 primaryExpression  

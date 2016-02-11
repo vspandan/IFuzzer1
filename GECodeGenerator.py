@@ -37,7 +37,7 @@ class GECodeGenerator(object):
         self.ges._extractProductions()
                 
 
-    def runFuzzer(self,interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
+    def runFuzzer(self,interpreter,options,returnCodes,preSelectedNonTerminals,shellfileOption):
         tempList=[]    
         TestCases=[]
         if isfile(FileListFile):
@@ -104,7 +104,7 @@ class GECodeGenerator(object):
                 
                 self.ges.set_crossover_bias_rate(int(config.get('Options', 'CROSSOVER_BIAS_RATE')))
                 
-                if self.ges.create_genotypes(tempList,interpreter,options,returnCodes,nTInvlvdGenProcess,shellfileOption):
+                if self.ges.create_genotypes(tempList,interpreter,options,returnCodes,preSelectedNonTerminals,shellfileOption):
                     self.ges.run()
                     for gene in self.ges.population:
                         if gene.get_fitness() != self.ges._fitness_fail :
@@ -119,7 +119,7 @@ class GECodeGenerator(object):
                 ges=None
             else:
                 remove(FileListFile)
-        except:
+        finally:
             pass
     
     def finalize(self,codeFrags2):

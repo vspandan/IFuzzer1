@@ -2,21 +2,21 @@ program : statementListItem |
 
 statementListItem : functionDeclaration | classDeclaration | statement
 
-functionDeclaration : function identifierName ( formalParameterList ) { functionBody } | function identifierName ( ) { functionBody } 
+functionDeclaration : function identifierName ( formalParameterList ) { statementListItem } | function identifierName ( ) { statementListItem } | function identifierName ( formalParameterList ) {  } | function identifierName ( ) {  } 
 
 classDeclaration : class identifierReference classTail | class classTail
 
-classTail : classHeritage { classBody }
+classTail : classHeritage { classBody } | { classBody }
 
-classHeritage : extends leftHandSideExpression
+classHeritage : extends conditionalExpression
 
 classBody : classElement | classElement classBody
 
 classElement : static methodDefinition | methodDefinition
 
-statement : block | variableStatement | expressionStatement | ifStatement | iterationStatement | continueStatement | breakStatement | returnStatement | withStatement | labelledStatement | switchStatement | throwStatement | tryStatement | debuggerStatement | yieldExpression | elseStatement
+statement : block | variableStatement | expressionStatement | ifStatement | iterationStatement | continueStatement | breakStatement | returnStatement | withStatement | labelledStatement | switchStatement | throwStatement | tryStatement | debuggerStatement | yieldExpression | elseStatement | emptyStatement
 
-yieldExpression : yield assignmentExpression
+yieldExpression : yield assignmentExpression | yield
 
 block : { statementList } | { }
 
@@ -34,11 +34,11 @@ identifierReference : identifierName | yield
 
 identifierPattern : arrayBindingPattern | objectBindingPattern | argumentBindingPattern
 
-arrayBindingPattern : [ restElement ] | [ elision restElement ] | [ bindingElementList ] | [ bindingElementList , elision restElement ] | [ bindingElementList , restElement ]
+arrayBindingPattern : [ ] | [ , ] | [ restElement ] | [ , restElement ] | [ bindingElementList ] | [ bindingElementList , , restElement ] | [ bindingElementList , restElement ]
 
-restElement : ... identifierReference 
+restElement : ... identifierReference
 
-bindingElementList : variableDeclaration | variableDeclaration bindingElementList | , variableDeclaration) | , variableDeclaration bindingElementList
+bindingElementList : variableDeclaration | variableDeclaration bindingElementList | , variableDeclaration | , variableDeclaration bindingElementList
 
 objectBindingPattern : { bindingPropertyList } | { }
 
@@ -94,13 +94,9 @@ formalParameters : formalParameter | formalParameter , formalParameters
 
 formalParameter : identifierName | arrayLiteral | objectLiteral
 
-functionBody : statementListItem |
-    
-arrayLiteral : [ ] | [ elementList ] | [ elementList , ] | [ elision ] | [ elementList , elision ]
+arrayLiteral : [ ] | [ elementList ] | [ elementList , ] | [ , ] | [ elementList , , ]
 
-elementList : assignmentExpression  | elementList , assignmentExpression  | elision ... assignmentExpression  | ... assignmentExpression  | elementList , ... assignmentExpression | elementList , assignmentExpression | elision assignmentExpression  | elementList , elision assignmentExpression  | elision ... assignmentExpression  | elementList , elision ... assignmentExpression 
-
-elision : ,
+elementList : assignmentExpression  | elementList , assignmentExpression  | , ... assignmentExpression  | ... assignmentExpression  | elementList , ... assignmentExpression | elementList , assignmentExpression | , assignmentExpression  | elementList , , assignmentExpression  | , ... assignmentExpression  | elementList , , ... assignmentExpression 
 
 objectLiteral : {  } | {  propertyNameAndValueList } | {  propertyNameAndValueList , }
 
@@ -124,35 +120,23 @@ conciseBody : assignmentExpression | { functionBody }
 
 expression : assignmentExpression | expression , assignmentExpression
  
-assignmentExpression : conditionalExpression ; | yieldExpression  | leftHandSideExpression = assignmentExpression  ; | leftHandSideExpression assignmentOperator assignmentExpression  | arrowfunction  | assignmentExpression for ( var identifierBinding of expression ) | assignmentExpression for ( var identifierBinding of expression ) | assignmentExpression for ( var identifierBinding of expression ) | assignmentExpression for ( var identifierBinding in expression ) | assignmentExpression for ( var identifierBinding in expression ) | assignmentExpression for ( var identifierBinding in expression ) | assignmentExpression for ( let identifierBinding of expression ) | assignmentExpression for ( let identifierBinding of expression ) | assignmentExpression for ( let identifierBinding of expression ) | assignmentExpression for ( let identifierBinding in expression ) | assignmentExpression for ( let identifierBinding in expression ) | assignmentExpression for ( let identifierBinding in expression ) | assignmentExpression for ( const identifierBinding of expression ) | assignmentExpression for ( const identifierBinding of expression ) | assignmentExpression for ( const identifierBinding of expression ) | assignmentExpression for ( const identifierBinding in expression ) | assignmentExpression for ( const identifierBinding in expression ) | assignmentExpression for ( const identifierBinding in expression ) | assignmentExpression for ( var assignmentExpression of expression ) | assignmentExpression for ( var assignmentExpression of expression ) | assignmentExpression for ( var assignmentExpression of expression ) | assignmentExpression for ( var assignmentExpression in expression ) | assignmentExpression for ( var assignmentExpression in expression ) | assignmentExpression for ( var assignmentExpression in expression ) | assignmentExpression for ( let assignmentExpression of expression ) | assignmentExpression for ( let assignmentExpression of expression ) | assignmentExpression for ( let assignmentExpression of expression ) | assignmentExpression for ( let assignmentExpression in expression ) | assignmentExpression for ( let assignmentExpression in expression ) | assignmentExpression for ( let assignmentExpression in expression ) | assignmentExpression for ( const assignmentExpression of expression ) | assignmentExpression for ( const assignmentExpression of expression ) | assignmentExpression for ( const assignmentExpression of expression ) | assignmentExpression for ( const assignmentExpression in expression ) | assignmentExpression for ( const assignmentExpression in expression ) | assignmentExpression for ( const assignmentExpression in expression ) | assignmentExpression for each ( var identifierBinding of expression ) | assignmentExpression for each ( var identifierBinding in expression ) | assignmentExpression for each ( var identifierBinding in expression ) | assignmentExpression for each ( var identifierBinding of expression ) | assignmentExpression for each ( var identifierBinding in expression ) | assignmentExpression for each ( var identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding in expression ) | assignmentExpression for each ( let identifierBinding in expression ) | assignmentExpression for each ( let identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding in expression ) | assignmentExpression for each ( const identifierBinding of expression ) | assignmentExpression for each ( const identifierBinding of expression ) | assignmentExpression for each ( const identifierBinding of expression ) | assignmentExpression for each ( const identifierBinding in expression ) | assignmentExpression for each ( const identifierBinding in expression ) | assignmentExpression for each ( const identifierBinding in expression ) | assignmentExpression for each ( var assignmentExpression of expression ) | assignmentExpression for each ( var assignmentExpression in expression ) | assignmentExpression for each ( var assignmentExpression in expression ) | assignmentExpression for each ( var assignmentExpression of expression ) | assignmentExpression for each ( var assignmentExpression in expression ) | assignmentExpression for each ( var assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression in expression ) | assignmentExpression for each ( let assignmentExpression in expression ) | assignmentExpression for each ( let assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression in expression ) | assignmentExpression for each ( const assignmentExpression of expression ) | assignmentExpression for each ( const assignmentExpression of expression ) | assignmentExpression for each ( const assignmentExpression of expression ) | assignmentExpression for each ( const assignmentExpression in expression ) | assignmentExpression for each ( const assignmentExpression in expression ) | assignmentExpression for each ( const assignmentExpression in expression ) | assignmentExpression if ( expression ) | 
+assignmentExpression : conditionalExpression | yieldExpression  | leftHandSideExpression = assignmentExpression  | leftHandSideExpression assignmentOperator assignmentExpression  | arrowfunction  | assignmentExpression for ( var identifierBinding of expression ) | assignmentExpression for ( var identifierBinding of expression ) | assignmentExpression for ( var identifierBinding of expression ) | assignmentExpression for ( var identifierBinding in expression ) | assignmentExpression for ( var identifierBinding in expression ) | assignmentExpression for ( var identifierBinding in expression ) | assignmentExpression for ( let identifierBinding of expression ) | assignmentExpression for ( let identifierBinding of expression ) | assignmentExpression for ( let identifierBinding of expression ) | assignmentExpression for ( let identifierBinding in expression ) | assignmentExpression for ( let identifierBinding in expression ) | assignmentExpression for ( let identifierBinding in expression ) | assignmentExpression for ( const identifierBinding of expression ) | assignmentExpression for ( const identifierBinding of expression ) | assignmentExpression for ( const identifierBinding of expression ) | assignmentExpression for ( const identifierBinding in expression ) | assignmentExpression for ( const identifierBinding in expression ) | assignmentExpression for ( const identifierBinding in expression ) | assignmentExpression for ( var assignmentExpression of expression ) | assignmentExpression for ( var assignmentExpression of expression ) | assignmentExpression for ( var assignmentExpression of expression ) | assignmentExpression for ( var assignmentExpression in expression ) | assignmentExpression for ( var assignmentExpression in expression ) | assignmentExpression for ( var assignmentExpression in expression ) | assignmentExpression for ( let assignmentExpression of expression ) | assignmentExpression for ( let assignmentExpression of expression ) | assignmentExpression for ( let assignmentExpression of expression ) | assignmentExpression for ( let assignmentExpression in expression ) | assignmentExpression for ( let assignmentExpression in expression ) | assignmentExpression for ( let assignmentExpression in expression ) | assignmentExpression for ( const assignmentExpression of expression ) | assignmentExpression for ( const assignmentExpression of expression ) | assignmentExpression for ( const assignmentExpression of expression ) | assignmentExpression for ( const assignmentExpression in expression ) | assignmentExpression for ( const assignmentExpression in expression ) | assignmentExpression for ( const assignmentExpression in expression ) | assignmentExpression for each ( var identifierBinding of expression ) | assignmentExpression for each ( var identifierBinding in expression ) | assignmentExpression for each ( var identifierBinding in expression ) | assignmentExpression for each ( var identifierBinding of expression ) | assignmentExpression for each ( var identifierBinding in expression ) | assignmentExpression for each ( var identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding in expression ) | assignmentExpression for each ( let identifierBinding in expression ) | assignmentExpression for each ( let identifierBinding of expression ) | assignmentExpression for each ( let identifierBinding in expression ) | assignmentExpression for each ( const identifierBinding of expression ) | assignmentExpression for each ( const identifierBinding of expression ) | assignmentExpression for each ( const identifierBinding of expression ) | assignmentExpression for each ( const identifierBinding in expression ) | assignmentExpression for each ( const identifierBinding in expression ) | assignmentExpression for each ( const identifierBinding in expression ) | assignmentExpression for each ( var assignmentExpression of expression ) | assignmentExpression for each ( var assignmentExpression in expression ) | assignmentExpression for each ( var assignmentExpression in expression ) | assignmentExpression for each ( var assignmentExpression of expression ) | assignmentExpression for each ( var assignmentExpression in expression ) | assignmentExpression for each ( var assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression in expression ) | assignmentExpression for each ( let assignmentExpression in expression ) | assignmentExpression for each ( let assignmentExpression of expression ) | assignmentExpression for each ( let assignmentExpression in expression ) | assignmentExpression for each ( const assignmentExpression of expression ) | assignmentExpression for each ( const assignmentExpression of expression ) | assignmentExpression for each ( const assignmentExpression of expression ) | assignmentExpression for each ( const assignmentExpression in expression ) | assignmentExpression for each ( const assignmentExpression in expression ) | assignmentExpression for each ( const assignmentExpression in expression ) | assignmentExpression if ( expression ) | 
 
 conditionalExpression :     conditionalExpression ? assignmentExpression : assignmentExpression  |   conditionalExpression && conditionalExpression |     conditionalExpression ^ conditionalExpression |     conditionalExpression & conditionalExpression |     conditionalExpression == conditionalExpression |     conditionalExpression != conditionalExpression |     conditionalExpression === conditionalExpression |     conditionalExpression !== conditionalExpression |     conditionalExpression < conditionalExpression |     conditionalExpression > conditionalExpression |     conditionalExpression <= conditionalExpression |     conditionalExpression >= conditionalExpression |     conditionalExpression instanceof conditionalExpression  |     conditionalExpression in conditionalExpression |     conditionalExpression << conditionalExpression |     conditionalExpression >> conditionalExpression |     conditionalExpression >>> conditionalExpression |     conditionalExpression + conditionalExpression |     conditionalExpression - conditionalExpression |     conditionalExpression * conditionalExpression |     conditionalExpression / conditionalExpression |     conditionalExpression % conditionalExpression |     delete conditionalExpression |     void conditionalExpression |     typeof conditionalExpression |     ++ conditionalExpression |     -- conditionalExpression |     + conditionalExpression |     - conditionalExpression |     ~ conditionalExpression |     ! conditionalExpression |     conditionalExpression ++ |     conditionalExpression -- |     leftHandSideExpression
 
 leftHandSideExpression   :     callExpression |     newExpression
 
 
-memberExpression   :     primaryExpression |     memberExpression [ expression ] |     memberExpression . identifierName |     superPropery |     new memberExpression arguments
+memberExpression   :     primaryExpression |     memberExpression [ expression ] |     memberExpression . identifierName  |     new memberExpression arguments
 
 primaryExpression   :     this |     identifierName |     functionExpression |     classDeclaration |     literal |     objectLiteral |     ( expression ) |     arrayLiteral 
 
-callExpression   : memberExpression arguments ; | superCall ; | callExpression arguments ; | callExpression [ expression ] ; | callExpression . identifierName ;
-
-superCall : super arguments
+callExpression   : memberExpression arguments | callExpression arguments | callExpression [ expression ] | callExpression . identifierName
 
 newExpression   : memberExpression | new newExpression
 
-superPropery :  super [ expression ] |  super . identifierName
-
-functionExpression   : function ( ) statement | function  identifierName ( ) statement | function ( ) { functionBody } | function  identifierName ( ) { functionBody } |  function ( formalParameterList ) statement | function  identifierName ( formalParameterList ) statement | function ( formalParameterList ) { functionBody } | function  identifierName ( formalParameterList ) { functionBody }
+functionExpression   : function ( ) statement | function  identifierName ( ) statement | function ( formalParameterList ) statement | function  identifierName ( formalParameterList ) statement |  function ( ) { functionBody } | function  identifierName ( ) { functionBody } | function ( formalParameterList ) { functionBody } | function  identifierName ( formalParameterList ) { functionBody } | function ( ) {  } | function  identifierName ( ) {  } | function ( formalParameterList ) {  } | function  identifierName ( formalParameterList ) {  }
  
 assignmentOperator : *=  | /=  | %=  | +=  | -=  | <<=  | >>=  | >>>=  | &=  | ^=  | #=
 
-keyword : break | do | instanceof | typeof | case | else | new | var | catch | finally | return | void | continue | for | switch | while | debugger | function | this | with | default | if | throw | delete | in | try | get | set 
-
-futureReservedWord : class | enum | extends | super | const | export | import | implements | let | private | public | interface | package | protected | static | yield
-
 emptyStatement : ;
-
-identifierName : Identifier | reservedWord
-
-reservedWord : keyword  | futureReservedWord
