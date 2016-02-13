@@ -20,7 +20,7 @@ testsuite=config.get('Testsuite', 'TESTSUITE').split(',')
 FILE_TYPE = config.get('Interpreter', 'FILE_TYPE')
 LIB_FILE = config.get('Interpreter', 'LIB_FILE')
 FILELISTFILE= abspath(config.get('TargetDir', 'FILELIST'))
-INCLUDE_NT = None
+INCLUDE_NT = config.get('Interpreter', 'SELECTEDNT').split(",")
 
 INCLUDE_NT1 = None
 
@@ -156,5 +156,4 @@ if __name__ == "__main__":
         g.genFragPool()
     if not exists(FILELISTFILE):
         collectFiles()
-    raw_input("Done")
     g.runFuzzer(shell,options,returnCodes,INCLUDE_NT,shellfileOption)

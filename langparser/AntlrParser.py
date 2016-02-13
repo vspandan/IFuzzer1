@@ -22,8 +22,8 @@ logging.basicConfig(filename=LOG_FILENAME,
                     level=int(LOG_LEVEL),
                     )
 
-globalobj=config.get('Interpreter', 'GLOBALOBJ').split(",")
-identifier=config.get('Interpreter', 'IDENTIFIER')
+globalobj=[]
+identifier=None
 
 class ProgramGen:
     def __init__(self):
@@ -138,15 +138,11 @@ def parseTree(input):
             c=CodeFragmentExtractor()
             output = c.XMLIRGenerator("\n"+input,True)
             c=None
-            identifiers_JavaObj=output['identifiers']
-            identifiers=[]
-            for id in identifiers_JavaObj:
-                identifiers.append(id)
             # xmlCode=''.join(split('(\W+)',output['parsecode']))
         except:
             return "",[],0
     logging.info("Parsing Program - Completed in "+str(output['exec_time']))
-    return output['parsecode'],identifiers, output['exec_time']
+    return output['parsecode']
 
 
 """

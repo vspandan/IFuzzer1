@@ -103,6 +103,7 @@ class GECodeGenerator(object):
                 self.ges.dynamic_crossover_rate(int(config.get('Options', 'DYNAMIC_CROSSOVER_RATE')))
                 
                 self.ges.set_crossover_bias_rate(int(config.get('Options', 'CROSSOVER_BIAS_RATE')))
+                self.ges.globalObj=config.get('Interpreter', 'GLOBALOBJ').split(",")
                 
                 if self.ges.create_genotypes(tempList,interpreter,options,returnCodes,preSelectedNonTerminals,shellfileOption):
                     self.ges.run()

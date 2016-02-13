@@ -11,4 +11,4 @@ assertEq(Object, 'RegExp: $`');
 ///home/rubbernecker/jsengines/firefox/js/src/dist/bin/js
 //--baseline-eager --no-fpu -f
 //
-//Generation:8
+//Generation:48

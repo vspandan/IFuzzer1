@@ -39,6 +39,7 @@ class GrammaticalEvolution(object):
         self.FUNCTION_EXEC_TIMEOUT=5
         self._pre_selected = []
         self.history = []
+        self.globalObj=[]
         self.population = []
         self.non_Terminals=[]
         self.stopping_criteria = {
@@ -74,7 +75,6 @@ class GrammaticalEvolution(object):
         self._multiple_rate = 0
         self._max_depth = 0
         self._generative_mutation_rate=0.5
-        self.identifiers_mapping={}
         self.parsimony_constant=0
         self.meanLength=1
         self.crossover_break=False
@@ -83,6 +83,7 @@ class GrammaticalEvolution(object):
         self.crossover_bias_rate=0
         self.targetDir=config.get('TargetDir', 'BUGSDIR')
         self.getMetricNonTerminals()
+        self.built_in=None
 
     def extractNonTerminal(self,input,nonTerminals):        
         def extractNT(root,nonTerminals):
@@ -345,7 +346,7 @@ class GrammaticalEvolution(object):
             gene.origin=fileList[member_no]
             gene.evolutionGraph.append(fileList[member_no])
             gene.local_bnf["program"]=program
-            gene.syntaxTree,gene._identifiers,dummy2=parseTree(program)
+            gene.syntaxTree=parseTree(program)
             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
             self.population.append(gene)
             
@@ -373,7 +374,6 @@ class GrammaticalEvolution(object):
                     return False
                 logging.info(gene._identifiers)
                 selected=choice(gene._identifiers)
-                gene._identifiers.remove(selected)
                 logging.info("Reference Error - selected:"+selected)
             logging.info("Replacing "+nextword+" with "+selected)
             if nextword == selected or selected is None:
@@ -407,7 +407,20 @@ class GrammaticalEvolution(object):
         f1.close
         logging.info("logBug Completed")
 
+
+    def extractIdentifiers(self,gene):
+        gene._identifiers.clear()
+        et1 = ElementTree.fromstring(gene.syntaxTree)
+        parent_map = dict((p, c) for p in et1.getiterator() for c in p)
+        for key in parent_map.values():
+            if key.tag=='identifierName':
+                if key.text is not None:
+                    val=key.text.strip()
+                    if val not in self.globalObj:
+                        gene._identifiers.add(val)
+
     def compute_fitness(self,gene):
+        self.extractIdentifiers(gene)
         logging.info("compute_fitness started")
         ti=time()
         flag=True;
@@ -545,7 +558,6 @@ class GrammaticalEvolution(object):
         try:
             score=0.0
             ti=time()
-            #TODO calc programlength using cyclic complexity
             i = analyze_file.analyze_source_code("test.js", program)
             cycloMetricComplexity=1
             pLen=i.token_count
@@ -677,8 +689,8 @@ class GrammaticalEvolution(object):
                         
                         if len(commonNonTerm) < 0:
                             break
-                        # child1.syntaxTree,child1._identifiers,dummy2=parseTree(child1Prg)
-                        # child2.syntaxTree,child2._identifiers,dummy2=parseTree(child2Prg)
+                        # child1.syntaxTree=parseTree(child1Prg)
+                        # child2.syntaxTree=parseTree(child2Prg)
                         et1 = ElementTree.fromstring(child1.syntaxTree)
                         et2 = ElementTree.fromstring(child2.syntaxTree)
 
@@ -828,7 +840,7 @@ class GrammaticalEvolution(object):
                 
                     while trail < 3:
                         trail+=1
-                        # gene.syntaxTree,gene._identifiers,dummy2=parseTree(pr)
+                        # gene.syntaxTree=parseTree(pr)
                         gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteSyntaxTree(gene,count)
                         
                         if len(selectedNt) <=0 :
@@ -846,7 +858,7 @@ class GrammaticalEvolution(object):
                         logging.info("mutate - calling compute_fitness")
                         self.compute_fitness(gene)
                         if gene.get_fitness() != self._fitness_fail:
-                            gene.syntaxTree,gene._identifiers,dummy2=parseTree(pr)
+                            gene.syntaxTree=parseTree(pr)
                             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
                             logging.info("Mutation-Success")
                             break
@@ -898,10 +910,6 @@ class GrammaticalEvolution(object):
 
     def de_EscapeText(self, gene, string):
         logging.info("de_EscapeText started")
-        self.identifiers_mapping={}
-        indicator=False
-        if len(gene._identifiers)> 0:
-            indicator=True
         wordList=split(VARIABLE_FORMAT, string)
         modifiedWordList=[]
         for word in wordList:
@@ -917,36 +925,6 @@ class GrammaticalEvolution(object):
                 word=word.replace("&apos;","\\")
             elif "&pipe" in word:
                 word=word.replace("#pipe;","|")
-            elif "_id_" in word:
-                    if indicator:
-                        if self.identifiers_mapping.has_key(word):
-                            word=self.identifiers_mapping[word]
-                        else:
-                            temp=choice(gene._identifiers).replace("_id_","")
-                            self.identifiers_mapping[word]=temp
-                            word=temp
-                    else:
-                        word='a'
-            elif "timeout" in word:
-                    if indicator:
-                        if self.identifiers_mapping.has_key(word):
-                            word=self.identifiers_mapping[word]
-                        else:
-                            temp=choice(gene._identifiers).replace("timeout","")
-                            self.identifiers_mapping[word]=temp
-                            word=temp
-                    else:
-                        word='a'
-            elif "quit" in word:
-                    if indicator:
-                        if self.identifiers_mapping.has_key(word):
-                            word=self.identifiers_mapping[word]
-                        else:
-                            temp=choice(gene._identifiers).replace("quit","")
-                            self.identifiers_mapping[word]=temp
-                            word=temp
-                    else:
-                        word='a'
             modifiedWordList.append(word)
         logging.info("de_EscapeText completed")
         return ''.join(modifiedWordList)
