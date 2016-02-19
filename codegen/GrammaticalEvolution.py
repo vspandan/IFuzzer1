@@ -409,15 +409,18 @@ class GrammaticalEvolution(object):
 
 
     def extractIdentifiers(self,gene):
-        gene._identifiers.clear()
-        et1 = ElementTree.fromstring(gene.syntaxTree)
-        parent_map = dict((p, c) for p in et1.getiterator() for c in p)
-        for key in parent_map.values():
-            if key.tag=='identifierName':
-                if key.text is not None:
-                    val=key.text.strip()
-                    if val not in self.globalObj:
-                        gene._identifiers.add(val)
+        try:
+            gene._identifiers.clear()
+            et1 = ElementTree.fromstring(gene.syntaxTree)
+            parent_map = dict((p, c) for p in et1.getiterator() for c in p)
+            for key in parent_map.values():
+                if key.tag=='identifierName':
+                    if key.text is not None:
+                        val=key.text.strip()
+                        if val not in self.globalObj:
+                            gene._identifiers.add(val)
+        except:
+            pass
 
     def compute_fitness(self,gene):
         self.extractIdentifiers(gene)
@@ -478,6 +481,7 @@ class GrammaticalEvolution(object):
                     return
                 execStart=time()
                 for a in range(len(self.interpreter_Shell)):
+                    foundBug=False
                     for option in self.interpreter_Options[a]:
                         ti1=time()
                         l=[None,None]
@@ -505,9 +509,12 @@ class GrammaticalEvolution(object):
                         gene.err=err
                         if rc not in self.interpreter_ReturnCodes[a]:
                             logging.info("Found CRASH")
+                            foundBug=True
                             self.logBug(program,self.interpreter_Shell[a],option,err)
                             logging.info("Logged CRASH")
-
+                if foundBug:
+                    gene._fitness=self.fitness_list.get_target_value();
+                    return
                 score,prgLength = self.computeSubScore(gene,program,err,time()-execStart)
                 gene.score+=score
                 logging.info(gene.prgLength)
@@ -770,6 +777,18 @@ class GrammaticalEvolution(object):
                                 child_list.append(child1)
                             logging.info("Crossover-Success")
                             break;
+                        elif child1.get_fitness()!= self.fitness_list.get_target_value():
+                            child1.syntaxTree=ElementTree.tostring(et1)
+                            child1.non_term=self.extractNonTerminal(child1.syntaxTree,[])
+                            child_list.append(child1)
+                            logging.info("Crossover-Success")
+                            break;
+                        elif child2.get_fitness()!= self.fitness_list.get_target_value():
+                            child2.syntaxTree=ElementTree.tostring(et2)
+                            child2.non_term=self.extractNonTerminal(child2.syntaxTree,[])
+                            child_list.append(child2)
+                            logging.info("Crossover-Success")
+                            break;
                         else:
                             logging.info("Crossover-Failed")
                             logging.info(selectedNTList)
@@ -862,6 +881,11 @@ class GrammaticalEvolution(object):
                             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
                             logging.info("Mutation-Success")
                             break
+                        elif gene.get_fitness()!= self.fitness_list.get_target_value():
+                            gene.syntaxTree=ElementTree.tostring(et1)
+                            gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
+                            logging.info("Mutation-Success")
+                            break;
                         else:
                             gene.local_bnf['program']=pr
                             logging.info(gene.rc)
