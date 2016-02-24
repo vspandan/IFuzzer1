@@ -25,26 +25,16 @@ INCLUDE_NT = config.get('Interpreter', 'SELECTEDNT').split(",")
 INCLUDE_NT1 = None
 
 fileList = []
-shell=[]
-options=[]
-returnCodes=[]
 libfiLes=[]
-fileOptionSpecifier=[]
 shellfileOption = []
 
-"""
-Initializes the options
-"""
-def generateOptions():
-    for i in config.get('Interpreter', 'SHELL_PATH').split('||'):
-        splitValues=i.split(':')
-        shell.append(splitValues[0])
-        options.append(splitValues[1].split(','))
-        returncode=[]
-        for j in splitValues[2].split(','):
-            returncode.append(int(j))
-        returnCodes.append(returncode)
-        fileOptionSpecifier.append(splitValues[3].strip())
+shell=config.get('Interpreter', 'SHELL_PATH').split(',')
+options=(config.get('Interpreter', 'SHELL_OPTIONS').split(','))
+returnCodes=[]
+for code in config.get('Interpreter', 'SHELL_RETURN_CODES').split(','):
+    returnCodes.append(int(code))
+fileOptionSpecifier=config.get('Interpreter', 'SHELL_FILE_SPECIFIER').strip()
+    
 
 """
 Lists all the directories and makes a call to list the files
@@ -78,7 +68,8 @@ def run_cmd(fi,l,option,shellNum):
         cmd=[]
         cmd.append(shell[shellNum].strip())
         cmd=cmd+option.split()
-        cmd=cmd+shellfileOption[shellNum]
+        if len(shellfileOption)>0:
+            cmd=cmd+shellfileOption[shellNum]
         cmd.append(fi)
         p = Popen(cmd, stdout=PIPE,stderr=PIPE)
         l[0]=p
@@ -105,9 +96,8 @@ def collectFiles():
             from subprocess import Popen,PIPE
             flag=True
             for a in range(len(shell)):
-                try:
                     l=[None,None]
-                    t=Thread(target=run_cmd,kwargs={'fi':f,'l':l,'option':options[a][0],'shellNum':a})
+                    t=Thread(target=run_cmd,kwargs={'fi':f,'l':l,'option':options[0],'shellNum':a})
                     t.start()
                     t.join(3)
                     if t.isAlive():
@@ -116,13 +106,10 @@ def collectFiles():
                             kill(l[0].pid, 9)
                             sleep(.1)
                     (out0,err0,rc0)=l[1]
-                    if rc0 == returnCodes[a][1]:
+                    if rc0 == returnCodes[1]:
                         print err0
                         flag=False
                         break
-                except:
-                        print(e)
-                        pass
             if flag:   
                 tempList.append(f)
         print "Files Listed for Processing "+ str(len(tempList))
@@ -140,14 +127,13 @@ if __name__ == "__main__":
     args = sys.argv[1:]
     sys.setrecursionlimit(300000)
     listAllTestCases(testsuite)
-    generateOptions()
     g=GECodeGenerator()
     for a in range(len(shell)):
         shellfileoption=[]
         for shellfile in libfiLes:
             shellfileoption.append(shellfile)
-            if len(fileOptionSpecifier[a])>0:
-                shellfileoption.append(fileOptionSpecifier[a])
+            if len(fileOptionSpecifier)>0:
+                shellfileoption.append(fileOptionSpecifier)
         shellfileOption.append(shellfileoption)
     if args[0]=="0":
         if exists(FILELISTFILE):

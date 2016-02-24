@@ -449,7 +449,7 @@ class GrammaticalEvolution(object):
                     tempFileObj.close()
                     ti1=time()
                     l=[None,None]
-                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0][0],'shellNum':0})
+                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0],'shellNum':0})
                     t.start()
                     t.join(self.execution_timeout)
                     if t.isAlive():
@@ -482,7 +482,7 @@ class GrammaticalEvolution(object):
                 execStart=time()
                 for a in range(len(self.interpreter_Shell)):
                     foundBug=False
-                    for option in self.interpreter_Options[a]:
+                    for option in self.interpreter_Options:
                         ti1=time()
                         l=[None,None]
                         t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':option, 'shellNum':a})
@@ -507,7 +507,7 @@ class GrammaticalEvolution(object):
                         (out,err,rc)=l[1]
                         gene.rc=rc
                         gene.err=err
-                        if rc not in self.interpreter_ReturnCodes[a]:
+                        if rc not in self.interpreter_ReturnCodes:
                             logging.info("Found CRASH")
                             foundBug=True
                             self.logBug(program,self.interpreter_Shell[a],option,err)
@@ -545,7 +545,7 @@ class GrammaticalEvolution(object):
             opt=option.strip()
             if len(opt)>0:
                 cmd=cmd+opt.split()
-            if len(self.shellfileOption[shellNum])>0:
+            if len(self.shellfileOption)>0:
                 cmd=cmd+self.shellfileOption[shellNum]
             cmd.append(fi)
             p = Popen(cmd, stdout=PIPE,stderr=PIPE)
