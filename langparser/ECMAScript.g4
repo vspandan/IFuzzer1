@@ -114,7 +114,7 @@ statementListItem
  ;
 
 functionDeclaration
- :    'function'  identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'|statement)
+ :    ('function'| 'function*') identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'|statement)
  ;
 
 classDeclaration
@@ -130,7 +130,7 @@ classHeritage
  ; 
 
 classBody
- : classElement+
+ : classElement*
  ;
 
 classElement
@@ -158,7 +158,7 @@ statement
  ;
 
 yieldExpression
- : 'yield' '*'? assignmentExpression? 
+ : ('yield'|'yield*') assignmentExpression? 
  ;
 
 block
@@ -365,6 +365,7 @@ formalParameter
  : identifierName
  | arrayLiteral
  | objectLiteral
+ | propertyNameAndValueList
  ;
 
 arrayLiteral
@@ -433,7 +434,7 @@ arguments
     
 argumentList
  : '...'? assignmentExpression
- | argumentList  ',' '...'? assignmentExpression 
+ | argumentList  elision '...'? assignmentExpression 
  ;
     
         
@@ -532,7 +533,7 @@ memberExpression
  ;
 
 functionExpression  
- :     'function' identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'| statement)
+ :     ('function'| 'function*') identifierName? '(' formalParameterList? ')' ('{' statementListItem* '}'| statement)
  ;
  
 primaryExpression  

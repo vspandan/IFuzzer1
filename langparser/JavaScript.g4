@@ -6,7 +6,7 @@ functionDeclaration : function identifierName ( formalParameterList ) { statemen
 
 classDeclaration : class identifierReference classTail | class classTail
 
-classTail : classHeritage { classBody } | { classBody }
+classTail : classHeritage { classBody } | { classBody } |  classHeritage { } | {  }
 
 classHeritage : extends conditionalExpression
 
