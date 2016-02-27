@@ -141,15 +141,10 @@ def parseTree(input):
             c=CodeFragmentExtractor()
             output = c.XMLIRGenerator("\n"+input,True)
             c=None
-            identifiers_JavaObj=output['identifiers']
-            identifiers=[]
-            for id in identifiers_JavaObj:
-                identifiers.append(id)
-            # xmlCode=''.join(split('(\W+)',output['parsecode']))
         except:
             return "",[],0
-    print("Parsing Program - Completed in "+str(output['exec_time']))
-    return output['parsecode'],identifiers, output['exec_time']
+    print("Parsing Program - Completed ")
+    return output['parsecode']
 
 
 """

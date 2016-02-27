@@ -140,8 +140,8 @@ def parseTree(input):
             c=None
             # xmlCode=''.join(split('(\W+)',output['parsecode']))
         except:
-            return "",[],0
-    logging.info("Parsing Program - Completed in "+str(output['exec_time']))
+            return ""
+    logging.info("Parsing Program - Completed")
     return output['parsecode']
 
 

@@ -777,18 +777,18 @@ class GrammaticalEvolution(object):
                                 child_list.append(child1)
                             logging.info("Crossover-Success")
                             break;
-                        elif child1.get_fitness()!= self.fitness_list.get_target_value():
-                            child1.syntaxTree=ElementTree.tostring(et1)
-                            child1.non_term=self.extractNonTerminal(child1.syntaxTree,[])
-                            child_list.append(child1)
-                            logging.info("Crossover-Success")
-                            break;
-                        elif child2.get_fitness()!= self.fitness_list.get_target_value():
-                            child2.syntaxTree=ElementTree.tostring(et2)
-                            child2.non_term=self.extractNonTerminal(child2.syntaxTree,[])
-                            child_list.append(child2)
-                            logging.info("Crossover-Success")
-                            break;
+                        # elif child1.get_fitness()!= self.fitness_list.get_target_value():
+                        #     child1.syntaxTree=ElementTree.tostring(et1)
+                        #     child1.non_term=self.extractNonTerminal(child1.syntaxTree,[])
+                        #     child_list.append(child1)
+                        #     logging.info("Crossover-Success")
+                        #     break;
+                        # elif child2.get_fitness()!= self.fitness_list.get_target_value():
+                        #     child2.syntaxTree=ElementTree.tostring(et2)
+                        #     child2.non_term=self.extractNonTerminal(child2.syntaxTree,[])
+                        #     child_list.append(child2)
+                        #     logging.info("Crossover-Success")
+                        #     break;
                         else:
                             logging.info("Crossover-Failed")
                             logging.info(selectedNTList)

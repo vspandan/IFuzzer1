@@ -96,6 +96,7 @@ def collectFiles():
             from subprocess import Popen,PIPE
             flag=True
             for a in range(len(shell)):
+                try:
                     l=[None,None]
                     t=Thread(target=run_cmd,kwargs={'fi':f,'l':l,'option':options[0],'shellNum':a})
                     t.start()
@@ -110,6 +111,8 @@ def collectFiles():
                         print err0
                         flag=False
                         break
+                except Exception as e:
+                    print(e)
             if flag:   
                 tempList.append(f)
         print "Files Listed for Processing "+ str(len(tempList))
