@@ -100,7 +100,6 @@ class Genotype(object):
     def _map_gene(self,selectedNTList):
         program=self.local_bnf['CodeFrag']
         logging.debug("Before mutation incomplete CodeFrag:"+program)
-        logging.info("Mutation: "+selectedNTList)
         # subcode=self._map_variables(nonTerminal)
         # program = program.replace(nonTerminal,subcode)
         self.local_bnf['program'] = self._map_variables(self.local_bnf['CodeFrag'])  

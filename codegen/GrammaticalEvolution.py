@@ -347,6 +347,7 @@ class GrammaticalEvolution(object):
             gene.evolutionGraph.append(fileList[member_no])
             gene.local_bnf["program"]=program
             gene.syntaxTree=parseTree(program)
+            logging.info(gene.origin)    
             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
             self.population.append(gene)
             
@@ -793,9 +794,11 @@ class GrammaticalEvolution(object):
                             logging.info("Crossover-Failed")
                             logging.info(selectedNTList)
                             logging.info("Err Code (Child1) ::"+str(child1.rc))
+                            logging.info("Out:"+str(child1.out))
                             logging.info("Err:"+str(child1.err))
                             logging.info("Origin:"+child1.origin)
                             logging.info("Err Code (Child2) ::"+str(child2.rc))
+                            logging.info("Out:"+str(child2.out))
                             logging.info("Err:"+str(child2.err))
                             logging.info("Origin:"+child2.origin)
                             child1.local_bnf['program']=child1Prg
@@ -840,14 +843,14 @@ class GrammaticalEvolution(object):
             pr=gene.local_bnf['program']
             ti3=time()
             if round(random(),1) < self._mutation_rate :
-                generative=False
                 shrink=False
 
                 count=1
                 if len(gene.non_term) > 1:
                     if round(random(),1) < self._generative_mutation_rate :
-                        generative=True
                         gene._max_depth=self._max_depth
+                    else:
+                        gene._max_depth=0
                     
                     if round(random(),1) < self._multiple_rate:
                         count=int(self.mutationCount*round(random(),1))+1
@@ -881,14 +884,10 @@ class GrammaticalEvolution(object):
                             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
                             logging.info("Mutation-Success")
                             break
-                        elif gene.get_fitness()!= self.fitness_list.get_target_value():
-                            gene.syntaxTree=ElementTree.tostring(et1)
-                            gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
-                            logging.info("Mutation-Success")
-                            break;
                         else:
                             gene.local_bnf['program']=pr
                             logging.info(gene.rc)
+                            logging.info(gene.out)
                             logging.info(gene.err)
                             logging.info(gene.origin)
                             logging.info("Mutation-Failed")
