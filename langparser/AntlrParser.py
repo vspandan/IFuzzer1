@@ -131,12 +131,12 @@ def genCodeFrag(input,nT,INCLUDE_NT_LIST = None, count=1):
 True: Program
 False: File
 """
-def parseTree(input):
+def parseTree(input,identKey=""):
     logging.info("Parsing Program - Started")
     if len(input)>0:
         try:
             c=CodeFragmentExtractor()
-            output = c.XMLIRGenerator("\n"+input,True)
+            output = c.XMLIRGenerator("\n"+input,True,identKey)
             c=None
             # xmlCode=''.join(split('(\W+)',output['parsecode']))
         except:
@@ -150,11 +150,11 @@ Restricting to accept only files;
 True: Program
 False: File
 """
-def extractCodeFrag(fileName):
+def extractCodeFrag(fileName,identKey=""):
     logging.info(fileName)
     c=CodeFragmentExtractor()
     f=open(fileName,"r")
-    d = c.XMLIRGenerator("\n"+f.read(),True)
+    d = c.XMLIRGenerator("\n"+f.read(),True,identKey)
     f.close()
     c=None
     xml=d['parsecode']

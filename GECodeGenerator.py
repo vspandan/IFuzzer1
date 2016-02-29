@@ -25,6 +25,8 @@ logging.basicConfig(filename=LOG_FILENAME,level=LOG_LEVEL,)
 Population_size=int(config.get('Options', 'POPULATION_SIZE'));
 FileListFile= abspath(config.get('TargetDir', 'FILELIST'))
 database = config.get('TargetDir', 'DATABASE')
+identifierKey = config.get('Interpreter', 'IDENTIFIER')
+
 
 class GECodeGenerator(object):
     def __init__(self):
@@ -181,7 +183,7 @@ class GECodeGenerator(object):
             if statinfo.st_size <= 10000:
                 try:
                     print(f)
-                    xml=extractCodeFrag(f)
+                    xml=extractCodeFrag(f,identifierKey)
                     et1 = ElementTree.fromstring(xml)
                     parent_map = dict((p, c) for p in et1.getiterator() for c in p)
                     for key in parent_map.keys():

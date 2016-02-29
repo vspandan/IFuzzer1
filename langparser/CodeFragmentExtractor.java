@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 public class CodeFragmentExtractor {
     
-    public HashMap XMLIRGenerator(String script, boolean isPrg) throws IOException {
+    public HashMap XMLIRGenerator(String script, boolean isPrg, String identKey) throws IOException {
         long startTime = System.currentTimeMillis();
         
         //final List<String> nonTermWithIdentifiers=  Arrays.asList("variableDeclaration","continueStatement","breakStatement","labelledStatement","catchProduction","functionDeclaration","formalParameterList","propertySetParameterList","getter","setter","primaryExpression");
@@ -45,10 +45,11 @@ public class CodeFragmentExtractor {
         final ArrayList nonTerminals = new ArrayList();
         ParseTreeWalker.DEFAULT.walk(new ECMAScriptBaseListener(){
             private boolean escape=true;
+            String key="";
             @Override
             public void enterEveryRule(@NotNull ParserRuleContext ctx) {
                 if(ctx != null) {
-                        String key=ruleNames[ctx.getRuleIndex()];
+                        key=ruleNames[ctx.getRuleIndex()];
                         sb.append("<"+key+">");
                 }
             }
@@ -56,10 +57,8 @@ public class CodeFragmentExtractor {
             @Override
             public void exitEveryRule(@NotNull ParserRuleContext ctx) {
                 if(ctx != null) {
-                    String key=ruleNames[ctx.getRuleIndex()];
+                    key=ruleNames[ctx.getRuleIndex()];
                     sb.append("</"+key+">");
-                    if (ctx.getRuleIndex()== ECMAScriptParser.RULE_debuggerStatement||ctx.getRuleIndex()== ECMAScriptParser.RULE_expressionStatement|| ctx.getRuleIndex()== ECMAScriptParser.RULE_throwStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_returnStatement| ctx.getRuleIndex()== ECMAScriptParser.RULE_breakStatement | ctx.getRuleIndex()==ECMAScriptParser.RULE_continueStatement){
-                    }
                 }
             }
             
@@ -68,9 +67,8 @@ public class CodeFragmentExtractor {
                 if(ctx != null) {
                     try{
                         String token=ctx.getText();
-                        /*if(ctx.getSymbol().getType()==ECMAScriptParser.Identifier && !global_Objects.contains(token)){
-                            identifiers.add(token);  
-                        }*/
+                        if (key.equalsIgnoreCase(identKey))
+                            token="<<id>>_"+token;
                         if(!token.equals("<EOF>"))
                             sb.append(xmlEscapeText(token)+" ");
                     }
@@ -92,7 +90,7 @@ public class CodeFragmentExtractor {
     public static void main(String[] args) throws Exception {
         CodeFragmentExtractor c=new CodeFragmentExtractor();
         String script = "/home/spandan/test.js";
-        HashMap hm=c.XMLIRGenerator(script,false);
+        HashMap hm=c.XMLIRGenerator(script,false,"");
         System.out.println(hm);
         hm=c.extractFrags(script,false);
         System.out.println(hm);

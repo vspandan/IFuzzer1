@@ -355,49 +355,49 @@ class GrammaticalEvolution(object):
         logging.info("create_genotypes Completed")
         return True;  
     
-    def checkNResolveRefError(self, gene):
-        logging.info("checkNResolveRefError Started")
-        if 'ReferenceError:' in gene.err or 'ReferenceError:' in gene.out:
-            if self._generation==0:
-                logging.info("checkNResolveRefError Completed")
-                return False
-            words=gene.err.split()+gene.out.split()
-            nextword=words[words.index('ReferenceError:')+1]
-            logging.info("Reference Error - nextword:"+nextword)
-            logging.info("Reference Error - Returning")
-            if nextword == 'invalid' or nextword ==  'reference' :
-                logging.info("checkNResolveRefError Completed - invalid")
-                return False
-            selected=None
-            while nextword == selected or selected is None:
-                if len(gene._identifiers)<=0:
-                    logging.info("checkNResolveRefError Completed")
-                    return False
-                logging.info(gene._identifiers)
-                selected=choice(gene._identifiers)
-                logging.info("Reference Error - selected:"+selected)
-            logging.info("Replacing "+nextword+" with "+selected)
-            if nextword == selected or selected is None:
-                logging.info("checkNResolveRefError Completed")
-                return False
+    # def checkNResolveRefError(self, gene):
+    #     logging.info("checkNResolveRefError Started")
+    #     if 'ReferenceError:' in gene.err or 'ReferenceError:' in gene.out:
+    #         if self._generation==0:
+    #             logging.info("checkNResolveRefError Completed")
+    #             return False
+    #         words=gene.err.split()+gene.out.split()
+    #         nextword=words[words.index('ReferenceError:')+1]
+    #         logging.info("Reference Error - nextword:"+nextword)
+    #         logging.info("Reference Error - Returning")
+    #         if nextword == 'invalid' or nextword ==  'reference' :
+    #             logging.info("checkNResolveRefError Completed - invalid")
+    #             return False
+    #         selected=None
+    #         while nextword == selected or selected is None:
+    #             if len(gene._identifiers)<=0:
+    #                 logging.info("checkNResolveRefError Completed")
+    #                 return False
+    #             logging.info(gene._identifiers)
+    #             selected=choice(gene._identifiers)
+    #             logging.info("Reference Error - selected:"+selected)
+    #         logging.info("Replacing "+nextword+" with "+selected)
+    #         if nextword == selected or selected is None:
+    #             logging.info("checkNResolveRefError Completed")
+    #             return False
             
-            newWordList=[]
-            wordList=split(VARIABLE_FORMAT1, gene.local_bnf['program'])
-            for word in wordList:
-                if word == nextword:
-                    newWordList.append(selected)
-                else:
-                    newWordList.append(word)
-            logging.info("Replaced "+nextword+" with "+selected)
-            program=''.join(newWordList)
-            gene.local_bnf['program'] = program
-            logging.info("checkNResolveRefError Completed")
-            return True
-        logging.info("checkNResolveRefError Completed")
-        return False
+    #         newWordList=[]
+    #         wordList=split(VARIABLE_FORMAT1, gene.local_bnf['program'])
+    #         for word in wordList:
+    #             if word == nextword:
+    #                 newWordList.append(selected)
+    #             else:
+    #                 newWordList.append(word)
+    #         logging.info("Replaced "+nextword+" with "+selected)
+    #         program=''.join(newWordList)
+    #         gene.local_bnf['program'] = program
+    #         logging.info("checkNResolveRefError Completed")
+    #         return True
+    #     logging.info("checkNResolveRefError Completed")
+    #     return False
 
     def logBug(self,program,shell,option,err):
-        logging.info("logBug Completed")
+        logging.info("logBug Started")
         program+="\n//"+shell+"\n//"+option + "\n//" + str(datetime.now()) + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
         logging.info("Crash:")
         logging.info(program)
@@ -406,32 +406,31 @@ class GrammaticalEvolution(object):
         f1=open(newFile,'w')
         f1.write(program)
         f1.close
-        logging.info("logBug Completed")
+        logging.info("logBug Completed - "+newFile)
 
 
-    def extractIdentifiers(self,gene):
+    def extractIdentifiers(self,et1):
         try:
-            gene._identifiers.clear()
-            et1 = ElementTree.fromstring(gene.syntaxTree)
+            identifiers=[]
             parent_map = dict((p, c) for p in et1.getiterator() for c in p)
             for key in parent_map.values():
                 if key.tag=='identifierName':
                     if key.text is not None:
                         val=key.text.strip()
-                        if val not in self.globalObj:
-                            gene._identifiers.add(val)
-        except:
-            pass
+                        if val not in self.globalObj and val not in identifiers:
+                            identifiers.append(val)
+            return identifiers
+        except Exception as e:
+            logging.info(e)
 
-    def compute_fitness(self,gene):
-        self.extractIdentifiers(gene)
+    def compute_fitness(self,gene,identifiers=None,mapIdentifiers=False):
         logging.info("compute_fitness started")
         ti=time()
         flag=True;
         gene._fitness=self._fitness_fail
         program=gene.local_bnf['program']
         if self._generation > 0:
-            program=self.de_EscapeText(gene,program)
+            program=self.de_EscapeText(gene,program,mapIdentifiers,identifiers)
             try:
                 program=beautify(program)
             except Exception as e:
@@ -444,40 +443,41 @@ class GrammaticalEvolution(object):
                 f=NamedTemporaryFile(delete=False)
                 f.close()
                 refError=False
-                while True:
-                    tempFileObj=open(f.name,"w")
-                    tempFileObj.write(program)
-                    tempFileObj.close()
-                    ti1=time()
-                    l=[None,None]
-                    t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0],'shellNum':0})
-                    t.start()
-                    t.join(self.execution_timeout)
-                    if t.isAlive():
-                        if l[0] is not None:
-                            l[0].kill()
-                            kill(l[0].pid, 9)
-                            sleep(.1)
-                            logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
-                        gene.rc=None
-                        gene.err=None
-                        gene.out=None
-                        return
-                    if (time()-ti1) > self.execution_timeout:
-                        gene.rc=None
-                        gene.err=None
-                        gene.out=None
-                        return
-                    (out,err,rc)=l[1]
-                    gene.rc=rc
-                    gene.err=err
-                    gene.out=out
-                    if not self.checkNResolveRefError(gene):
-                        refError=False
-                        break;
-                    else:
-                        refError=True
-                if refError or 'SyntaxError' in gene.err or 'SyntaxError' in gene.out:
+                # while True:
+                tempFileObj=open(f.name,"w")
+                tempFileObj.write(program)
+                tempFileObj.close()
+                ti1=time()
+                l=[None,None]
+                t=Thread(target=self.run_cmd,kwargs={'fi':f.name,'l':l,'option':self.interpreter_Options[0],'shellNum':0})
+                t.start()
+                t.join(self.execution_timeout)
+                if t.isAlive():
+                    if l[0] is not None:
+                        l[0].kill()
+                        kill(l[0].pid, 9)
+                        sleep(.1)
+                        logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
+                    gene.rc=None
+                    gene.err=None
+                    gene.out=None
+                    return
+                if (time()-ti1) > self.execution_timeout:
+                    gene.rc=None
+                    gene.err=None
+                    gene.out=None
+                    return
+                (out,err,rc)=l[1]
+                gene.rc=rc
+                gene.err=err
+                gene.out=out
+                # if not self.checkNResolveRefError(gene):
+                #     refError=False
+                #     break;
+                # else:
+                #     refError=True
+                # if refError or 'SyntaxError' in gene.err or 'SyntaxError' in gene.out:
+                if 'SyntaxError' in gene.err or 'SyntaxError' in gene.out:
                     logging.info("compute_fitness completed - Reference Error or SyntaxError :"+ gene.err)
                     return
                 execStart=time()
@@ -692,6 +692,7 @@ class GrammaticalEvolution(object):
                         trail += 1
                         count=1
                         selectedNTList = []
+
                         if round(random(),1) < self._multiple_rate:
                             count=int(self.crossoverCount*(round(random(),1)))+1
                         
@@ -722,6 +723,9 @@ class GrammaticalEvolution(object):
                             if len(li1)==0 or len(li2)==0 :
                                 continue
                             try:
+                                identifiers1=self.extractIdentifiers(et1)
+                                identifiers2=self.extractIdentifiers(et2)
+                        
                                 selectedXMLNode1= choice(li1)
                                 selectedXMLNode2= choice(li2)
                                 child_1 = selectedXMLNode1.getchildren()
@@ -743,6 +747,38 @@ class GrammaticalEvolution(object):
                                 for ch in child1DeepCopy:
                                     selectedXMLNode2.append(ch)
                                 
+
+                                subTreeIdentifiers1= self.extractIdentifiers(selectedXMLNode2) #generated child1
+                                subTreeIdentifiers2= self.extractIdentifiers(selectedXMLNode1) #generated child2
+
+                                mapping1={}
+                                if len(identifiers1)-len(subTreeIdentifiers2)>=0:
+                                    for elem in selectedXMLNode1.iter('identifierName'):
+                                        if elem.text in mapping1:
+                                            elem.text=mapping1[elem.text]
+                                        else:
+                                            ident=""
+                                            if len(identifiers1)-len(subTreeIdentifiers2)!=0:
+                                                ident=choice([x for x in identifiers1 if x not in subTreeIdentifiers2])
+                                            else:
+                                                ident=choice(identifiers1)
+                                            mapping1[elem.text]=ident
+                                            elem.text = ident
+
+                                mapping2={}
+                                if len(identifiers2)-len(subTreeIdentifiers1)>=0:
+                                    for elem in selectedXMLNode2.iter('identifierName'):
+                                        if elem.text in mapping2:
+                                            elem.text=mapping2[elem.text]
+                                        else:
+                                            ident=""
+                                            if len(identifiers2)-len(subTreeIdentifiers1)!=0:
+                                                ident=choice([x for x in identifiers2 if x not in subTreeIdentifiers1])
+                                            else:
+                                                ident=choice(identifiers1)
+                                            mapping2[elem.text]=ident
+                                            elem.text = ident
+
                                 i+=1;
                                 selectedNTList.append(k)
                                 if (i==count):
@@ -834,7 +870,7 @@ class GrammaticalEvolution(object):
                 i+=1
         t=ProgramGen()
         logging.info("genIncompleteSyntaxTree completed")
-        return t.treeToProg(et1),selectedNt
+        return t.treeToProg(et1),selectedNt,et1
 
             
     def mutate(self,gene):
@@ -863,7 +899,7 @@ class GrammaticalEvolution(object):
                     while trail < 3:
                         trail+=1
                         # gene.syntaxTree=parseTree(pr)
-                        gene.local_bnf['CodeFrag'],selectedNt=self.genIncompleteSyntaxTree(gene,count)
+                        gene.local_bnf['CodeFrag'],selectedNt,et1=self.genIncompleteSyntaxTree(gene,count)
                         
                         if len(selectedNt) <=0 :
                             logging.info("Mutation-Failed-Not selected any non-terminal")
@@ -877,8 +913,9 @@ class GrammaticalEvolution(object):
                         gene.score=10
                         
                         gene._map_gene(selectedNt)
+                        identifiers=self.extractIdentifiers(ElementTree.fromstring(et1))
                         logging.info("mutate - calling compute_fitness")
-                        self.compute_fitness(gene)
+                        self.compute_fitness(gene,identifiers,True)
                         if gene.get_fitness() != self._fitness_fail:
                             gene.syntaxTree=parseTree(pr)
                             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
@@ -931,10 +968,12 @@ class GrammaticalEvolution(object):
                 break
         logging.info("_perform_replacements completed")
 
-    def de_EscapeText(self, gene, string):
+    def de_EscapeText(self, gene, string,mapIdentifiers=False,identifiers=None):
         logging.info("de_EscapeText started")
-        wordList=split(VARIABLE_FORMAT, string)
+        # wordList=split(VARIABLE_FORMAT, string)
+        wordList=string.split()
         modifiedWordList=[]
+        mapping={}
         for word in wordList:
             if "&lt" in word:
                 word=word.replace("&lt;","<")
@@ -948,6 +987,12 @@ class GrammaticalEvolution(object):
                 word=word.replace("&apos;","\\")
             elif "&pipe" in word:
                 word=word.replace("#pipe;","|")
+            if mapIdentifiers:
+                if "<<id>>_" in word:
+                    if word in mapping:
+                        word=mapping[word]
+                    else
+                        word=choice(identifiers)
             modifiedWordList.append(word)
         logging.info("de_EscapeText completed")
         return ''.join(modifiedWordList)
