@@ -329,7 +329,7 @@ class GrammaticalEvolution(object):
             logging.info("create_genotypes Completed")
             return
         member_no = 0
-        
+        files=fileList.keys()
         while member_no < self._population_size:
             gene = Genotype(member_no)
             gene.local_bnf = deepcopy(self._bnf)
@@ -339,15 +339,18 @@ class GrammaticalEvolution(object):
             gene.preSelectedNonTerminals=preSelectedNonTerminals
             gene._initial_member_no =  member_no
             
-            f=open(path.abspath(fileList[member_no]),"r")
+            f=open(path.abspath(files[member_no]),"r")
             program=f.read()
             f.close()
-            
             gene.origin=fileList[member_no]
             gene.evolutionGraph.append(fileList[member_no])
             logging.info(gene.origin)    
             gene.local_bnf["program"]=program
-            gene.syntaxTree=parseTree(program)
+
+            f=open(path.abspath(fileList[files[member_no]]),"r")
+            gene.syntaxTree=f.read()
+            f.close()
+            
             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
             self.population.append(gene)
             

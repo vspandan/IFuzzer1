@@ -1,10 +1,10 @@
 #!/usr/bin/env python
+from shutil import copyfile
 from marshal import dump, load
 from collections import defaultdict
 from datetime import datetime
 from os import listdir,remove,makedirs
 from os.path import isfile, join, abspath, exists
-from shutil import rmtree
 from codegen.fitness import FitnessElites, FitnessTournament, FitnessProportionate
 from codegen.fitness import ReplacementTournament, MAX, MIN, CENTER
 from codegen.GrammaticalEvolution import GrammaticalEvolution
@@ -26,7 +26,7 @@ Population_size=int(config.get('Options', 'POPULATION_SIZE'));
 FileListFile= abspath(config.get('TargetDir', 'FILELIST'))
 database = config.get('TargetDir', 'DATABASE')
 identifierKey = config.get('Interpreter', 'IDENTIFIER')
-
+parsetreedir = config.get('TargetDir', 'PARSETREES')
 
 class GECodeGenerator(object):
     def __init__(self):
@@ -40,28 +40,25 @@ class GECodeGenerator(object):
                 
 
     def runFuzzer(self,interpreter,options,returnCodes,preSelectedNonTerminals,shellfileOption):
-        tempList=[]    
-        TestCases=[]
+        tempList={}   
+        TestCases={}
         if isfile(FileListFile):
             f2 = open(FileListFile, 'rb')
             TestCases=load(f2)
             f2.close()
         else: 
             return
-        
         try:
+            keys=TestCases.keys()
             while len(tempList)<Population_size:
                 if len(TestCases)>0:
-                    t=choice(TestCases)
-                    tempList.append(t)
-                    TestCases.remove(t)
+                    t=choice(keys)
+                    tempList[t]=TestCases[t]
+                    del TestCases[t]
                 else:
                     break
             f2 = open(FileListFile, 'wb')
             dump(TestCases, f2)
-            f2.close()
-            f2 = open(FileListFile, 'rb')
-            TestCases=load(f2)
             f2.close()
             
             if len(tempList) >= Population_size:
@@ -147,7 +144,7 @@ class GECodeGenerator(object):
 
     def genFragPool(self):
         f2 = open(FileListFile, 'rb')
-        fileList=load(f2)
+        fileList=load(f2).keys()
         f2.close()
         codeFrags2=defaultdict(list)
         if not exists(database):
@@ -166,40 +163,62 @@ class GECodeGenerator(object):
             else:
                 print "Answer must be 'Y' or 'N'"
         count = 0
-        # fi=open("Consolidated","w")
-        # fi.close()
-
-        # for f in fileList:
-        #     fo=open(f,"rb")
-        #     fi=open("Consolidated","ab")
-        #     fi.write("\n")
-        #     fi.write(fo.read())
-        #     fo.close()
-        #     fi.close()
-        
         for f in fileList:
             count+=1
-            statinfo=stat(f)
-            if statinfo.st_size <= 10000:
-                try:
-                    print(f)
-                    xml=extractCodeFrag(f,identifierKey)
-                    et1 = ElementTree.fromstring(xml)
-                    parent_map = dict((p, c) for p in et1.getiterator() for c in p)
-                    for key in parent_map.keys():
-                        nonTerm=key.tag
-                        p1=ProgramGen()
-                        frag=p1.treeToProg(key)
-                        if codeFrags2.has_key(nonTerm):
-                            frags=codeFrags2.get(nonTerm)
-                            frags.append(frag)
-                            codeFrags2[nonTerm]=frags
-                        else:
-                            codeFrags2[nonTerm]=[frag]
-                except Exception as e:
-                    print "Error:"+str(e)+"\nProcessing:"+f
-                if count % 100 == 0:
-                    self.finalize(codeFrags2)
-                    codeFrags2.clear()
+            try:
+                print(f)
+                xml=extractCodeFrag(f,identifierKey)
+                et1 = ElementTree.fromstring(xml)
+                parent_map = dict((p, c) for p in et1.getiterator() for c in p)
+                for key in parent_map.keys():
+                    nonTerm=key.tag
+                    p1=ProgramGen()
+                    frag=p1.treeToProg(key)
+                    if codeFrags2.has_key(nonTerm):
+                        frags=codeFrags2.get(nonTerm)
+                        frags.append(frag)
+                        codeFrags2[nonTerm]=frags
+                    else:
+                        codeFrags2[nonTerm]=[frag]
+            except Exception as e:
+                print "Error:"+str(e)+"\nProcessing:"+f
+            if count % 100 == 0:
+                self.finalize(codeFrags2)
+                codeFrags2.clear()
         self.finalize(codeFrags2)
         print ("Finished; Code generation and testing begins " +str(datetime.now()))
+
+    def collectFiles(self, fileList,FILELISTFILE):
+        try:
+            if not exists(parsetreedir):
+                makedirs(parsetreedir)
+            if exists(abspath(parsetreedir+"/"+FILELISTFILE)):
+                copyfile(abspath(parsetreedir+"/"+FILELISTFILE),abspath(FILELISTFILE))
+                return
+            fileList1=listdir(parsetreedir)
+            for f in fileList1:
+                remove(parsetreedir+"/"+f)
+            tempList = {}
+            print "Total Number of Files "+ str(len(fileList))
+            count=0
+            for f in fileList:
+                print f
+                count+=1
+                fi=open(path.abspath(f),"r")
+                program=fi.read()
+                fi.close()
+                xml=parseTree(program)
+                fileName=path.abspath(parsetreedir+"/"+str(count))
+                fi=open(fileName,"w")
+                fi.write(xml)
+                fi.close()
+                tempList[f]=fileName
+                print fileName
+            print "Files Listed for Processing "+ str(len(tempList))
+            fileList[:] =tempList
+            f1 = open(abspath(parsetreedir+"/"+FILELISTFILE), 'wb')
+            dump(fileList,f1)
+            f1.close()
+            copyfile(abspath(parsetreedir+"/"+FILELISTFILE),abspath(FILELISTFILE))
+        except Exception as e:
+            print (e)
