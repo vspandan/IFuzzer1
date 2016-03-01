@@ -53,7 +53,9 @@ class GECodeGenerator(object):
             while len(tempList)<Population_size:
                 if len(TestCases)>0:
                     t=choice(keys)
-                    tempList[t]=TestCases[t]
+                    val = TestCases[t]
+                    tempList[t]=val
+                    keys.remove(t)
                     del TestCases[t]
                 else:
                     break
@@ -215,9 +217,8 @@ class GECodeGenerator(object):
                 tempList[f]=fileName
                 print fileName
             print "Files Listed for Processing "+ str(len(tempList))
-            fileList[:] =tempList
             f1 = open(abspath(parsetreedir+"/"+FILELISTFILE), 'wb')
-            dump(fileList,f1)
+            dump(tempList,f1)
             f1.close()
             copyfile(abspath(parsetreedir+"/"+FILELISTFILE),abspath(FILELISTFILE))
         except Exception as e:

@@ -342,11 +342,10 @@ class GrammaticalEvolution(object):
             f=open(path.abspath(files[member_no]),"r")
             program=f.read()
             f.close()
-            gene.origin=fileList[member_no]
-            gene.evolutionGraph.append(fileList[member_no])
+            gene.origin=files[member_no]
+            gene.evolutionGraph.append(files[member_no])
             logging.info(gene.origin)    
             gene.local_bnf["program"]=program
-
             f=open(path.abspath(fileList[files[member_no]]),"r")
             gene.syntaxTree=f.read()
             f.close()
