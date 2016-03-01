@@ -102,8 +102,9 @@ class Genotype(object):
         logging.debug("Before mutation incomplete CodeFrag:"+program)
         # subcode=self._map_variables(nonTerminal)
         # program = program.replace(nonTerminal,subcode)
+        logging.info("Involved nonTerminals"+str(selectedNTList))
         self.local_bnf['program'] = self._map_variables(self.local_bnf['CodeFrag'])  
-        logging.debug("Completed mutation:"+program)
+        logging.info("Completed mutation")
         logging.debug("After mutation complete CodeFrag:"+program)
     
     def get_program(self):

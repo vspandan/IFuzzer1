@@ -345,9 +345,9 @@ class GrammaticalEvolution(object):
             
             gene.origin=fileList[member_no]
             gene.evolutionGraph.append(fileList[member_no])
+            logging.info(gene.origin)    
             gene.local_bnf["program"]=program
             gene.syntaxTree=parseTree(program)
-            logging.info(gene.origin)    
             gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
             self.population.append(gene)
             
@@ -600,7 +600,6 @@ class GrammaticalEvolution(object):
             else:
                 limitSelection=False
             ch=choice([0,1])
-            ch=0
             if ch==0:
                 fitness_pool = self._evaluate_fitness(False,limitSelection)
                 child_list = self._perform_crossovers(fitness_pool)
@@ -854,6 +853,8 @@ class GrammaticalEvolution(object):
         i=0;
         while i<count:
             k=choice(gene.non_term)
+            if k not in self.preSelectedNonTerminals:
+                continue
             li=[]
             for r in et1.iter(k):
                 li.append(r)
@@ -913,7 +914,7 @@ class GrammaticalEvolution(object):
                         gene.score=10
                         
                         gene._map_gene(selectedNt)
-                        identifiers=self.extractIdentifiers(ElementTree.fromstring(et1))
+                        identifiers=self.extractIdentifiers(et1)
                         logging.info("mutate - calling compute_fitness")
                         self.compute_fitness(gene,identifiers,True)
                         if gene.get_fitness() != self._fitness_fail:
@@ -928,9 +929,8 @@ class GrammaticalEvolution(object):
                             logging.info(gene.err)
                             logging.info(gene.origin)
                             logging.info("Mutation-Failed")
-        except Exception as e:
-            logging.info("mutate-exception:")
-            logging.info(e)
+        finally:
+            pass
         logging.info("mutate completed" +str(time()-ti3))
         return gene               
     
@@ -991,11 +991,11 @@ class GrammaticalEvolution(object):
                 if "<<id>>_" in word:
                     if word in mapping:
                         word=mapping[word]
-                    else
+                    else:
                         word=choice(identifiers)
             modifiedWordList.append(word)
         logging.info("de_EscapeText completed")
-        return ''.join(modifiedWordList)
+        return ' '.join(modifiedWordList)
 
     def _continue_processing(self):
         logging.info("_continue_processing started")
