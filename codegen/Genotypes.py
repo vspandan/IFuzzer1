@@ -32,6 +32,7 @@ class Genotype(object):
         self._fitness = None
         self.keywords = None
         # self._identifiers=set()
+        self.identifiers=[]
         self.preSelectedNonTerminals=[]
         self._max_depth = 0
         self.err = ""

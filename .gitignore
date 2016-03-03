@@ -18,6 +18,7 @@
 *.so
 *.xml
 *.lst
+*.pyc
 
 # Packages #
 ############
@@ -32,6 +33,7 @@
 *.zip
 parse[tT]rees/
 database/
+generated/
 
 # Logs and databases #
 ######################
