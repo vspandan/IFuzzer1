@@ -87,13 +87,20 @@ if __name__ == "__main__":
     sys.setrecursionlimit(300000)
     listAllTestCases(testsuite)
     g=GECodeGenerator()
+    # f=open("shell.js","a")
     for a in range(len(shell)):
         shellfileoption=[]
         for shellfile in libfiLes:
+            # f1=open(shellfile,"r")
+            # f.write("\n")
+            # f.write(f1.read());
+            # f1.close()
             shellfileoption.append(shellfile)
             if len(fileOptionSpecifier)>0:
                 shellfileoption.append(fileOptionSpecifier)
         shellfileOption.append(shellfileoption)
+    # f.close()
+    # raw_input(abspath("shellfull.js"))
     if not exists(abspath(FILELISTFILE)):
         g.collectFiles(fileList,FILELISTFILE)
     if args[0]=="0":

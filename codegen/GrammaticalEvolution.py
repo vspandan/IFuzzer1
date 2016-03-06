@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from copy import deepcopy
+from os import makedirs,remove
 from threading import Thread
 from datetime import datetime
 from os import path,listdir,remove,kill
@@ -13,9 +14,10 @@ from codegen.Genotypes import Genotype
 from time import time,sleep
 from jsbeautifier import beautify
 from tempfile import NamedTemporaryFile
+from marshal import load,dump
 from lizard import analyze_file
 
-import tests.jit_test
+# import tests.jit_test
 import signal 
 import ConfigParser
 import logging
@@ -280,6 +282,10 @@ class GrammaticalEvolution(object):
                 gene._fitness=10
                 # logging.info("First Generation - calling compute_fitness")
                 # self.compute_fitness(gene)
+                score,prgLength = self.computeSubScore(gene,gene.get_program())
+                gene.prgLength=prgLength
+                gene._fitness =  gene.score
+                    
             self.population[gene.member_no]=gene
             self.fitness_list[gene.member_no][0] = gene.get_fitness()
             totalLength += gene.prgLength
@@ -357,46 +363,6 @@ class GrammaticalEvolution(object):
         logging.info("create_genotypes Completed")
         return True;  
     
-    # def checkNResolveRefError(self, gene):
-    #     logging.info("checkNResolveRefError Started")
-    #     if 'ReferenceError:' in gene.err or 'ReferenceError:' in gene.out:
-    #         if self._generation==0:
-    #             logging.info("checkNResolveRefError Completed")
-    #             return False
-    #         words=gene.err.split()+gene.out.split()
-    #         nextword=words[words.index('ReferenceError:')+1]
-    #         logging.info("Reference Error - nextword:"+nextword)
-    #         logging.info("Reference Error - Returning")
-    #         if nextword == 'invalid' or nextword ==  'reference' :
-    #             logging.info("checkNResolveRefError Completed - invalid")
-    #             return False
-    #         selected=None
-    #         while nextword == selected or selected is None:
-    #             if len(gene._identifiers)<=0:
-    #                 logging.info("checkNResolveRefError Completed")
-    #                 return False
-    #             logging.info(gene._identifiers)
-    #             selected=choice(gene._identifiers)
-    #             logging.info("Reference Error - selected:"+selected)
-    #         logging.info("Replacing "+nextword+" with "+selected)
-    #         if nextword == selected or selected is None:
-    #             logging.info("checkNResolveRefError Completed")
-    #             return False
-            
-    #         newWordList=[]
-    #         wordList=split(VARIABLE_FORMAT1, gene.local_bnf['program'])
-    #         for word in wordList:
-    #             if word == nextword:
-    #                 newWordList.append(selected)
-    #             else:
-    #                 newWordList.append(word)
-    #         logging.info("Replaced "+nextword+" with "+selected)
-    #         program=''.join(newWordList)
-    #         gene.local_bnf['program'] = program
-    #         logging.info("checkNResolveRefError Completed")
-    #         return True
-    #     logging.info("checkNResolveRefError Completed")
-    #     return False
 
     def logBug(self,program,shell,option,err):
         logging.info("logBug Started")
@@ -444,8 +410,6 @@ class GrammaticalEvolution(object):
             try:
                 f=NamedTemporaryFile(delete=False)
                 f.close()
-                refError=False
-                # while True:
                 tempFileObj=open(f.name,"w")
                 tempFileObj.write(program)
                 tempFileObj.close()
@@ -473,12 +437,6 @@ class GrammaticalEvolution(object):
                 gene.rc=rc
                 gene.err=err
                 gene.out=out
-                # if not self.checkNResolveRefError(gene):
-                #     refError=False
-                #     break;
-                # else:
-                #     refError=True
-                # if refError or 'SyntaxError' in gene.err or 'SyntaxError' in gene.out:
                 if 'SyntaxError' in gene.err or 'SyntaxError' in gene.out:
                     logging.info("compute_fitness completed - Reference Error or SyntaxError :"+ gene.err)
                     return
@@ -520,13 +478,7 @@ class GrammaticalEvolution(object):
                     return
                 score,prgLength = self.computeSubScore(gene,program,err,time()-execStart)
                 gene.score+=score
-                logging.info(gene.prgLength)
-                if self._generation==0:
-                    gene.prgLength=prgLength
-                    gene._fitness =  gene.score
-                # elif (prgLength/gene.prgLength) < (self.crossover_bias_rate/100):
-                else:
-                    gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
+                gene._fitness =  gene.score - (self.parsimony_constant * gene.prgLength )
             except Exception as e:                    
                 logging.info("compute_fitness-1-exception:")
                 logging.info(e)
@@ -562,7 +514,7 @@ class GrammaticalEvolution(object):
             logging.info(e)
             pass
 
-    def computeSubScore (self, gene, program,err,exec_time):
+    def computeSubScore (self, gene, program,err="",exec_time=0):
         logging.info("computeSubScore started")
         pLen=1
         try:
@@ -794,38 +746,6 @@ class GrammaticalEvolution(object):
                         child2.local_bnf['program']=p2.treeToProg(et2)
 
                         child1.score=10
-                        child2.score=10
-                        # logging.info("_perform_crossovers - calling compute_fitness - child1")
-                        # self.compute_fitness(child1)
-                        # logging.info("_perform_crossovers - calling compute_fitness - child2")
-                        # self.compute_fitness(child2)
-                        # logging.info("_perform_crossovers - child1 - "+str(child1.get_fitness()) +" child2 - "+str(child2.get_fitness()))
-                        # if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
-                        #     child1.syntaxTree=ElementTree.tostring(et1)
-                        #     child2.syntaxTree=ElementTree.tostring(et2)
-                        #     child1.non_term=self.extractNonTerminal(child1.syntaxTree,[])
-                        #     child2.non_term=self.extractNonTerminal(child2.syntaxTree,[])
-
-                        #     if self._children_per_crossover == 2:
-                        #         child_list.append(child1)
-                        #         child_list.append(child2)
-                        #     else:
-                        #         child_list.append(child1)
-                        #     logging.info("Crossover-Success")
-                        #     break;
-                        # else:
-                        #     logging.info("Crossover-Failed")
-                        #     logging.info(selectedNTList)
-                        #     logging.info("Err Code (Child1) ::"+str(child1.rc))
-                        #     logging.info("Out:"+str(child1.out))
-                        #     logging.info("Err:"+str(child1.err))
-                        #     logging.info("Origin:"+child1.origin)
-                        #     logging.info("Err Code (Child2) ::"+str(child2.rc))
-                        #     logging.info("Out:"+str(child2.out))
-                        #     logging.info("Err:"+str(child2.err))
-                        #     logging.info("Origin:"+child2.origin)
-                        #     child1.local_bnf['program']=child1Prg
-                        #     child2.local_bnf['program']=child2Prg
                         if self._children_per_crossover == 2:
                             child_list.append(child1)
                             child_list.append(child2)
@@ -911,20 +831,7 @@ class GrammaticalEvolution(object):
                     
                     gene._map_gene(selectedNt)
                     identifiers=self.extractIdentifiers(et1)
-                    # logging.info("mutate - calling compute_fitness")
-                    # self.compute_fitness(gene,identifiers,True)
-                    # if gene.get_fitness() != self._fitness_fail:
-                    #     gene.syntaxTree=parseTree(pr)
-                    #     gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
-                    #     logging.info("Mutation-Success")
-                    #     break
-                    # else:
-                    #     gene.local_bnf['program']=pr
-                    #     logging.info(gene.rc)
-                    #     logging.info(gene.out)
-                    #     logging.info(gene.err)
-                    #     logging.info(gene.origin)
-                    #     logging.info("Mutation-Failed")
+                    
         except Exception as e:
             logging.info("mutate completed with exception"+str(e))
             gene.local_bnf['program']=gene.local_bnf['prev']
@@ -962,9 +869,7 @@ class GrammaticalEvolution(object):
             else:
                 self.compute_fitness(gene)
             # TODO: Call delta debugging and driver file here
-        print fitness_pool
         fitness_pool.sort(key=Genotype.get_fitness,reverse=True)
-        print fitness_pool
         for gene in fitness_pool:
             if position<self._population_size:
                 gene.member_no=position
