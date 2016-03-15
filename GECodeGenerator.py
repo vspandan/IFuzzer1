@@ -43,9 +43,14 @@ class GECodeGenerator(object):
         tempList={}   
         TestCases={}
         if isfile(FileListFile):
-            f2 = open(FileListFile, 'rb')
-            TestCases=load(f2)
-            f2.close()
+            try:
+                f2 = open(FileListFile, 'rb')
+                TestCases=load(f2)
+                f2.close()
+            except Exception as e:
+                print (e)
+                remove(FileListFile)
+                return
         else: 
             return
         try:
