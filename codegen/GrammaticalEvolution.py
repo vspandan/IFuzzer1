@@ -410,6 +410,8 @@ class GrammaticalEvolution(object):
             try:
                 f=NamedTemporaryFile(delete=False)
                 f.close()
+                refError=False
+                # while True:
                 tempFileObj=open(f.name,"w")
                 tempFileObj.write(program)
                 tempFileObj.close()
@@ -572,10 +574,11 @@ class GrammaticalEvolution(object):
                 child_list = self._perform_mutations(fitness_pool,(remainingPopCount-len(childList)))
                 if child_list is not None:
                     childList.extend(child_list)
+                    
                 fitness_pool = self._evaluate_fitness(False,limitSelection)
                 child_list = self._perform_crossovers(fitness_pool)
                 if child_list is not None:
-                    childList.extend(child_list)   
+                    childList.extend(child_list)    
         self._perform_replacements(childList)
         logging.info("completed performing crossover and mutation")
 
@@ -642,103 +645,106 @@ class GrammaticalEvolution(object):
                             commonNonTerm=[val for val in child1.non_term if (val in set(child2.non_term))]
 
                         trail=0
-                        count=1
-                        selectedNTList = []
-
-                        if round(random(),1) < self._multiple_rate:
-                            count=int(self.crossoverCount*(round(random(),1)))+1
+                        while trail<5:
                         
-                        if len(commonNonTerm) < 0:
-                            break
-                        # child1.syntaxTree=parseTree(child1Prg)
-                        # child2.syntaxTree=parseTree(child2Prg)
-                        et1 = ElementTree.fromstring(child1.syntaxTree)
-                        et2 = ElementTree.fromstring(child2.syntaxTree)
+                            trail += 1
+                            count=1
+                            selectedNTList = []
 
-                        # et11=child1.syntaxTree
-                        # et12=child2.syntaxTree
+                            if round(random(),1) < self._multiple_rate:
+                                count=int(self.crossoverCount*(round(random(),1)))+1
+                            
+                            if len(commonNonTerm) < 0:
+                                break
+                            # child1.syntaxTree=parseTree(child1Prg)
+                            # child2.syntaxTree=parseTree(child2Prg)
+                            et1 = ElementTree.fromstring(child1.syntaxTree)
+                            et2 = ElementTree.fromstring(child2.syntaxTree)
 
-                        # st1=""
-                        
-                        i=0;
-                        while True:
-                            k=choice(commonNonTerm)
-                            li2=[]
-                            for r in et2.iter(k):
-                                li2.append(r)
+                            # et11=child1.syntaxTree
+                            # et12=child2.syntaxTree
 
-                            li1=[]
-                            for r in et1.iter(k):
-                                li1.append(r)
+                            # st1=""
+                            
+                            i=0;
+                            while True:
+                                k=choice(commonNonTerm)
+                                li2=[]
+                                for r in et2.iter(k):
+                                    li2.append(r)
+
+                                li1=[]
+                                for r in et1.iter(k):
+                                    li1.append(r)
 
 
-                            if len(li1)==0 or len(li2)==0 :
-                                continue
-                            try:
-                                identifiers1=self.extractIdentifiers(et1)
-                                identifiers2=self.extractIdentifiers(et2)
-                        
-                                selectedXMLNode1= choice(li1)
-                                selectedXMLNode2= choice(li2)
-                                child_1 = selectedXMLNode1.getchildren()
-                                child1DeepCopy=deepcopy(child_1)
-                                child_2 = selectedXMLNode2.getchildren()
-                                child2DeepCopy=deepcopy(child_2)
+                                if len(li1)==0 or len(li2)==0 :
+                                    continue
+                                try:
+                                    identifiers1=self.extractIdentifiers(et1)
+                                    identifiers2=self.extractIdentifiers(et2)
+                            
+                                    selectedXMLNode1= choice(li1)
+                                    selectedXMLNode2= choice(li2)
+                                    child_1 = selectedXMLNode1.getchildren()
+                                    child1DeepCopy=deepcopy(child_1)
+                                    child_2 = selectedXMLNode2.getchildren()
+                                    child2DeepCopy=deepcopy(child_2)
 
-                                while len(child_1):
-                                    ch=child_1[0]
-                                    selectedXMLNode1.remove(ch)
+                                    while len(child_1):
+                                        ch=child_1[0]
+                                        selectedXMLNode1.remove(ch)
 
-                                while len(child_2):
-                                    ch=child_2[0]
-                                    selectedXMLNode2.remove(ch)
+                                    while len(child_2):
+                                        ch=child_2[0]
+                                        selectedXMLNode2.remove(ch)
 
-                                for ch in child2DeepCopy:
-                                    selectedXMLNode1.append(ch)
+                                    for ch in child2DeepCopy:
+                                        selectedXMLNode1.append(ch)
 
-                                for ch in child1DeepCopy:
-                                    selectedXMLNode2.append(ch)
-                                
+                                    for ch in child1DeepCopy:
+                                        selectedXMLNode2.append(ch)
+                                    
 
-                                subTreeIdentifiers1= self.extractIdentifiers(selectedXMLNode2) #generated child1
-                                subTreeIdentifiers2= self.extractIdentifiers(selectedXMLNode1) #generated child2
+                                    subTreeIdentifiers1= self.extractIdentifiers(selectedXMLNode2) #generated child1
+                                    subTreeIdentifiers2= self.extractIdentifiers(selectedXMLNode1) #generated child2
 
-                                mapping1={}
-                                if len(identifiers1)-len(subTreeIdentifiers2)>=0:
-                                    for elem in selectedXMLNode1.iter('identifierName'):
-                                        if elem.text in mapping1:
-                                            elem.text=mapping1[elem.text]
-                                        else:
-                                            ident=""
-                                            if len(identifiers1)-len(subTreeIdentifiers2)!=0:
-                                                ident=choice([x for x in identifiers1 if x not in subTreeIdentifiers2])
+                                    mapping1={}
+                                    if len(identifiers1)-len(subTreeIdentifiers2)>=0:
+                                        for elem in selectedXMLNode1.iter('identifierName'):
+                                            if elem.text in mapping1:
+                                                elem.text=mapping1[elem.text]
                                             else:
-                                                ident=choice(identifiers1)
-                                            mapping1[elem.text]=ident
-                                            elem.text = ident
+                                                ident=""
+                                                if len(identifiers1)-len(subTreeIdentifiers2)!=0:
+                                                    ident=choice([x for x in identifiers1 if x not in subTreeIdentifiers2])
+                                                else:
+                                                    ident=choice(identifiers1)
+                                                mapping1[elem.text]=ident
+                                                elem.text = ident
 
-                                mapping2={}
-                                if len(identifiers2)-len(subTreeIdentifiers1)>=0:
-                                    for elem in selectedXMLNode2.iter('identifierName'):
-                                        if elem.text in mapping2:
-                                            elem.text=mapping2[elem.text]
-                                        else:
-                                            ident=""
-                                            if len(identifiers2)-len(subTreeIdentifiers1)!=0:
-                                                ident=choice([x for x in identifiers2 if x not in subTreeIdentifiers1])
+                                    mapping2={}
+                                    if len(identifiers2)-len(subTreeIdentifiers1)>=0:
+                                        for elem in selectedXMLNode2.iter('identifierName'):
+                                            if elem.text in mapping2:
+                                                elem.text=mapping2[elem.text]
                                             else:
-                                                ident=choice(identifiers1)
-                                            mapping2[elem.text]=ident
-                                            elem.text = ident
+                                                ident=""
+                                                if len(identifiers2)-len(subTreeIdentifiers1)!=0:
+                                                    ident=choice([x for x in identifiers2 if x not in subTreeIdentifiers1])
+                                                else:
+                                                    ident=choice(identifiers1)
+                                                mapping2[elem.text]=ident
+                                                elem.text = ident
 
-                                i+=1;
-                                selectedNTList.append(k)
-                                if (i==count):
-                                    break
-                            except Exception as e:
-                            	logging.info("_perform_crossovers-1-exception:")
-                            	logging.info(e)
-                            	pass
+                                    i+=1;
+                                    selectedNTList.append(k)
+                                    if (i==count):
+                                        break
+                            	except Exception as e:
+                                	logging.info("_perform_crossovers-1-exception:")
+                                	logging.info(e)
+                                	pass
                         p1=ProgramGen()
                         p2=ProgramGen()
 
@@ -746,12 +752,39 @@ class GrammaticalEvolution(object):
                         child2.local_bnf['program']=p2.treeToProg(et2)
 
                         child1.score=10
-                        if self._children_per_crossover == 2:
-                            child_list.append(child1)
-                            child_list.append(child2)
-                        else:
-                            child_list.append(child1)
+                        child2.score=10
+                        logging.info("_perform_crossovers - calling compute_fitness - child1")
+                        self.compute_fitness(child1)
+                        logging.info("_perform_crossovers - calling compute_fitness - child2")
+                        self.compute_fitness(child2)
+                        
+                        logging.info("_perform_crossovers - child1 - "+str(child1.get_fitness()) +" child2 - "+str(child2.get_fitness()))
+                        if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
+                            child1.syntaxTree=ElementTree.tostring(et1)
+                            child2.syntaxTree=ElementTree.tostring(et2)
+                            child1.non_term=self.extractNonTerminal(child1.syntaxTree,[])
+                            child2.non_term=self.extractNonTerminal(child2.syntaxTree,[])
 
+                            if self._children_per_crossover == 2:
+                                child_list.append(child1)
+                                child_list.append(child2)
+                            else:
+                                child_list.append(child1)
+                            logging.info("Crossover-Success")
+                            break;
+                        else:
+                            logging.info("Crossover-Failed")
+                            logging.info(selectedNTList)
+                            logging.info("Err Code (Child1) ::"+str(child1.rc))
+                            logging.info("Out:"+str(child1.out))
+                            logging.info("Err:"+str(child1.err))
+                            logging.info("Origin:"+child1.origin)
+                            logging.info("Err Code (Child2) ::"+str(child2.rc))
+                            logging.info("Out:"+str(child2.out))
+                            logging.info("Err:"+str(child2.err))
+                            logging.info("Origin:"+child2.origin)
+                            child1.local_bnf['program']=child1Prg
+                            child2.local_bnf['program']=child2Prg
                     except Exception as e:
                         logging.info("_perform_crossovers-2-exception:")
                         logging.info(e)
@@ -796,7 +829,6 @@ class GrammaticalEvolution(object):
         try:
             logging.info("mutate started")
             pr=gene.local_bnf['program']
-            gene.local_bnf['prevprogram']=pr
             ti3=time()
             if round(random(),1) < self._mutation_rate :
                 shrink=False
@@ -814,27 +846,42 @@ class GrammaticalEvolution(object):
                     if round(random(),1) < self.shrink_mutation_rate:
                         shrink=True
                     
-                    # trail=0
-                    # gene.syntaxTree=parseTree(pr)
-                    gene.local_bnf['CodeFrag'],selectedNt,et1=self.genIncompleteSyntaxTree(gene,count)
-                    
-                    if len(selectedNt) <=0 :
-                        logging.info("Mutation-Failed-Not selected any non-terminal")
-                        return None
-            
-                    if shrink:
-                        for val in selectedNt:
-                            gene.local_bnf['CodeFrag'].replace(val,'')
-                        # break
+                    trail=0
+                
+                    while trail < 3:
+                        trail+=1
+                        # gene.syntaxTree=parseTree(pr)
+                        gene.local_bnf['CodeFrag'],selectedNt,et1=self.genIncompleteSyntaxTree(gene,count)
+                        
+                        if len(selectedNt) <=0 :
+                            logging.info("Mutation-Failed-Not selected any non-terminal")
+                            return None
+                
+                        if shrink:
+                            for val in selectedNt:
+                                gene.local_bnf['CodeFrag'].replace(val,'')
+                            break
 
-                    gene.score=10
-                    
-                    gene._map_gene(selectedNt)
-                    identifiers=self.extractIdentifiers(et1)
-                    
-        except Exception as e:
-            logging.info("mutate completed with exception"+str(e))
-            gene.local_bnf['program']=gene.local_bnf['prev']
+                        gene.score=10
+                        
+                        gene._map_gene(selectedNt)
+                        identifiers=self.extractIdentifiers(et1)
+                        logging.info("mutate - calling compute_fitness")
+                        self.compute_fitness(gene,identifiers,True)
+                        if gene.get_fitness() != self._fitness_fail:
+                            gene.syntaxTree=parseTree(pr)
+                            gene.non_term=self.extractNonTerminal(gene.syntaxTree,[])
+                            logging.info("Mutation-Success")
+                            break
+                        else:
+                            gene.local_bnf['program']=pr
+                            logging.info(gene.rc)
+                            logging.info(gene.out)
+                            logging.info(gene.err)
+                            logging.info(gene.origin)
+                            logging.info("Mutation-Failed")
+        finally:
+            pass
         logging.info("mutate completed" +str(time()-ti3))
         return gene               
     
@@ -863,12 +910,7 @@ class GrammaticalEvolution(object):
             gene.member_no=position
             self.population[position]=gene
             position+=1
-        for gene in fitness_pool:
-            if(len(gene.identifiers)>0):
-                self.compute_fitness(gene,identifiers,True)
-            else:
-                self.compute_fitness(gene)
-            # TODO: Call delta debugging and driver file here
+        
         fitness_pool.sort(key=Genotype.get_fitness,reverse=True)
         for gene in fitness_pool:
             if position<self._population_size:
