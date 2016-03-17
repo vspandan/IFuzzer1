@@ -779,7 +779,6 @@ class GrammaticalEvolution(object):
                             else:
                                 child_list.append(child1)
                             logging.info("Crossover-Success")
-                            break;
                         else:
                             logging.info("Crossover-Failed")
                             logging.info(selectedNTList)
