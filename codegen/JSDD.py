@@ -56,7 +56,7 @@ if __name__ == '__main__':
     
     print "Simplifying failure-inducing input..."
     print deltas
-    c = mydd.dd(deltas)              # Invoke DDMIN
+    c = mydd.ddmin(deltas)              # Invoke DDMIN
     print "The 1-minimal failure-inducing input is", mydd.coerce(c)
     print "Removing any element will make the failure go away."
 

@@ -36,6 +36,7 @@ class Genotype(object):
         self.preSelectedNonTerminals=[]
         self._max_depth = 0
         self.err = ""
+        self.out = ""
         self.rc=None
         self.score=0
         self.prgLength=0

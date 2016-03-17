@@ -525,7 +525,7 @@ class GrammaticalEvolution(object):
             i = analyze_file.analyze_source_code("test.js", program)
             cycloMetricComplexity=1
             pLen=i.token_count
-            score= -float(exec_time)/pLen
+            score= -float(exec_time)/pLen+1
             funcListSize=len(i.function_list)+1
             for index in range(funcListSize-1):
                 cycloMetricComplexity += i.function_list[index].cyclomatic_complexity
@@ -626,7 +626,7 @@ class GrammaticalEvolution(object):
                 length -= 1
             if length >= 2:
                 logging.info("_perform_crossovers " + str(len(parentlist)) + " individuals are participating in the crossover")
-                while len(parentlist) > 1 :
+                while len(parentlist) >= 2 :
                     try:
                         logging.info("_perform_crossovers - Remaining " + str(len(parentlist)) + " individuals are participating in the crossover")
                         child1 = choice(parentlist)
@@ -654,7 +654,7 @@ class GrammaticalEvolution(object):
                             if round(random(),1) < self._multiple_rate:
                                 count=int(self.crossoverCount*(round(random(),1)))+1
                             
-                            if len(commonNonTerm) < 0:
+                            if len(commonNonTerm) == 0:
                                 break
                             # child1.syntaxTree=parseTree(child1Prg)
                             # child2.syntaxTree=parseTree(child2Prg)
@@ -717,7 +717,11 @@ class GrammaticalEvolution(object):
                                             else:
                                                 ident=""
                                                 if len(identifiers1)-len(subTreeIdentifiers2)!=0:
-                                                    ident=choice([x for x in identifiers1 if x not in subTreeIdentifiers2])
+                                                    idents=[x for x in identifiers1 if x not in subTreeIdentifiers2]
+                                                    if len(idents)>0:
+                                                        ident=choice(idents)
+                                                    else
+                                                        ident=choice(identifiers1)
                                                 else:
                                                     ident=choice(identifiers1)
                                                 mapping1[elem.text]=ident
@@ -731,9 +735,13 @@ class GrammaticalEvolution(object):
                                             else:
                                                 ident=""
                                                 if len(identifiers2)-len(subTreeIdentifiers1)!=0:
-                                                    ident=choice([x for x in identifiers2 if x not in subTreeIdentifiers1])
+                                                    idents=[x for x in identifiers2 if x not in subTreeIdentifiers1]
+                                                    if len(idents)>0:
+                                                        ident=choice(idents)
+                                                    else
+                                                        ident=choice(identifiers2)
                                                 else:
-                                                    ident=choice(identifiers1)
+                                                    ident=choice(identifiers2)
                                                 mapping2[elem.text]=ident
                                                 elem.text = ident
 
