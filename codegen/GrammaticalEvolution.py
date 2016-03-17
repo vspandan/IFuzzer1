@@ -738,7 +738,7 @@ class GrammaticalEvolution(object):
                                                     idents=[x for x in identifiers2 if x not in subTreeIdentifiers1]
                                                     if len(idents)>0:
                                                         ident=choice(idents)
-                                                    else
+                                                    else:
                                                         ident=choice(identifiers2)
                                                 else:
                                                     ident=choice(identifiers2)
