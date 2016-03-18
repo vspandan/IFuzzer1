@@ -710,7 +710,7 @@ class GrammaticalEvolution(object):
                                     subTreeIdentifiers2= self.extractIdentifiers(selectedXMLNode1) #generated child2
 
                                     mapping1={}
-                                    if len(identifiers1)-len(subTreeIdentifiers2)>=0:
+                                    if len(identifiers1)-len(subTreeIdentifiers2)>0:
                                         for elem in selectedXMLNode1.iter('identifierName'):
                                             if elem.text in mapping1:
                                                 elem.text=mapping1[elem.text]
@@ -728,7 +728,7 @@ class GrammaticalEvolution(object):
                                                 elem.text = ident
 
                                     mapping2={}
-                                    if len(identifiers2)-len(subTreeIdentifiers1)>=0:
+                                    if len(identifiers2)-len(subTreeIdentifiers1)>0:
                                         for elem in selectedXMLNode2.iter('identifierName'):
                                             if elem.text in mapping2:
                                                 elem.text=mapping2[elem.text]
@@ -753,9 +753,12 @@ class GrammaticalEvolution(object):
                                 	logging.info("_perform_crossovers-1-exception:")
                                 	logging.info(e)
                                 	pass
+                        if et1 is None or et2 is None:
+                            break
+                        
                         p1=ProgramGen()
                         p2=ProgramGen()
-
+                        
                         child1.local_bnf['program']=p1.treeToProg(et1)
                         child2.local_bnf['program']=p2.treeToProg(et2)
 
