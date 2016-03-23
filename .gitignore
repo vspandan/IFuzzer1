@@ -34,6 +34,7 @@
 parse[tT]rees/
 database/
 generated/
+JSDeltaBugs/
 
 # Logs and databases #
 ######################
