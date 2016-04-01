@@ -229,16 +229,14 @@ if(ext === 'json')
 var ast = esprima.parse(src);
 
 // determine a suitable temporary directory
-var tmp_dir="";
+var tmp_dir=config.tmp_dir;
 var round = 0;
 if (!fs.existsSync(config.tmp_dir))
 	fs.mkdirSync(config.tmp_dir);
 //for(i=0; fs.existsSync(tmp_dir=config.tmp_dir+"/tmp"+i); ++i);
-for(round=0; true; ++round)
+for(round=0; true; round++)
 {
-	console.log(fs.existsSync(round+".js"))
-	console.log("\n")
-	if(!fs.existsSync(round+".js"))
+	if(!fs.existsSync(tmp_dir + "/" + round + "." + ext))
 		break;
     //fs.mkdirSync(tmp_dir);
 }
@@ -247,13 +245,13 @@ for(round=0; true; ++round)
 //var round = 0;
 
 // the smallest test case so far is kept here
-var smallest = tmp_dir + "smallest." + ext;
+var smallest = tmp_dir + "/smallest." + ext;
 //var smallest = tmp_dir + "/delta_js_smallest." + ext;
 
 // get name of current test case
 function getTempFileName() {
     //var fn = tmp_dir + "/delta_js_" + round + "." + ext;
-    var fn = tmp_dir + round + "." + ext;
+    var fn = tmp_dir + "/" + round + "." + ext;
     ++round;
     return fn;
 }

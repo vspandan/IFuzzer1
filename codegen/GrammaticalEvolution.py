@@ -461,8 +461,7 @@ class GrammaticalEvolution(object):
                             gene.err=None
                             gene.out=None
                             return
-                        self.run_delta(f.name,l,option,a)
-                        raw_input("waiting")
+                        self.run_delta(f.name,option,a)
                         logging.info("Invoked  interpreter for "+str(time()-ti1) +"seconds")
                         if (time()-ti1) > self.execution_timeout:
                             gene.rc=None
@@ -496,24 +495,22 @@ class GrammaticalEvolution(object):
                     logging.info(e)
                     pass
         
-    def run_delta(self, fi,l,option,shellNum):
+    def run_delta(self, fi,option,shellNum):
         try:
             cmd=["node"]
             cmd.append("codegen/jsdelta/delta.js")
             cmd.append("--cmd")
-            runcmd="\""+self.interpreter_Shell[shellNum].strip()
+            runcmd=self.interpreter_Shell[shellNum].strip()
             opt=option.strip()
             if len(opt)>0:
                 runcmd=runcmd+" "+opt+" "
             if len(self.shellfileOption)>0:
                 runcmd=runcmd+' '.join(self.shellfileOption[shellNum])
-            runcmd=runcmd+"\""
+            
             cmd.append(runcmd)
             cmd.append(fi)
             p = Popen(cmd, stdout=PIPE,stderr=PIPE)
-            l[0]=p
             out, err = p.communicate()
-            l[1]=(out,err,p.returncode)
             sys.stdout.flush()
             sys.stderr.flush()
         except Exception as e:
