@@ -87,7 +87,7 @@ class processTree(object):
         return self.subcode,self.out    
 
 def genCodeFrag(input,nT,INCLUDE_NT_LIST = None, count=1):
-    logging.info("GenCodeFrag method - Entered ")
+    logging.debug("GenCodeFrag method - Entered ")
     selectedNTList={}
     subcode={}
     out=""
@@ -124,7 +124,7 @@ def genCodeFrag(input,nT,INCLUDE_NT_LIST = None, count=1):
     except:
         pass
     finally:
-        logging.info("GenCodeFrag method - Completed ")
+        logging.debug("GenCodeFrag method - Completed ")
         return subcode,out,selectedNTList
 
 """
@@ -132,7 +132,7 @@ True: Program
 False: File
 """
 def parseTree(input,identKey=""):
-    logging.info("Parsing Program - Started")
+    logging.debug("Parsing Program - Started")
     if len(input)>0:
         try:
             c=CodeFragmentExtractor()
@@ -141,7 +141,7 @@ def parseTree(input,identKey=""):
             # xmlCode=''.join(split('(\W+)',output['parsecode']))
         except:
             return ""
-    logging.info("Parsing Program - Completed")
+    logging.debug("Parsing Program - Completed")
     return output['parsecode']
 
 
@@ -151,7 +151,7 @@ True: Program
 False: File
 """
 def extractCodeFrag(fileName,identKey=""):
-    logging.info(fileName)
+    logging.debug(fileName)
     c=CodeFragmentExtractor()
     f=open(fileName,"r")
     d = c.XMLIRGenerator("\n"+f.read(),True,identKey)

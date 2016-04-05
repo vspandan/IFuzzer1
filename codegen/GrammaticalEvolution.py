@@ -103,14 +103,14 @@ class GrammaticalEvolution(object):
         return nonTerminals
 
     def getMetricNonTerminals(self):
-        logging.info("getMetricNonTerminals Started")
+        logging.debug("getMetricNonTerminals Started")
         nonTerminalListStr= config.get('Interpreter', 'METRICS_NON_TEMINALS')
         nonTermList=nonTerminalListStr.split(",")
         self.metricNonTerm={}
         for nonTerm in nonTermList:
             splitValues=nonTerm.split(":")
             self.metricNonTerm[splitValues[0]]=float(splitValues[1])
-        logging.info("getMetricNonTerminals Completed")
+        logging.debug("getMetricNonTerminals Completed")
 
     def set_crossover_bias_rate(self,percentage):
         self.crossover_bias_rate=percentage
@@ -252,23 +252,23 @@ class GrammaticalEvolution(object):
         return self.population[self.fitness_list.worst_member()]
 
     def calcfitness(self):
-        logging.info("calcfitness Started")
+        logging.debug("calcfitness Started")
         self.meanLength=1
         
         def calculateCovariance(meanFitness):
-            logging.info("calculateCovariance Started")
+            logging.debug("calculateCovariance Started")
             value=0
             for gene in self.population:
                 value += ( gene.get_fitness() - meanFitness ) * ( gene.prgLength - self.meanLength )
-            logging.info("calculateCovariance Completed")
+            logging.debug("calculateCovariance Completed")
             return value
 
         def variance():
-            logging.info("variance Started")
+            logging.debug("variance Started")
             value=0
             for gene in self.population:
                 value += ( gene.prgLength - self.meanLength ) ** 2 
-            logging.info("variance Completed")
+            logging.debug("variance Completed")
             return value
         
         totalLength=0
@@ -280,7 +280,7 @@ class GrammaticalEvolution(object):
             gene.set_keys (self.non_Terminals)
             if self._generation == 0 :
                 gene._fitness=10
-                # logging.info("First Generation - calling compute_fitness")
+                # logging.debug("First Generation - calling compute_fitness")
                 # self.compute_fitness(gene)
                 score,prgLength = self.computeSubScore(gene,gene.get_program())
                 gene.prgLength=prgLength
@@ -298,17 +298,17 @@ class GrammaticalEvolution(object):
             self.parsimony_constant=0
         else:
             self.parsimony_constant=calculateCovariance(meanFitness)/varianceValue
-        logging.info("calcfitness Completed")
+        logging.debug("calcfitness Completed")
 
     def run(self, starting_generation=0):
-        logging.info("Starting Code Generation Process")
+        logging.debug("Starting Code Generation Process")
         self._generation = starting_generation
         starttime=time()
         self.calcfitness()
         self._generation+=1
-        logging.info("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
+        logging.debug("completed : "+str(self._generation)+" in "+str(round((time()-starttime))) + " seconds")
         while True:
-            logging.info("Starting "+str(self._generation)+" Generation - "+str(datetime.now()))
+            logging.debug("Starting "+str(self._generation)+" Generation - "+str(datetime.now()))
             starttime=time()
             if self._maintain_history:
                 self.history.append(deepcopy(self.fitness_list))
@@ -319,11 +319,11 @@ class GrammaticalEvolution(object):
             else:
                 break
             diff=round((time()-starttime))
-            logging.info("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
-        logging.info("Completed Code Generation Process")
+            logging.debug("completed : "+str(self._generation)+" in "+str(diff) + " seconds")
+        logging.debug("Completed Code Generation Process")
       
     def create_genotypes(self,fileList,interpreter_Shell,interpreter_Options,interpreter_ReturnCodes,preSelectedNonTerminals,shellfileOption):
-        logging.info("create_genotypes Started")
+        logging.debug("create_genotypes Started")
         self.interpreter_Shell=interpreter_Shell
         self.shellfileOption=shellfileOption
         self.interpreter_Options =interpreter_Options
@@ -332,7 +332,7 @@ class GrammaticalEvolution(object):
         self._extractProductions()
         
         if len(fileList)<self._population_size:
-            logging.info("create_genotypes Completed")
+            logging.debug("create_genotypes Completed")
             return
         member_no = 0
         files=fileList.keys()
@@ -350,7 +350,7 @@ class GrammaticalEvolution(object):
             f.close()
             gene.origin=files[member_no]
             gene.evolutionGraph.append(files[member_no])
-            logging.info(gene.origin)    
+            logging.debug(gene.origin)    
             gene.local_bnf["program"]=program
             f=open(path.abspath(fileList[files[member_no]]),"r")
             gene.syntaxTree=f.read()
@@ -360,12 +360,12 @@ class GrammaticalEvolution(object):
             self.population.append(gene)
             
             member_no += 1
-        logging.info("create_genotypes Completed")
+        logging.debug("create_genotypes Completed")
         return True;  
     
 
     def logBug(self,program,shell,option,err):
-        logging.info("logBug Started")
+        logging.debug("logBug Started")
         program+="\n//"+shell+"\n//"+option + "\n//" + str(datetime.now()) + "\n//" + err.replace("\n"," ") +"\n//Generation:"+str(self._generation)
         logging.info("Crash:")
         logging.info(program)
@@ -389,10 +389,11 @@ class GrammaticalEvolution(object):
                             identifiers.append(val)
             return identifiers
         except Exception as e:
+            logging.info("extractIdentifiers-exception:")
             logging.info(e)
 
     def compute_fitness(self,gene,identifiers=None,mapIdentifiers=False):
-        logging.info("compute_fitness started")
+        logging.debug("compute_fitness started")
         ti=time()
         flag=True;
         gene._fitness=self._fitness_fail
@@ -425,7 +426,7 @@ class GrammaticalEvolution(object):
                         l[0].kill()
                         kill(l[0].pid, 9)
                         sleep(.1)
-                        logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
+                        logging.debug("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
                     gene.rc=None
                     gene.err=None
                     gene.out=None
@@ -440,7 +441,7 @@ class GrammaticalEvolution(object):
                 gene.err=err
                 gene.out=out
                 if 'SyntaxError' in gene.err or 'SyntaxError' in gene.out:
-                    logging.info("compute_fitness completed - Reference Error or SyntaxError :"+ gene.err)
+                    logging.debug("compute_fitness completed - Reference Error or SyntaxError :"+ gene.err)
                     return
                 execStart=time()
                 for a in range(len(self.interpreter_Shell)):
@@ -456,13 +457,13 @@ class GrammaticalEvolution(object):
                                 l[0].kill()
                                 kill(l[0].pid, 9)
                                 sleep(.1)
-                                logging.info("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
+                                logging.debug("compute_fitness completed - Killed timeout process"+str(time()-ti)+" seconds")
                             gene.rc=None
                             gene.err=None
                             gene.out=None
                             return
                         self.run_delta(f.name,option,a)
-                        logging.info("Invoked  interpreter for "+str(time()-ti1) +"seconds")
+                        logging.debug("Invoked  interpreter for "+str(time()-ti1) +"seconds")
                         if (time()-ti1) > self.execution_timeout:
                             gene.rc=None
                             gene.err=None
@@ -472,10 +473,10 @@ class GrammaticalEvolution(object):
                         gene.rc=rc
                         gene.err=err
                         if rc not in self.interpreter_ReturnCodes:
-                            logging.info("Found CRASH")
+                            logging.debug("Found CRASH")
                             foundBug=True
                             self.logBug(program,self.interpreter_Shell[a],option,err)
-                            logging.info("Logged CRASH")
+                            logging.debug("Logged CRASH")
                 if foundBug:
                     gene._fitness=self.fitness_list.get_target_value();
                     return
@@ -488,7 +489,7 @@ class GrammaticalEvolution(object):
                 logging.info("compute_fitness completed with exception"+str(time()-ti)+" seconds")
             finally:
                 try:
-                    logging.info("compute_fitness completed"+str(time()-ti)+" seconds")
+                    logging.debug("compute_fitness completed"+str(time()-ti)+" seconds")
                     remove(f.name)
                 except Exception as e:
                     logging.info("compute_fitness-2-exception:")
@@ -514,7 +515,7 @@ class GrammaticalEvolution(object):
             sys.stdout.flush()
             sys.stderr.flush()
         except Exception as e:
-            logging.info("run_cmd-exception:")
+            logging.info("run_delta-exception:")
             logging.info(e)
             pass
 
@@ -540,7 +541,7 @@ class GrammaticalEvolution(object):
             pass
 
     def computeSubScore (self, gene, program,err="",exec_time=0):
-        logging.info("computeSubScore started")
+        logging.debug("computeSubScore started")
         pLen=1
         try:
             score=0.0
@@ -558,18 +559,18 @@ class GrammaticalEvolution(object):
                 for temp in nonTerminalsMeticsInfo[a]:
                     score += temp*self.metricNonTerm[a]
             if "warning" in err:
-                logging.info("warning found: "+err)
+                logging.debug("warning found: "+err)
                 score+=10
             score=score/avgCycloMetricComplx
         except Exception as e:
             logging.info("computeSubScore-exception:")
             logging.info(e)
             pass
-        logging.info("computeSubScore completed")
+        logging.debug("computeSubScore completed")
         return score,pLen
 
     def _perform_endcycle(self):
-        logging.info("performing crossover and mutation")
+        logging.debug("performing crossover and mutation")
         self._pre_selected = self._evaluate_fitness(True)
         childList=[]
         remainingPopCount = self._population_size - len(self._pre_selected)
@@ -603,10 +604,10 @@ class GrammaticalEvolution(object):
                 if child_list is not None:
                     childList.extend(child_list)    
         self._perform_replacements(childList)
-        logging.info("completed performing crossover and mutation")
+        logging.debug("completed performing crossover and mutation")
 
     def _evaluate_fitness(self,ind=False,limitSelection=False): 
-        logging.info("_evaluate_fitness started")
+        logging.debug("_evaluate_fitness started")
         parentlist = []
         parentlist1 = []
         if ind:
@@ -631,11 +632,11 @@ class GrammaticalEvolution(object):
             for gene in self.population:
                 if gene._fitness!=self._fitness_fail:
                     parentlist1.append(deepcopy(gene))
-        logging.info("_evaluate_fitness completed")
+        logging.debug("_evaluate_fitness completed")
         return parentlist1
 
     def _perform_crossovers(self, parentlist):
-        logging.info("_perform_crossovers started")
+        logging.debug("_perform_crossovers started")
         ti=time()
         child_list = []
         try:
@@ -648,7 +649,7 @@ class GrammaticalEvolution(object):
             if length % 2 == 1:
                 length -= 1
             if length >= 2:
-                logging.info("_perform_crossovers " + str(len(parentlist)) + " individuals are participating in the crossover")
+                logging.debug("_perform_crossovers " + str(len(parentlist)) + " individuals are participating in the crossover")
                 while len(parentlist) >= 2 :
                     try:
                         logging.info("_perform_crossovers - Remaining " + str(len(parentlist)) + " individuals are participating in the crossover")
@@ -787,12 +788,12 @@ class GrammaticalEvolution(object):
 
                         child1.score=10
                         child2.score=10
-                        logging.info("_perform_crossovers - calling compute_fitness - child1")
+                        logging.debug("_perform_crossovers - calling compute_fitness - child1")
                         self.compute_fitness(child1)
-                        logging.info("_perform_crossovers - calling compute_fitness - child2")
+                        logging.debug("_perform_crossovers - calling compute_fitness - child2")
                         self.compute_fitness(child2)
                         
-                        logging.info("_perform_crossovers - child1 - "+str(child1.get_fitness()) +" child2 - "+str(child2.get_fitness()))
+                        logging.debug("_perform_crossovers - child1 - "+str(child1.get_fitness()) +" child2 - "+str(child2.get_fitness()))
                         if child1.get_fitness()!= self._fitness_fail and child2.get_fitness()!= self._fitness_fail:
                             child1.syntaxTree=ElementTree.tostring(et1)
                             child2.syntaxTree=ElementTree.tostring(et2)
@@ -808,21 +809,21 @@ class GrammaticalEvolution(object):
                         else:
                             logging.info("Crossover-Failed")
                             logging.info(selectedNTList)
-                            logging.info("Err Code (Child1) ::"+str(child1.rc))
-                            logging.info("Out:"+str(child1.out))
-                            logging.info("Err:"+str(child1.err))
-                            logging.info("Origin:"+child1.origin)
-                            logging.info("Err Code (Child2) ::"+str(child2.rc))
-                            logging.info("Out:"+str(child2.out))
-                            logging.info("Err:"+str(child2.err))
-                            logging.info("Origin:"+child2.origin)
+                            logging.debug("Err Code (Child1) ::"+str(child1.rc))
+                            logging.debug("Out:"+str(child1.out))
+                            logging.debug("Err:"+str(child1.err))
+                            logging.debug("Origin:"+child1.origin)
+                            logging.debug("Err Code (Child2) ::"+str(child2.rc))
+                            logging.debug("Out:"+str(child2.out))
+                            logging.debug("Err:"+str(child2.err))
+                            logging.debug("Origin:"+child2.origin)
                             child1.local_bnf['program']=child1Prg
                             child2.local_bnf['program']=child2Prg
                     except Exception as e:
                         logging.info("_perform_crossovers-2-exception:")
                         logging.info(e)
                         pass
-                logging.info("_perform_crossovers completed")
+                logging.debug("_perform_crossovers completed")
                 return child_list
         except Exception as e:
             logging.info("_perform_crossovers-3-exception:")
@@ -831,7 +832,7 @@ class GrammaticalEvolution(object):
             return child_list
 
     def genIncompleteSyntaxTree(self,gene,count):
-        logging.info("genIncompleteSyntaxTree started")
+        logging.debug("genIncompleteSyntaxTree started")
         et1 = ElementTree.fromstring(gene.syntaxTree)
         selectedNt=[]
         i=0;
@@ -854,13 +855,13 @@ class GrammaticalEvolution(object):
                 selectedXMLNode1.append(etTemp)
                 i+=1
         t=ProgramGen()
-        logging.info("genIncompleteSyntaxTree completed")
+        logging.debug("genIncompleteSyntaxTree completed")
         return t.treeToProg(et1),selectedNt,et1
 
             
     def mutate(self,gene):
         try:
-            logging.info("mutate started")
+            logging.debug("mutate started")
             pr=gene.local_bnf['program']
             ti3=time()
             if round(random(),1) < self._mutation_rate :
@@ -887,7 +888,7 @@ class GrammaticalEvolution(object):
                         gene.local_bnf['CodeFrag'],selectedNt,et1=self.genIncompleteSyntaxTree(gene,count)
                         
                         if len(selectedNt) <=0 :
-                            logging.info("Mutation-Failed-Not selected any non-terminal")
+                            logging.debug("Mutation-Failed-Not selected any non-terminal")
                             return None
                 
                         if shrink:
@@ -899,7 +900,7 @@ class GrammaticalEvolution(object):
                         
                         gene._map_gene(selectedNt)
                         identifiers=self.extractIdentifiers(et1)
-                        logging.info("mutate - calling compute_fitness")
+                        logging.debug("mutate - calling compute_fitness")
                         self.compute_fitness(gene,identifiers,True)
                         if gene.get_fitness() != self._fitness_fail:
                             gene.syntaxTree=parseTree(pr)
@@ -908,18 +909,18 @@ class GrammaticalEvolution(object):
                             break
                         else:
                             gene.local_bnf['program']=pr
-                            logging.info(gene.rc)
-                            logging.info(gene.out)
-                            logging.info(gene.err)
-                            logging.info(gene.origin)
+                            logging.debug(gene.rc)
+                            logging.debug(gene.out)
+                            logging.debug(gene.err)
+                            logging.debug(gene.origin)
                             logging.info("Mutation-Failed")
         finally:
             pass
-        logging.info("mutate completed" +str(time()-ti3))
+        logging.debug("mutate completed" +str(time()-ti3))
         return gene               
     
     def _perform_mutations(self, mlist, count):
-        logging.info("_perform_mutations started")
+        logging.debug("_perform_mutations started")
         mutatedList=[]
         for gene in mlist:
             try:
@@ -933,11 +934,11 @@ class GrammaticalEvolution(object):
                 logging.info("_perform_mutations-exception:")
                 logging.info(e)
                 return mlist
-        logging.info("_perform_mutations completed")
+        logging.debug("_perform_mutations completed")
         return mutatedList
 
     def _perform_replacements(self, fitness_pool):
-        logging.info("_perform_replacements started")
+        logging.debug("_perform_replacements started")
         position = 0
         for gene in self._pre_selected:
             gene.member_no=position
@@ -952,10 +953,10 @@ class GrammaticalEvolution(object):
                 position+=1
             else:
                 break
-        logging.info("_perform_replacements completed")
+        logging.debug("_perform_replacements completed")
 
     def de_EscapeText(self, gene, string,mapIdentifiers=False,identifiers=None):
-        logging.info("de_EscapeText started")
+        logging.debug("de_EscapeText started")
         # wordList=split(VARIABLE_FORMAT, string)
         wordList=string.split()
         modifiedWordList=[]
@@ -980,11 +981,11 @@ class GrammaticalEvolution(object):
                     else:
                         word=choice(identifiers)
             modifiedWordList.append(word)
-        logging.info("de_EscapeText completed")
+        logging.debug("de_EscapeText completed")
         return ' '.join(modifiedWordList)
 
     def _continue_processing(self):
-        logging.info("_continue_processing started")
+        logging.debug("_continue_processing started")
         """
         This method analyzes the fitness list against the stopping_criteria defined over target_value and max generations
         """
@@ -993,20 +994,20 @@ class GrammaticalEvolution(object):
         s=set()
         for i in range(len(fitl)):
             s.add(fitl[i][0])
-        logging.info(self.interpreter_Shell)
-        logging.info("Mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
+        logging.debug(self.interpreter_Shell)
+        logging.debug("Mutation_rate:"+str(self._mutation_rate) +",crossover_rate:"+str(self._crossover_rate)+",multiple_rate:"+str(self._multiple_rate))
         logging.info("Unique: "+str(len(s)) +" Genotype Objects based on Fitness")
         logging.info("Fitness values : After Generation " + str(self._generation))
         logging.info(str(datetime.now()))
-        logging.info(fitl)
+        logging.debug(fitl)
         
         if self.stopping_criteria[STOPPING_MAX_GEN] is not None:
             if self.stopping_criteria[STOPPING_MAX_GEN] <= self._generation:
-                logging.info("_continue_processing completed")
+                logging.debug("_continue_processing completed")
                 return False
         if fitl.get_target_value() is not None:
                 if fitl.best_value() == fitl.get_target_value():
-                    logging.info("_continue_processing completed")
+                    logging.debug("_continue_processing completed")
                     return False
-        logging.info("_continue_processing completed")
+        logging.debug("_continue_processing completed")
         return status
